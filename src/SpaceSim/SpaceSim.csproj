@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1C529C56-1B3E-4C1C-A6DD-7E898218D299}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpaceSim</RootNamespace>
+    <AssemblyName>SpaceSim</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Cloo, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\Cloo\Cloo.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Contracts\Commands\Command.cs" />
+    <Compile Include="Contracts\Commands\Ignition.cs" />
+    <Compile Include="Contracts\Commands\Orient.cs" />
+    <Compile Include="Contracts\Commands\Shutdown.cs" />
+    <Compile Include="Contracts\Commands\Stage.cs" />
+    <Compile Include="Contracts\Commands\Throttle.cs" />
+    <Compile Include="Commands\IgnitionCommand.cs" />
+    <Compile Include="Commands\OrientCommand.cs" />
+    <Compile Include="Commands\ShutdownCommand.cs" />
+    <Compile Include="Commands\StageCommand.cs" />
+    <Compile Include="Commands\ThrottleCommand.cs" />
+    <Compile Include="Contracts\Payload.cs" />
+    <Compile Include="Controllers\CommandController.cs" />
+    <Compile Include="Controllers\IController.cs" />
+    <Compile Include="Controllers\SimpleFlightController.cs" />
+    <Compile Include="Drawing\EngineFlame.cs" />
+    <Compile Include="Drawing\GpuClear.cs" />
+    <Compile Include="Drawing\IGdiRenderable.cs" />
+    <Compile Include="Drawing\IGpuRenderable.cs" />
+    <Compile Include="Drawing\IIconRenderable.cs" />
+    <Compile Include="Drawing\Particle.cs" />
+    <Compile Include="Drawing\RenderUtils.cs" />
+    <Compile Include="Engines\EngineBase.cs" />
+    <Compile Include="Engines\IEngine.cs" />
+    <Compile Include="Engines\Merlin1D.cs" />
+    <Compile Include="Engines\Merlin1DVac.cs" />
+    <Compile Include="Engines\SuperDraco.cs" />
+    <Compile Include="Physics\FlightGlobals.cs" />
+    <Compile Include="Drawing\FpsManager.cs" />
+    <Compile Include="Gauges\RetrogradeButton.cs" />
+    <Compile Include="Gauges\ProgradeButton.cs" />
+    <Compile Include="Gauges\IGauge.cs" />
+    <Compile Include="Gauges\NavBall.cs" />
+    <Compile Include="Gauges\Scale.cs" />
+    <Compile Include="Gauges\ThrustGauge.cs" />
+    <Compile Include="Kernels\ClearKernel.cs" />
+    <Compile Include="Physics\IAreodynamicBody.cs" />
+    <Compile Include="Physics\IGravitationalBody.cs" />
+    <Compile Include="Physics\GravitationalBodyBase.cs" />
+    <Compile Include="Proxies\MassiveBodyProxy.cs" />
+    <Compile Include="Proxies\SpaceCraftProxy.cs" />
+    <Compile Include="SolarSystem\IMassiveBody.cs" />
+    <Compile Include="SolarSystem\IMassiveKernel.cs" />
+    <Compile Include="Kernels\EuropaKernel.cs" />
+    <Compile Include="Kernels\JupiterKernel.cs" />
+    <Compile Include="Kernels\MarsKernel.cs" />
+    <Compile Include="Kernels\MercuryKernel.cs" />
+    <Compile Include="Kernels\MoonKernel.cs" />
+    <Compile Include="Kernels\SaturnKernel.cs" />
+    <Compile Include="Kernels\SunKernel.cs" />
+    <Compile Include="Kernels\VenusKernel.cs" />
+    <Compile Include="Orbits\OrbitHelper.cs" />
+    <Compile Include="Drawing\RenderingType.cs" />
+    <Compile Include="Physics\IPhysicsBody.cs" />
+    <Compile Include="SolarSystem\Moons\Europa.cs" />
+    <Compile Include="SolarSystem\Moons\Moon.cs" />
+    <Compile Include="SolarSystem\MassiveBodyBase.cs" />
+    <Compile Include="SolarSystem\Planets\Jupiter.cs" />
+    <Compile Include="SolarSystem\Planets\Mars.cs" />
+    <Compile Include="SolarSystem\Planets\Mercury.cs" />
+    <Compile Include="SolarSystem\Planets\Saturn.cs" />
+    <Compile Include="SolarSystem\Planets\Venus.cs" />
+    <Compile Include="Spacecrafts\DemoSat.cs" />
+    <Compile Include="Spacecrafts\Dragon.cs" />
+    <Compile Include="Spacecrafts\DragonTrunk.cs" />
+    <Compile Include="Spacecrafts\FH9S1.cs" />
+    <Compile Include="Spacecrafts\FH9S2.cs" />
+    <Compile Include="Spacecrafts\FHBooster.cs" />
+    <Compile Include="Spacecrafts\ISpaceCraft.cs" />
+    <Compile Include="Spacecrafts\SpaceCraftBase.cs" />
+    <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
+    <Compile Include="SolarSystem\Stars\Sun.cs" />
+    <Compile Include="Physics\TimeStep.cs" />
+    <Compile Include="Structures\Strongback.cs" />
+    <Compile Include="Structures\StructureBase.cs" />
+    <Compile Include="Orbits\OrbitTrace.cs" />
+    <Compile Include="Drawing\UnitDisplay.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Drawing\Camera.cs" />
+    <Compile Include="Kernels\EarthKernel.cs" />
+    <Compile Include="Kernels\SymbolKernel.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SolarSystem\Planets\Earth.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCLWrapper\OpenCLWrapper.csproj">
+      <Project>{FEEF5BEC-FD10-4FB5-B0BA-15F566B0A56E}</Project>
+      <Name>OpenCLWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VectorMath\VectorMath.csproj">
+      <Project>{FB0F7B62-34F7-469F-9096-F857473DE4E9}</Project>
+      <Name>VectorMath</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Textures\dragonTrunk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\dragonV2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\fairing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\fh9S1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\fh9S2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\fhBooster1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\fhBooster2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\strongback.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

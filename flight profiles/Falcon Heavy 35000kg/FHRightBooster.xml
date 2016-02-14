@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>148</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>165</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-13</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>227.5</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>271.8</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>320</StartTime>
+    <Duration>100</Duration>
+    <TargetOrientation>-110</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>481</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>65</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>493</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>520</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-92</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>580.1</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>70</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>603.6</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+</ArrayOfCommand>
