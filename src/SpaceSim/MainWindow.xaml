@@ -1,0 +1,8 @@
+﻿<Window x:Class="SpaceSim.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Space Sim" Width="1700" Height="800" ResizeMode="NoResize" Closing="OnClosing" KeyUp="OnKeyUp" KeyDown="OnKeyDown" WindowState="Normal" WindowStyle="SingleBorderWindow" SizeToContent="Manual">
+    <Grid>
+        <Image HorizontalAlignment="Left" Name="BackBuffer" Stretch="Fill" VerticalAlignment="Top" MouseWheel="OnScroll" Grid.ColumnSpan="2" />
+    </Grid>
+</Window>
