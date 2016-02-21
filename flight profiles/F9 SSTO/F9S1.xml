@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>10</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-120</TargetOrientation>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>70</StartTime>
+    <Duration>80</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>160</StartTime>
+    <Duration>150</Duration>
+    <TargetOrientation>-200</TargetOrientation>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>110</StartTime>
+    <Duration>0.5</Duration>
+	<EngineIds>
+      <int>1</int>
+      <int>7</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>135</StartTime>
+    <Duration>0.5</Duration>
+	<EngineIds>
+      <int>2</int>
+      <int>6</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>165</StartTime>
+    <Duration>0.5</Duration>
+	<EngineIds>
+      <int>3</int>
+      <int>5</int>
+    </EngineIds>
+  </Command>
+    <Command xsi:type="Shutdown">
+    <StartTime>195</StartTime>
+    <Duration>0.5</Duration>
+	<EngineIds>
+      <int>0</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>300</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+</ArrayOfCommand>

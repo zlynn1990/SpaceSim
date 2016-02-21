@@ -130,9 +130,10 @@
     <Compile Include="Spacecrafts\DemoSat.cs" />
     <Compile Include="Spacecrafts\Dragon.cs" />
     <Compile Include="Spacecrafts\DragonTrunk.cs" />
-    <Compile Include="Spacecrafts\FH9S1.cs" />
-    <Compile Include="Spacecrafts\FH9S2.cs" />
-    <Compile Include="Spacecrafts\FHBooster.cs" />
+    <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
+    <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
+    <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
+    <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
     <Compile Include="Spacecrafts\SpaceCraftBase.cs" />
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />

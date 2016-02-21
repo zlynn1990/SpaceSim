@@ -7,7 +7,7 @@ namespace SpaceSim.Engines
     class SuperDraco : EngineBase
     {
         public SuperDraco(int id, ISpaceCraft parent, DVector2 offset)
-            : base(id, parent, offset, new EngineFlame(id, 50, 1, 0.1))
+            : base(parent, offset, new EngineFlame(id, 50, 1, 0.1))
         {
         }
 

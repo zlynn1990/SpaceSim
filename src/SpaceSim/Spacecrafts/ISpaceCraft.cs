@@ -34,11 +34,10 @@ namespace SpaceSim.Spacecrafts
 
         double GetDownrangeDistance(DVector2 pointOfReference);
 
-        void SetThrottle(double throttle);
-        void SumTotalThrottle(List<double> throttleValues);
-        void OffsetRotation(double offset);
+        void SetThrottle(double throttle, int[] engineIds = null);
 
         void SetRotation(double rotation);
+        void OffsetRotation(double offset);
 
         void SetParent(ISpaceCraft craft);
         void AddChild(ISpaceCraft child);

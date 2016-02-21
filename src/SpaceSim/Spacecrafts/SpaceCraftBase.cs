@@ -42,7 +42,35 @@ namespace SpaceSim.Spacecrafts
             get { return Height + Children.Sum(spaceCraft => spaceCraft.TotalHeight); }
         }
 
-        public double Throttle { get; protected set; }
+        /// <summary>
+        /// Throttle is the maximum of all engines on the spacecraft.
+        /// </summary>
+        public double Throttle
+        {
+            get
+            {
+                double throttle = 0;
+
+                foreach (IEngine engine in Engines)
+                {
+                    if (engine.Throttle > throttle)
+                    {
+                        throttle = engine.Throttle;
+                    }
+                }
+
+                foreach (ISpaceCraft child in Children)
+                {
+                    if (child.Throttle > throttle)
+                    {
+                        throttle = child.Throttle;
+                    }
+                }
+
+                return throttle;
+            }
+        }
+
         public double Thrust { get; protected set; }
 
         public abstract double DryMass { get; }
@@ -146,34 +174,25 @@ namespace SpaceSim.Spacecrafts
             }
         }
 
-        public void SetThrottle(double throttle)
+        public void SetThrottle(double throttle, int[] engineIds = null)
         {
-            Throttle = throttle;
-
             if (Engines.Length > 0)
             {
-                foreach (IEngine engine in Engines)
+                // Throttle all engines if ids are specified
+                if (engineIds == null)
                 {
-                    engine.AdjustThrottle(Throttle);
+                    foreach (IEngine engine in Engines)
+                    {
+                        engine.AdjustThrottle(throttle);
+                    }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Recursively sums the throttle of the parent and it's children.
-        /// </summary>
-        public void SumTotalThrottle(List<double> throttleValues)
-        {
-            if (Engines.Length > 0 && Throttle > 0)
-            {
-                throttleValues.Add(Throttle);
-            }
-
-            if (Children.Count > 0)
-            {
-                foreach (ISpaceCraft child in Children)
+                else
                 {
-                    child.SumTotalThrottle(throttleValues);
+                    // Throttle only specified engine ids
+                    foreach (int engineId in engineIds)
+                    {
+                        Engines[engineId].AdjustThrottle(throttle);
+                    }
                 }
             }
         }

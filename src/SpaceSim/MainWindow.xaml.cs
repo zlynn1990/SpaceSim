@@ -193,7 +193,14 @@ namespace SpaceSim
                 _strongback
             };
 
-            _spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
+            //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
+            _spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+
+            // Initialize the spacecraft controllers
+            foreach (ISpaceCraft spaceCraft in _spaceCrafts)
+            {
+                spaceCraft.InitializeController(ProfileDirectory);
+            }
 
             _gravitationalBodies = new List<IGravitationalBody>
             {
@@ -695,14 +702,7 @@ namespace SpaceSim
 
                 if (targetSpaceCraft != null)
                 {
-                    var throttleValues = new List<double>();
-
-                    targetSpaceCraft.SumTotalThrottle(throttleValues);
-
-                    if (throttleValues.Count > 0)
-                    {
-                        throttle = throttleValues.Average();
-                    }
+                    throttle = targetSpaceCraft.Throttle;
                 }
 
                 foreach (IGauge gauge in _gauges)
