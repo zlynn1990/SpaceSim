@@ -9,10 +9,12 @@ namespace SpaceSim.Commands
     class ShutdownCommand : CommandBase
     {
         private double _currentThrottle;
+        private int[] _engineIds;
 
         public ShutdownCommand(Shutdown shutdown)
             : base(shutdown.StartTime, shutdown.Duration)
         {
+            _engineIds = shutdown.EngineIds;
         }
 
         public override void Initialize(ISpaceCraft spaceCraft)
@@ -22,11 +24,23 @@ namespace SpaceSim.Commands
 
         public override void Finalize(ISpaceCraft spaceCraft)
         {
-            spaceCraft.SetThrottle(0);
+            spaceCraft.SetThrottle(0, _engineIds);
 
-            foreach (IEngine engine in spaceCraft.Engines)
+            // Shutdown all engines
+            if (_engineIds == null)
             {
-                engine.Shutdown();
+                foreach (IEngine engine in spaceCraft.Engines)
+                {
+                    engine.Shutdown();
+                }
+            }
+            else
+            {
+                // Shut down specific engines
+                foreach (int engineId in _engineIds)
+                {
+                    spaceCraft.Engines[engineId].Shutdown();
+                }
             }
         }
 
@@ -34,7 +48,7 @@ namespace SpaceSim.Commands
         {
             double shutdownRatio = (elapsedTime - StartTime) * 2;
 
-            spaceCraft.SetThrottle(_currentThrottle * (1-shutdownRatio));
+            spaceCraft.SetThrottle(_currentThrottle * (1 - shutdownRatio), _engineIds);
         }
     }
 }

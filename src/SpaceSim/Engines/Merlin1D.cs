@@ -7,7 +7,7 @@ namespace SpaceSim.Engines
     class Merlin1D : EngineBase
     {
         public Merlin1D(int id, ISpaceCraft parent, DVector2 offset)
-            : base(id, parent, offset, new EngineFlame(id, 100, 1, 0.2))
+            : base( parent, offset, new EngineFlame(id, 100, 1, 0.2))
         {
         }
 

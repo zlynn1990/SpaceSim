@@ -20,7 +20,7 @@ namespace SpaceSim.Engines
 
         private EngineFlame _engineFlame;
 
-        protected EngineBase(int id, ISpaceCraft parent, DVector2 offset, EngineFlame flame)
+        protected EngineBase(ISpaceCraft parent, DVector2 offset, EngineFlame flame)
         {
             _parent = parent;
 

@@ -3,9 +3,9 @@ using System.Drawing;
 using SpaceSim.Engines;
 using VectorMath;
 
-namespace SpaceSim.Spacecrafts
+namespace SpaceSim.Spacecrafts.FalconHeavy
 {
-    sealed class FH9S2 : SpaceCraftBase
+    sealed class FHS2 : SpaceCraftBase
     {
         public override double DryMass { get { return 4000; } }
 
@@ -19,7 +19,7 @@ namespace SpaceSim.Spacecrafts
 
         public override Color IconColor { get { return Color.White; } }
 
-        public FH9S2(DVector2 position, DVector2 velocity)
+        public FHS2(DVector2 position, DVector2 velocity)
             : base(position, velocity, 103500, "Textures/fh9S2.png")
         {
             StageOffset = new DVector2(0, 13.3);

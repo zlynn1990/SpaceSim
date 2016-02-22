@@ -2,8 +2,9 @@
 using System.IO;
 using System.Xml.Serialization;
 using SpaceSim.Contracts;
-using SpaceSim.Contracts.Commands;
 using SpaceSim.SolarSystem;
+using SpaceSim.Spacecrafts.Falcon9;
+using SpaceSim.Spacecrafts.FalconHeavy;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts
@@ -17,42 +18,40 @@ namespace SpaceSim.Spacecrafts
             PayloadSerializer = new XmlSerializer(typeof(Payload));
         }
 
+        public static List<ISpaceCraft> BuildF9SSTO(IMassiveBody planet, string path)
+        {
+            var f9S1 = new F9S1(planet.Position + new DVector2(0, -planet.SurfaceRadius),
+                                planet.Velocity + new DVector2(-400, 0));
+
+            return new List<ISpaceCraft> { f9S1 };
+        }
+
         public static List<ISpaceCraft> BuildFalconHeavy(IMassiveBody planet, string path)
         {
-            var spacecraft = new List<ISpaceCraft>();
-
             Payload payload = GetPayload(path);
 
             var demoSat = new DemoSat(planet.Position + new DVector2(0, -planet.SurfaceRadius),
                                       planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
 
-            var falcon9S1 = new FH9S1(DVector2.Zero, DVector2.Zero);
-            var falcon9S2 = new FH9S2(DVector2.Zero, DVector2.Zero);
+            var fhS1 = new FHS1(DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2(DVector2.Zero, DVector2.Zero);
 
             var fhLeftBooster = new FHBooster(1, DVector2.Zero, DVector2.Zero);
             var fhRightBooster = new FHBooster(2, DVector2.Zero, DVector2.Zero);
 
-            demoSat.AddChild(falcon9S2);
-            falcon9S2.SetParent(demoSat);
-            falcon9S2.AddChild(falcon9S1);
-            falcon9S1.SetParent(falcon9S2);
-            falcon9S1.AddChild(fhLeftBooster);
-            falcon9S1.AddChild(fhRightBooster);
-            fhLeftBooster.SetParent(falcon9S1);
-            fhRightBooster.SetParent(falcon9S1);
+            demoSat.AddChild(fhS2);
+            fhS2.SetParent(demoSat);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
 
-            spacecraft.Add(demoSat);
-            spacecraft.Add(falcon9S2);
-            spacecraft.Add(falcon9S1);
-            spacecraft.Add(fhLeftBooster);
-            spacecraft.Add(fhRightBooster);
-
-            foreach (ISpaceCraft spaceCraft in spacecraft)
+            return new List<ISpaceCraft>
             {
-                spaceCraft.InitializeController(path);
-            }
-
-            return spacecraft;
+                demoSat, fhS2, fhS1, fhLeftBooster, fhRightBooster
+            };
         }
 
         private static Payload GetPayload(string path)
