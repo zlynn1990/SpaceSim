@@ -14,13 +14,15 @@ The program accepts two command line arguments. If you want to run the game in w
 
 The control scheme is similar to Kerbal Space Program.
 
-Enter - Starts the simulation.
-Escape - Exits the simulation.
-Scroll - Changes the zoom factor.
-[ - Switch focus to previous body.
-] - Switch focus to next body.
-, - Reduce simulation speed.
-. - Increase simulation speed.
+| Button | Action |
+| ------ | ----------- |
+| Enter  | Starts the simulation. |
+| Escape | Exits the simulation. |
+| Scroll | Changes the zoom factor. |
+| [ | Switch focus to previous body. |
+| ] | Switch focus to next body. |
+| , | Reduce simulation speed. |
+| . | Increase simulation speed. |
 
 ## Flight Profiles
 
