@@ -92,8 +92,10 @@ namespace SpaceSim.Spacecrafts
         public abstract Color IconColor { get; }
 
         protected Bitmap Texture;
-        protected double MachNumber;
         protected DVector2 StageOffset;
+
+        protected double MachNumber;
+        protected double IspMultiplier;
 
         protected SpaceCraftBase(DVector2 position, DVector2 velocity, double propellantMass, string texturePath)
             : base(position, velocity, -Math.PI * 0.5)
@@ -236,7 +238,7 @@ namespace SpaceSim.Spacecrafts
         {
             foreach (IEngine engine in Engines)
             {
-                engine.Update(timeStep);
+                engine.Update(timeStep, IspMultiplier);
             }
         }
 
@@ -424,15 +426,11 @@ namespace SpaceSim.Spacecrafts
 
             if (Engines.Length > 0 && PropellantMass > 0)
             {
-                double altitude = GetRelativeAltitude();
-
-                double ispMultiplier = GravitationalParent.GetIspMultiplier(altitude);
-
                 foreach (IEngine engine in Engines)
                 {
                     if (!engine.IsActive) continue;
 
-                    Thrust += engine.Thrust(ispMultiplier);
+                    Thrust += engine.Thrust(IspMultiplier);
 
                     PropellantMass = Math.Max(0, PropellantMass - engine.MassFlowRate() * dt);
                 }
@@ -452,6 +450,10 @@ namespace SpaceSim.Spacecrafts
         public override void Update(double dt)
         {
             Controller.Update(dt);
+
+            double altitude = GetRelativeAltitude();
+
+            IspMultiplier = GravitationalParent.GetIspMultiplier(altitude);
 
             if (Parent == null)
             {

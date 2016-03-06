@@ -15,9 +15,10 @@ namespace SpaceSim.Drawing
         private Random _random;
 
         private double _particleRate;
-        private double _spreadFactor;
+        private double _minSpread;
+        private double _maxSpread;
 
-        public EngineFlame(int seed, int maxParticles, double particleRate, double spreadFactor)
+        public EngineFlame(int seed, int maxParticles, double particleRate, double minSpread, double maxSpread)
         {
             _random = new Random(seed);
 
@@ -33,14 +34,19 @@ namespace SpaceSim.Drawing
             }
 
             _particleRate = particleRate;
-            _spreadFactor = spreadFactor;
+            _minSpread = minSpread;
+            _maxSpread = maxSpread;
         }
 
-        public void Update(TimeStep timeStep, DVector2 enginePosition, DVector2 shipVelocity, double rotation, double throttle)
+        public void Update(TimeStep timeStep, DVector2 enginePosition, DVector2 shipVelocity,
+                           double rotation, double throttle, double ispMultiplier)
         {
             double retrograde = rotation + Math.PI;
 
             int particles = (int)((throttle * _particleRate)  / timeStep.UpdateLoops);
+
+            // Interpolate between spreads based on ISP
+            double spreadMultiplier = (1.0 - ispMultiplier) * _minSpread + ispMultiplier * _maxSpread;
 
             // Add new particles if nessecary
             for (int i = 0; i < particles; i++)
@@ -50,7 +56,7 @@ namespace SpaceSim.Drawing
                     double velocityFactor = _random.Next(150, 250);
                     double spread = _random.NextDouble() - 0.5;
 
-                    DVector2 velocity = DVector2.FromAngle(retrograde + spread * _spreadFactor);
+                    DVector2 velocity = DVector2.FromAngle(retrograde + spread * spreadMultiplier);
 
                     int id = _availableParticles.Dequeue();
 

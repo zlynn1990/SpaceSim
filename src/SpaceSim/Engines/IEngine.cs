@@ -17,7 +17,7 @@ namespace SpaceSim.Engines
         double Thrust(double ispMultiplier);
         double MassFlowRate();
 
-        void Update(TimeStep timeStep);
+        void Update(TimeStep timeStep, double ispMultiplier);
         void Draw(Graphics graphics, RectangleD cameraBounds);
     }
 }

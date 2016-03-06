@@ -19,7 +19,7 @@
   <Command xsi:type="Orient">
     <StartTime>10</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-138</TargetOrientation>
+    <TargetOrientation>-125</TargetOrientation>
   </Command>
   <Command xsi:type="Orient">
     <StartTime>70</StartTime>
@@ -64,7 +64,20 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>300</StartTime>
+    <StartTime>266</StartTime>
     <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>266</StartTime>
+    <Duration>1980</Duration>
+    <TargetOrientation>-320</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>1980</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
   </Command>
 </ArrayOfCommand>
