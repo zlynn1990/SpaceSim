@@ -3,7 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 using SpaceSim.Contracts;
 using SpaceSim.SolarSystem;
-using SpaceSim.Spacecrafts.Falcon9;
+using SpaceSim.Spacecrafts.Falcon9SSTO;
 using SpaceSim.Spacecrafts.FalconHeavy;
 using VectorMath;
 
@@ -20,7 +20,7 @@ namespace SpaceSim.Spacecrafts
 
         public static List<ISpaceCraft> BuildF9SSTO(IMassiveBody planet, string path)
         {
-            var f9S1 = new F9S1(planet.Position + new DVector2(0, -planet.SurfaceRadius),
+            var f9S1 = new F9SSTO(planet.Position + new DVector2(0, -planet.SurfaceRadius),
                                 planet.Velocity + new DVector2(-400, 0));
 
             return new List<ISpaceCraft> { f9S1 };

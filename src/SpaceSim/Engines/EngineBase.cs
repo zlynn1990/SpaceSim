@@ -49,7 +49,7 @@ namespace SpaceSim.Engines
 
         public abstract double MassFlowRate();
 
-        public void Update(TimeStep timeStep)
+        public void Update(TimeStep timeStep, double ispMultiplier)
         {
             double rotation = _parent.Rotation -_offsetRotation;
 
@@ -57,7 +57,7 @@ namespace SpaceSim.Engines
 
             double throttle = (IsActive && _parent.PropellantMass > 0) ? Throttle : 0;
 
-            _engineFlame.Update(timeStep, _parent.Position - offset, _parent.Velocity, _parent.Rotation, throttle);
+            _engineFlame.Update(timeStep, _parent.Position - offset, _parent.Velocity, _parent.Rotation, throttle, ispMultiplier);
         }
 
         public void Draw(Graphics graphics, RectangleD cameraBounds)

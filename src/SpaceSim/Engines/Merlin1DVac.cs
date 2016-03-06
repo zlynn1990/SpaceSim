@@ -7,7 +7,7 @@ namespace SpaceSim.Engines
     class Merlin1DVac : EngineBase
     {
         public Merlin1DVac(ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(0, 500, 3, 0.5))
+            : base(parent, offset, new EngineFlame(0, 500, 3, 0.5, 0.5))
         {
         }
 

@@ -130,7 +130,7 @@
     <Compile Include="Spacecrafts\DemoSat.cs" />
     <Compile Include="Spacecrafts\Dragon.cs" />
     <Compile Include="Spacecrafts\DragonTrunk.cs" />
-    <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
+    <Compile Include="Spacecrafts\Falcon9SSTO\F9SSTO.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
@@ -200,6 +200,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\dragonV2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\f9ssto.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\fairing.png">

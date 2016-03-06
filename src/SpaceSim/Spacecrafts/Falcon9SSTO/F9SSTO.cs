@@ -3,11 +3,11 @@ using System.Drawing;
 using SpaceSim.Engines;
 using VectorMath;
 
-namespace SpaceSim.Spacecrafts.Falcon9
+namespace SpaceSim.Spacecrafts.Falcon9SSTO
 {
-    sealed class F9S1 : SpaceCraftBase
+    sealed class F9SSTO : SpaceCraftBase
     {
-        public override double DryMass { get { return 22200; } }
+        public override double DryMass { get { return 20100; } }
 
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 47.812188; } }
@@ -38,12 +38,12 @@ namespace SpaceSim.Spacecrafts.Falcon9
             }
         }
 
-        public override double CrossSectionalArea { get { return 5 * Math.PI * 1.83 * 1.83; } }
+        public override double CrossSectionalArea { get { return 2 * Math.PI * 1.83 * 1.83; } }
 
         public override Color IconColor { get { return Color.White; } }
 
-        public F9S1(DVector2 position, DVector2 velocity)
-            : base(position, velocity, 409500, "Textures/fh9S1.png")
+        public F9SSTO(DVector2 position, DVector2 velocity)
+            : base(position, velocity, 409500, "Textures/f9ssto.png")
         {
             StageOffset = new DVector2(0, 25.5);
 
@@ -63,7 +63,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
         public void DeployLegs() { }
 
-        public override string CommandFileName { get { return "F9S1.xml"; } }
+        public override string CommandFileName { get { return "F9SSTO.xml"; } }
 
         public override string ToString()
         {

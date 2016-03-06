@@ -105,7 +105,7 @@ namespace SpaceSim.Orbits
 
             if (altitude < proximityAltitude)
             {
-                stepCount = 1000;
+                stepCount = 1100;
 
                 isOrbiting = false;
 
