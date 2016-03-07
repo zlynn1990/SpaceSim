@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 using SpaceSim.Contracts;
 using SpaceSim.SolarSystem;
+using SpaceSim.Spacecrafts.Falcon9;
 using SpaceSim.Spacecrafts.Falcon9SSTO;
 using SpaceSim.Spacecrafts.FalconHeavy;
 using VectorMath;
@@ -18,12 +19,33 @@ namespace SpaceSim.Spacecrafts
             PayloadSerializer = new XmlSerializer(typeof(Payload));
         }
 
+        public static List<ISpaceCraft> BuildF9(IMassiveBody planet, string path)
+        {
+            Payload payload = GetPayload(path);
+
+            var demoSat = new DemoSat(planet.Position + new DVector2(0, -planet.SurfaceRadius),
+                                      planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
+
+            var f9S1 = new F9S1(DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2(DVector2.Zero, DVector2.Zero);
+
+            demoSat.AddChild(fhS2);
+            fhS2.SetParent(demoSat);
+            fhS2.AddChild(f9S1);
+            f9S1.SetParent(fhS2);
+
+            return new List<ISpaceCraft>
+            {
+                demoSat, fhS2, f9S1
+            };
+        }
+
         public static List<ISpaceCraft> BuildF9SSTO(IMassiveBody planet, string path)
         {
-            var f9S1 = new F9SSTO(planet.Position + new DVector2(0, -planet.SurfaceRadius),
+            var f9SSTO = new F9SSTO(planet.Position + new DVector2(0, -planet.SurfaceRadius),
                                 planet.Velocity + new DVector2(-400, 0));
 
-            return new List<ISpaceCraft> { f9S1 };
+            return new List<ISpaceCraft> { f9SSTO };
         }
 
         public static List<ISpaceCraft> BuildFalconHeavy(IMassiveBody planet, string path)

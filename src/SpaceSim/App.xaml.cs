@@ -12,6 +12,7 @@ namespace SpaceSim
         protected override void OnStartup(StartupEventArgs e)
         {
             string profileDirectory = DetectProfileDirectory();
+
             SpaceSim.MainWindow.FullScreen = true;
 
             // Parse arguments
@@ -26,6 +27,10 @@ namespace SpaceSim
                     SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, e.Args[i]);
                 }
             }
+
+            // TODO this is bad hack because im too lazy to use env variables right now
+            SpaceSim.MainWindow.FullScreen = false;
+            SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "SES9");
             
             // If no profile directory was specified find a default locally or further up the folder structure
             if (string.IsNullOrEmpty(SpaceSim.MainWindow.ProfileDirectory))

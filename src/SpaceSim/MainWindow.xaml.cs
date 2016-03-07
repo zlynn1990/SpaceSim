@@ -194,7 +194,8 @@ namespace SpaceSim
             };
 
             //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
-            _spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+            //_spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+            _spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
 
             // Initialize the spacecraft controllers
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
