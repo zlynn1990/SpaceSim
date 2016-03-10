@@ -38,7 +38,7 @@ namespace SpaceSim.Spacecrafts.Falcon9SSTO
             }
         }
 
-        public override double CrossSectionalArea { get { return 2 * Math.PI * 1.83 * 1.83; } }
+        public override double CrossSectionalArea { get { return Math.PI * 1.83 * 1.83; } }
 
         public override Color IconColor { get { return Color.White; } }
 

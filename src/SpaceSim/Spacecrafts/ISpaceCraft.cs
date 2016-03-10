@@ -31,6 +31,7 @@ namespace SpaceSim.Spacecrafts
         void InitializeController(string craftDirectory);
 
         void Stage();
+        void DeployFairing();
 
         double GetDownrangeDistance(DVector2 pointOfReference);
 

@@ -27,16 +27,16 @@ namespace SpaceSim.Spacecrafts
                                       planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
 
             var f9S1 = new F9S1(DVector2.Zero, DVector2.Zero);
-            var fhS2 = new FHS2(DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2(DVector2.Zero, DVector2.Zero);
 
-            demoSat.AddChild(fhS2);
-            fhS2.SetParent(demoSat);
-            fhS2.AddChild(f9S1);
-            f9S1.SetParent(fhS2);
+            demoSat.AddChild(f9S2);
+            f9S2.SetParent(demoSat);
+            f9S2.AddChild(f9S1);
+            f9S1.SetParent(f9S2);
 
             return new List<ISpaceCraft>
             {
-                demoSat, fhS2, f9S1
+                demoSat, f9S2, f9S1
             };
         }
 

@@ -13,8 +13,8 @@ namespace SpaceSim.Commands
         {
             Serializer = new XmlSerializer(typeof(List<Command>), new[]
             {
-                typeof (Ignition), typeof (Shutdown),
-                typeof (Stage), typeof (Throttle), typeof (Orient)
+                typeof (Ignition), typeof (Shutdown), typeof (Stage),
+                typeof (Throttle), typeof (Orient), typeof(Fairing)
             });
         }
 
@@ -51,6 +51,10 @@ namespace SpaceSim.Commands
                     else if (contract is Orient)
                     {
                         commands.Add(new OrientCommand(contract as Orient));
+                    }
+                    else if (contract is Fairing)
+                    {
+                        commands.Add(new FairingCommand(contract as Fairing));
                     }
                 }
 

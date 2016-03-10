@@ -9,6 +9,7 @@ namespace SpaceSim.Physics
 
         double DragCoefficient { get; }
         double CrossSectionalArea { get; }
+        double SurfaceArea { get; }
 
         DVector2 AccelerationD { get; }
         DVector2 AccelerationN { get; }

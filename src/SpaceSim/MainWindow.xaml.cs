@@ -541,7 +541,7 @@ namespace SpaceSim
             RectangleD cameraBounds = _camera.GetBounds();
 
             IGravitationalBody target = _gravitationalBodies[_targetIndex];
-            var targetSpaceCraft = target as ISpaceCraft;
+            var targetSpaceCraft = target as SpaceCraftBase;
 
             // If openCL is supported render all cl bodies
             if (_renderingType == RenderingType.OpenCLHardware ||
@@ -672,6 +672,11 @@ namespace SpaceSim
 
                 graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(target.GetRelativeVelocity().Length()), font, brush, 5, 225);
                 graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 255);
+
+                if (targetSpaceCraft != null)
+                {
+                    graphics.DrawString("Aero Drag: " + UnitDisplay.Acceleration(targetSpaceCraft.AccelerationD.Length()), font, brush, 5, 285);
+                }
 
                 graphics.DrawString("Apogee: " + UnitDisplay.Distance(apogee), font, brush, 5, 320);
                 graphics.DrawString("Perigee: " + UnitDisplay.Distance(perigee), font, brush, 5, 350);

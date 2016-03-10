@@ -15,7 +15,8 @@ namespace SpaceSim.SolarSystem
 
         double GetSurfaceGravity();
 
-        double GetIspMultiplier(double height);
-        double GetAtmosphericDensity(double height);
+        double GetIspMultiplier(double altitude);
+        double GetAtmosphericDensity(double altitude);
+        double GetAtmosphericViscosity(double altitude);
     }
 }

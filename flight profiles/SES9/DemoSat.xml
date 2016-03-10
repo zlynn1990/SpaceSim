@@ -2,8 +2,8 @@
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Command xsi:type="Orient">
     <StartTime>10</StartTime>
-    <Duration>159</Duration>
-    <TargetOrientation>-161</TargetOrientation>
+    <Duration>149</Duration>
+    <TargetOrientation>-159.5</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
     <StartTime>160</StartTime>
@@ -11,6 +11,14 @@
   <Command xsi:type="Orient">
     <StartTime>208</StartTime>
     <Duration>450</Duration>
-    <TargetOrientation>-200</TargetOrientation>
+    <TargetOrientation>-195</TargetOrientation>
+  </Command>
+  <Command xsi:type="Fairing">
+    <StartTime>222</StartTime>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>700</StartTime>
+    <Duration>924</Duration>
+    <TargetOrientation>-275</TargetOrientation>
   </Command>
 </ArrayOfCommand>

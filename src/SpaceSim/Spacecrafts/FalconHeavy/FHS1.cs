@@ -7,7 +7,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 {
     sealed class FHS1 : SpaceCraftBase
     {
-        public override double DryMass { get { return 22200; } }
+        public override double DryMass { get { return 25600; } }
 
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 47.812188; } }
@@ -16,34 +16,15 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
         public override double DragCoefficient
         {
-            get
-            {
-                if (MachNumber < 0.65 || MachNumber > 2.8)
-                {
-                    return 0.4;
-                }
-
-                double normalizedMach;
-
-                if (MachNumber < 1.5)
-                {
-                    normalizedMach = (MachNumber - 0.65) * 1.17;
-                }
-                else
-                {
-                    normalizedMach = (2.8 - MachNumber) * 0.769;
-                }
-
-                return 0.4 + normalizedMach * 0.31;
-            }
+            get { return 1.6; }
         }
 
-        public override double CrossSectionalArea { get { return 5 * Math.PI * 1.83 * 1.83; } }
+        public override double CrossSectionalArea { get { return Math.PI * 1.83 * 1.83; } }
 
         public override Color IconColor { get { return Color.White; } }
 
         public FHS1(DVector2 position, DVector2 velocity)
-            : base(position, velocity, 409500, "Textures/fh9S1.png")
+            : base(position, velocity, 398887, "Textures/fh9S1.png")
         {
             StageOffset = new DVector2(0, 25.5);
 
