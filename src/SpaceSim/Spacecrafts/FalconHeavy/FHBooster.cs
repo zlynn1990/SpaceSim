@@ -9,7 +9,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
     {
         public int Id { get; private set; }
 
-        public override double DryMass { get { return 22500; } }
+        public override double DryMass { get { return 25600; } }
 
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 44.6; } }
@@ -18,34 +18,15 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
         public override double DragCoefficient
         {
-            get
-            {
-                if (MachNumber < 0.65 || MachNumber > 2.8)
-                {
-                    return 0.4;
-                }
-
-                double normalizedMach;
-
-                if (MachNumber < 1.5)
-                {
-                    normalizedMach = (MachNumber - 0.65) * 1.17;
-                }
-                else
-                {
-                    normalizedMach = (2.8 - MachNumber) * 0.769;
-                }
-
-                return 0.4 + normalizedMach * 0.31;
-            }
+            get { return 1.6; }
         }
 
-        public override double CrossSectionalArea { get { return 4 * Math.PI * 1.83 * 1.83; } }
+        public override double CrossSectionalArea { get { return Math.PI * 1.83 * 1.83; } }
 
         public override Color IconColor { get { return Color.White; } }
 
         public FHBooster(int id, DVector2 position, DVector2 velocity)
-            : base(position, velocity, 409500, "Textures/fhBooster" + id  + ".png")
+            : base(position, velocity, 398887, "Textures/fhBooster" + id + ".png")
         {
             Id = id;
 

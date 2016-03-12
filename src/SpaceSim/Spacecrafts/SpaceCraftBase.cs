@@ -84,7 +84,8 @@ namespace SpaceSim.Spacecrafts
         public abstract bool ExposedToAirFlow { get; }
 
         public abstract double DragCoefficient { get; }
-        public abstract double CrossSectionalArea { get; }
+        public virtual double CrossSectionalArea { get { return Math.PI * (Width * 0.5) * (Width * 0.5); } }
+        public virtual double SurfaceArea { get { return Math.PI * Width * Height; } }
 
         public DVector2 AccelerationD { get; protected set; }
         public DVector2 AccelerationN { get; protected set; }
@@ -175,6 +176,11 @@ namespace SpaceSim.Spacecrafts
                 AccelerationN += stagingVector * 1000;
             }
         }
+
+        /// <summary>
+        /// Deploys the fairing.
+        /// </summary>
+        public virtual void DeployFairing() { }
 
         public void SetThrottle(double throttle, int[] engineIds = null)
         {
@@ -361,18 +367,30 @@ namespace SpaceSim.Spacecrafts
 
                 DVector2 relativeVelocity = (body.Velocity + surfaceNormal * rotationalSpeed) - Velocity;
 
-                double velocityMagnitude = relativeVelocity.LengthSquared();
+                double velocity = relativeVelocity.Length();
+                double velocitySquared = relativeVelocity.LengthSquared();
 
-                if (velocityMagnitude > 0)
+                if (velocitySquared > 0)
                 {
                     relativeVelocity.Normalize();
 
                     double dragTerm = TotalDragCoefficient() * TotalDragArea();
 
                     // Drag ( Fd = 0.5pv^2dA )
-                    DVector2 dragForce = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * dragTerm);
+                    DVector2 dragForce = relativeVelocity * (0.5 * atmosphericDensity * velocitySquared * dragTerm);
 
                     AccelerationD += dragForce / Mass;
+
+                    double reynoldsNumber = (velocity * Height) / body.GetAtmosphericViscosity(altitude);
+
+                    double frictionCoefficient = 0.455 / Math.Pow(Math.Log10(reynoldsNumber), 2.58);
+
+                    double frictionTerm = frictionCoefficient*TotalSurfaceArea();
+
+                    // Skin friction ( Fs = 0.5CfpV^2S )
+                    DVector2 skinFriction = relativeVelocity * (0.5 * atmosphericDensity * velocitySquared * frictionTerm);
+
+                    AccelerationD += skinFriction / Mass;
                 }
             }
         }
@@ -415,6 +433,21 @@ namespace SpaceSim.Spacecrafts
             }
 
             return totalDragArea;
+        }
+
+        /// <summary>
+        /// Recursively finds the total surface area of the spacecraft.
+        /// </summary>
+        private double TotalSurfaceArea()
+        {
+            double totalSuraceArea = SurfaceArea;
+
+            foreach (SpaceCraftBase child in Children)
+            {
+                totalSuraceArea += child.TotalSurfaceArea();
+            }
+
+            return totalSuraceArea;
         }
 
         /// <summary>

@@ -42,9 +42,9 @@ namespace SpaceSim.SolarSystem.Planets
         {
         }
 
-        public override double GetAtmosphericDensity(double height)
+        public override double GetAtmosphericDensity(double altitude)
         {
-            return base.GetAtmosphericDensity(height) * 0.02;
+            return base.GetAtmosphericDensity(altitude) * 0.02;
         }
 
         public override string ToString()

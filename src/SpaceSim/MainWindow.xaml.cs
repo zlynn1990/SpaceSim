@@ -129,11 +129,8 @@ namespace SpaceSim
                 WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
 
-                RenderUtils.ScreenWidth = 1670;
-                RenderUtils.ScreenHeight =940;
-
-                //RenderUtils.ScreenWidth = (int) SystemParameters.PrimaryScreenWidth;
-                //RenderUtils.ScreenHeight = (int) SystemParameters.PrimaryScreenHeight;
+                RenderUtils.ScreenWidth = (int) SystemParameters.PrimaryScreenWidth;
+                RenderUtils.ScreenHeight = (int) SystemParameters.PrimaryScreenHeight;
             }
             else
             {
@@ -175,7 +172,11 @@ namespace SpaceSim
             var venus = new Venus();
             var earth = new Earth();
 
-            _strongback = new Strongback(new DVector2(10, -earth.SurfaceRadius + 38), earth);
+            // Start at nearly -Math.Pi / 2
+            _strongback = new Strongback(-1.5707947, 38, earth);
+
+            // Start downrange at ~640km (
+            var asds = new ASDS(-1.67146, 20, earth);
 
             var moon = new Moon(earth.Position, earth.Velocity);
             var mars = new Mars();
@@ -190,11 +191,12 @@ namespace SpaceSim
 
             _structures = new List<StructureBase>
             {
-                _strongback
+                _strongback, asds
             };
 
             //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
-            _spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+            //_spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+            _spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
 
             // Initialize the spacecraft controllers
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
@@ -540,7 +542,7 @@ namespace SpaceSim
             RectangleD cameraBounds = _camera.GetBounds();
 
             IGravitationalBody target = _gravitationalBodies[_targetIndex];
-            var targetSpaceCraft = target as ISpaceCraft;
+            var targetSpaceCraft = target as SpaceCraftBase;
 
             // If openCL is supported render all cl bodies
             if (_renderingType == RenderingType.OpenCLHardware ||
@@ -671,6 +673,11 @@ namespace SpaceSim
 
                 graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(target.GetRelativeVelocity().Length()), font, brush, 5, 225);
                 graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 255);
+
+                if (targetSpaceCraft != null)
+                {
+                    //graphics.DrawString("Aero Drag: " + UnitDisplay.Acceleration(targetSpaceCraft.AccelerationD.Length()), font, brush, 5, 285);
+                }
 
                 graphics.DrawString("Apogee: " + UnitDisplay.Distance(apogee), font, brush, 5, 320);
                 graphics.DrawString("Perigee: " + UnitDisplay.Distance(perigee), font, brush, 5, 350);

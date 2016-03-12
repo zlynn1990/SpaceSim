@@ -115,7 +115,7 @@ namespace SpaceSim.Orbits
             }
             else
             {
-                stepCount = 300;
+                stepCount = 600;
 
                 isOrbiting = true;
 
@@ -195,7 +195,7 @@ namespace SpaceSim.Orbits
 
                         isOrbiting = true;
 
-                        stepCount = 300;
+                        stepCount = 600;
                     }
                     else
                     {

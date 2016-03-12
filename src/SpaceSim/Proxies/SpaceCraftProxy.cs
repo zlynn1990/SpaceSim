@@ -17,6 +17,7 @@ namespace SpaceSim.Proxies
 
         public double DragCoefficient { get { return _proxy.DragCoefficient; } }
         public double CrossSectionalArea { get { return _proxy.CrossSectionalArea; } }
+        public double SurfaceArea { get { return _proxy.SurfaceArea; } }
 
         public DVector2 AccelerationD { get; private set; }
         public DVector2 AccelerationL { get; private set; }

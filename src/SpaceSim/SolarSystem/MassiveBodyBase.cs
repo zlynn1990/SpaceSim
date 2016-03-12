@@ -3,7 +3,6 @@ using System.Drawing;
 using Cloo;
 using OpenCLWrapper;
 using SpaceSim.Drawing;
-using SpaceSim.Kernels;
 using SpaceSim.Physics;
 using VectorMath;
 
@@ -50,18 +49,23 @@ namespace SpaceSim.SolarSystem
             return FlightGlobals.GRAVITATION_CONSTANT*massDistanceRatio;
         }
 
-        public double GetIspMultiplier(double height)
+        public double GetIspMultiplier(double altitude)
         {
-            double heightRatio = Math.Max(height / AtmosphereHeight, 0);
+            double heightRatio = Math.Max(altitude / AtmosphereHeight, 0);
 
             return 1.0 - Math.Exp(-21.3921 * heightRatio);
         }
 
-        public virtual double GetAtmosphericDensity(double height)
+        public virtual double GetAtmosphericDensity(double altitude)
         {
-            double heightRatio = Math.Max(height / AtmosphereHeight, 0);
+            double heightRatio = Math.Max(altitude / AtmosphereHeight, 0);
 
             return Math.Exp(-21.3921 * heightRatio);
+        }
+
+        public virtual double GetAtmosphericViscosity(double altitude)
+        {
+            return 1.48e-5;
         }
 
         public virtual double BoundingRadius

@@ -2,7 +2,6 @@
 using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
-using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.SolarSystem.Planets
@@ -44,31 +43,28 @@ namespace SpaceSim.SolarSystem.Planets
         }
 
         // Realistic density model based off https://www.grc.nasa.gov/www/k-12/rocket/atmos.html
-        public override double GetAtmosphericDensity(double height)
+        public override double GetAtmosphericDensity(double altitude)
         {
-            if (height > AtmosphereHeight)
-            {
-                return 0;
-            }
+            if (altitude > AtmosphereHeight) return 0;
 
             double tempurature;
             double pressure;
 
-            if (height > 25098.756)
+            if (altitude > 25098.756)
             {
-                tempurature = -205.05 + 0.0053805776 * height;
+                tempurature = -205.05 + 0.0053805776 * altitude;
 
                 pressure = 51.97 * Math.Pow((tempurature + 459.7) / 389.98, -11.388);
             }
-            else if (height > 11019.13)
+            else if (altitude > 11019.13)
             {
                 tempurature = -70;
 
-                pressure = 473.1 * Math.Exp(1.73 - 0.00015748032 * height);
+                pressure = 473.1 * Math.Exp(1.73 - 0.00015748032 * altitude);
             }
             else
             {
-                tempurature = 59 - 0.0116797904 * height;
+                tempurature = 59 - 0.0116797904 * altitude;
 
                 pressure = 2116 * Math.Pow((tempurature + 459.7) / 518.6, 5.256);   
             }
@@ -76,6 +72,17 @@ namespace SpaceSim.SolarSystem.Planets
             double density = pressure / (1718 * (tempurature + 459.7));
 
             return density * 515.379;
+        }
+
+        // Quickly approximated using temperature from here https://www.grc.nasa.gov/www/k-12/rocket/atmos.html
+        // and a calculator here http://www.mhtl.uwaterloo.ca/old/onlinetools/airprop/airprop.html
+        public override double GetAtmosphericViscosity(double altitude)
+        {
+            if (altitude > AtmosphereHeight) return 0;
+
+            if (altitude > 10668) return 0.0000089213;
+
+            return -5.37e-10 * altitude + 1.458e-5;
         }
 
         public override string ToString()

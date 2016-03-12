@@ -3,9 +3,9 @@ using System.Drawing;
 using SpaceSim.Engines;
 using VectorMath;
 
-namespace SpaceSim.Spacecrafts.FalconHeavy
+namespace SpaceSim.Spacecrafts.Falcon9
 {
-    sealed class FHS1 : SpaceCraftBase
+    sealed class F9S1 : SpaceCraftBase
     {
         public override double DryMass { get { return 25600; } }
 
@@ -19,18 +19,18 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
             get { return 1.6; }
         }
 
-        public override double CrossSectionalArea { get { return Math.PI * 1.83 * 1.83; } }
+        public override double CrossSectionalArea { get { return 1.15 * Math.PI * 1.83 * 1.83; } }
 
         public override Color IconColor { get { return Color.White; } }
 
-        public FHS1(DVector2 position, DVector2 velocity)
-            : base(position, velocity, 398887, "Textures/fh9S1.png")
+        public F9S1(DVector2 position, DVector2 velocity)
+            : base(position, velocity, 398887, "Textures/f9S1.png")
         {
             StageOffset = new DVector2(0, 25.5);
 
             Engines = new IEngine[9];
 
-            for (int i=0; i < 9; i++)
+            for (int i = 0; i < 9; i++)
             {
                 double engineOffsetX = (i - 4.0) / 4.0;
 
@@ -44,11 +44,11 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
         public void DeployLegs() { }
 
-        public override string CommandFileName { get { return "FHCore.xml"; } }
+        public override string CommandFileName { get { return "F9S1.xml"; } }
 
         public override string ToString()
         {
-            return "Falcon Heavy First Stage";
+            return "Falcon 9 First Stage";
         }
     }
 }

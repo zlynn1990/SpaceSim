@@ -43,14 +43,19 @@ namespace SpaceSim.Proxies
             return _proxy.GetSurfaceGravity();
         }
 
-        public double GetIspMultiplier(double height)
+        public double GetIspMultiplier(double altitude)
         {
-            return _proxy.GetIspMultiplier(height);
+            return _proxy.GetIspMultiplier(altitude);
         }
 
-        public double GetAtmosphericDensity(double height)
+        public double GetAtmosphericDensity(double altitude)
         {
-            return _proxy.GetAtmosphericDensity(height);
+            return _proxy.GetAtmosphericDensity(altitude);
+        }
+
+        public double GetAtmosphericViscosity(double altitude)
+        {
+            return _proxy.GetAtmosphericViscosity(altitude);
         }
 
         public override void Update(double dt)

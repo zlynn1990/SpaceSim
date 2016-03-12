@@ -65,7 +65,9 @@
     </ApplicationDefinition>
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\FairingCommand.cs" />
     <Compile Include="Contracts\Commands\Command.cs" />
+    <Compile Include="Contracts\Commands\Fairing.cs" />
     <Compile Include="Contracts\Commands\Ignition.cs" />
     <Compile Include="Contracts\Commands\Orient.cs" />
     <Compile Include="Contracts\Commands\Shutdown.cs" />
@@ -131,6 +133,8 @@
     <Compile Include="Spacecrafts\Dragon.cs" />
     <Compile Include="Spacecrafts\DragonTrunk.cs" />
     <Compile Include="Spacecrafts\Falcon9SSTO\F9SSTO.cs" />
+    <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
+    <Compile Include="Spacecrafts\Falcon9\F9S2.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
@@ -139,6 +143,7 @@
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
     <Compile Include="SolarSystem\Stars\Sun.cs" />
     <Compile Include="Physics\TimeStep.cs" />
+    <Compile Include="Structures\ASDS.cs" />
     <Compile Include="Structures\Strongback.cs" />
     <Compile Include="Structures\StructureBase.cs" />
     <Compile Include="Orbits\OrbitTrace.cs" />
@@ -196,10 +201,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Textures\asds.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\dragonTrunk.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\dragonV2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\f9S1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\f9ssto.png">
