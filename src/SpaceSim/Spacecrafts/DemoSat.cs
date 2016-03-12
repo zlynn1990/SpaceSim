@@ -64,7 +64,7 @@ namespace SpaceSim.Spacecrafts
 
         public override string ToString()
         {
-            return "DemoSat";
+            return "SES9";
         }
     }
 }

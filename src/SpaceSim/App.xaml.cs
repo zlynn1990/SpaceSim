@@ -15,6 +15,9 @@ namespace SpaceSim
 
             SpaceSim.MainWindow.FullScreen = true;
 
+            // TODO this is bad hack because im too lazy to use env variables right now
+            SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "SES9");
+
             // Parse arguments
             for (int i = 0; i < e.Args.Length; i++)
             {
@@ -27,10 +30,6 @@ namespace SpaceSim
                     SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, e.Args[i]);
                 }
             }
-
-            // TODO this is bad hack because im too lazy to use env variables right now
-            SpaceSim.MainWindow.FullScreen = false;
-            SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "SES9");
             
             // If no profile directory was specified find a default locally or further up the folder structure
             if (string.IsNullOrEmpty(SpaceSim.MainWindow.ProfileDirectory))

@@ -23,13 +23,13 @@ namespace SpaceSim.Structures
         private double _initialRotation;
         private double _initialDistance;
 
-        protected StructureBase(DVector2 relativePosition, string texturePath, IMassiveBody parent)
+        protected StructureBase(double surfaceAngle, double height, string texturePath, IMassiveBody parent)
         {
             _parent = parent;
 
-            _initialDistance = relativePosition.Length();
+            _initialDistance = parent.SurfaceRadius - height;
 
-            _rotationOffset = relativePosition.Angle();
+            _rotationOffset = surfaceAngle;
             _initialRotation = parent.Rotation;
 
             _texture = new Bitmap(texturePath);

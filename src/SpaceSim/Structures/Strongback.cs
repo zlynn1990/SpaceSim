@@ -11,8 +11,8 @@ namespace SpaceSim.Structures
 
         public override Color IconColor { get { return Color.White; } }
 
-        public Strongback(DVector2 relativePosition, IMassiveBody parent)
-            : base(relativePosition, "Textures/strongback.png", parent)
+        public Strongback(double surfaceAngle, double height, IMassiveBody parent)
+            : base(surfaceAngle, height, "Textures/strongback.png", parent)
         {
         }
     }
