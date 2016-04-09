@@ -23,16 +23,11 @@
   </Command>
   <Command xsi:type="Orient">
     <StartTime>70</StartTime>
-    <Duration>80</Duration>
-    <TargetOrientation>-183</TargetOrientation>
-  </Command>
-  <Command xsi:type="Orient">
-    <StartTime>160</StartTime>
-    <Duration>150</Duration>
-    <TargetOrientation>-200</TargetOrientation>
+    <Duration>97</Duration>
+    <TargetOrientation>-192</TargetOrientation>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>112</StartTime>
+    <StartTime>108</StartTime>
     <Duration>0.5</Duration>
 	<EngineIds>
       <int>1</int>
@@ -40,7 +35,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>137</StartTime>
+    <StartTime>127</StartTime>
     <Duration>0.5</Duration>
 	<EngineIds>
       <int>2</int>
@@ -48,7 +43,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>167</StartTime>
+    <StartTime>153</StartTime>
     <Duration>0.5</Duration>
 	<EngineIds>
       <int>3</int>
@@ -56,7 +51,7 @@
     </EngineIds>
   </Command>
     <Command xsi:type="Shutdown">
-    <StartTime>197</StartTime>
+    <StartTime>200</StartTime>
     <Duration>0.5</Duration>
 	<EngineIds>
       <int>0</int>
@@ -64,20 +59,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>266</StartTime>
+    <StartTime>340</StartTime>
     <Duration>0.5</Duration>
-  </Command>
-  <Command xsi:type="Orient">
-    <StartTime>266</StartTime>
-    <Duration>1980</Duration>
-    <TargetOrientation>-320</TargetOrientation>
-  </Command>
-  <Command xsi:type="Ignition">
-    <StartTime>1980</StartTime>
-    <Duration>0.5</Duration>
-    <Throttle>100</Throttle>
-    <EngineIds>
-      <int>4</int>
-    </EngineIds>
   </Command>
 </ArrayOfCommand>

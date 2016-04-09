@@ -7,7 +7,7 @@ namespace SpaceSim.Spacecrafts.Falcon9SSTO
 {
     sealed class F9SSTO : SpaceCraftBase
     {
-        public override double DryMass { get { return 20100; } }
+        public override double DryMass { get { return 21600; } }
 
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 47.812188; } }

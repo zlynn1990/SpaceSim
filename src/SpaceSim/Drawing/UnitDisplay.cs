@@ -91,5 +91,17 @@
         {
             return density.ToString("0.##0") + " kg/m^3";
         }
+
+        public static string Pressure(double pressure)
+        {
+            if (pressure > 1000)
+            {
+                pressure *= 0.001;
+
+                return pressure.ToString("#,##0.0") + " kPa";
+            }
+
+            return pressure.ToString("#,##0.0") + " Pa";
+        }
     }
 }

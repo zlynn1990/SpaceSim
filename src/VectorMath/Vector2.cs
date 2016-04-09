@@ -22,6 +22,11 @@ namespace VectorMath
             return X * other.X + Y * other.Y;
         }
 
+        public float Cross(Vector2 v)
+        {
+            return X * v.Y - Y * v.X;
+        }
+
         public float Distance(Vector2 other)
         {
             float diffX = other.X - X;
