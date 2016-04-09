@@ -171,13 +171,6 @@ namespace SpaceSim
             var mercury = new Mercury();
             var venus = new Venus();
             var earth = new Earth();
-
-            // Start at nearly -Math.Pi / 2
-            _strongback = new Strongback(-1.5707947, 38, earth);
-
-            // Start downrange at ~640km (
-            var asds = new ASDS(-1.67146, 20, earth);
-
             var moon = new Moon(earth.Position, earth.Velocity);
             var mars = new Mars();
             var jupiter = new Jupiter();
@@ -189,20 +182,21 @@ namespace SpaceSim
                 _sun, mercury, venus, earth, moon, mars, jupiter, europa, saturn
             };
 
-            _structures = new List<StructureBase>
-            {
-                _strongback, asds
-            };
-
             //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
-            //_spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
-            _spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
+            _spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+            //_spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
 
             // Initialize the spacecraft controllers
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
             {
                 spaceCraft.InitializeController(ProfileDirectory);
             }
+
+            // Start at nearly -Math.Pi / 2
+            _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.2, earth);
+
+            // Start downrange at ~640km (
+            var asds = new ASDS(-1.67146, 20, earth);
 
             _gravitationalBodies = new List<IGravitationalBody>
             {
@@ -213,6 +207,11 @@ namespace SpaceSim
             {
                 _gravitationalBodies.Add(spaceCraft);
             }
+
+            _structures = new List<StructureBase>
+            {
+                _strongback, asds
+            };
 
             _gravitationalBodies.Add(moon);
             _gravitationalBodies.Add(mars);
@@ -667,34 +666,35 @@ namespace SpaceSim
 
                 double altitude = target.GetRelativeAltitude();
 
-                graphics.DrawString("Altitude: " + UnitDisplay.Distance(altitude), font, brush, 5, 100);
+                graphics.DrawString("Altitude: " + UnitDisplay.Distance(altitude), font, brush, 5, 90);
 
                 graphics.DrawString(string.Format("Target: {0}", target), font, brush, RenderUtils.ScreenWidth / 2 - 35, 5);
 
-                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(target.GetRelativeVelocity().Length()), font, brush, 5, 225);
-                graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 255);
+                double targetVelocity = target.GetRelativeVelocity().Length();
+
+                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity), font, brush, 5, 175);
+                graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 205);
+
+                graphics.DrawString("Apogee: " + UnitDisplay.Distance(apogee), font, brush, 5, 345);
+                graphics.DrawString("Perigee: " + UnitDisplay.Distance(perigee), font, brush, 5, 375);
+
+                graphics.DrawString("Mass: " + UnitDisplay.Mass(target.Mass), font, brush, 5, 260);
 
                 if (targetSpaceCraft != null)
                 {
-                    //graphics.DrawString("Aero Drag: " + UnitDisplay.Acceleration(targetSpaceCraft.AccelerationD.Length()), font, brush, 5, 285);
-                }
-
-                graphics.DrawString("Apogee: " + UnitDisplay.Distance(apogee), font, brush, 5, 320);
-                graphics.DrawString("Perigee: " + UnitDisplay.Distance(perigee), font, brush, 5, 350);
-
-                graphics.DrawString("Mass: " + UnitDisplay.Mass(target.Mass), font, brush, 5, 410);
-
-                if (targetSpaceCraft != null)
-                {
-                    graphics.DrawString("Thrust: " + UnitDisplay.Force(targetSpaceCraft.Thrust), font, brush, 5, 440);
-
                     double downrangeDistance = targetSpaceCraft.GetDownrangeDistance(_strongback.Position);
 
-                    graphics.DrawString("Downrange: " + UnitDisplay.Distance(downrangeDistance), font, brush, 5, 130);
+                    graphics.DrawString("Downrange: " + UnitDisplay.Distance(downrangeDistance), font, brush, 5, 120);
+
+                    graphics.DrawString("Thrust: " + UnitDisplay.Force(targetSpaceCraft.Thrust), font, brush, 5, 290);
 
                     double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(altitude);
 
-                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 160);
+                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 430);
+
+                    double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
+
+                    graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 460);
                 }
 
                 graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 80, 5);

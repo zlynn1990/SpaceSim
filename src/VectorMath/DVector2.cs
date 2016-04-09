@@ -15,12 +15,23 @@ namespace VectorMath
             Y = y;
         }
 
+        public void Reset()
+        {
+            X = 0;
+            Y = 0;
+        }
+
         public void Normalize()
         {
             double length = Length();
 
             X /= length;
             Y /= length;
+        }
+
+        public DVector2 Normalized()
+        {
+            return Clone() / Length(); 
         }
 
         public void Negate()
@@ -75,19 +86,18 @@ namespace VectorMath
             return new DVector2(X / scalar, Y / scalar);
         }
 
-        public void Reset()
+        public double Dot(DVector2 v)
         {
-            X = 0;
-            Y = 0;
+            return X * v.X + Y * v.Y;
+        }
+
+        public double Cross(DVector2 v)
+        {
+            return X * v.Y - Y * v.X;
         }
 
         public double Length()
         {
-            if (X == 0 && Y == 0)
-            {
-                return 0;
-            }
-
             return Math.Sqrt(X * X + Y * Y);
         }
 
@@ -106,15 +116,20 @@ namespace VectorMath
             return new Vector2((float)X, (float)Y);
         }
 
+        public static DVector2 Lerp(DVector2 from, DVector2 to, double t)
+        {
+            return new DVector2(from.X + t * (to.X - from.X),
+                               from.Y + t * (to.Y - from.Y));
+        }
+
         public static DVector2 FromAngle(double angle)
         {
             return new DVector2(Math.Cos(angle), Math.Sin(angle));
         }
 
-        public static DVector2 Lerp(DVector2 from, DVector2 to, double t)
+        public static double Distance(DVector2 v1, DVector2 v2)
         {
-            return new DVector2(from.X + t * (to.X - from.X),
-                               from.Y + t * (to.Y - from.Y));
+            return (v2 - v1).Length();
         }
 
         public override string ToString()

@@ -16,7 +16,9 @@ namespace SpaceSim
             SpaceSim.MainWindow.FullScreen = true;
 
             // TODO this is bad hack because im too lazy to use env variables right now
-            SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "SES9");
+            SpaceSim.MainWindow.FullScreen = false;
+            SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "F9 SSTO");
+            //SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "SES9");
 
             // Parse arguments
             for (int i = 0; i < e.Args.Length; i++)
