@@ -18,10 +18,10 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
         public override Color IconColor { get { return Color.White; } }
 
-        public F9S2(DVector2 position, DVector2 velocity)
+        public F9S2(DVector2 position, DVector2 velocity, double stageOffset)
             : base(position, velocity, 108185, "Textures/fh9S2.png")
         {
-            StageOffset = new DVector2(0, 13.3);
+            StageOffset = new DVector2(0, stageOffset);
 
             Engines = new IEngine[]
             {
@@ -33,7 +33,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
         public override string ToString()
         {
-            return "Falcon Heavy Second Stage";
+            return "Falcon 9 Second Stage";
         }
     }
 }

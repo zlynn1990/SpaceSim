@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Orient">
+    <StartTime>10</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-100</TargetOrientation>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>70</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-140</TargetOrientation>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>120</StartTime>
+    <Duration>25</Duration>
+    <TargetOrientation>-142</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>158</StartTime>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>180</StartTime>
+    <Duration>400</Duration>
+    <TargetOrientation>-190</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>632</StartTime>
+  </Command>
+</ArrayOfCommand>

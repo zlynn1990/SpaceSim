@@ -37,6 +37,8 @@ namespace SpaceSim.Engines
 
         public virtual void Shutdown()
         {
+            AdjustThrottle(0);
+
             IsActive = false;
         }
 
