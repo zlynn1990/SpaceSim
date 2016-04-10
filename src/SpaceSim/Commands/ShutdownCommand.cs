@@ -24,8 +24,6 @@ namespace SpaceSim.Commands
 
         public override void Finalize(ISpaceCraft spaceCraft)
         {
-            spaceCraft.SetThrottle(0, _engineIds);
-
             // Shutdown all engines
             if (_engineIds == null)
             {

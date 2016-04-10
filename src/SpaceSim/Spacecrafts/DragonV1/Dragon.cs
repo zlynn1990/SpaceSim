@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Drawing;
-using SpaceSim.Controllers;
 using SpaceSim.Engines;
 using VectorMath;
 
-namespace SpaceSim.Spacecrafts
+namespace SpaceSim.Spacecrafts.DragonV1
 {
     sealed class Dragon : SpaceCraftBase
     {
         public override double Width { get { return 3.7; } }
-        public override double Height { get { return 4.15; } }
+        public override double Height { get { return 4.194; } }
 
-        // 4200 dry + 2015 payload
-        //public override double DryMass { get { return 6215; } }
-        public override double DryMass { get { return 2500; } }
+        // Dragon + pressuredized cargo (1723) + unpressurized (1413)
+        public override double DryMass { get { return 7336; } }
 
         public override bool ExposedToAirFlow { get { return true; } }
 
@@ -44,14 +42,9 @@ namespace SpaceSim.Spacecrafts
         private double _parachuteRatio;
 
         public Dragon(DVector2 position, DVector2 velocity)
-            : base(position, velocity, 1388, "Textures/dragonV2.png")
+            : base(position, velocity, 1388, "Textures/dragon.png")
         {
-            Engines = new IEngine[8];
-
-            for (int i = 0; i < 8; i++)
-            {
-                Engines[i] = new SuperDraco(i, this, DVector2.Zero);
-            }
+            Engines = new IEngine[0];
         }
 
         public void Abort()
@@ -102,7 +95,7 @@ namespace SpaceSim.Spacecrafts
 
         public override string ToString()
         {
-            return "DragonV2";
+            return "Dragon";
         }
     }
 }

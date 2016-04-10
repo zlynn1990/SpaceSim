@@ -1,14 +1,13 @@
 ﻿using System.Drawing;
-using SpaceSim.Controllers;
 using SpaceSim.Engines;
 using VectorMath;
 
-namespace SpaceSim.Spacecrafts
+namespace SpaceSim.Spacecrafts.DragonV1
 {
     class DragonTrunk : SpaceCraftBase
     {
-        public override double Width { get { return 4.72; } }
-        public override double Height { get { return 4.1; } }
+        public override double Width { get { return 3.8754; } }
+        public override double Height { get { return 3.253; } }
 
         public override double DryMass { get { return 1000; } }
 
@@ -24,6 +23,8 @@ namespace SpaceSim.Spacecrafts
         public DragonTrunk(DVector2 position, DVector2 velocity)
             : base(position, velocity, 0, "Textures/dragonTrunk.png")
         {
+            StageOffset = new DVector2(0, 2.8);
+
             Engines = new IEngine[0];
         }
 

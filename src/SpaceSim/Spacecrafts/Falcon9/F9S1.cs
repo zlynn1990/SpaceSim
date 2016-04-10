@@ -16,7 +16,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
         public override double DragCoefficient
         {
-            get { return 1.6; }
+            get { return 0.97; }
         }
 
         public override double CrossSectionalArea { get { return 1.15 * Math.PI * 1.83 * 1.83; } }

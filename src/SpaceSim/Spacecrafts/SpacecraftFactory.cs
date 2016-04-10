@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 using SpaceSim.Contracts;
 using SpaceSim.SolarSystem;
+using SpaceSim.Spacecrafts.DragonV1;
 using SpaceSim.Spacecrafts.Falcon9;
 using SpaceSim.Spacecrafts.Falcon9SSTO;
 using SpaceSim.Spacecrafts.FalconHeavy;
@@ -27,7 +28,7 @@ namespace SpaceSim.Spacecrafts
                                       planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
 
             var f9S1 = new F9S1(DVector2.Zero, DVector2.Zero);
-            var f9S2 = new F9S2(DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2(DVector2.Zero, DVector2.Zero, 13.3);
 
             demoSat.AddChild(f9S2);
             f9S2.SetParent(demoSat);
@@ -37,6 +38,27 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 demoSat, f9S2, f9S1
+            };
+        }
+
+        public static List<ISpaceCraft> BuildF9Dragon(IMassiveBody planet, string path)
+        {
+            var dragon = new Dragon(planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity);
+            var dragonTrunk = new DragonTrunk(DVector2.Zero, DVector2.Zero);
+
+            var f9S1 = new F9S1(DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2(DVector2.Zero, DVector2.Zero, 8.3);
+
+            dragon.AddChild(dragonTrunk);
+            dragonTrunk.SetParent(dragon);
+            dragonTrunk.AddChild(f9S2);
+            f9S2.SetParent(dragonTrunk);
+            f9S2.AddChild(f9S1);
+            f9S1.SetParent(f9S2);
+
+            return new List<ISpaceCraft>
+            {
+                dragon, dragonTrunk, f9S2, f9S1
             };
         }
 

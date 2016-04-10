@@ -129,8 +129,11 @@ namespace SpaceSim
                 WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
 
-                RenderUtils.ScreenWidth = (int) SystemParameters.PrimaryScreenWidth;
-                RenderUtils.ScreenHeight = (int) SystemParameters.PrimaryScreenHeight;
+                //RenderUtils.ScreenWidth = 1742;
+                //RenderUtils.ScreenHeight = 980;
+
+                RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
+                RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
             }
             else
             {
@@ -183,8 +186,9 @@ namespace SpaceSim
             };
 
             //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
-            _spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+            //_spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
             //_spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
+            _spaceCrafts = SpacecraftFactory.BuildF9Dragon(earth, ProfileDirectory);
 
             // Initialize the spacecraft controllers
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
@@ -193,10 +197,10 @@ namespace SpaceSim
             }
 
             // Start at nearly -Math.Pi / 2
-            _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.2, earth);
+            _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.5, earth);
 
-            // Start downrange at ~640km (
-            var asds = new ASDS(-1.67146, 20, earth);
+            // Start downrange at ~300km
+            var asds = new ASDS(-1.62026, 20, earth);
 
             _gravitationalBodies = new List<IGravitationalBody>
             {
@@ -672,7 +676,7 @@ namespace SpaceSim
 
                 double targetVelocity = target.GetRelativeVelocity().Length();
 
-                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity), font, brush, 5, 175);
+                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, false), font, brush, 5, 175);
                 graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 205);
 
                 graphics.DrawString("Apogee: " + UnitDisplay.Distance(apogee), font, brush, 5, 345);

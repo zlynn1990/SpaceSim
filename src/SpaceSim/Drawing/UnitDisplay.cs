@@ -5,8 +5,22 @@
     /// </summary>
     static class UnitDisplay
     {
-        public static string Speed(double speed)
+        public static string Speed(double speed, bool useKmPerHr)
         {
+            if (useKmPerHr)
+            {
+                double kmPerHr = speed * 3.6;
+
+                if (kmPerHr > 10000)
+                {
+                    kmPerHr *= 0.001;
+
+                    return kmPerHr.ToString("#,##0.0") + " km/h";
+                }
+
+                return kmPerHr.ToString("#,##0") + " km/h";
+            }
+
             if (speed > 10000)
             {
                 speed *= 0.001;
