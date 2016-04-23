@@ -7,6 +7,8 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 {
     sealed class FHBooster : SpaceCraftBase
     {
+        public override string ShortName { get { return "FH Booster " + Id; } }
+
         public int Id { get; private set; }
 
         public override double DryMass { get { return 25600; } }

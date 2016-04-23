@@ -20,5 +20,10 @@ namespace SpaceSim.Engines
         {
             return 273.8 * Throttle * 0.01;
         }
+
+        public override string ToString()
+        {
+            return "Merlin1D";
+        }
     }
 }

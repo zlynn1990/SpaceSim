@@ -16,6 +16,8 @@ namespace SpaceSim.Commands
 
         public override void Initialize(ISpaceCraft spaceCraft)
         {
+            EventManager.AddMessage(string.Format("Throttling to {0}%", _targetThrottle.ToString("0.0")), spaceCraft);
+
             _currentThrottle = spaceCraft.Throttle;
         }
 

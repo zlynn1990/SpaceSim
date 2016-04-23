@@ -20,5 +20,10 @@ namespace SpaceSim.Engines
         {
             return 31.25 * Throttle * 0.01;
         }
+
+        public override string ToString()
+        {
+            return "Super Draco";
+        }
     }
 }

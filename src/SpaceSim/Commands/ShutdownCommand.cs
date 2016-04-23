@@ -19,6 +19,16 @@ namespace SpaceSim.Commands
 
         public override void Initialize(ISpaceCraft spaceCraft)
         {
+            if (_engineIds == null)
+            {
+                EventManager.AddMessage("Shutting down all engines", spaceCraft);
+            }
+            else
+            {
+                EventManager.AddMessage(string.Format("Shutting down {0} engines", _engineIds.Length), spaceCraft);
+            }
+
+
             _currentThrottle = spaceCraft.Throttle;
         }
 

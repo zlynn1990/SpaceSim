@@ -21,6 +21,16 @@
     <Duration>60</Duration>
     <TargetOrientation>-125</TargetOrientation>
   </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>45</StartTime>
+    <Duration>5</Duration>
+    <TargetThrottle>90</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>52</StartTime>
+    <Duration>3</Duration>
+    <TargetThrottle>100</TargetThrottle>
+  </Command>
   <Command xsi:type="Orient">
     <StartTime>70</StartTime>
     <Duration>97</Duration>
@@ -59,7 +69,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>340</StartTime>
+    <StartTime>325</StartTime>
     <Duration>0.5</Duration>
   </Command>
 </ArrayOfCommand>

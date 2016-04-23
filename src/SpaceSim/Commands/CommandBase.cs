@@ -1,4 +1,5 @@
-﻿using SpaceSim.Spacecrafts;
+﻿using SpaceSim.Drawing;
+using SpaceSim.Spacecrafts;
 
 namespace SpaceSim.Commands
 {
@@ -7,10 +8,17 @@ namespace SpaceSim.Commands
         public double StartTime { get; private set; }
         public double Duration { get; private set; }
 
+        protected EventManager EventManager;
+
         protected CommandBase(double startTime, double duration)
         {
             StartTime = startTime;
             Duration = duration;
+        }
+
+        public void LoadEventManager(EventManager eventManager)
+        {
+            EventManager = eventManager;
         }
 
         public abstract void Initialize(ISpaceCraft spaceCraft);

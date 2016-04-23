@@ -85,6 +85,7 @@
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
     <Compile Include="Drawing\EngineFlame.cs" />
+    <Compile Include="Drawing\EventManager.cs" />
     <Compile Include="Drawing\GpuClear.cs" />
     <Compile Include="Drawing\IGdiRenderable.cs" />
     <Compile Include="Drawing\IGpuRenderable.cs" />
