@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceSim.Commands;
+using SpaceSim.Drawing;
 using SpaceSim.Spacecrafts;
 
 namespace SpaceSim.Controllers
@@ -11,7 +12,7 @@ namespace SpaceSim.Controllers
         private List<CommandBase> _queuedCommands;
         private List<CommandBase> _activeCommands;
 
-        public CommandController(List<CommandBase> commands, ISpaceCraft spaceCraft)
+        public CommandController(List<CommandBase> commands, ISpaceCraft spaceCraft, EventManager eventManager)
             : base(spaceCraft)
         {
             _commands = commands;
@@ -22,6 +23,8 @@ namespace SpaceSim.Controllers
             foreach (CommandBase command in _commands)
             {
                 _queuedCommands.Add(command);
+
+                command.LoadEventManager(eventManager);
             }
         }
 

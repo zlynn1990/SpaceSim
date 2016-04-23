@@ -7,6 +7,8 @@ namespace SpaceSim.Spacecrafts.Falcon9
 {
     sealed class F9S1 : SpaceCraftBase
     {
+        public override string ShortName { get { return "F9 S1"; } }
+
         public override double DryMass { get { return 25600; } }
 
         public override double Width { get { return 4.11; } }

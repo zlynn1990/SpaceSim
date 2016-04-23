@@ -27,6 +27,7 @@ using SpaceSim.Spacecrafts;
 using SpaceSim.Structures;
 using VectorMath;
 using Color = System.Drawing.Color;
+using EventManager = SpaceSim.Drawing.EventManager;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
@@ -67,6 +68,7 @@ namespace SpaceSim
         private List<IGauge> _gauges;
         private ProgradeButton _progradeButton;
         private RetrogradeButton _retrogradeButton;
+        private EventManager _eventManager;
 
         private List<ISpaceCraft> _spaceCrafts; 
         private List<IMassiveBody> _massiveBodies;
@@ -81,9 +83,9 @@ namespace SpaceSim
             InitializeComponent();
             InitializeScreen();
 
+            LoadGui();
             LoadSolarSystem();
             LoadKernels();
-            LoadGui();
 
             _camera = new Camera(_gravitationalBodies[_targetIndex], 0.1);
 
@@ -129,8 +131,8 @@ namespace SpaceSim
                 WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
 
-                //RenderUtils.ScreenWidth = 1742;
-                //RenderUtils.ScreenHeight = 980;
+                //RenderUtils.ScreenWidth = 1688;
+                //RenderUtils.ScreenHeight = 950;
 
                 RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
                 RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
@@ -154,6 +156,8 @@ namespace SpaceSim
 
         private void LoadGui()
         {
+            _eventManager = new EventManager(new Point(RenderUtils.ScreenWidth / 2, 50), 5, 0.25);
+
             _progradeButton = new ProgradeButton(new Point(RenderUtils.ScreenWidth - 160, RenderUtils.ScreenHeight - 105));
             _retrogradeButton = new RetrogradeButton(new Point(RenderUtils.ScreenWidth - 160, RenderUtils.ScreenHeight - 45));
 
@@ -186,18 +190,18 @@ namespace SpaceSim
             };
 
             //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
-            //_spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+            _spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
             //_spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
-            _spaceCrafts = SpacecraftFactory.BuildF9Dragon(earth, ProfileDirectory);
+            //_spaceCrafts = SpacecraftFactory.BuildF9Dragon(earth, ProfileDirectory);
 
             // Initialize the spacecraft controllers
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
             {
-                spaceCraft.InitializeController(ProfileDirectory);
+                spaceCraft.InitializeController(ProfileDirectory, _eventManager);
             }
 
             // Start at nearly -Math.Pi / 2
-            _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.5, earth);
+            _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.05, earth);
 
             // Start downrange at ~300km
             var asds = new ASDS(-1.62026, 20, earth);
@@ -214,7 +218,7 @@ namespace SpaceSim
 
             _structures = new List<StructureBase>
             {
-                _strongback, asds
+                _strongback, //asds
             };
 
             _gravitationalBodies.Add(moon);
@@ -491,6 +495,7 @@ namespace SpaceSim
                 }
 
                 _camera.Update(targetDt);
+                _eventManager.Update(targetDt);
 
                 _totalElapsedSeconds += targetDt;
             }
@@ -672,7 +677,7 @@ namespace SpaceSim
 
                 graphics.DrawString("Altitude: " + UnitDisplay.Distance(altitude), font, brush, 5, 90);
 
-                graphics.DrawString(string.Format("Target: {0}", target), font, brush, RenderUtils.ScreenWidth / 2 - 35, 5);
+                graphics.DrawString(string.Format("Target: {0}", target), font, brush, RenderUtils.ScreenWidth / 2.0f, 5, new StringFormat {Alignment = StringAlignment.Center});
 
                 double targetVelocity = target.GetRelativeVelocity().Length();
 
@@ -725,6 +730,8 @@ namespace SpaceSim
 
                     gauge.Render(graphics, cameraBounds);
                 }
+
+                _eventManager.Render(graphics);
             }
         }
 

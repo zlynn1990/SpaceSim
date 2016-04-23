@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceSim.Controllers;
+using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
@@ -8,6 +9,8 @@ namespace SpaceSim.Spacecrafts
 {
     interface ISpaceCraft : IGravitationalBody
     {
+        string ShortName { get; }
+
         ISpaceCraft Parent { get; }
         List<ISpaceCraft> Children { get; }
 
@@ -28,7 +31,7 @@ namespace SpaceSim.Spacecrafts
 
         string CommandFileName { get; }
 
-        void InitializeController(string craftDirectory);
+        void InitializeController(string craftDirectory, EventManager eventManager);
 
         void Stage();
         void DeployFairing();

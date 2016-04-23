@@ -15,6 +15,8 @@ namespace SpaceSim.Spacecrafts
 {
     abstract class SpaceCraftBase : GravitationalBodyBase, IAreodynamicBody, ISpaceCraft, IGdiRenderable
     {
+        public virtual string ShortName { get { return ToString(); } }
+
         public ISpaceCraft Parent { get; protected set; }
 
         public List<ISpaceCraft> Children { get; protected set; }
@@ -107,7 +109,7 @@ namespace SpaceSim.Spacecrafts
             PropellantMass = propellantMass;
         }
 
-        public void InitializeController(string craftDirectory)
+        public void InitializeController(string craftDirectory, EventManager eventManager)
         {
             string commandPath = Path.Combine(craftDirectory, CommandFileName);
 
@@ -115,7 +117,7 @@ namespace SpaceSim.Spacecrafts
             {
                 List<CommandBase> commands = CommandManager.Load(commandPath);
 
-                Controller = new CommandController(commands, this);
+                Controller = new CommandController(commands, this, eventManager);
             }
             else
             {

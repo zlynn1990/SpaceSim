@@ -8,6 +8,8 @@ namespace SpaceSim.Drawing
     /// </summary>
     class FpsManager
     {
+        public double TargetDt { get; private set; }
+
         public int CurrentFps
         {
             get
@@ -29,11 +31,13 @@ namespace SpaceSim.Drawing
 
         public FpsManager(int targetFps)
         {
+            TargetDt = (1.0 / targetFps);
+
             _updateTimer = new Stopwatch();
 
             _frameSamples = new long[30];
 
-            _targetFrameTicks = (long)((1.0/ targetFps) * Stopwatch.Frequency);
+            _targetFrameTicks = (long)(TargetDt * Stopwatch.Frequency);
         }
 
         public void StartFrame()

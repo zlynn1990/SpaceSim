@@ -12,6 +12,8 @@ namespace SpaceSim.Commands
 
         public override void Initialize(ISpaceCraft spaceCraft)
         {
+            EventManager.AddMessage("Fairing Seperation", spaceCraft);
+
             spaceCraft.DeployFairing();
         }
 

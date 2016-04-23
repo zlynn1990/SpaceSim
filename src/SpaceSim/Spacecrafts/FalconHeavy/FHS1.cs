@@ -7,6 +7,8 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 {
     sealed class FHS1 : SpaceCraftBase
     {
+        public override string ShortName { get { return "FH Core "; } }
+
         public override double DryMass { get { return 25600; } }
 
         public override double Width { get { return 4.11; } }
