@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using VectorMath;
 
@@ -42,7 +43,7 @@ namespace SpaceSim.Spacecrafts.DragonV1
         private double _parachuteRatio;
 
         public Dragon(DVector2 position, DVector2 velocity)
-            : base(position, velocity, 1388, "Textures/dragon.png")
+            : base(position, velocity, 1388, "Textures/dragon.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
         {
             Engines = new IEngine[0];
         }
@@ -89,6 +90,21 @@ namespace SpaceSim.Spacecrafts.DragonV1
             }
 
             base.Update(dt);
+        }
+
+        /// <summary>
+        /// Renders the space craft at it's correct scale and rotation according to the camera.
+        /// The engines are rendered first and then the space craft body.
+        /// </summary>
+        public override void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        {
+            RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
+
+            // Saftey
+            if (screenBounds.Width > RenderUtils.ScreenWidth * 500) return;
+
+            RenderShip(graphics, cameraBounds, screenBounds);
+            RenderAnimations(graphics, cameraBounds);
         }
 
         public override string CommandFileName { get { return "dragon.xml"; } }

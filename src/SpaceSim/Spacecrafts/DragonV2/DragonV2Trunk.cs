@@ -23,6 +23,8 @@ namespace SpaceSim.Spacecrafts.DragonV2
         public DragonV2Trunk(DVector2 position, DVector2 velocity)
             : base(position, velocity, 0, "Textures/dragonTrunkV2.png")
         {
+            StageOffset = new DVector2(0, 4);
+
             Engines = new IEngine[0];
         }
 

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using SpaceSim.Contracts;
 using SpaceSim.SolarSystem;
 using SpaceSim.Spacecrafts.DragonV1;
+using SpaceSim.Spacecrafts.DragonV2;
 using SpaceSim.Spacecrafts.Falcon9;
 using SpaceSim.Spacecrafts.Falcon9SSTO;
 using SpaceSim.Spacecrafts.FalconHeavy;
@@ -68,6 +70,31 @@ namespace SpaceSim.Spacecrafts
                                 planet.Velocity + new DVector2(-400, 0));
 
             return new List<ISpaceCraft> { f9SSTO };
+        }
+
+        public static List<ISpaceCraft> BuildDragonV2Abort(IMassiveBody planet, string path)
+        {
+
+            var dragon = new DragonV2.DragonV2(planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity);
+            var dragonTrunk = new DragonV2Trunk(DVector2.Zero, DVector2.Zero);
+
+            dragon.AddChild(dragonTrunk);
+            dragonTrunk.SetParent(dragon);
+
+            return new List<ISpaceCraft> { dragon, dragonTrunk };
+        }
+
+        public static List<ISpaceCraft> BuildDragonV2Entry(IMassiveBody planet, string path)
+        {
+            var dragon = new DragonV2.DragonV2(planet.Position + new DVector2(planet.SurfaceRadius * 0.75, planet.SurfaceRadius * -0.75), planet.Velocity + new DVector2(-6000, -5100));
+            var dragonTrunk = new DragonV2Trunk(DVector2.Zero, DVector2.Zero);
+
+            dragon.AddChild(dragonTrunk);
+            dragonTrunk.SetParent(dragon);
+
+            dragon.SetRotation(Math.PI * 1.24);
+
+            return new List<ISpaceCraft> { dragon, dragonTrunk };
         }
 
         public static List<ISpaceCraft> BuildFalconHeavy(IMassiveBody planet, string path)

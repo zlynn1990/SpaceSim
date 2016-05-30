@@ -13,10 +13,10 @@ namespace SpaceSim
         {
             string profileDirectory = DetectProfileDirectory();
 
-            SpaceSim.MainWindow.FullScreen = true;
+            SpaceSim.MainWindow.FullScreen = false;
 
             // TODO this is bad hack because im too lazy to use env variables right now
-            SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "F9 SSTO");
+            SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "Dragon Entry");
             //SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "SES9");
 
             // Parse arguments

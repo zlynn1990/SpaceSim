@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+      <int>6</int>
+      <int>7</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>1</StartTime>
+    <Duration>8</Duration>
+    <TargetOrientation>-140</TargetOrientation>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>8</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+    <Command xsi:type="Stage">
+    <StartTime>15</StartTime>
+  </Command>
+</ArrayOfCommand>

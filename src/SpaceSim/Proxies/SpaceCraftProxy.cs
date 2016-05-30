@@ -14,6 +14,7 @@ namespace SpaceSim.Proxies
         public override double Mass { get { return _proxy.Mass; } }
 
         public bool ExposedToAirFlow { get { return _proxy.ExposedToAirFlow; } }
+        public double HeatingRate { get { return _proxy.HeatingRate; } }
 
         public double DragCoefficient { get { return _proxy.DragCoefficient; } }
         public double CrossSectionalArea { get { return _proxy.CrossSectionalArea; } }

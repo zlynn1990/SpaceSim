@@ -6,6 +6,7 @@ namespace SpaceSim.Physics
     interface IAreodynamicBody : IPhysicsBody
     {
         bool ExposedToAirFlow { get; }
+        double HeatingRate { get; }
 
         double DragCoefficient { get; }
         double CrossSectionalArea { get; }

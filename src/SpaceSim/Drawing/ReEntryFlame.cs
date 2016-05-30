@@ -6,30 +6,26 @@ using VectorMath;
 
 namespace SpaceSim.Drawing
 {
-    class EngineFlame
+    class ReEntryFlame
     {
         private Particle[] _particles;
-
         private Queue<int> _availableParticles;
 
         private Random _random;
-
         private double _particleRate;
-        private double _minSpread;
-        private double _maxSpread;
-        private double _maxAge;
-        private double _angle;
 
-        public EngineFlame(int seed, int maxParticles, double particleRate,
-                           double minSpread, double maxSpread, double maxAge, double angle = 0)
+        private double _offsetAngle;
+        private double _offsetLength;
+
+        public ReEntryFlame(int maxParticles, double particleRate, DVector2 offset)
         {
-            _random = new Random(seed);
+            _random = new Random();
 
             _particles = new Particle[maxParticles];
 
             _availableParticles = new Queue<int>(maxParticles);
 
-            for (int i =0; i < maxParticles; i++)
+            for (int i = 0; i < maxParticles; i++)
             {
                 _particles[i] = new Particle();
 
@@ -37,31 +33,32 @@ namespace SpaceSim.Drawing
             }
 
             _particleRate = particleRate;
-            _minSpread = minSpread;
-            _maxSpread = maxSpread;
-            _maxAge = maxAge;
-            _angle = angle;
+
+            _offsetAngle = offset.Angle();
+            _offsetLength = offset.Length();
         }
 
-        public void Update(TimeStep timeStep, DVector2 enginePosition, DVector2 shipVelocity,
-                           double rotation, double throttle, double ispMultiplier)
+        public void Update(TimeStep timeStep, DVector2 shipPosition, DVector2 shipVelocity, double pitch, double heatingRate)
         {
-            double retrograde = rotation + Math.PI + _angle;
+            double rotation = pitch - _offsetAngle;
 
-            int particles = (int)((throttle * _particleRate)  / timeStep.UpdateLoops);
+            DVector2 offset = new DVector2(Math.Cos(rotation), Math.Sin(rotation)) * _offsetLength;
 
-            // Interpolate between spreads based on ISP
-            double spreadMultiplier = (1.0 - ispMultiplier) * _minSpread + ispMultiplier * _maxSpread;
+            DVector2 shockPosition = shipPosition - offset;
+
+            double normalizedHeating = Math.Max((heatingRate - 500000) * 0.0005, 0);
+
+            int particles = (int)(normalizedHeating * _particleRate) / timeStep.UpdateLoops;
 
             // Add new particles if nessecary
             for (int i = 0; i < particles; i++)
             {
                 if (_availableParticles.Count > 0)
                 {
-                    double velocityFactor = _random.Next(150, 250);
-                    double spread = _random.NextDouble() - 0.5;
+                    double velocityFactor = _random.Next(50, 200);
+                    double spread = _random.NextDouble() * 2.5 - 1.25;
 
-                    DVector2 velocity = DVector2.FromAngle(retrograde + spread * spreadMultiplier);
+                    DVector2 velocity = DVector2.FromAngle(rotation + spread);
 
                     int id = _availableParticles.Dequeue();
 
@@ -69,10 +66,10 @@ namespace SpaceSim.Drawing
 
                     particle.IsActive = true;
                     particle.Age = 0;
-                    particle.MaxAge = _random.NextDouble() * 0.05 + _maxAge;
+                    particle.MaxAge = _random.NextDouble()*0.01 + 0.02;
 
-                    particle.Position = enginePosition.Clone();
-                    particle.Velocity = shipVelocity.Clone() + velocity * velocityFactor;
+                    particle.Position = shockPosition.Clone();
+                    particle.Velocity = shipVelocity.Clone() + velocity*velocityFactor;
                 }
             }
 
@@ -83,7 +80,7 @@ namespace SpaceSim.Drawing
 
                 if (particle.IsActive)
                 {
-                    particle.Position += particle.Velocity * timeStep.Dt;
+                    particle.Position += particle.Velocity*timeStep.Dt;
                     particle.Age += timeStep.Dt;
 
                     if (particle.Age > particle.MaxAge)
@@ -107,12 +104,12 @@ namespace SpaceSim.Drawing
                     {
                         PointF localPoint = RenderUtils.WorldToScreen(particle.Position, cameraBounds);
 
-                        particleBounds.Add(new RectangleF(localPoint.X - 0.85f, localPoint.Y - 0.85f, 1.7f, 1.7f));
+                        particleBounds.Add(new RectangleF(localPoint.X - 1.5f, localPoint.Y - 1.5f, 3, 3));
                     }
                 }
             }
 
-            RenderUtils.DrawRectangles(graphics, particleBounds, Color.FromArgb(200, 255, 255, 0));
+            RenderUtils.DrawRectangles(graphics, particleBounds, Color.FromArgb(50, 255, 255, 0));
         }
     }
 }
