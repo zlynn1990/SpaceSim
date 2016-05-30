@@ -66,11 +66,13 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\FairingCommand.cs" />
+    <Compile Include="Commands\ProgradeCommand.cs" />
     <Compile Include="Commands\RetrogradeCommand.cs" />
     <Compile Include="Contracts\Commands\Command.cs" />
     <Compile Include="Contracts\Commands\Fairing.cs" />
     <Compile Include="Contracts\Commands\Ignition.cs" />
     <Compile Include="Contracts\Commands\Orient.cs" />
+    <Compile Include="Contracts\Commands\Prograde.cs" />
     <Compile Include="Contracts\Commands\Retrograde.cs" />
     <Compile Include="Contracts\Commands\Shutdown.cs" />
     <Compile Include="Contracts\Commands\Stage.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Drawing\IGpuRenderable.cs" />
     <Compile Include="Drawing\IIconRenderable.cs" />
     <Compile Include="Drawing\Particle.cs" />
+    <Compile Include="Drawing\ReEntryFlame.cs" />
     <Compile Include="Drawing\RenderUtils.cs" />
     <Compile Include="Engines\EngineBase.cs" />
     <Compile Include="Engines\IEngine.cs" />

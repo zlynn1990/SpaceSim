@@ -74,6 +74,7 @@ namespace SpaceSim.Spacecrafts
         }
 
         public double Thrust { get; protected set; }
+        public double HeatingRate { get; protected set; }
 
         public abstract double DryMass { get; }
         public double PropellantMass { get; protected set; }
@@ -84,8 +85,8 @@ namespace SpaceSim.Spacecrafts
         public abstract string CommandFileName { get; }
 
         public abstract bool ExposedToAirFlow { get; }
-
         public abstract double DragCoefficient { get; }
+
         public virtual double CrossSectionalArea { get { return Math.PI * (Width * 0.5) * (Width * 0.5); } }
         public virtual double SurfaceArea { get { return Math.PI * Width * Height; } }
 
@@ -100,13 +101,17 @@ namespace SpaceSim.Spacecrafts
         protected double MachNumber;
         protected double IspMultiplier;
 
-        protected SpaceCraftBase(DVector2 position, DVector2 velocity, double propellantMass, string texturePath)
+        protected ReEntryFlame EntryFlame;
+
+        protected SpaceCraftBase(DVector2 position, DVector2 velocity, double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
             : base(position, velocity, -Math.PI * 0.5)
         {
             Children = new List<ISpaceCraft>();
 
             Texture = new Bitmap(texturePath);
             PropellantMass = propellantMass;
+
+            EntryFlame = entryFlame;
         }
 
         public void InitializeController(string craftDirectory, EventManager eventManager)
@@ -244,6 +249,12 @@ namespace SpaceSim.Spacecrafts
 
         public virtual void UpdateAnimations(TimeStep timeStep)
         {
+            // Only use re-entry flames for separated bodies
+            if (EntryFlame != null && Children.Count == 0)
+            {
+                EntryFlame.Update(timeStep, Position, Velocity, Rotation, HeatingRate);
+            }
+
             foreach (IEngine engine in Engines)
             {
                 engine.Update(timeStep, IspMultiplier);
@@ -374,6 +385,11 @@ namespace SpaceSim.Spacecrafts
 
                 if (velocitySquared > 0)
                 {
+                    double speed = relativeVelocity.Length();
+
+                    // Heating
+                    HeatingRate = 1.83e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
+
                     relativeVelocity.Normalize();
 
                     double dragTerm = TotalDragCoefficient() * TotalDragArea();
@@ -394,6 +410,10 @@ namespace SpaceSim.Spacecrafts
 
                     AccelerationD += skinFriction / Mass;
                 }
+            }
+            else
+            {
+                HeatingRate = 0;
             }
         }
 
@@ -564,11 +584,26 @@ namespace SpaceSim.Spacecrafts
             // Saftey
             if (screenBounds.Width > RenderUtils.ScreenWidth * 500) return;
 
+            RenderAnimations(graphics, cameraBounds);
+
+            RenderShip(graphics, cameraBounds, screenBounds);
+        }
+
+        protected virtual void RenderAnimations(Graphics graphics, RectangleD cameraBounds)
+        {
             foreach (IEngine engine in Engines)
             {
                 engine.Draw(graphics, cameraBounds);
             }
 
+            if (EntryFlame != null)
+            {
+                EntryFlame.Draw(graphics, cameraBounds);   
+            }
+        }
+
+        protected virtual void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        {
             double drawingRotation = Rotation + Math.PI * 0.5;
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,

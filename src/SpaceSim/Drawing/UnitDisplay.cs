@@ -117,5 +117,17 @@
 
             return pressure.ToString("#,##0.0") + " Pa";
         }
+
+        public static string Heat(double heatingRate)
+        {
+            if (heatingRate > 1000)
+            {
+                heatingRate *= 0.001;
+
+                return heatingRate.ToString("#,##0.0") + " kW/m^2";
+            }
+
+            return heatingRate.ToString("#,##0.0") + " W/m^2";
+        }
     }
 }

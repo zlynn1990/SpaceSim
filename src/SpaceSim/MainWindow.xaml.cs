@@ -190,7 +190,8 @@ namespace SpaceSim
             };
 
             //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
-            _spaceCrafts = SpacecraftFactory.BuildF9SSTO(earth, ProfileDirectory);
+            //_spaceCrafts = SpacecraftFactory.BuildDragonV2Abort(earth, ProfileDirectory);
+            _spaceCrafts = SpacecraftFactory.BuildDragonV2Entry(earth, ProfileDirectory);
             //_spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
             //_spaceCrafts = SpacecraftFactory.BuildF9Dragon(earth, ProfileDirectory);
 
@@ -482,10 +483,13 @@ namespace SpaceSim
                     }
                 }
 
-                // Update spacecraft animations
-                foreach (ISpaceCraft spaceCraft in _spaceCrafts)
+                // Update spacecraft animations when update loops are low
+                if (timeStep.UpdateLoops < 16)
                 {
-                    spaceCraft.UpdateAnimations(timeStep);
+                    foreach (ISpaceCraft spaceCraft in _spaceCrafts)
+                    {
+                        spaceCraft.UpdateAnimations(timeStep);
+                    }   
                 }
 
                 // Update oribitng bodies
@@ -704,6 +708,8 @@ namespace SpaceSim
                     double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
 
                     graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 460);
+
+                    graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 490);
                 }
 
                 graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 80, 5);

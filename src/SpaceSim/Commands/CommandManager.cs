@@ -14,7 +14,8 @@ namespace SpaceSim.Commands
             Serializer = new XmlSerializer(typeof(List<Command>), new[]
             {
                 typeof (Ignition), typeof (Shutdown), typeof (Stage),
-                typeof (Throttle), typeof (Orient), typeof(Fairing), typeof(Retrograde)
+                typeof (Throttle), typeof (Orient), typeof(Fairing),
+                typeof(Retrograde), typeof(Prograde)
             });
         }
 
@@ -59,6 +60,10 @@ namespace SpaceSim.Commands
                     else if (contract is Retrograde)
                     {
                         commands.Add(new RetrogradeCommand(contract as Retrograde));
+                    }
+                    else if (contract is Prograde)
+                    {
+                        commands.Add(new ProgradeCommand(contract as Prograde));
                     }
                 }
 
