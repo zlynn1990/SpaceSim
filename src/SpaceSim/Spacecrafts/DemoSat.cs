@@ -64,7 +64,7 @@ namespace SpaceSim.Spacecrafts
 
         public override string ToString()
         {
-            return "SES9";
+            return "Thaicom-8";
         }
     }
 }
