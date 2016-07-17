@@ -191,8 +191,8 @@ namespace SpaceSim
 
             //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
             //_spaceCrafts = SpacecraftFactory.BuildDragonV2Abort(earth, ProfileDirectory);
-            _spaceCrafts = SpacecraftFactory.BuildDragonV2Entry(earth, ProfileDirectory);
-            //_spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
+            //_spaceCrafts = SpacecraftFactory.BuildDragonV2Entry(earth, ProfileDirectory);
+            _spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
             //_spaceCrafts = SpacecraftFactory.BuildF9Dragon(earth, ProfileDirectory);
 
             // Initialize the spacecraft controllers
@@ -202,7 +202,7 @@ namespace SpaceSim
             }
 
             // Start at nearly -Math.Pi / 2
-            _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.05, earth);
+            _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.5, earth);
 
             // Start downrange at ~300km
             var asds = new ASDS(-1.62026, 20, earth);
@@ -219,7 +219,7 @@ namespace SpaceSim
 
             _structures = new List<StructureBase>
             {
-                _strongback, //asds
+                _strongback, asds
             };
 
             _gravitationalBodies.Add(moon);
@@ -685,7 +685,7 @@ namespace SpaceSim
 
                 double targetVelocity = target.GetRelativeVelocity().Length();
 
-                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, false), font, brush, 5, 175);
+                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, true), font, brush, 5, 175);
                 graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 205);
 
                 graphics.DrawString("Apogee: " + UnitDisplay.Distance(apogee), font, brush, 5, 345);
