@@ -99,6 +99,20 @@ namespace SpaceSim.Drawing
         {
             var particleBounds = new List<RectangleF>();
 
+            float particleScale;
+
+            // Scale particle size with viewport width
+            if (cameraBounds.Width > 1000)
+            {
+                particleScale = 1;
+            }
+            else
+            {
+                particleScale = (float)(1.22e-6 * cameraBounds.Width * cameraBounds.Width - 4.8e-3 * cameraBounds.Width + 4.4);
+            }
+
+            float halfParticleScale = particleScale * 0.5f;
+
             foreach (Particle particle in _particles)
             {
                 if (particle.IsActive)
@@ -107,7 +121,9 @@ namespace SpaceSim.Drawing
                     {
                         PointF localPoint = RenderUtils.WorldToScreen(particle.Position, cameraBounds);
 
-                        particleBounds.Add(new RectangleF(localPoint.X - 0.85f, localPoint.Y - 0.85f, 1.7f, 1.7f));
+                        particleBounds.Add(new RectangleF(localPoint.X - halfParticleScale,
+                                                          localPoint.Y - halfParticleScale,
+                                                          particleScale, particleScale));
                     }
                 }
             }

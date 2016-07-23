@@ -9,7 +9,8 @@ namespace SpaceSim.Spacecrafts
 {
     interface ISpaceCraft : IGravitationalBody
     {
-        string ShortName { get; }
+        string CraftName { get; }
+        string CraftDirectory { get; }
 
         ISpaceCraft Parent { get; }
         List<ISpaceCraft> Children { get; }
@@ -31,7 +32,7 @@ namespace SpaceSim.Spacecrafts
 
         string CommandFileName { get; }
 
-        void InitializeController(string craftDirectory, EventManager eventManager);
+        void InitializeController(EventManager eventManager);
 
         void Stage();
         void DeployFairing();

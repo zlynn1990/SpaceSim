@@ -91,6 +91,8 @@ namespace SpaceSim.Orbits
             var proxyParent = new MassiveBodyProxy(DVector2.Zero, DVector2.Zero, parent);
             var proxySatellite = new SpaceCraftProxy(initialPosition, satellite.Velocity - parent.Velocity, satellite);
 
+            proxySatellite.SetGravitationalParent(proxyParent);
+
             int stepCount;
 
             double targetDt;

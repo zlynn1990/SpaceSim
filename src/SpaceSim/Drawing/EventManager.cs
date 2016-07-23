@@ -72,7 +72,7 @@ namespace SpaceSim.Drawing
             // Display each message
             foreach (EventMessage message in _eventMessages)
             {
-                string messageOutput = string.Format("{0} - {1}", message.SpaceCraft.ShortName, message.Message);
+                string messageOutput = string.Format("{0} - {1}", message.SpaceCraft, message.Message);
 
                 int alpha = 255;
 

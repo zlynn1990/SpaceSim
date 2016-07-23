@@ -39,7 +39,7 @@ namespace SpaceSim
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static string ProfileDirectory;
+        public static List<string> ProfileDirectories;
         public static bool FullScreen;
 
         private RenderingType _renderingType = RenderingType.OpenCLHardware;
@@ -189,16 +189,21 @@ namespace SpaceSim
                 _sun, mercury, venus, earth, moon, mars, jupiter, europa, saturn
             };
 
-            //_spaceCrafts = SpacecraftFactory.BuildFalconHeavy(earth, ProfileDirectory);
-            //_spaceCrafts = SpacecraftFactory.BuildDragonV2Abort(earth, ProfileDirectory);
-            //_spaceCrafts = SpacecraftFactory.BuildDragonV2Entry(earth, ProfileDirectory);
-            _spaceCrafts = SpacecraftFactory.BuildF9(earth, ProfileDirectory);
-            //_spaceCrafts = SpacecraftFactory.BuildF9Dragon(earth, ProfileDirectory);
+            _spaceCrafts = new List<ISpaceCraft>();
+
+            for (int i = 0; i < ProfileDirectories.Count; i++)
+            {
+                string profileDirectory = ProfileDirectories[i];
+
+                List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(earth, profileDirectory, i * 30);
+
+                _spaceCrafts.AddRange(spaceCraft);
+            }
 
             // Initialize the spacecraft controllers
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
             {
-                spaceCraft.InitializeController(ProfileDirectory, _eventManager);
+                spaceCraft.InitializeController(_eventManager);
             }
 
             // Start at nearly -Math.Pi / 2
@@ -685,7 +690,7 @@ namespace SpaceSim
 
                 double targetVelocity = target.GetRelativeVelocity().Length();
 
-                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, true), font, brush, 5, 175);
+                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, false), font, brush, 5, 175);
                 graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 205);
 
                 graphics.DrawString("Apogee: " + UnitDisplay.Distance(apogee), font, brush, 5, 345);

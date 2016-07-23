@@ -7,7 +7,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 {
     sealed class F9S2 : SpaceCraftBase
     {
-        public override string ShortName { get { return "F9 S2"; } }
+        public override string CraftName { get { return "F9 S2"; } }
 
         public override double DryMass { get { return 4000; } }
 
@@ -20,8 +20,10 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
         public override Color IconColor { get { return Color.White; } }
 
-        public F9S2(DVector2 position, DVector2 velocity, double stageOffset)
-            : base(position, velocity, 108185, "Textures/fh9S2.png")
+        public override string CommandFileName { get { return "F9S2.xml"; } }
+
+        public F9S2(string craftDirectory, DVector2 position, DVector2 velocity, double stageOffset)
+            : base(craftDirectory, position, velocity, 108185, "Textures/fh9S2.png")
         {
             StageOffset = new DVector2(0, stageOffset);
 
@@ -29,13 +31,6 @@ namespace SpaceSim.Spacecrafts.Falcon9
             {
                 new Merlin1DVac(this, new DVector2(0, Height * 0.3))
             };
-        }
-
-        public override string CommandFileName { get { return "F9S2.xml"; } }
-
-        public override string ToString()
-        {
-            return "Falcon 9 Second Stage";
         }
     }
 }

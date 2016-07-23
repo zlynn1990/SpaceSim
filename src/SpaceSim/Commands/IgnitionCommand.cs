@@ -17,7 +17,7 @@ namespace SpaceSim.Commands
             _engineIds = ignition.EngineIds;
         }
 
-        public override void Initialize(ISpaceCraft spaceCraft)
+        public override void Initialize(SpaceCraftBase spaceCraft)
         {
             if (_engineIds.Length > 0 && spaceCraft.Engines.Length > 0)
             {
@@ -53,14 +53,14 @@ namespace SpaceSim.Commands
             }
         }
 
-        public override void Finalize(ISpaceCraft spaceCraft)
+        public override void Finalize(SpaceCraftBase spaceCraft)
         {
             spaceCraft.SetThrottle(_throttle);
         }
 
-        public override void Update(double elapsedTime, ISpaceCraft spaceCraft)
+        public override void Update(double elapsedTime, SpaceCraftBase spaceCraft)
         {
-            double timeRatio = elapsedTime - StartTime;
+            double timeRatio = (elapsedTime - StartTime) / Duration;
 
             spaceCraft.SetThrottle(_throttle * timeRatio);
         }

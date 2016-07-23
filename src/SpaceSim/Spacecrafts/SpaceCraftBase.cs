@@ -15,10 +15,10 @@ namespace SpaceSim.Spacecrafts
 {
     abstract class SpaceCraftBase : GravitationalBodyBase, IAreodynamicBody, ISpaceCraft, IGdiRenderable
     {
-        public virtual string ShortName { get { return ToString(); } }
+        public abstract string CraftName { get; }
+        public string CraftDirectory { get; protected set; }
 
         public ISpaceCraft Parent { get; protected set; }
-
         public List<ISpaceCraft> Children { get; protected set; }
 
         public override double Mass
@@ -103,20 +103,25 @@ namespace SpaceSim.Spacecrafts
 
         protected ReEntryFlame EntryFlame;
 
-        protected SpaceCraftBase(DVector2 position, DVector2 velocity, double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
+        protected string MissionName;
+
+        protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
             : base(position, velocity, -Math.PI * 0.5)
         {
+            CraftDirectory = craftDirectory;
             Children = new List<ISpaceCraft>();
 
             Texture = new Bitmap(texturePath);
             PropellantMass = propellantMass;
 
             EntryFlame = entryFlame;
+
+            MissionName = craftDirectory.Substring(craftDirectory.LastIndexOf('\\') + 1);
         }
 
-        public void InitializeController(string craftDirectory, EventManager eventManager)
+        public void InitializeController(EventManager eventManager)
         {
-            string commandPath = Path.Combine(craftDirectory, CommandFileName);
+            string commandPath = Path.Combine(CraftDirectory, CommandFileName);
 
             if (File.Exists(commandPath))
             {
@@ -618,6 +623,11 @@ namespace SpaceSim.Spacecrafts
             graphics.DrawImage(Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
             graphics.ResetTransform();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} [{1}]", CraftName, MissionName);
         }
     }
 }

@@ -5,20 +5,20 @@ namespace SpaceSim.Commands
 {
     class FairingCommand : CommandBase
     {
-        public FairingCommand(Fairing stage)
-            : base(stage.StartTime, stage.Duration)
+        public FairingCommand(Fairing fairing)
+            : base(fairing.StartTime, fairing.Duration)
         {
         }
 
-        public override void Initialize(ISpaceCraft spaceCraft)
+        public override void Initialize(SpaceCraftBase spaceCraft)
         {
             EventManager.AddMessage("Fairing Seperation", spaceCraft);
 
             spaceCraft.DeployFairing();
         }
 
-        public override void Finalize(ISpaceCraft spaceCraft) { }
+        public override void Finalize(SpaceCraftBase spaceCraft) { }
 
-        public override void Update(double elapsedTime, ISpaceCraft spaceCraft) { }
+        public override void Update(double elapsedTime, SpaceCraftBase spaceCraft) { }
     }
 }

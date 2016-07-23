@@ -13,9 +13,9 @@ namespace SpaceSim.Controllers
 
         public double ElapsedTime { get; private set; }
 
-        protected ISpaceCraft SpaceCraft;
+        protected SpaceCraftBase SpaceCraft;
 
-        public SimpleFlightController(ISpaceCraft spaceCraft)
+        public SimpleFlightController(SpaceCraftBase spaceCraft)
         {
             SpaceCraft = spaceCraft;
         }

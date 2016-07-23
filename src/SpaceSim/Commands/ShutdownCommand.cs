@@ -17,7 +17,7 @@ namespace SpaceSim.Commands
             _engineIds = shutdown.EngineIds;
         }
 
-        public override void Initialize(ISpaceCraft spaceCraft)
+        public override void Initialize(SpaceCraftBase spaceCraft)
         {
             if (_engineIds == null)
             {
@@ -32,7 +32,7 @@ namespace SpaceSim.Commands
             _currentThrottle = spaceCraft.Throttle;
         }
 
-        public override void Finalize(ISpaceCraft spaceCraft)
+        public override void Finalize(SpaceCraftBase spaceCraft)
         {
             // Shutdown all engines
             if (_engineIds == null)
@@ -52,9 +52,9 @@ namespace SpaceSim.Commands
             }
         }
 
-        public override void Update(double elapsedTime, ISpaceCraft spaceCraft)
+        public override void Update(double elapsedTime, SpaceCraftBase spaceCraft)
         {
-            double shutdownRatio = (elapsedTime - StartTime) * 2;
+            double shutdownRatio = (elapsedTime - StartTime) / Duration * 2;
 
             spaceCraft.SetThrottle(_currentThrottle * (1 - shutdownRatio), _engineIds);
         }

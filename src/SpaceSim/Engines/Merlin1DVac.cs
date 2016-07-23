@@ -21,6 +21,11 @@ namespace SpaceSim.Engines
             return 274 * Throttle * 0.01;
         }
 
+        public override IEngine Clone()
+        {
+            return new Merlin1DVac(Parent, Offset);
+        }
+
         public override string ToString()
         {
             return "Merlin1D Vac";

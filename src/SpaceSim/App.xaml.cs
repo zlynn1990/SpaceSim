@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
@@ -15,36 +16,11 @@ namespace SpaceSim
 
             SpaceSim.MainWindow.FullScreen = false;
 
-            // TODO this is bad hack because im too lazy to use env variables right now
-            //SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "Dragon Entry");
-            SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, "Thaicom-8");
-
-            // Parse arguments
-            for (int i = 0; i < e.Args.Length; i++)
+            SpaceSim.MainWindow.ProfileDirectories = new List<string>
             {
-                if (e.Args[i].Equals("-w", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    SpaceSim.MainWindow.FullScreen = false;
-                }
-                else if (Directory.Exists(Path.Combine(profileDirectory, e.Args[i])))
-                {
-                    SpaceSim.MainWindow.ProfileDirectory = Path.Combine(profileDirectory, e.Args[i]);
-                }
-            }
-            
-            // If no profile directory was specified find a default locally or further up the folder structure
-            if (string.IsNullOrEmpty(SpaceSim.MainWindow.ProfileDirectory))
-            {
-                string[] profileDirectories = Directory.GetDirectories(profileDirectory);
-
-                if (profileDirectories.Length == 0)
-                {
-                    throw new Exception("No flight profiles cound be found!");
-                }
-
-                // Default
-                SpaceSim.MainWindow.ProfileDirectory = profileDirectories[0];
-            }
+                //Path.Combine(profileDirectory, "Orbcomm-OG2"),
+                Path.Combine(profileDirectory, "CRS-9"),
+            };
         }
 
         private string DetectProfileDirectory()
