@@ -21,9 +21,9 @@ namespace SpaceSim.Commands
             EventManager = eventManager;
         }
 
-        public abstract void Initialize(ISpaceCraft spaceCraft);
-        public abstract void Finalize(ISpaceCraft spaceCraft);
+        public abstract void Initialize(SpaceCraftBase spaceCraft);
+        public abstract void Finalize(SpaceCraftBase spaceCraft);
 
-        public abstract void Update(double elapsedTime, ISpaceCraft spaceCraft);
+        public abstract void Update(double elapsedTime, SpaceCraftBase spaceCraft);
     }
 }

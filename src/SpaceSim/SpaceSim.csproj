@@ -63,11 +63,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AutoLandCommand.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\FairingCommand.cs" />
     <Compile Include="Commands\ProgradeCommand.cs" />
     <Compile Include="Commands\RetrogradeCommand.cs" />
+    <Compile Include="Contracts\Commands\AutoLand.cs" />
     <Compile Include="Contracts\Commands\Command.cs" />
     <Compile Include="Contracts\Commands\Fairing.cs" />
     <Compile Include="Contracts\Commands\Ignition.cs" />

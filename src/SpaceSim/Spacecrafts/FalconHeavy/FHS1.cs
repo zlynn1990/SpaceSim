@@ -7,7 +7,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 {
     sealed class FHS1 : SpaceCraftBase
     {
-        public override string ShortName { get { return "FH Core "; } }
+        public override string CraftName { get { return "FH Core "; } }
 
         public override double DryMass { get { return 25600; } }
 
@@ -25,8 +25,10 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
         public override Color IconColor { get { return Color.White; } }
 
-        public FHS1(DVector2 position, DVector2 velocity)
-            : base(position, velocity, 398887, "Textures/fh9S1.png")
+        public override string CommandFileName { get { return "FHCore.xml"; } }
+
+        public FHS1(string craftDirectory, DVector2 position, DVector2 velocity)
+            : base(craftDirectory, position, velocity, 398887, "Textures/fh9S1.png")
         {
             StageOffset = new DVector2(0, 25.5);
 
@@ -43,14 +45,6 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
         }
 
         public void DeployFins() { }
-
         public void DeployLegs() { }
-
-        public override string CommandFileName { get { return "FHCore.xml"; } }
-
-        public override string ToString()
-        {
-            return "Falcon Heavy First Stage";
-        }
     }
 }

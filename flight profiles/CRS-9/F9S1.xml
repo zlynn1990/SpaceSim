@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>50</StartTime>
+    <Duration>10</Duration>
+    <TargetThrottle>83</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>80</StartTime>
+    <Duration>1</Duration>
+    <TargetThrottle>100</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>141.5</StartTime>
+    <Duration>1</Duration>
+  </Command>
+  <Command xsi:type="Orient">
+    <StartTime>147</StartTime>
+    <Duration>14</Duration>
+    <TargetOrientation>-3.25</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>161</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>77</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>211</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>230</StartTime>
+    <Duration>260</Duration>
+    <InitialAdjustmentTime>50</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>390</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>408</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="AutoLand">
+    <StartTime>467</StartTime>
+    <Duration>100</Duration>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+</ArrayOfCommand>

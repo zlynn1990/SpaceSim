@@ -7,7 +7,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 {
     sealed class FHBooster : SpaceCraftBase
     {
-        public override string ShortName { get { return "FH Booster " + Id; } }
+        public override string CraftName { get { return "FH Booster " + Id; } }
 
         public int Id { get; private set; }
 
@@ -27,8 +27,13 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
         public override Color IconColor { get { return Color.White; } }
 
-        public FHBooster(int id, DVector2 position, DVector2 velocity)
-            : base(position, velocity, 398887, "Textures/fhBooster" + id + ".png")
+        public override string CommandFileName
+        {
+            get { return Id == 1 ? "FHLeftBooster.xml" : "FHRightBooster.xml"; }
+        }
+
+        public FHBooster(string craftDirectory, int id, DVector2 position, DVector2 velocity)
+            : base(craftDirectory, position, velocity, 398887, "Textures/fhBooster" + id + ".png")
         {
             Id = id;
 
@@ -51,16 +56,6 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
                 Engines[i] = new Merlin1D(i, this, offset);
             }
-        }
-
-        public override string CommandFileName
-        {
-            get { return Id == 1 ? "FHLeftBooster.xml" : "FHRightBooster.xml"; }
-        }
-
-        public override string ToString()
-        {
-            return Id == 1 ? "Falcon Heavy Left Booster" : "Falcon Heavy Right Booster";
         }
     }
 }

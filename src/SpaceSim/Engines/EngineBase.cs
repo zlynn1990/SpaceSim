@@ -13,7 +13,8 @@ namespace SpaceSim.Engines
 
         public double Throttle { get; protected set; }
 
-        private ISpaceCraft _parent;
+        protected ISpaceCraft Parent;
+        protected DVector2 Offset;
 
         private double _offsetLength;
         private double _offsetRotation;
@@ -22,7 +23,8 @@ namespace SpaceSim.Engines
 
         protected EngineBase(ISpaceCraft parent, DVector2 offset, EngineFlame flame)
         {
-            _parent = parent;
+            Parent = parent;
+            Offset = offset;
 
             _offsetLength = offset.Length();
             _offsetRotation = offset.Angle() - Math.PI / 2.0;
@@ -51,15 +53,17 @@ namespace SpaceSim.Engines
 
         public abstract double MassFlowRate();
 
+        public abstract IEngine Clone();
+
         public void Update(TimeStep timeStep, double ispMultiplier)
         {
-            double rotation = _parent.Rotation -_offsetRotation;
+            double rotation = Parent.Rotation -_offsetRotation;
 
             DVector2 offset = new DVector2(Math.Cos(rotation), Math.Sin(rotation)) * _offsetLength;
 
-            double throttle = (IsActive && _parent.PropellantMass > 0) ? Throttle : 0;
+            double throttle = (IsActive && Parent.PropellantMass > 0) ? Throttle : 0;
 
-            _engineFlame.Update(timeStep, _parent.Position - offset, _parent.Velocity, _parent.Rotation, throttle, ispMultiplier);
+            _engineFlame.Update(timeStep, Parent.Position - offset, Parent.Velocity, Parent.Rotation, throttle, ispMultiplier);
         }
 
         public void Draw(Graphics graphics, RectangleD cameraBounds)

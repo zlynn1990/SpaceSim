@@ -10,15 +10,15 @@ namespace SpaceSim.Commands
         {
         }
 
-        public override void Initialize(ISpaceCraft spaceCraft)
+        public override void Initialize(SpaceCraftBase spaceCraft)
         {
             spaceCraft.Stage();
 
             EventManager.AddMessage("Staging", spaceCraft);
         }
 
-        public override void Finalize(ISpaceCraft spaceCraft) { }
+        public override void Finalize(SpaceCraftBase spaceCraft) { }
 
-        public override void Update(double elapsedTime, ISpaceCraft spaceCraft) { }
+        public override void Update(double elapsedTime, SpaceCraftBase spaceCraft) { }
     }
 }

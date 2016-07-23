@@ -8,6 +8,8 @@ namespace SpaceSim.Spacecrafts.DragonV1
 {
     sealed class Dragon : SpaceCraftBase
     {
+        public override string CraftName { get { return "Dragon"; } }
+
         public override double Width { get { return 3.7; } }
         public override double Height { get { return 4.194; } }
 
@@ -38,12 +40,14 @@ namespace SpaceSim.Spacecrafts.DragonV1
 
         public override Color IconColor { get { return Color.White; } }
 
+        public override string CommandFileName { get { return "dragon.xml"; } }
+
         private bool _drogueDeployed;
         private bool _parachuteDeployed;
         private double _parachuteRatio;
 
-        public Dragon(DVector2 position, DVector2 velocity)
-            : base(position, velocity, 1388, "Textures/dragon.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
+        public Dragon(string craftDirectory, DVector2 position, DVector2 velocity)
+            : base(craftDirectory, position, velocity, 1388, "Textures/dragon.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
         {
             Engines = new IEngine[0];
         }
@@ -105,13 +109,6 @@ namespace SpaceSim.Spacecrafts.DragonV1
 
             RenderShip(graphics, cameraBounds, screenBounds);
             RenderAnimations(graphics, cameraBounds);
-        }
-
-        public override string CommandFileName { get { return "dragon.xml"; } }
-
-        public override string ToString()
-        {
-            return "Dragon";
         }
     }
 }

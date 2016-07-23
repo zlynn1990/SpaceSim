@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <Payload xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <DryMass>2835</DryMass>
-  <PropellantMass>2436</PropellantMass>
+  <DryMass>2000</DryMass>
   <CraftType>GenericF9</CraftType>
 </Payload>

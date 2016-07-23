@@ -22,15 +22,41 @@ namespace SpaceSim.Spacecrafts
             PayloadSerializer = new XmlSerializer(typeof(Payload));
         }
 
-        public static List<ISpaceCraft> BuildF9(IMassiveBody planet, string path)
+        public static List<ISpaceCraft> BuildSpaceCraft(IMassiveBody planet, string craftDirectory, float offset = 0)
         {
-            Payload payload = GetPayload(path);
+            Payload payload = GetPayload(craftDirectory);
 
-            var demoSat = new DemoSat(planet.Position + new DVector2(0, -planet.SurfaceRadius),
+            if (string.IsNullOrEmpty(payload.CraftType))
+            {
+                throw new Exception("Please specify a craftType in the payload.xml!");
+            }
+
+            switch (payload.CraftType)
+            {
+                case "GenericF9":
+                    return BuildF9(planet, payload, craftDirectory, offset);
+                case "DragonF9":
+                    return BuildF9Dragon(planet, craftDirectory, offset);
+                case "F9SSTO":
+                    return BuildF9SSTO(planet, craftDirectory);
+                case "DragonAbort":
+                    return BuildDragonV2Abort(planet, payload, craftDirectory);
+                case "DragonEntry":
+                    return BuildDragonV2Entry(planet, payload, craftDirectory);
+                case "GenericFH":
+                    return BuildFalconHeavy(planet, payload, craftDirectory, offset);
+                    default:
+                    throw new Exception("Unkown craftType: " + payload.CraftType);
+            }
+        }
+
+        private static List<ISpaceCraft> BuildF9(IMassiveBody planet, Payload payload, string craftDirectory, float offset = 0)
+        {
+            var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
                                       planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
 
-            var f9S1 = new F9S1(DVector2.Zero, DVector2.Zero);
-            var f9S2 = new F9S2(DVector2.Zero, DVector2.Zero, 13.3);
+            var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 13.3);
 
             demoSat.AddChild(f9S2);
             f9S2.SetParent(demoSat);
@@ -43,13 +69,13 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
-        public static List<ISpaceCraft> BuildF9Dragon(IMassiveBody planet, string path)
+        private static List<ISpaceCraft> BuildF9Dragon(IMassiveBody planet, string craftDirectory, float offset = 0)
         {
-            var dragon = new Dragon(planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity);
-            var dragonTrunk = new DragonTrunk(DVector2.Zero, DVector2.Zero);
+            var dragon = new Dragon(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius), planet.Velocity);
+            var dragonTrunk = new DragonTrunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
-            var f9S1 = new F9S1(DVector2.Zero, DVector2.Zero);
-            var f9S2 = new F9S2(DVector2.Zero, DVector2.Zero, 8.3);
+            var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 8.3);
 
             dragon.AddChild(dragonTrunk);
             dragonTrunk.SetParent(dragon);
@@ -64,19 +90,20 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
-        public static List<ISpaceCraft> BuildF9SSTO(IMassiveBody planet, string path)
+        private static List<ISpaceCraft> BuildF9SSTO(IMassiveBody planet, string craftDirectory)
         {
-            var f9SSTO = new F9SSTO(planet.Position + new DVector2(0, -planet.SurfaceRadius),
+            var f9SSTO = new F9SSTO(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius),
                                 planet.Velocity + new DVector2(-400, 0));
 
             return new List<ISpaceCraft> { f9SSTO };
         }
 
-        public static List<ISpaceCraft> BuildDragonV2Abort(IMassiveBody planet, string path)
+        private static List<ISpaceCraft> BuildDragonV2Abort(IMassiveBody planet, Payload payload, string craftDirectory)
         {
+            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius),
+                                                planet.Velocity, payload.DryMass, payload.PropellantMass);
 
-            var dragon = new DragonV2.DragonV2(planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity);
-            var dragonTrunk = new DragonV2Trunk(DVector2.Zero, DVector2.Zero);
+            var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
             dragon.AddChild(dragonTrunk);
             dragonTrunk.SetParent(dragon);
@@ -84,10 +111,12 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft> { dragon, dragonTrunk };
         }
 
-        public static List<ISpaceCraft> BuildDragonV2Entry(IMassiveBody planet, string path)
+        private static List<ISpaceCraft> BuildDragonV2Entry(IMassiveBody planet, Payload payload, string craftDirectory)
         {
-            var dragon = new DragonV2.DragonV2(planet.Position + new DVector2(planet.SurfaceRadius * 0.75, planet.SurfaceRadius * -0.75), planet.Velocity + new DVector2(-6000, -5100));
-            var dragonTrunk = new DragonV2Trunk(DVector2.Zero, DVector2.Zero);
+            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius*0.75, planet.SurfaceRadius*-0.75),
+                                               planet.Velocity + new DVector2(-6000, -5100), payload.DryMass, payload.PropellantMass);
+
+            var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
             dragon.AddChild(dragonTrunk);
             dragonTrunk.SetParent(dragon);
@@ -97,18 +126,16 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft> { dragon, dragonTrunk };
         }
 
-        public static List<ISpaceCraft> BuildFalconHeavy(IMassiveBody planet, string path)
+        private static List<ISpaceCraft> BuildFalconHeavy(IMassiveBody planet, Payload payload, string craftDirectory, float offset = 0)
         {
-            Payload payload = GetPayload(path);
-
-            var demoSat = new DemoSat(planet.Position + new DVector2(0, -planet.SurfaceRadius),
+            var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
                                       planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
 
-            var fhS1 = new FHS1(DVector2.Zero, DVector2.Zero);
-            var fhS2 = new FHS2(DVector2.Zero, DVector2.Zero);
+            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero);
 
-            var fhLeftBooster = new FHBooster(1, DVector2.Zero, DVector2.Zero);
-            var fhRightBooster = new FHBooster(2, DVector2.Zero, DVector2.Zero);
+            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
 
             demoSat.AddChild(fhS2);
             fhS2.SetParent(demoSat);

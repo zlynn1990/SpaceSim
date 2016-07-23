@@ -18,20 +18,20 @@ namespace SpaceSim.Commands
             _displayOrientation = orient.TargetOrientation + 90;
         }
 
-        public override void Initialize(ISpaceCraft spaceCraft)
+        public override void Initialize(SpaceCraftBase spaceCraft)
         {
             EventManager.AddMessage(string.Format("Pitching to {0} degrees", _displayOrientation.ToString("0.0")), spaceCraft);
 
             _curentOrientation = spaceCraft.Rotation;
         }
 
-        public override void Finalize(ISpaceCraft spaceCraft)
+        public override void Finalize(SpaceCraftBase spaceCraft)
         {
             spaceCraft.SetRotation(_targetOrientation);
         }
 
         // Interpolate between current and target orientation over the duration
-        public override void Update(double elapsedTime, ISpaceCraft spaceCraft)
+        public override void Update(double elapsedTime, SpaceCraftBase spaceCraft)
         {
             double ratio = (elapsedTime - StartTime) / Duration;
 

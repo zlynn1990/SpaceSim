@@ -14,20 +14,20 @@ namespace SpaceSim.Commands
             _targetThrottle = throttle.TargetThrottle;
         }
 
-        public override void Initialize(ISpaceCraft spaceCraft)
+        public override void Initialize(SpaceCraftBase spaceCraft)
         {
             EventManager.AddMessage(string.Format("Throttling to {0}%", _targetThrottle.ToString("0.0")), spaceCraft);
 
             _currentThrottle = spaceCraft.Throttle;
         }
 
-        public override void Finalize(ISpaceCraft spaceCraft)
+        public override void Finalize(SpaceCraftBase spaceCraft)
         {
             spaceCraft.SetThrottle(_targetThrottle);
         }
 
         // Interpolate between current and target throttle over the duration
-        public override void Update(double elapsedTime, ISpaceCraft spaceCraft)
+        public override void Update(double elapsedTime, SpaceCraftBase spaceCraft)
         {
             double ratio = (elapsedTime - StartTime) / Duration;
 

@@ -7,7 +7,7 @@ namespace SpaceSim.Engines
     class Merlin1D : EngineBase
     {
         public Merlin1D(int id, ISpaceCraft parent, DVector2 offset)
-            : base( parent, offset, new EngineFlame(id, 100, 2, 0.2, (id >0) ? 0.6 : 0.2, 0.1))
+            : base(parent, offset, new EngineFlame(id, 100, 2, 0.2, (id >0) ? 0.6 : 0.2, 0.1))
         {
         }
 
@@ -19,6 +19,11 @@ namespace SpaceSim.Engines
         public override double MassFlowRate()
         {
             return 273.8 * Throttle * 0.01;
+        }
+
+        public override IEngine Clone()
+        {
+            return new Merlin1D(0, Parent, Offset);
         }
 
         public override string ToString()

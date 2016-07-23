@@ -15,7 +15,7 @@ namespace SpaceSim.Commands
             _adjustmentTime = prograde.InitialAdjustmentTime;
         }
 
-        public override void Initialize(ISpaceCraft spaceCraft)
+        public override void Initialize(SpaceCraftBase spaceCraft)
         {
             EventManager.AddMessage("Maneuvering to prograde", spaceCraft);
 
@@ -23,10 +23,10 @@ namespace SpaceSim.Commands
         }
 
         // Nothing to finalize
-        public override void Finalize(ISpaceCraft spaceCraft) { }
+        public override void Finalize(SpaceCraftBase spaceCraft) { }
 
         // Interpolate between current and target orientation over the duration
-        public override void Update(double elapsedTime, ISpaceCraft spaceCraft)
+        public override void Update(double elapsedTime, SpaceCraftBase spaceCraft)
         {
             DVector2 prograde = spaceCraft.GetRelativeVelocity();
             prograde.Normalize();

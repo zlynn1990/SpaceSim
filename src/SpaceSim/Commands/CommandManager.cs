@@ -15,7 +15,7 @@ namespace SpaceSim.Commands
             {
                 typeof (Ignition), typeof (Shutdown), typeof (Stage),
                 typeof (Throttle), typeof (Orient), typeof(Fairing),
-                typeof(Retrograde), typeof(Prograde)
+                typeof(Retrograde), typeof(Prograde), typeof(AutoLand)
             });
         }
 
@@ -64,6 +64,10 @@ namespace SpaceSim.Commands
                     else if (contract is Prograde)
                     {
                         commands.Add(new ProgradeCommand(contract as Prograde));
+                    }
+                    else if (contract is AutoLand)
+                    {
+                        commands.Add(new AutoLandCommand(contract as AutoLand));
                     }
                 }
 

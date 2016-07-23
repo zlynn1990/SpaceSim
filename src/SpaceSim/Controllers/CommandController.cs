@@ -7,20 +7,16 @@ namespace SpaceSim.Controllers
 {
     class CommandController : SimpleFlightController
     {
-        private List<CommandBase> _commands;
-
         private List<CommandBase> _queuedCommands;
         private List<CommandBase> _activeCommands;
 
-        public CommandController(List<CommandBase> commands, ISpaceCraft spaceCraft, EventManager eventManager)
+        public CommandController(List<CommandBase> commands, SpaceCraftBase spaceCraft, EventManager eventManager)
             : base(spaceCraft)
         {
-            _commands = commands;
-
             _queuedCommands = new List<CommandBase>();
             _activeCommands = new List<CommandBase>();
 
-            foreach (CommandBase command in _commands)
+            foreach (CommandBase command in commands)
             {
                 _queuedCommands.Add(command);
 
