@@ -6,7 +6,7 @@ using VectorMath;
 
 namespace SpaceSim.Drawing
 {
-    interface IGpuRenderable : IIconRenderable
+    interface IGpuRenderable : IMapRenderable
     {
         #region OpenCL
 

@@ -40,7 +40,7 @@ namespace SpaceSim.Orbits
             _points.Add(point);
         }
 
-        public void Draw(Graphics graphics, RectangleD cameraBounds, IIconRenderable orbitingBody)
+        public void Draw(Graphics graphics, RectangleD cameraBounds, IMapRenderable orbitingBody)
         {
             var traceBounds = new List<RectangleF>();
 

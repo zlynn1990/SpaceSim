@@ -208,9 +208,10 @@ namespace SpaceSim
 
             // Start at nearly -Math.Pi / 2
             _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.5, earth);
+            var strongback2 = new Strongback(-1.57079, _spaceCrafts[0].TotalHeight * 0.5, earth);
 
             // Start downrange at ~300km
-            var asds = new ASDS(-1.62026, 20, earth);
+            //var asds = new ASDS(-1.62026, 20, earth);
 
             _gravitationalBodies = new List<IGravitationalBody>
             {
@@ -224,7 +225,7 @@ namespace SpaceSim
 
             _structures = new List<StructureBase>
             {
-                _strongback, asds
+                _strongback,strongback2// asds
             };
 
             _gravitationalBodies.Add(moon);
@@ -324,42 +325,14 @@ namespace SpaceSim
 
             if (e.Key == Key.OemCloseBrackets && !_isPaused)
             {
-                _targetIndex++;
-
-                if (_targetIndex == _gravitationalBodies.Count)
-                {
-                    _targetIndex = 0;
-                }
-
-                while (_gravitationalBodies[_targetIndex] is ISpaceCraft)
-                {
-                    var nextCraft = _gravitationalBodies[_targetIndex] as ISpaceCraft;
-
-                    if (nextCraft != null && nextCraft.Parent == null) break;
-
-                    _targetIndex++;
-                }
+                _targetIndex = GravitationalBodyIterator.Next(_targetIndex, _gravitationalBodies);
 
                 _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
             }
 
             if (e.Key == Key.OemOpenBrackets && !_isPaused)
             {
-                _targetIndex--;
-
-                if (_targetIndex < 0)
-                {
-                    _targetIndex = _gravitationalBodies.Count - 1;
-                }
-
-                while (_gravitationalBodies[_targetIndex] is ISpaceCraft)
-                {
-                    var nextCraft = _gravitationalBodies[_targetIndex] as ISpaceCraft;
-
-                    if (nextCraft != null && nextCraft.Parent == null) break;
-
-                    _targetIndex--;
-                }
+                _targetIndex = GravitationalBodyIterator.Prev(_targetIndex, _gravitationalBodies);
 
                 _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
             }
@@ -611,19 +584,14 @@ namespace SpaceSim
                 }
             }
 
-            // Draw all orbit traces, spacecrafts, and GDI objects
-            using (var graphics = Graphics.FromImage(_imageBitmap))
-            {
-                graphics.SmoothingMode = SmoothingMode.HighSpeed;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-                graphics.CompositingQuality = CompositingQuality.HighSpeed;
-                graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+            double currentApogee = 0;
+            double currentPerigee = 0;
 
+            // Draw all orbit traces, spacecrafts, and GDI objects
+            using (Graphics graphics = RenderUtils.GetContext(false, _imageBitmap))
+            {
                 RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(0, -10e12), new DVector2(0, 10e12), Color.FromArgb(40, 255, 255, 255));
                 RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(-10e12, 0), new DVector2(10e12, 0), Color.FromArgb(40, 255, 255, 255));
-
-                double apogee = 0;
-                double perigee = 0;
 
                 // Draw orbit traces
                 foreach (MassiveBodyBase massiveBody in _massiveBodies)
@@ -634,8 +602,8 @@ namespace SpaceSim
 
                     if (target == massiveBody)
                     {
-                        apogee = trace.Apogee;
-                        perigee = trace.Perigee;
+                        currentApogee = trace.Apogee;
+                        currentPerigee = trace.Perigee;
                     }
 
                     trace.Draw(graphics, cameraBounds, massiveBody);
@@ -667,12 +635,35 @@ namespace SpaceSim
 
                     if (target == spaceCraft)
                     {
-                        apogee = trace.Apogee;
-                        perigee = trace.Perigee;
+                        currentApogee = trace.Apogee;
+                        currentPerigee = trace.Perigee;
                     }
 
                     trace.Draw(graphics, cameraBounds, spaceCraft);
                 }
+            }
+
+            // Draw all GUI elements (higher quality)
+            using (Graphics graphics = RenderUtils.GetContext(true, _imageBitmap))
+            {
+                double throttle = 0;
+
+                if (targetSpaceCraft != null)
+                {
+                    throttle = targetSpaceCraft.Throttle;
+                }
+
+                foreach (IGauge gauge in _gauges)
+                {
+                    if (targetSpaceCraft != null)
+                    {
+                        gauge.Update(_gravitationalBodies[_targetIndex].Rotation, throttle / 100.0);
+                    }
+
+                    gauge.Render(graphics, cameraBounds);
+                }
+
+                _eventManager.Render(graphics);
 
                 var elapsedTime = TimeSpan.FromSeconds(_totalElapsedSeconds);
 
@@ -686,15 +677,15 @@ namespace SpaceSim
 
                 graphics.DrawString("Altitude: " + UnitDisplay.Distance(altitude), font, brush, 5, 90);
 
-                graphics.DrawString(string.Format("Target: {0}", target), font, brush, RenderUtils.ScreenWidth / 2.0f, 5, new StringFormat {Alignment = StringAlignment.Center});
+                graphics.DrawString(string.Format("Target: {0}", target), font, brush, RenderUtils.ScreenWidth / 2.0f, 5, new StringFormat { Alignment = StringAlignment.Center });
 
                 double targetVelocity = target.GetRelativeVelocity().Length();
 
                 graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, false), font, brush, 5, 175);
                 graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 205);
 
-                graphics.DrawString("Apogee: " + UnitDisplay.Distance(apogee), font, brush, 5, 345);
-                graphics.DrawString("Perigee: " + UnitDisplay.Distance(perigee), font, brush, 5, 375);
+                graphics.DrawString("Apogee: " + UnitDisplay.Distance(currentApogee), font, brush, 5, 345);
+                graphics.DrawString("Perigee: " + UnitDisplay.Distance(currentPerigee), font, brush, 5, 375);
 
                 graphics.DrawString("Mass: " + UnitDisplay.Mass(target.Mass), font, brush, 5, 260);
 
@@ -718,31 +709,6 @@ namespace SpaceSim
                 }
 
                 graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 80, 5);
-            }
-
-            // Draw all GUI elements (higher quality)
-            using (var graphics = Graphics.FromImage(_imageBitmap))
-            {
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-
-                double throttle = 0;
-
-                if (targetSpaceCraft != null)
-                {
-                    throttle = targetSpaceCraft.Throttle;
-                }
-
-                foreach (IGauge gauge in _gauges)
-                {
-                    if (targetSpaceCraft != null)
-                    {
-                        gauge.Update(_gravitationalBodies[_targetIndex].Rotation, throttle / 100.0);
-                    }
-
-                    gauge.Render(graphics, cameraBounds);
-                }
-
-                _eventManager.Render(graphics);
             }
         }
 

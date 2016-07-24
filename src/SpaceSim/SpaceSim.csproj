@@ -66,12 +66,12 @@
     <Compile Include="Commands\AutoLandCommand.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="Commands\FairingCommand.cs" />
+    <Compile Include="Commands\DeployCommand.cs" />
     <Compile Include="Commands\ProgradeCommand.cs" />
     <Compile Include="Commands\RetrogradeCommand.cs" />
     <Compile Include="Contracts\Commands\AutoLand.cs" />
     <Compile Include="Contracts\Commands\Command.cs" />
-    <Compile Include="Contracts\Commands\Fairing.cs" />
+    <Compile Include="Contracts\Commands\Deploy.cs" />
     <Compile Include="Contracts\Commands\Ignition.cs" />
     <Compile Include="Contracts\Commands\Orient.cs" />
     <Compile Include="Contracts\Commands\Prograde.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="Drawing\GpuClear.cs" />
     <Compile Include="Drawing\IGdiRenderable.cs" />
     <Compile Include="Drawing\IGpuRenderable.cs" />
-    <Compile Include="Drawing\IIconRenderable.cs" />
+    <Compile Include="Drawing\IMapRenderable.cs" />
     <Compile Include="Drawing\Particle.cs" />
     <Compile Include="Drawing\ReEntryFlame.cs" />
     <Compile Include="Drawing\RenderUtils.cs" />
@@ -111,6 +111,7 @@
     <Compile Include="Gauges\Scale.cs" />
     <Compile Include="Gauges\ThrustGauge.cs" />
     <Compile Include="Kernels\ClearKernel.cs" />
+    <Compile Include="Physics\GravitationalBodyIterator.cs" />
     <Compile Include="Physics\IAreodynamicBody.cs" />
     <Compile Include="Physics\IGravitationalBody.cs" />
     <Compile Include="Physics\GravitationalBodyBase.cs" />
@@ -145,6 +146,8 @@
     <Compile Include="Spacecrafts\Falcon9SSTO\F9SSTO.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S2.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\GridFin.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\LandingLeg.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
@@ -229,6 +232,9 @@
     <Content Include="Textures\f9S1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\f9S1Soot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\f9ssto.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -245,6 +251,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\fhBooster2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\gridFinLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\gridFinRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\landingLegLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\landingLegRight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\strongback.png">

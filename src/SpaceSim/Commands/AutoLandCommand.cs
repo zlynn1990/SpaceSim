@@ -58,11 +58,9 @@ namespace SpaceSim.Commands
                 // Update required this iteration
                 if (t > 1.0 / UpdateRate)
                 {
-                    double relativeAltitude = spaceCraft.GetRelativeAltitude();
-
                     PredictTargetThrottle(spaceCraft);
 
-                    if (relativeAltitude <= spaceCraft.Height * 0.05)
+                    if (spaceCraft.OnGround)
                     {
                         _landed = true;
 
@@ -120,7 +118,7 @@ namespace SpaceSim.Commands
 
                     proxySatellite.Update(0.02);
 
-                    if (proxySatellite.Altitude <= spaceCraft.Height * 0.6)
+                    if (proxySatellite.Altitude <= spaceCraft.Height * 0.65)
                     {
                         if (proxySatellite.RelativeVelocity.Length() < lowestVelocity.Length())
                         {

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Command xsi:type="Ignition">
-    <StartTime>0</StartTime>
+    <StartTime>0.01</StartTime>
     <Duration>0.2</Duration>
     <Throttle>95</Throttle>
     <EngineIds>
@@ -43,12 +43,12 @@
   <Command xsi:type="Orient">
     <StartTime>160</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-6</TargetOrientation>
+    <TargetOrientation>-5.3</TargetOrientation>
   </Command>
   <Command xsi:type="Ignition">
     <StartTime>228</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>90</Throttle>
+    <Throttle>90.7</Throttle>
     <EngineIds>
       <int>0</int>
       <int>4</int>
@@ -61,13 +61,17 @@
   </Command>
   <Command xsi:type="Retrograde">
     <StartTime>270</StartTime>
-    <Duration>310</Duration>
+    <Duration>295</Duration>
     <InitialAdjustmentTime>50</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Deploy">
+	<Part>Grid Fins</Part>
+    <StartTime>340</StartTime>
   </Command>
   <Command xsi:type="Ignition">
     <StartTime>481</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>75</Throttle>
+    <Throttle>60</Throttle>
     <EngineIds>
       <int>0</int>
       <int>4</int>
@@ -84,5 +88,9 @@
     <EngineIds>
       <int>4</int>
     </EngineIds>
+  </Command>
+  <Command xsi:type="Deploy">
+	<Part>Landing Legs</Part>
+    <StartTime>568</StartTime>
   </Command>
 </ArrayOfCommand>

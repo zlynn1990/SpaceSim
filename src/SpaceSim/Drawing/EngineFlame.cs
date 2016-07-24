@@ -58,7 +58,7 @@ namespace SpaceSim.Drawing
             {
                 if (_availableParticles.Count > 0)
                 {
-                    double velocityFactor = _random.Next(150, 250);
+                    double velocityFactor = _random.Next(200, 300);
                     double spread = _random.NextDouble() - 0.5;
 
                     DVector2 velocity = DVector2.FromAngle(retrograde + spread * spreadMultiplier);
