@@ -3,7 +3,8 @@
 namespace SpaceSim.Contracts.Commands
 {
     [Serializable]
-    public class Fairing : Command
+    public class Deploy : Command
     {
+        public string Part { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using VectorMath;
 
 namespace SpaceSim.Spacecrafts
 {
-    abstract class SpaceCraftBase : GravitationalBodyBase, IAreodynamicBody, ISpaceCraft, IGdiRenderable
+    abstract class SpaceCraftBase : GravitationalBodyBase, IAreodynamicBody, ISpaceCraft, IMapRenderable, IGdiRenderable
     {
         public abstract string CraftName { get; }
         public string CraftDirectory { get; protected set; }
@@ -83,6 +83,8 @@ namespace SpaceSim.Spacecrafts
         public IController Controller { get; protected set; }
 
         public abstract string CommandFileName { get; }
+
+        public bool OnGround { get; private set; }
 
         public abstract bool ExposedToAirFlow { get; }
         public abstract double DragCoefficient { get; }
@@ -193,6 +195,16 @@ namespace SpaceSim.Spacecrafts
         /// Deploys the fairing.
         /// </summary>
         public virtual void DeployFairing() { }
+
+        /// <summary>
+        /// Deploys the grid fins.
+        /// </summary>
+        public virtual void DeployGridFins() { }
+
+        /// <summary>
+        /// Deploys the landing legs.
+        /// </summary>
+        public virtual void DeployLandingLegs() { }
 
         public void SetThrottle(double throttle, int[] engineIds = null)
         {
@@ -369,16 +381,22 @@ namespace SpaceSim.Spacecrafts
                 // Simple collision detection
                 if (altitude <= 0)
                 {
+                    OnGround = true;
+
                     var normal = new DVector2(-difference.X, -difference.Y);
 
-                    Position = body.Position + normal * (body.SurfaceRadius);
+                    Position = body.Position + normal*(body.SurfaceRadius);
 
-                    Velocity = (body.Velocity + surfaceNormal * rotationalSpeed);
+                    Velocity = (body.Velocity + surfaceNormal*rotationalSpeed);
 
                     Rotation = normal.Angle();
 
                     AccelerationN.X = -AccelerationG.X;
                     AccelerationN.Y = -AccelerationG.Y;
+                }
+                else
+                {
+                    OnGround = false;
                 }
 
                 double atmosphericDensity = body.GetAtmosphericDensity(altitude);
@@ -551,14 +569,15 @@ namespace SpaceSim.Spacecrafts
             }
         }
 
+        // Return an inflated bounding box for better drawing results
         public virtual RectangleD ComputeBoundingBox()
         {
             if (Width > Height)
             {
-                return new RectangleD(Position.X - Width * 0.5, Position.Y - Width * 0.5, Width, Width);
+                return new RectangleD(Position.X - Width, Position.Y - Width, Width * 2, Width * 2);
             }
 
-            return new RectangleD(Position.X - Height * 0.5, Position.Y - Height * 0.5, Height, Height);
+            return new RectangleD(Position.X - Height, Position.Y - Height, Height * 2, Height * 2);
         }
 
         public double Visibility(RectangleD cameraBounds)

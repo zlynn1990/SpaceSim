@@ -3,7 +3,7 @@ using VectorMath;
 
 namespace SpaceSim.Drawing
 {
-    interface IGdiRenderable : IIconRenderable
+    interface IGdiRenderable
     {
         void RenderGdi(Graphics graphics, RectangleD cameraBounds);
     }

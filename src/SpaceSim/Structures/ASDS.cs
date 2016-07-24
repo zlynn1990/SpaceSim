@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using SpaceSim.SolarSystem;
-using VectorMath;
 
 namespace SpaceSim.Structures
 {

@@ -3,7 +3,7 @@ using VectorMath;
 
 namespace SpaceSim.Drawing
 {
-    interface IIconRenderable
+    interface IMapRenderable
     {
         Color IconColor { get; }
 

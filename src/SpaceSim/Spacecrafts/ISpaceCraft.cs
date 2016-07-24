@@ -32,6 +32,8 @@ namespace SpaceSim.Spacecrafts
 
         string CommandFileName { get; }
 
+        bool OnGround { get; }
+
         void InitializeController(EventManager eventManager);
 
         void Stage();

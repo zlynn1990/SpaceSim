@@ -14,11 +14,11 @@ namespace SpaceSim
         {
             string profileDirectory = DetectProfileDirectory();
 
-            SpaceSim.MainWindow.FullScreen = false;
+            SpaceSim.MainWindow.FullScreen = true;
 
             SpaceSim.MainWindow.ProfileDirectories = new List<string>
             {
-                //Path.Combine(profileDirectory, "Orbcomm-OG2"),
+                Path.Combine(profileDirectory, "Orbcomm-OG2"),
                 Path.Combine(profileDirectory, "CRS-9"),
             };
         }

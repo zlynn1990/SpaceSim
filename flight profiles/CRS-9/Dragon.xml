@@ -20,7 +20,7 @@
   </Command>
   <Command xsi:type="Orient">
     <StartTime>180</StartTime>
-    <Duration>600</Duration>
+    <Duration>450</Duration>
     <TargetOrientation>-190</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">

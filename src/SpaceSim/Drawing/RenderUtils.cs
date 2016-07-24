@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using VectorMath;
 
 namespace SpaceSim.Drawing
@@ -10,6 +11,26 @@ namespace SpaceSim.Drawing
         public static int ScreenHeight;
 
         public static int ScreenArea;
+
+        public static Graphics GetContext(bool highQuality, Bitmap source)
+        {
+            var graphics = Graphics.FromImage(source);
+
+            if (!highQuality)
+            {
+                graphics.CompositingMode = CompositingMode.SourceOver;
+                graphics.SmoothingMode = SmoothingMode.HighSpeed;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+                graphics.CompositingQuality = CompositingQuality.HighSpeed;
+                graphics.InterpolationMode = InterpolationMode.NearestNeighbor;   
+            }
+            else
+            {
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+            }
+
+            return graphics;
+        }
 
         public static PointF WorldToScreen(DVector2 point, RectangleD cameraBounds)
         {
