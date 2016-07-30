@@ -95,20 +95,5 @@ namespace SpaceSim.Spacecrafts.DragonV1
 
             base.Update(dt);
         }
-
-        /// <summary>
-        /// Renders the space craft at it's correct scale and rotation according to the camera.
-        /// The engines are rendered first and then the space craft body.
-        /// </summary>
-        public override void RenderGdi(Graphics graphics, RectangleD cameraBounds)
-        {
-            RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
-
-            // Saftey
-            if (screenBounds.Width > RenderUtils.ScreenWidth * 500) return;
-
-            RenderShip(graphics, cameraBounds, screenBounds);
-            RenderAnimations(graphics, cameraBounds);
-        }
     }
 }
