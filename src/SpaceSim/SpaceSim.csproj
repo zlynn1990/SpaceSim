@@ -94,6 +94,7 @@
     <Compile Include="Drawing\IGdiRenderable.cs" />
     <Compile Include="Drawing\IGpuRenderable.cs" />
     <Compile Include="Drawing\IMapRenderable.cs" />
+    <Compile Include="Drawing\LaunchTrail.cs" />
     <Compile Include="Drawing\Particle.cs" />
     <Compile Include="Drawing\ReEntryFlame.cs" />
     <Compile Include="Drawing\RenderUtils.cs" />

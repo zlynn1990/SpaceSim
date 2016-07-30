@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -618,6 +617,8 @@ namespace SpaceSim
                 // Draw spacecraft
                 foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
                 {
+                    spaceCraft.RenderLaunchTrail(graphics, cameraBounds);
+
                     if (spaceCraft.Visibility(cameraBounds) > 0)
                     {
                         RectangleD bounds = spaceCraft.ComputeBoundingBox();
