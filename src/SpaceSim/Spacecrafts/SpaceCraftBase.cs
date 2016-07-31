@@ -13,7 +13,7 @@ using VectorMath;
 
 namespace SpaceSim.Spacecrafts
 {
-    abstract class SpaceCraftBase : GravitationalBodyBase, IAreodynamicBody, ISpaceCraft, IMapRenderable, IGdiRenderable
+    abstract class SpaceCraftBase : GravitationalBodyBase, IAerodynamicBody, ISpaceCraft, IMapRenderable, IGdiRenderable
     {
         public abstract string CraftName { get; }
         public string CraftDirectory { get; protected set; }
@@ -86,14 +86,39 @@ namespace SpaceSim.Spacecrafts
 
         public bool OnGround { get; private set; }
 
-        public abstract bool ExposedToAirFlow { get; }
-        public abstract double DragCoefficient { get; }
+        public abstract AeroDynamicProperties GetAeroDynamicProperties { get; }
+        public abstract double FormDragCoefficient { get; }
+        public abstract double CrossSectionalArea { get; }
+        public abstract double ExposedSurfaceArea { get; }
+        public abstract double LiftingSurfaceArea { get; }
+        public abstract double LiftCoefficient { get; }
 
-        public virtual double CrossSectionalArea { get { return Math.PI * (Width * 0.5) * (Width * 0.5); } }
-        public virtual double SurfaceArea { get { return Math.PI * Width * Height; } }
+        public virtual double GetBaseCd(double baseCd)
+        {
+            if (MachNumber > 1.0)
+            {
+                double exp = Math.Exp(0.3 / MachNumber);
+                baseCd *= 1.4 * exp;
+            }
+
+            return baseCd;
+        }
+
+        public virtual double SkinFrictionCoefficient
+        {
+            get
+            {
+                double velocity = GetRelativeVelocity().Length();
+                double altitude = GetRelativeAltitude();
+                double viscosity = GravitationalParent.GetAtmosphericViscosity(altitude);
+                double reynoldsNumber = (velocity * Height) / viscosity;
+                return 0.455 / Math.Pow(Math.Log10(reynoldsNumber), 2.58);
+            }
+        }
 
         public DVector2 AccelerationD { get; protected set; }
         public DVector2 AccelerationN { get; protected set; }
+        public DVector2 AccelerationL { get; protected set; }
 
         public abstract Color IconColor { get; }
 
@@ -185,7 +210,7 @@ namespace SpaceSim.Spacecrafts
                 // Simulate simple staging mechanism
                 double sAngle = StageOffset.Angle();
 
-                DVector2 stagingVector = DVector2.FromAngle(Rotation + sAngle + Math.PI * 0.5);
+                DVector2 stagingVector = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
 
                 AccelerationN += stagingVector * 1000;
             }
@@ -229,23 +254,98 @@ namespace SpaceSim.Spacecrafts
             }
         }
 
-        public void OffsetRotation(double offset)
+        public void OffsetPitch(double offset)
         {
-            Rotation += offset;
+            Pitch += offset;
 
             foreach (ISpaceCraft child in Children)
             {
-                child.OffsetRotation(offset);
+                child.OffsetPitch(offset);
             }
         }
 
-        public void SetRotation(double rotation)
+        public void SetPitch(double pitch)
         {
-            Rotation = rotation;
+            Pitch = pitch;
 
             foreach (ISpaceCraft child in Children)
             {
-                child.SetRotation(rotation);
+                child.SetPitch(pitch);
+            }
+        }
+
+        public void OffsetRoll(double offset)
+        {
+            Roll += offset;
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.OffsetRoll(offset);
+            }
+        }
+
+        public void SetRoll(double roll)
+        {
+            Roll = roll;
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.SetRoll(roll);
+            }
+        }
+
+        public void OffsetYaw(double offset)
+        {
+            Yaw += offset;
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.OffsetRoll(offset);
+            }
+        }
+
+        public void SetYaw(double yaw)
+        {
+            Yaw = yaw;
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.SetRoll(yaw);
+            }
+        }
+
+        public void OffsetRelativePitch(double offset)
+        {
+            Pitch += offset;
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.OffsetRelativePitch(offset);
+            }
+        }
+
+        public void SetRelativePitch(double pitch)
+        {
+            double altitude = GetRelativeAltitude();
+            if (altitude > GravitationalParent.AtmosphereHeight)
+            {
+                Pitch = GravitationalParent.Pitch + pitch;
+            }
+            else
+            {
+                DVector2 difference = GravitationalParent.Position - Position;
+                difference.Normalize();
+                var surfaceNormal = new DVector2(difference.Y, difference.X);
+                double normal = surfaceNormal.Angle();
+                if (double.IsNaN(normal))
+                    Pitch = GravitationalParent.Pitch + pitch;
+                else
+                    Pitch = GravitationalParent.Pitch + pitch - normal;
+            }
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.SetRelativePitch(pitch);
             }
         }
 
@@ -269,7 +369,7 @@ namespace SpaceSim.Spacecrafts
             // Only use re-entry flames for separated bodies
             if (EntryFlame != null && Children.Count == 0)
             {
-                EntryFlame.Update(timeStep, Position, Velocity, Rotation, HeatingRate);
+                EntryFlame.Update(timeStep, Position, Velocity, Pitch, HeatingRate);
             }
 
             foreach (IEngine engine in Engines)
@@ -280,8 +380,8 @@ namespace SpaceSim.Spacecrafts
 
         public virtual void UpdateChildren(DVector2 position, DVector2 velocity)
         {
-            Position = position - new DVector2(StageOffset.X*Math.Sin(Rotation) + StageOffset.Y*Math.Cos(Rotation),
-                                               -StageOffset.X*Math.Cos(Rotation) + StageOffset.Y*Math.Sin(Rotation));
+            Position = position - new DVector2(StageOffset.X*Math.Sin(Pitch) + StageOffset.Y*Math.Cos(Pitch),
+                                               -StageOffset.X*Math.Cos(Pitch) + StageOffset.Y*Math.Sin(Pitch));
             Velocity.X = velocity.X;
             Velocity.Y = velocity.Y;
 
@@ -296,6 +396,7 @@ namespace SpaceSim.Spacecrafts
         public override void ResetAccelerations()
         {
             AccelerationD = DVector2.Zero;
+            AccelerationL = DVector2.Zero;
             AccelerationN = DVector2.Zero;
 
             base.ResetAccelerations();
@@ -315,7 +416,7 @@ namespace SpaceSim.Spacecrafts
 
         public override DVector2 GetRelativeAcceleration()
         {
-            return AccelerationD + AccelerationN;
+            return AccelerationD + AccelerationL + AccelerationN;
         }
 
         /// <summary>
@@ -344,6 +445,63 @@ namespace SpaceSim.Spacecrafts
             double rotationalSpeed = pathCirumference / GravitationalParent.RotationPeriod;
 
             return Velocity - (GravitationalParent.Velocity + surfaceNormal * rotationalSpeed);
+        }
+
+        public override double GetRelativePitch()
+        {
+            double altitude = GetRelativeAltitude();
+            double relativePitch = Pitch - GravitationalParent.Pitch;
+            if (altitude > GravitationalParent.AtmosphereHeight)
+            {
+                return relativePitch;
+            }
+            else
+            {
+                DVector2 difference = GravitationalParent.Position - Position;
+                difference.Normalize();
+                var surfaceNormal = new DVector2(difference.Y, difference.X);
+                double normal = surfaceNormal.Angle();
+                if (!double.IsNaN(normal))
+                {
+                    if (altitude > 0.1)
+                        relativePitch += normal;
+                    else
+                        relativePitch = normal;
+                }
+
+                return relativePitch;
+            }
+        }
+
+        public double GetAlpha()
+        {
+            double altitude = GetRelativeAltitude();
+            if (altitude > GravitationalParent.AtmosphereHeight)
+            {
+                return Pitch - GravitationalParent.Pitch;
+            }
+
+            var alpha = 0.0;
+            if (altitude > 0.1)
+            {
+                DVector2 difference = GravitationalParent.Position - Position;
+                difference.Normalize();
+                double vAngle = GetRelativeVelocity().Angle();
+                alpha = Pitch - vAngle;
+
+                double twoPi = Math.PI * 2;
+                while (alpha > Math.PI)
+                {
+                    alpha -= twoPi;
+                }
+
+                while (alpha < -Math.PI)
+                {
+                    alpha += twoPi;
+                }
+            }
+
+            return alpha;
         }
 
         public override void ResolveGravitation(IPhysicsBody other)
@@ -389,7 +547,7 @@ namespace SpaceSim.Spacecrafts
 
                     Velocity = (body.Velocity + surfaceNormal*rotationalSpeed);
 
-                    Rotation = normal.Angle();
+                    Pitch = normal.Angle();
 
                     AccelerationN.X = -AccelerationG.X;
                     AccelerationN.Y = -AccelerationG.Y;
@@ -404,9 +562,9 @@ namespace SpaceSim.Spacecrafts
                 DVector2 relativeVelocity = (body.Velocity + surfaceNormal * rotationalSpeed) - Velocity;
 
                 double velocity = relativeVelocity.Length();
-                double velocitySquared = relativeVelocity.LengthSquared();
+                double velocityMagnitude = relativeVelocity.LengthSquared();
 
-                if (velocitySquared > 0)
+                if (velocityMagnitude > 0)
                 {
                     double speed = relativeVelocity.Length();
 
@@ -415,23 +573,37 @@ namespace SpaceSim.Spacecrafts
 
                     relativeVelocity.Normalize();
 
-                    double dragTerm = TotalDragCoefficient() * TotalDragArea();
+                    double formDragTerm = TotalFormDragCoefficient() * TotalFormDragArea();
+                    double skinFrictionTerm = TotalSkinFrictionCoefficient() * TotalSkinFrictionArea();
 
-                    // Drag ( Fd = 0.5pv^2dA )
-                    DVector2 dragForce = relativeVelocity * (0.5 * atmosphericDensity * velocitySquared * dragTerm);
+                    double dragTerm = formDragTerm;
+                    if (!double.IsNaN(skinFrictionTerm))
+                        dragTerm += skinFrictionTerm;
 
-                    AccelerationD += dragForce / Mass;
+                    double liftTerm = TotalLiftCoefficient() * TotalLiftArea();
 
-                    double reynoldsNumber = (velocity * Height) / body.GetAtmosphericViscosity(altitude);
-
-                    double frictionCoefficient = 0.455 / Math.Pow(Math.Log10(reynoldsNumber), 2.58);
-
-                    double frictionTerm = frictionCoefficient*TotalSurfaceArea();
-
+                    // Form Drag ( Fd = 0.5pv^2dA )
                     // Skin friction ( Fs = 0.5CfpV^2S )
-                    DVector2 skinFriction = relativeVelocity * (0.5 * atmosphericDensity * velocitySquared * frictionTerm);
+                    DVector2 drag = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * dragTerm);
+                    DVector2 lift = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * liftTerm);
 
-                    AccelerationD += skinFriction / Mass;
+                    AccelerationD = drag / Mass;
+                    DVector2 accelerationLift = lift / Mass;
+
+                    double alpha = GetAlpha();
+                    double halfPi = Math.PI / 2;
+                    bool isRetrograde = alpha > halfPi || alpha < -halfPi;
+
+                    if (isRetrograde)
+                    {
+                        AccelerationL.X -= accelerationLift.Y;
+                        AccelerationL.Y += accelerationLift.X;
+                    }
+                    else
+                    {
+                        AccelerationL.X += accelerationLift.Y;
+                        AccelerationL.Y -= accelerationLift.X;
+                    }
                 }
             }
             else
@@ -443,18 +615,39 @@ namespace SpaceSim.Spacecrafts
         /// <summary>
         /// Recursively finds the total drag of all surfaces exposed to air in the spacecraft.
         /// </summary>
-        private double TotalDragCoefficient()
+        private double TotalFormDragCoefficient()
         {
             double totalDragCoefficient = 0;
-
-            if (ExposedToAirFlow)
+            AeroDynamicProperties props = GetAeroDynamicProperties;
+            if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow) ||
+                props.HasFlag(AeroDynamicProperties.ExtendsFineness))
             {
-                totalDragCoefficient += DragCoefficient;
+                totalDragCoefficient = FormDragCoefficient;
             }
 
-            foreach (SpaceCraftBase child in Children)
+            return GetChildDragCoefficient(Children, totalDragCoefficient);
+        }
+
+        private double GetChildDragCoefficient(List<ISpaceCraft> children, double totalDragCoefficient)
+        {
+            foreach (SpaceCraftBase child in children)
             {
-                totalDragCoefficient += child.TotalDragCoefficient();
+                AeroDynamicProperties props = child.GetAeroDynamicProperties;
+                if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow))
+                {
+                    if (child.FormDragCoefficient > totalDragCoefficient)
+                        totalDragCoefficient = child.FormDragCoefficient;
+                }
+                else if (props.HasFlag(AeroDynamicProperties.ExtendsFineness))
+                {
+                    totalDragCoefficient *= child.FormDragCoefficient;
+                }
+                else if (props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
+                {
+                    totalDragCoefficient = (totalDragCoefficient + child.FormDragCoefficient) / 2;
+                }
+
+                totalDragCoefficient = GetChildDragCoefficient(child.Children, totalDragCoefficient);
             }
 
             return totalDragCoefficient;
@@ -463,36 +656,188 @@ namespace SpaceSim.Spacecrafts
         /// <summary>
         /// Recursively finds the total drag area of all surfaces exposed to air in the spacecraft.
         /// </summary>
-        private double TotalDragArea()
+        private double TotalFormDragArea()
         {
-            double totalDragArea = 0;
-
-            if (ExposedToAirFlow)
+            double totalFormDragArea = 0;
+            AeroDynamicProperties props = GetAeroDynamicProperties;
+            if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow) ||
+                props.HasFlag(AeroDynamicProperties.ExtendsFineness))
             {
-                totalDragArea += CrossSectionalArea;
+                totalFormDragArea = CrossSectionalArea;
             }
 
-            foreach (SpaceCraftBase child in Children)
+            return GetChildFormDragArea(Children, totalFormDragArea);
+        }
+
+        private double GetChildFormDragArea(List<ISpaceCraft> children, double totalFormDragArea)
+        {
+            foreach (SpaceCraftBase child in children)
             {
-                totalDragArea += child.TotalDragArea();
+                AeroDynamicProperties props = child.GetAeroDynamicProperties;
+                if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow))
+                {
+                    if (child.CrossSectionalArea > totalFormDragArea)
+                        totalFormDragArea = child.CrossSectionalArea;
+                }
+                else if (props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
+                {
+                    totalFormDragArea += child.CrossSectionalArea;
+                }
+
+                totalFormDragArea = GetChildFormDragArea(child.Children, totalFormDragArea);
             }
 
-            return totalDragArea;
+            return totalFormDragArea;
+        }
+
+        private double HeatingRadius()
+        {
+            double radius = 0;
+            AeroDynamicProperties props = GetAeroDynamicProperties;
+            if (!props.Equals(AeroDynamicProperties.None))
+                radius = Width / 2;
+
+            return ChildHeatingRadius(Children, radius);
+        }
+
+        private double ChildHeatingRadius(List<ISpaceCraft> children, double radius)
+        {
+            foreach (SpaceCraftBase child in children)
+            {
+                AeroDynamicProperties props = child.GetAeroDynamicProperties;
+                if (!props.Equals(AeroDynamicProperties.None))
+                {
+                    if (child.Width / 2 > radius)
+                        radius = child.Width / 2;
+                }
+
+                radius = ChildHeatingRadius(child.Children, radius);
+            }
+
+            return radius;
         }
 
         /// <summary>
-        /// Recursively finds the total surface area of the spacecraft.
+        /// Recursively finds the total skin friction due to all surfaces exposed to air in the spacecraft.
         /// </summary>
-        private double TotalSurfaceArea()
+        private double TotalSkinFrictionCoefficient()
         {
-            double totalSuraceArea = SurfaceArea;
+            double totalSkinFrictionCoefficient = 0;
+
+            AeroDynamicProperties props = GetAeroDynamicProperties;
+            if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow)
+                || props.HasFlag(AeroDynamicProperties.ExtendsFineness)
+                || props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
+            {
+                totalSkinFrictionCoefficient = SkinFrictionCoefficient;
+            }
 
             foreach (SpaceCraftBase child in Children)
             {
-                totalSuraceArea += child.TotalSurfaceArea();
+                totalSkinFrictionCoefficient += child.TotalSkinFrictionCoefficient();
             }
 
-            return totalSuraceArea;
+            return totalSkinFrictionCoefficient;
+        }
+
+        /// <summary>
+        /// Recursively finds the total drag area of all surfaces exposed to air in the spacecraft.
+        /// </summary>
+        private double TotalSkinFrictionArea()
+        {
+            double totalSkinFrictionArea = 0;
+            AeroDynamicProperties props = GetAeroDynamicProperties;
+            if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow)
+                || props.HasFlag(AeroDynamicProperties.ExtendsFineness)
+                || props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
+            {
+                totalSkinFrictionArea += ExposedSurfaceArea;
+            }
+
+            foreach (SpaceCraftBase child in Children)
+            {
+                totalSkinFrictionArea += child.TotalSkinFrictionArea();
+            }
+
+            return totalSkinFrictionArea;
+        }
+
+        /// <summary>
+        /// Recursively finds the total lift of all surfaces exposed to air in the spacecraft.
+        /// </summary>
+        private double TotalLiftCoefficient()
+        {
+            double totalLiftCoefficient = 0;
+            AeroDynamicProperties props = GetAeroDynamicProperties;
+            if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow)
+                || props.HasFlag(AeroDynamicProperties.ExtendsFineness)
+                || props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
+            {
+                totalLiftCoefficient = LiftCoefficient;
+            }
+
+            return GetMaxChildLiftCoefficient(Children, totalLiftCoefficient);
+        }
+
+        private double GetMaxChildLiftCoefficient(List<ISpaceCraft> children, double totalLiftCoefficient)
+        {
+            foreach (SpaceCraftBase child in children)
+            {
+                AeroDynamicProperties props = child.GetAeroDynamicProperties;
+                if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow))
+                {
+                    if (Math.Abs(child.LiftCoefficient) > Math.Abs(totalLiftCoefficient))
+                        totalLiftCoefficient = child.LiftCoefficient;
+                }
+                else if (props.HasFlag(AeroDynamicProperties.ExtendsFineness)
+                         || props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
+                {
+                    totalLiftCoefficient += child.LiftCoefficient;
+                }
+
+                totalLiftCoefficient = GetMaxChildLiftCoefficient(child.Children, totalLiftCoefficient);
+            }
+
+            return totalLiftCoefficient;
+        }
+
+        /// <summary>
+        /// Recursively finds the total lift area of all surfaces exposed to air in the spacecraft.
+        /// </summary>
+        private double TotalLiftArea()
+        {
+            double totalLiftArea = 0;
+            AeroDynamicProperties props = GetAeroDynamicProperties;
+            if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow)
+                || props.HasFlag(AeroDynamicProperties.ExtendsFineness)
+                || props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
+            {
+                totalLiftArea = LiftingSurfaceArea;
+            }
+
+            return GetChildLiftArea(Children, totalLiftArea);
+        }
+
+        private double GetChildLiftArea(List<ISpaceCraft> children, double totalLiftArea)
+        {
+            foreach (SpaceCraftBase child in children)
+            {
+                AeroDynamicProperties props = child.GetAeroDynamicProperties;
+                if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow))
+                {
+                    if (child.LiftingSurfaceArea > totalLiftArea)
+                        totalLiftArea = child.LiftingSurfaceArea;
+                }
+                else if (props.HasFlag(AeroDynamicProperties.ExtendsFineness)
+                         || props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
+                {
+                    totalLiftArea += child.LiftingSurfaceArea;
+                }
+
+                totalLiftArea = GetChildLiftArea(child.Children, totalLiftArea);
+            }
+
+            return totalLiftArea;
         }
 
         /// <summary>
@@ -539,7 +884,7 @@ namespace SpaceSim.Spacecrafts
 
                 if (Thrust > 0)
                 {
-                    var thrustVector = new DVector2(Math.Cos(Rotation), Math.Sin(Rotation));
+                    var thrustVector = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
 
                     AccelerationN += (thrustVector * Thrust) / Mass;
                 }
@@ -548,6 +893,7 @@ namespace SpaceSim.Spacecrafts
                 Velocity += (AccelerationG * dt);
                 Velocity += (AccelerationD * dt);
                 Velocity += (AccelerationN * dt);
+                Velocity += (AccelerationL * dt);
 
                 // Re-normalize FTL scenarios
                 if (Velocity.LengthSquared() > FlightGlobals.SPEED_LIGHT_SQUARED)
@@ -628,7 +974,7 @@ namespace SpaceSim.Spacecrafts
 
         protected virtual void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
         {
-            double drawingRotation = Rotation + Math.PI * 0.5;
+            double drawingRotation = Pitch + Math.PI * 0.5;
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);

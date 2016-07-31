@@ -225,8 +225,13 @@ namespace SpaceSim
 
             _structures = new List<StructureBase>
             {
-                _strongback,strongback2// asds
+                _strongback // asds
             };
+
+            if (ProfileDirectories.Count > 1)
+            {
+                _structures.Add(strongback2);
+            }
 
             _gravitationalBodies.Add(moon);
             _gravitationalBodies.Add(mars);
@@ -657,7 +662,7 @@ namespace SpaceSim
                 {
                     if (targetSpaceCraft != null)
                     {
-                        gauge.Update(_gravitationalBodies[_targetIndex].Rotation, throttle / 100.0);
+                        gauge.Update(_gravitationalBodies[_targetIndex].Pitch, throttle / 100.0);
                     }
 
                     gauge.Render(graphics, cameraBounds);
@@ -684,8 +689,8 @@ namespace SpaceSim
                 graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, false), font, brush, 5, 175);
                 graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 205);
 
-                graphics.DrawString("Apogee: " + UnitDisplay.Distance(currentApogee), font, brush, 5, 345);
-                graphics.DrawString("Perigee: " + UnitDisplay.Distance(currentPerigee), font, brush, 5, 375);
+                graphics.DrawString("Apogee: " + UnitDisplay.Distance(currentApogee), font, brush, 5, 395);
+                graphics.DrawString("Perigee: " + UnitDisplay.Distance(currentPerigee), font, brush, 5, 425);
 
                 graphics.DrawString("Mass: " + UnitDisplay.Mass(target.Mass), font, brush, 5, 260);
 
@@ -697,15 +702,30 @@ namespace SpaceSim
 
                     graphics.DrawString("Thrust: " + UnitDisplay.Force(targetSpaceCraft.Thrust), font, brush, 5, 290);
 
+                    DVector2 dragForce = targetSpaceCraft.AccelerationD * targetSpaceCraft.Mass;
+                    DVector2 liftForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass;
+
+                    graphics.DrawString("Drag: " + UnitDisplay.Force(dragForce.Length()), font, brush, 5, 320);
+                    graphics.DrawString("Lift: " + UnitDisplay.Force(liftForce.Length()), font, brush, 5, 350);
+
                     double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(altitude);
 
-                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 430);
+                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 475);
 
                     double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
 
-                    graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 460);
+                    graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 505);
 
-                    graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 490);
+                    graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 535);
+
+                    double alpha = targetSpaceCraft.GetAlpha();
+                    double halfPi = Math.PI / 2;
+                    if (alpha > halfPi)
+                        alpha = Math.PI - alpha;
+                    if (alpha < -halfPi)
+                        alpha = -(Math.PI + alpha);
+
+                    graphics.DrawString("Alpha: " + UnitDisplay.Degrees(alpha), font, brush, 5, 565);
                 }
 
                 graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 80, 5);

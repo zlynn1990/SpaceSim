@@ -19,7 +19,7 @@ namespace SpaceSim.Commands
         {
             EventManager.AddMessage("Maneuvering to retrograde", spaceCraft);
 
-            _curentOrientation = spaceCraft.Rotation;
+            _curentOrientation = spaceCraft.Pitch;
         }
 
         // Nothing to finalize
@@ -38,13 +38,13 @@ namespace SpaceSim.Commands
 
             if (adjustRatio > 1)
             {
-                spaceCraft.SetRotation(retrogradeAngle);
+                spaceCraft.SetPitch(retrogradeAngle);
             }
             else
             {
                 double interpolatedAdjust = _curentOrientation * (1 - adjustRatio) + retrogradeAngle * adjustRatio;
 
-                spaceCraft.SetRotation(interpolatedAdjust);
+                spaceCraft.SetPitch(interpolatedAdjust);
             }
         }
     }

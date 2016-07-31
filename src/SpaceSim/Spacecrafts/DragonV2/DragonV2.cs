@@ -2,6 +2,7 @@
 using System.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Drawing;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.DragonV2
@@ -15,18 +16,58 @@ namespace SpaceSim.Spacecrafts.DragonV2
 
         public override double DryMass { get { return _dryMass; } }
 
-        public override bool ExposedToAirFlow { get { return true; } }
+        public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
 
-        public override double DragCoefficient
+        public override double FormDragCoefficient
         {
             get
             {
-                if (Children.Count > 0)
+                double alpha = GetAlpha();
+                double baseCd = GetBaseCd(0.45);
+                bool isRetrograde = false;
+                double halfPi = Math.PI / 2;
+                if (alpha > halfPi || alpha < -halfPi)
                 {
-                    return 0.1;
+                    isRetrograde = true;
+                    baseCd = GetBaseCd(0.9);
                 }
 
-                return 0.5 + _parachuteRatio * 0.2;
+                double cosAlpha = Math.Cos(alpha);
+                baseCd *= cosAlpha;
+
+                double dragPreservation = 1.0;
+                if (isRetrograde)
+                {
+                    // if retrograde
+                    if (MachNumber > 1.5 && MachNumber < 20.0)
+                    {
+                        double throttleFactor = Throttle / 50;
+                        double cantFactor = Math.Sin(Engines[0].Cant * 2);
+                        dragPreservation += throttleFactor * cantFactor;
+                        baseCd *= dragPreservation;
+                    }
+                }
+
+                return Math.Abs(baseCd);
+            }
+        }
+
+        public override double LiftCoefficient
+        {
+            get
+            {
+                double alpha = GetAlpha();
+                double baseCd = GetBaseCd(0.3);
+                double sinAlpha = Math.Sin(alpha * 2.0);
+                double halfPi = Math.PI / 2;
+                if (alpha > halfPi || alpha < -halfPi)
+                {
+                    baseCd = GetBaseCd(0.6);
+                }
+
+                double alphaCd = baseCd * sinAlpha;
+
+                return alphaCd;
             }
         }
 
@@ -35,6 +76,29 @@ namespace SpaceSim.Spacecrafts.DragonV2
         public override double CrossSectionalArea
         {
             get { return 21.504 + _parachuteRatio * 2500; }
+        }
+
+        public override double LiftingSurfaceArea
+        {
+            get
+            {
+                double area = Math.PI * Math.Pow(Width / 2, 2);
+                double alpha = GetAlpha();
+                double sinAlpha = Math.Cos(alpha * 2);
+                return Math.Abs(area * sinAlpha);
+            }
+        }
+
+        public override double ExposedSurfaceArea
+        {
+            get
+            {
+                // A = πr(r + root(h ^ 2 + r ^ 2))
+                double r = Width / 2;
+                double h2 = Math.Pow(Height, 2);
+                double r2 = Math.Pow(r, 2);
+                return Math.PI * r * (r + Math.Pow(h2 + r2, 0.5));
+            }
         }
 
         public override string CommandFileName { get { return "dragon.xml"; } }

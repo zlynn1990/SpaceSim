@@ -3,7 +3,7 @@
 namespace SpaceSim.Contracts.Commands
 {
     [Serializable]
-    public class Orient : Command
+    public class Roll : Command
     {
         public double TargetOrientation { get; set; }
     }

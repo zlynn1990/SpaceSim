@@ -10,8 +10,10 @@ namespace SpaceSim.Proxies
     /// <summary>
     /// Spacecraft proxy used for doing orbital approximations and traces.
     /// </summary>
-    class SpaceCraftProxy : GravitationalBodyBase, IAreodynamicBody
+    class SpaceCraftProxy : GravitationalBodyBase, IAerodynamicBody
     {
+        public AeroDynamicProperties GetAeroDynamicProperties { get { return _proxy.GetAeroDynamicProperties; } }
+
         public double Altitude { get; private set; }
         public DVector2 RelativeVelocity { get; private set; }
 
@@ -19,12 +21,14 @@ namespace SpaceSim.Proxies
 
         public double Height {get { return _proxy.Height; }}
 
-        public bool ExposedToAirFlow { get { return _proxy.ExposedToAirFlow; } }
         public double HeatingRate { get { return _proxy.HeatingRate; } }
 
-        public double DragCoefficient { get { return _proxy.DragCoefficient; } }
+        public double FormDragCoefficient { get { return _proxy.FormDragCoefficient; } }
         public double CrossSectionalArea { get { return _proxy.CrossSectionalArea; } }
-        public double SurfaceArea { get { return _proxy.SurfaceArea; } }
+        public double SkinFrictionCoefficient { get { return _proxy.SkinFrictionCoefficient; } }
+        public double ExposedSurfaceArea { get { return _proxy.ExposedSurfaceArea; } }
+        public double LiftCoefficient { get { return _proxy.LiftCoefficient; } }
+        public double LiftingSurfaceArea { get { return _proxy.LiftingSurfaceArea; } }
 
         public double PropellantMass { get; private set; }
 
@@ -40,7 +44,7 @@ namespace SpaceSim.Proxies
         private SpaceCraftBase _proxy;
 
         public SpaceCraftProxy(DVector2 position, DVector2 velocity, SpaceCraftBase spaceCraft)
-            : base(position, velocity, spaceCraft.Rotation)
+            : base(position, velocity, spaceCraft.Pitch)
         {
             _dryMass = spaceCraft.DryMass;
             PropellantMass = spaceCraft.PropellantMass;
@@ -98,7 +102,7 @@ namespace SpaceSim.Proxies
 
                     Position = body.Position + normal * (body.SurfaceRadius);
 
-                    Rotation = normal.Angle();
+                    Pitch = normal.Angle();
 
                     AccelerationN.X = -AccelerationG.X;
                     AccelerationN.Y = -AccelerationG.Y;
@@ -115,10 +119,18 @@ namespace SpaceSim.Proxies
                     DVector2 normalizedRelativeVelocity = RelativeVelocity.Clone();
                     normalizedRelativeVelocity.Normalize();
 
+                    double formDragTerm = FormDragCoefficient * CrossSectionalArea;
+                    double skinFrictionTerm = SkinFrictionCoefficient * ExposedSurfaceArea;
+                    double dragTerm = formDragTerm + skinFrictionTerm;
+
+                    double liftTerm = LiftCoefficient * LiftingSurfaceArea;
+
                     // Drag ( Fd = 0.5pv^2dA )
-                    DVector2 dragForce = normalizedRelativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * DragCoefficient * CrossSectionalArea);
+                    DVector2 dragForce = normalizedRelativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * dragTerm);
+                    DVector2 liftForce = normalizedRelativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * liftTerm);
 
                     AccelerationD += dragForce / Mass;
+                    AccelerationN += liftForce / Mass;
                 }
             }
         }
@@ -129,7 +141,7 @@ namespace SpaceSim.Proxies
 
             if (_thrust > 0)
             {
-                var thrustVector = new DVector2(Math.Cos(Rotation), Math.Sin(Rotation));
+                var thrustVector = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
 
                 AccelerationN += (thrustVector * _thrust) / Mass;
             }

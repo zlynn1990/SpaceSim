@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.Falcon9SSTO
@@ -14,33 +15,44 @@ namespace SpaceSim.Spacecrafts.Falcon9SSTO
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 47.812188; } }
 
-        public override bool ExposedToAirFlow { get { return Parent == null; } }
+        public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
 
-        public override double DragCoefficient
+        public override double FormDragCoefficient
         {
             get
             {
-                if (MachNumber < 0.65 || MachNumber > 2.8)
-                {
-                    return 0.4;
-                }
+                double baseCd = GetBaseCd(0.15);
+                double alpha = GetAlpha();
+                double cosAlpha = Math.Cos(alpha);
+                double Cd = Math.Abs(baseCd * cosAlpha);
 
-                double normalizedMach;
-
-                if (MachNumber < 1.5)
-                {
-                    normalizedMach = (MachNumber - 0.65) * 1.17;
-                }
-                else
-                {
-                    normalizedMach = (2.8 - MachNumber) * 0.769;
-                }
-
-                return 0.4 + normalizedMach * 0.31;
+                return Cd;
             }
         }
 
-        public override double CrossSectionalArea { get { return Math.PI * 1.83 * 1.83; } }
+        public override double LiftCoefficient
+        {
+            get
+            {
+                double baseCd = GetBaseCd(0.6);
+                double alpha = GetAlpha();
+                double sinAlpha = Math.Sin(alpha * 2);
+                return baseCd * sinAlpha;
+            }
+        }
+
+        public override double CrossSectionalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+
+        public override double ExposedSurfaceArea
+        {
+            get
+            {
+                // A = 2πrh + πr2
+                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+            }
+        }
+
+        public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override Color IconColor { get { return Color.White; } }
 

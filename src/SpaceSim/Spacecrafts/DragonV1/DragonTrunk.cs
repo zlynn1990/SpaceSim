@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.DragonV1
@@ -13,12 +15,45 @@ namespace SpaceSim.Spacecrafts.DragonV1
 
         public override double DryMass { get { return 1000; } }
 
-        public override bool ExposedToAirFlow { get { return Parent == null; } }
+        public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
 
-        public override double DragCoefficient { get { return 0.3; } }
+        public override double FormDragCoefficient
+        {
+            get
+            {
+                double baseCd = GetBaseCd(0.3);
+                double alpha = GetAlpha();
+                double cosAlpha = Math.Cos(alpha);
+                double Cd = Math.Abs(baseCd * cosAlpha);
+
+                return Cd;
+            }
+        }
+
+        public override double LiftCoefficient
+        {
+            get
+            {
+                double baseCd = GetBaseCd(0.6);
+                double alpha = GetAlpha();
+                double sinAlpha = Math.Sin(alpha * 2);
+                return baseCd * sinAlpha;
+            }
+        }
 
         // Cylinder - 2 * pi * r * h
         public override double CrossSectionalArea { get { return 27.6579; } }
+
+        public override double ExposedSurfaceArea
+        {
+            get
+            {
+                // A = 2πrh + πr2
+                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+            }
+        }
+
+        public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override Color IconColor { get { return Color.White; } }
 

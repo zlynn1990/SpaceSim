@@ -36,7 +36,7 @@ namespace SpaceSim.SolarSystem
             Position += (Velocity * dt);
 
             // Rotate the planet
-            Rotation += (RotationRate * dt);
+            Pitch += (RotationRate * dt);
         }
 
         public double GetSurfaceGravity()
@@ -137,7 +137,7 @@ namespace SpaceSim.SolarSystem
                 clProxy.UpdateDoubleArgument("sunNormalX", sunNormal.X);
                 clProxy.UpdateDoubleArgument("sunNormalY", sunNormal.Y);
 
-                clProxy.UpdateDoubleArgument("rotation", Rotation);
+                clProxy.UpdateDoubleArgument("rotation", Pitch);
 
                 clProxy.RunKernel(_computeKernel, RenderUtils.ScreenArea);
             }
@@ -149,7 +149,7 @@ namespace SpaceSim.SolarSystem
                 {
                     Kernel.Run(clProxy.ReadIntBuffer("image", totalSize), RenderUtils.ScreenWidth, RenderUtils.ScreenHeight,
                                                     normalizedPosition.X, normalizedPosition.Y, cameraBounds.Width, cameraBounds.Height,
-                                                    sunNormal.X, sunNormal.Y, Rotation);
+                                                    sunNormal.X, sunNormal.Y, Pitch);
                 }
 
                 Kernel.Finish();

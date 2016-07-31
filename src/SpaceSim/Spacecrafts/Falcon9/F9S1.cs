@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Physics;
 using SpaceSim.Spacecrafts.FalconCommon;
 using VectorMath;
 
@@ -18,15 +19,80 @@ namespace SpaceSim.Spacecrafts.Falcon9
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 47.812188; } }
 
-        public override bool ExposedToAirFlow { get { return Parent == null; } }
+        public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
 
-        public override double DragCoefficient
+        public override double FormDragCoefficient
         {
-            get { return 1.9; }
+            get
+            {
+                double alpha = GetAlpha();
+                double baseCd = GetBaseCd(0.4);
+                bool isRetrograde = false;
+                double halfPi = Math.PI / 2;
+                if (alpha > halfPi || alpha < -halfPi)
+                {
+                    if (_landingLegs[0].Pitch > 0)
+                        baseCd = GetBaseCd(2.0);
+                    else if(_gridFins[0].Pitch > 0)
+                        baseCd = GetBaseCd(1.4);
+                    else
+                        baseCd = GetBaseCd(0.8);
+                    isRetrograde = true;
+                }
+
+
+                double cosAlpha = Math.Cos(alpha);
+                double Cd = Math.Abs(baseCd * cosAlpha);
+
+                double dragPreservation = 1.0;
+                if (isRetrograde)
+                {
+                    // if retrograde
+                    if (Throttle > 0 && MachNumber > 1.5 && MachNumber < 20.0)
+                    {
+                        double throttleFactor = Throttle / 50;
+                        double cantFactor = Math.Sin(Engines[0].Cant * 2);
+                        dragPreservation += throttleFactor * cantFactor;
+                        Cd *= dragPreservation;
+                    }
+                }
+
+                return Math.Abs(Cd);
+            }
         }
 
-        public override double CrossSectionalArea { get { return 1.15 * Math.PI * 1.83 * 1.83; } }
+        public override double LiftCoefficient
+        {
+            get
+            {
+                double baseCd = GetBaseCd(0.6);
+                double alpha = GetAlpha();
+                double sinAlpha = Math.Sin(alpha * 2);
+                return baseCd * sinAlpha;
+            }
+        }
 
+        public override double CrossSectionalArea
+        {
+            get
+            {
+                double area = Math.PI * Math.Pow(Width / 2, 2);
+                double alpha = GetAlpha();
+                double cosAlpha = Math.Cos(alpha);
+                return Math.Abs(area * cosAlpha);
+            }
+        }
+
+        public override double ExposedSurfaceArea
+        {
+            get
+            {
+                // A = 2πrh + πr2
+                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+            }
+        }
+
+        public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override Color IconColor { get { return Color.White; } }
 
@@ -106,7 +172,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
            
             velocity.Normalize();
 
-            DVector2 rotation = new DVector2(Math.Cos(Rotation), Math.Sin(Rotation));
+            DVector2 rotation = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
 
             // If we are going retro-grade and firing rockets adds soot
             if (altitude < 70000 && velocity.Dot(rotation) < 0)
@@ -157,7 +223,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
                 }
             }
 
-            double drawingRotation = Rotation + Math.PI * 0.5;
+            double drawingRotation = Pitch + Math.PI * 0.5;
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);

@@ -8,7 +8,7 @@ namespace SpaceSim.Physics
         DVector2 Velocity { get; }
 
         double Mass { get; }
-        double Rotation { get; }
+        double Pitch { get; }
 
         void Update(double dt);
     }

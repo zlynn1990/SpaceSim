@@ -64,12 +64,12 @@ namespace SpaceSim.Controllers
 
             if (key == Key.A)
             {
-                SpaceCraft.OffsetRotation(-0.05);
+                SpaceCraft.OffsetPitch(-0.05);
             }
 
             if (key == Key.D)
             {
-                SpaceCraft.OffsetRotation(0.05);
+                SpaceCraft.OffsetPitch(0.05);
             }
         }
 
@@ -82,7 +82,7 @@ namespace SpaceSim.Controllers
                 DVector2 prograde = SpaceCraft.GetRelativeVelocity();
                 prograde.Normalize();
 
-                SpaceCraft.SetRotation(prograde.Angle());
+                SpaceCraft.SetPitch(prograde.Angle());
             }
 
             if (IsRetrograde)
@@ -91,7 +91,7 @@ namespace SpaceSim.Controllers
                 retrograde.Negate();
                 retrograde.Normalize();
 
-                SpaceCraft.SetRotation(retrograde.Angle());
+                SpaceCraft.SetPitch(retrograde.Angle());
             }
         }
     }

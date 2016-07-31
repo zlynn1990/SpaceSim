@@ -11,16 +11,18 @@ namespace SpaceSim.Physics
         public DVector2 Velocity { get; protected set; }
 
         public abstract double Mass { get; }
-        public double Rotation { get; protected set; }
+        public double Pitch { get; protected set; }
+        public double Roll { get; protected set; }
+        public double Yaw { get; protected set; }
 
         public DVector2 AccelerationG { get; protected set; }
 
-        protected GravitationalBodyBase(DVector2 position, DVector2 velocity, double rotation)
+        protected GravitationalBodyBase(DVector2 position, DVector2 velocity, double pitch)
         {
             Position = position;
             Velocity = velocity;
 
-            Rotation = rotation;
+            Pitch = pitch;
         }
 
         public virtual void ResetAccelerations()
@@ -63,6 +65,11 @@ namespace SpaceSim.Physics
         public virtual DVector2 GetRelativeVelocity()
         {
             return Velocity - GravitationalParent.Velocity;
+        }
+
+        public virtual double GetRelativePitch()
+        {
+            return Pitch - GravitationalParent.Pitch;
         }
 
         public abstract void Update(double dt);

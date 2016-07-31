@@ -45,7 +45,7 @@
     <StartTime>159</StartTime>
     <Duration>0.5</Duration>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>230</StartTime>
     <Duration>100</Duration>
     <TargetOrientation>-35</TargetOrientation>
@@ -64,7 +64,7 @@
     <StartTime>414</StartTime>
     <Duration>0.5</Duration>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>415</StartTime>
     <Duration>95</Duration>
     <TargetOrientation>-95</TargetOrientation>

@@ -11,7 +11,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public DVector2 Position { get; private set; }
         public DVector2 Velocity { get; private set; }
         public double Mass { get; private set; }
-        public double Rotation { get; private set; }
+        public double Pitch { get; private set; }
 
         private const double Width = 1.8;
         private const double Height = 10.052819015;
@@ -40,14 +40,14 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public void Deploy()
         {
             // Been deployed already, can't again
-            if (Rotation > 0) return;
+            if (Pitch > 0) return;
 
             _isDeploying = true;
         }
 
         public void Update(double dt)
         {
-            double rotation = _parent.Rotation - _offsetRotation;
+            double rotation = _parent.Pitch - _offsetRotation;
 
             DVector2 offset = new DVector2(Math.Cos(rotation), Math.Sin(rotation))*_offsetLength;
 
@@ -59,11 +59,11 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
                 if (_isLeft)
                 {
-                    Rotation -= 0.5*dt;
+                    Pitch -= 0.5*dt;
                 }
                 else
                 {
-                    Rotation += 0.5*dt;
+                    Pitch += 0.5*dt;
                 }
 
                 if (_deployTimer > 4)
@@ -75,7 +75,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         public void RenderGdi(Graphics graphics, RectangleD cameraBounds)
         {
-            double drawingRotation = _parent.Rotation + Rotation;
+            double drawingRotation = _parent.Pitch + Pitch;
 
             DVector2 drawingOffset = new DVector2(Math.Cos(drawingRotation), Math.Sin(drawingRotation)) * -4.2;
 

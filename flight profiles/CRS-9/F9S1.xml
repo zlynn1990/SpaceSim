@@ -30,7 +30,7 @@
     <StartTime>141.5</StartTime>
     <Duration>1</Duration>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>147</StartTime>
     <Duration>14</Duration>
     <TargetOrientation>0</TargetOrientation>
