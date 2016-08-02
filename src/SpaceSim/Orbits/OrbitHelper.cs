@@ -83,8 +83,8 @@ namespace SpaceSim.Orbits
 
             DVector2 initialPosition = satellite.Position - parent.Position;
 
-            var shipOffset = new DVector2(Math.Cos(satellite.Rotation) * (satellite.TotalWidth - satellite.Width),
-                                          Math.Sin(satellite.Rotation) * (satellite.TotalHeight - satellite.Height)) * 0.5;
+            var shipOffset = new DVector2(Math.Cos(satellite.Pitch) * (satellite.TotalWidth - satellite.Width),
+                                          Math.Sin(satellite.Pitch) * (satellite.TotalHeight - satellite.Height)) * 0.5;
 
             initialPosition -= shipOffset;
 

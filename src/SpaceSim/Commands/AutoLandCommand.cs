@@ -93,8 +93,8 @@ namespace SpaceSim.Commands
 
                 DVector2 initialPosition = spaceCraft.Position - parent.Position;
 
-                var shipOffset = new DVector2(Math.Cos(spaceCraft.Rotation)*(spaceCraft.TotalWidth - spaceCraft.Width),
-                    Math.Sin(spaceCraft.Rotation)*(spaceCraft.TotalHeight - spaceCraft.Height))*0.5;
+                var shipOffset = new DVector2(Math.Cos(spaceCraft.Pitch)*(spaceCraft.TotalWidth - spaceCraft.Width),
+                    Math.Sin(spaceCraft.Pitch)*(spaceCraft.TotalHeight - spaceCraft.Height))*0.5;
 
                 initialPosition -= shipOffset;
 

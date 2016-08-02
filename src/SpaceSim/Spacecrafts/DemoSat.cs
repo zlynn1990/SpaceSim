@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts
@@ -8,44 +9,42 @@ namespace SpaceSim.Spacecrafts
     class DemoSat : SpaceCraftBase
     {
         public override string CraftName {get { return "Satellite"; }}
+        public override string CommandFileName { get { return "demosat.xml"; } }
 
         public override double Width { get { return 5.10655; } }
         public override double Height { get { return 12.9311; } }
 
         public override double DryMass { get { return _dryMass + _fairingMass; } }
 
-        public override bool ExposedToAirFlow { get { return true; } }
+        public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
 
-        public override double DragCoefficient
+        public override double FormDragCoefficient
         {
             get
             {
-                if (MachNumber < 0.65 || MachNumber > 2.8)
-                {
-                    return 0.24;
-                }
+                double baseCd = GetBaseCd(0.4);
+                double alpha = GetAlpha();
 
-                double normalizedMach;
-
-                if (MachNumber < 1.5)
-                {
-                    normalizedMach = (MachNumber - 0.65) * 1.17;
-                }
-                else
-                {
-                    normalizedMach = (2.8 - MachNumber) * 0.769;
-                }
-
-                return 0.24 + normalizedMach * 0.35;
+                return baseCd * Math.Cos(alpha);
             }
         }
 
-        // Fairing
-        public override double CrossSectionalArea { get { return Math.PI * 2.6 * 2.6; } }
+        public override double LiftCoefficient
+        {
+            get
+            {
+                double baseCd = GetBaseCd(0.6);
+                double alpha = GetAlpha();
+                
+                return baseCd * Math.Sin(alpha * 2.0);
+            }
+        }
+
+        public override double CrossSectionalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+        public override double ExposedSurfaceArea { get { return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea; } }
+        public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override Color IconColor { get { return Color.White; } }
-
-        public override string CommandFileName { get { return "demosat.xml"; } }
 
         private double _dryMass;
         private double _fairingMass;

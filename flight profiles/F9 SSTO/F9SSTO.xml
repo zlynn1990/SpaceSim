@@ -16,7 +16,7 @@
       <int>8</int>
     </EngineIds>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>10</StartTime>
     <Duration>60</Duration>
     <TargetOrientation>-125</TargetOrientation>
@@ -31,7 +31,7 @@
     <Duration>3</Duration>
     <TargetThrottle>100</TargetThrottle>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>70</StartTime>
     <Duration>97</Duration>
     <TargetOrientation>-192</TargetOrientation>

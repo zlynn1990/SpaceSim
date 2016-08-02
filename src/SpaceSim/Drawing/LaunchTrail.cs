@@ -22,7 +22,7 @@ namespace SpaceSim.Drawing
         {
             DVector2 offset = point - parentBody.Position;
 
-            _trailAngles.Add(offset.Angle() - parentBody.Rotation);
+            _trailAngles.Add(offset.Angle() - parentBody.Pitch);
             _trailDistances.Add(offset.Length());
 
             _trailPowered.Add(isPowered);
@@ -35,7 +35,7 @@ namespace SpaceSim.Drawing
 
             for (int i = 0; i < _trailAngles.Count; i++)
             {
-                double angle = _trailAngles[i] + parentBody.Rotation;
+                double angle = _trailAngles[i] + parentBody.Pitch;
                 double distance = _trailDistances[i];
 
                 DVector2 worldPoint = DVector2.FromAngle(angle) * distance + parentBody.Position;

@@ -1,53 +1,24 @@
 ﻿using System;
 using System.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Physics;
+using SpaceSim.Spacecrafts.FalconCommon;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.Falcon9SSTO
 {
-    sealed class F9SSTO : SpaceCraftBase
+    sealed class F9SSTO : F9S1Base
     {
         public override string CraftName { get { return "F9 S1"; } }
+        public override string CommandFileName { get { return "F9SSTO.xml"; } }
 
         public override double DryMass { get { return 21600; } }
 
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 47.812188; } }
 
-        public override bool ExposedToAirFlow { get { return Parent == null; } }
-
-        public override double DragCoefficient
-        {
-            get
-            {
-                if (MachNumber < 0.65 || MachNumber > 2.8)
-                {
-                    return 0.4;
-                }
-
-                double normalizedMach;
-
-                if (MachNumber < 1.5)
-                {
-                    normalizedMach = (MachNumber - 0.65) * 1.17;
-                }
-                else
-                {
-                    normalizedMach = (2.8 - MachNumber) * 0.769;
-                }
-
-                return 0.4 + normalizedMach * 0.31;
-            }
-        }
-
-        public override double CrossSectionalArea { get { return Math.PI * 1.83 * 1.83; } }
-
-        public override Color IconColor { get { return Color.White; } }
-
-        public override string CommandFileName { get { return "F9SSTO.xml"; } }
-
         public F9SSTO(string craftDirectory, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 409500, "Textures/f9ssto.png")
+            : base(craftDirectory, position, velocity, 409500, "Textures/f9ssto.png", null)
         {
             StageOffset = new DVector2(0, 25.5);
 
@@ -62,9 +33,5 @@ namespace SpaceSim.Spacecrafts.Falcon9SSTO
                 Engines[i] = new Merlin1D(i, this, offset);
             }
         }
-
-        public void DeployFins() { }
-
-        public void DeployLegs() { }
     }
 }

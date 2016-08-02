@@ -1,4 +1,8 @@
-﻿namespace SpaceSim.Drawing
+﻿using System;
+﻿using SpaceSim.Physics;
+﻿using VectorMath;
+
+namespace SpaceSim.Drawing
 {
     /// <summary>
     /// Creates display friendly representations of units.
@@ -128,6 +132,23 @@
             }
 
             return heatingRate.ToString("#,##0.0") + " W/m^2";
+        }
+
+        public static string Degrees(double angle)
+        {
+            if (angle > Constants.PiOverTwo)
+            {
+                angle = Math.PI - angle;
+            }
+
+            if (angle < -Constants.PiOverTwo)
+            {
+                angle = -(Math.PI + angle);
+            }
+
+            double displayAngle = MathHelper.RadiansToDegrees * angle;
+
+            return displayAngle.ToString("0.0") + "°";
         }
     }
 }

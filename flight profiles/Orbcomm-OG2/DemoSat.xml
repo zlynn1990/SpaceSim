@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>15</StartTime>
     <Duration>60</Duration>
     <TargetOrientation>-100</TargetOrientation>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>75</StartTime>
     <Duration>69</Duration>
     <TargetOrientation>-128</TargetOrientation>
@@ -13,7 +13,7 @@
   <Command xsi:type="Stage">
     <StartTime>148</StartTime>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>160</StartTime>
     <Duration>540</Duration>
     <TargetOrientation>-225</TargetOrientation>
@@ -22,7 +22,7 @@
 	<Part>Fairing</Part>
     <StartTime>170</StartTime>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>700</StartTime>
     <Duration>924</Duration>
     <TargetOrientation>-300</TargetOrientation>

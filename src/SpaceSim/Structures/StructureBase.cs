@@ -30,7 +30,7 @@ namespace SpaceSim.Structures
             _initialDistance = parent.SurfaceRadius - height;
 
             _rotationOffset = surfaceAngle;
-            _initialRotation = parent.Rotation;
+            _initialRotation = parent.Pitch;
 
             _texture = new Bitmap(texturePath);
         }
@@ -60,7 +60,7 @@ namespace SpaceSim.Structures
         public void RenderGdi(Graphics graphics, RectangleD cameraBounds)
         {
             // Update position and rotation given the parent's motion
-            double currentRotation = (_parent.Rotation - _initialRotation) + _rotationOffset;
+            double currentRotation = (_parent.Pitch - _initialRotation) + _rotationOffset;
 
             DVector2 rotationNormal = DVector2.FromAngle(currentRotation);
 

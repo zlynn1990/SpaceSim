@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.Falcon9
@@ -14,9 +15,42 @@ namespace SpaceSim.Spacecrafts.Falcon9
         public override double Width { get { return 3.706; } }
         public override double Height { get { return 14.0018; } }
 
-        public override bool ExposedToAirFlow { get { return Parent == null; } }
+        public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
 
-        public override double DragCoefficient { get { return 0.5; } }
+        public override double FormDragCoefficient
+        {
+            get
+            {
+                double baseCd = GetBaseCd(0.5);
+                double alpha = GetAlpha();
+
+                return Math.Abs(baseCd * Math.Cos(alpha));
+            }
+        }
+
+        public override double LiftCoefficient
+        {
+            get
+            {
+                double baseCd = GetBaseCd(0.6);
+                double alpha = GetAlpha();
+
+                return baseCd * Math.Sin(alpha * 2);
+            }
+        }
+
+        public override double CrossSectionalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+
+        public override double ExposedSurfaceArea
+        {
+            get
+            {
+                // A = 2πrh + πr2
+                return 2 * Math.PI * (Width / 2.0) * Height + CrossSectionalArea;
+            }
+        }
+
+        public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override Color IconColor { get { return Color.White; } }
 

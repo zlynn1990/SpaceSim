@@ -121,7 +121,7 @@ namespace SpaceSim.Spacecrafts
             dragon.AddChild(dragonTrunk);
             dragonTrunk.SetParent(dragon);
 
-            dragon.SetRotation(Math.PI * 1.24);
+            dragon.SetPitch(Math.PI * 1.24);
 
             return new List<ISpaceCraft> { dragon, dragonTrunk };
         }

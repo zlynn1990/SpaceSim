@@ -15,12 +15,12 @@
       <int>7</int>
     </EngineIds>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>1</StartTime>
     <Duration>8</Duration>
     <TargetOrientation>-140</TargetOrientation>
   </Command>
-  <Command xsi:type="Orient">
+  <Command xsi:type="Pitch">
     <StartTime>8</StartTime>
     <Duration>20</Duration>
     <TargetOrientation>-180</TargetOrientation>

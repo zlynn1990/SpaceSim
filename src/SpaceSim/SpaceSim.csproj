@@ -64,27 +64,35 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\AutoLandCommand.cs" />
+    <Compile Include="Commands\CantCommand.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\DeployCommand.cs" />
+    <Compile Include="Commands\PitchCommand.cs" />
     <Compile Include="Commands\ProgradeCommand.cs" />
+    <Compile Include="Commands\RelativePitchCommand.cs" />
     <Compile Include="Commands\RetrogradeCommand.cs" />
+    <Compile Include="Commands\RollCommand.cs" />
+    <Compile Include="Commands\YawCommand.cs" />
     <Compile Include="Contracts\Commands\AutoLand.cs" />
+    <Compile Include="Contracts\Commands\Cant.cs" />
     <Compile Include="Contracts\Commands\Command.cs" />
     <Compile Include="Contracts\Commands\Deploy.cs" />
     <Compile Include="Contracts\Commands\Ignition.cs" />
-    <Compile Include="Contracts\Commands\Orient.cs" />
+    <Compile Include="Contracts\Commands\Pitch.cs" />
     <Compile Include="Contracts\Commands\Prograde.cs" />
+    <Compile Include="Contracts\Commands\RelativePitch.cs" />
     <Compile Include="Contracts\Commands\Retrograde.cs" />
     <Compile Include="Contracts\Commands\Shutdown.cs" />
     <Compile Include="Contracts\Commands\Stage.cs" />
     <Compile Include="Contracts\Commands\Throttle.cs" />
     <Compile Include="Commands\IgnitionCommand.cs" />
-    <Compile Include="Commands\OrientCommand.cs" />
     <Compile Include="Commands\ShutdownCommand.cs" />
     <Compile Include="Commands\StageCommand.cs" />
     <Compile Include="Commands\ThrottleCommand.cs" />
     <Compile Include="Contracts\Payload.cs" />
+    <Compile Include="Contracts\Roll.cs" />
+    <Compile Include="Contracts\Yaw.cs" />
     <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
@@ -103,7 +111,7 @@
     <Compile Include="Engines\Merlin1D.cs" />
     <Compile Include="Engines\Merlin1DVac.cs" />
     <Compile Include="Engines\SuperDraco.cs" />
-    <Compile Include="Physics\FlightGlobals.cs" />
+    <Compile Include="Physics\Constants.cs" />
     <Compile Include="Drawing\FpsManager.cs" />
     <Compile Include="Gauges\RetrogradeButton.cs" />
     <Compile Include="Gauges\ProgradeButton.cs" />
@@ -113,7 +121,7 @@
     <Compile Include="Gauges\ThrustGauge.cs" />
     <Compile Include="Kernels\ClearKernel.cs" />
     <Compile Include="Physics\GravitationalBodyIterator.cs" />
-    <Compile Include="Physics\IAreodynamicBody.cs" />
+    <Compile Include="Physics\IAerodynamicBody.cs" />
     <Compile Include="Physics\IGravitationalBody.cs" />
     <Compile Include="Physics\GravitationalBodyBase.cs" />
     <Compile Include="Proxies\MassiveBodyProxy.cs" />
@@ -147,6 +155,7 @@
     <Compile Include="Spacecrafts\Falcon9SSTO\F9SSTO.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S2.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\F9S1Base.cs" />
     <Compile Include="Spacecrafts\FalconCommon\GridFin.cs" />
     <Compile Include="Spacecrafts\FalconCommon\LandingLeg.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />

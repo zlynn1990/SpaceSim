@@ -9,11 +9,14 @@ namespace SpaceSim.Engines
         bool IsActive { get; }
 
         double Throttle { get; }
+        double Cant { get; }
 
         void Startup();
         void Shutdown();
 
         void AdjustThrottle(double targetThrottle);
+        void AdjustCant(double targetAngle);
+
         double Thrust(double ispMultiplier);
         double MassFlowRate();
 
