@@ -132,6 +132,9 @@ namespace SpaceSim.Spacecrafts
 
         protected string MissionName;
 
+        private double _trailTimer;
+        private LaunchTrail _launchTrail;
+
         protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
             : base(position, velocity, -Math.PI * 0.5)
         {
@@ -144,6 +147,8 @@ namespace SpaceSim.Spacecrafts
             EntryFlame = entryFlame;
 
             MissionName = craftDirectory.Substring(craftDirectory.LastIndexOf('\\') + 1);
+
+            _launchTrail = new LaunchTrail();
         }
 
         public void InitializeController(EventManager eventManager)
@@ -912,6 +917,14 @@ namespace SpaceSim.Spacecrafts
                 {
                     child.UpdateChildren(Position, Velocity);
                 }
+
+                _trailTimer += dt;
+
+                if (_trailTimer > 1 && !OnGround)
+                {
+                    _launchTrail.AddPoint(Position, GravitationalParent, Throttle > 0);
+                    _trailTimer = 0;
+                }
             }
         }
 
@@ -947,28 +960,30 @@ namespace SpaceSim.Spacecrafts
         /// Renders the space craft at it's correct scale and rotation according to the camera.
         /// The engines are rendered first and then the space craft body.
         /// </summary>
-        public virtual void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public void RenderGdi(Graphics graphics, RectangleD cameraBounds)
         {
             RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
 
             // Saftey
             if (screenBounds.Width > RenderUtils.ScreenWidth * 500) return;
 
-            RenderAnimations(graphics, cameraBounds);
+            RenderBelow(graphics, cameraBounds);
 
             RenderShip(graphics, cameraBounds, screenBounds);
+
+            RenderAbove(graphics, cameraBounds);
         }
 
-        protected virtual void RenderAnimations(Graphics graphics, RectangleD cameraBounds)
+        public void RenderLaunchTrail(Graphics graphics, RectangleD cameraBounds)
+        {
+            _launchTrail.Draw(graphics, cameraBounds, GravitationalParent);
+        }
+
+        protected virtual void RenderBelow(Graphics graphics, RectangleD cameraBounds)
         {
             foreach (IEngine engine in Engines)
             {
                 engine.Draw(graphics, cameraBounds);
-            }
-
-            if (EntryFlame != null)
-            {
-                EntryFlame.Draw(graphics, cameraBounds);   
             }
         }
 
@@ -988,6 +1003,14 @@ namespace SpaceSim.Spacecrafts
             graphics.DrawImage(Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
             graphics.ResetTransform();
+        }
+
+        protected virtual void RenderAbove(Graphics graphics, RectangleD cameraBounds)
+        {
+            if (EntryFlame != null)
+            {
+                EntryFlame.Draw(graphics, cameraBounds);
+            }
         }
 
         public override string ToString()

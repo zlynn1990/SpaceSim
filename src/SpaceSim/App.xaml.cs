@@ -14,7 +14,7 @@ namespace SpaceSim
         {
             string profileDirectory = DetectProfileDirectory();
 
-            SpaceSim.MainWindow.FullScreen = true;
+            SpaceSim.MainWindow.FullScreen = false;
 
             SpaceSim.MainWindow.ProfileDirectories = new List<string>
             {
