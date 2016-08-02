@@ -21,6 +21,9 @@ namespace SpaceSim.Spacecrafts
         public ISpaceCraft Parent { get; protected set; }
         public List<ISpaceCraft> Children { get; protected set; }
 
+        public double Roll { get; protected set; }
+        public double Yaw { get; protected set; }
+
         public override double Mass
         {
             get
@@ -87,6 +90,7 @@ namespace SpaceSim.Spacecrafts
         public bool OnGround { get; private set; }
 
         public abstract AeroDynamicProperties GetAeroDynamicProperties { get; }
+
         public abstract double FormDragCoefficient { get; }
         public abstract double CrossSectionalArea { get; }
         public abstract double ExposedSurfaceArea { get; }
@@ -98,7 +102,8 @@ namespace SpaceSim.Spacecrafts
             if (MachNumber > 1.0)
             {
                 double exp = Math.Exp(0.3 / MachNumber);
-                baseCd *= 1.4 * exp;
+
+                return baseCd * 1.4 * exp;
             }
 
             return baseCd;
@@ -456,26 +461,30 @@ namespace SpaceSim.Spacecrafts
         {
             double altitude = GetRelativeAltitude();
             double relativePitch = Pitch - GravitationalParent.Pitch;
+
             if (altitude > GravitationalParent.AtmosphereHeight)
             {
                 return relativePitch;
             }
-            else
-            {
-                DVector2 difference = GravitationalParent.Position - Position;
-                difference.Normalize();
-                var surfaceNormal = new DVector2(difference.Y, difference.X);
-                double normal = surfaceNormal.Angle();
-                if (!double.IsNaN(normal))
-                {
-                    if (altitude > 0.1)
-                        relativePitch += normal;
-                    else
-                        relativePitch = normal;
-                }
 
-                return relativePitch;
+            DVector2 difference = GravitationalParent.Position - Position;
+            difference.Normalize();
+            var surfaceNormal = new DVector2(difference.Y, difference.X);
+            double normal = surfaceNormal.Angle();
+
+            if (!double.IsNaN(normal))
+            {
+                if (altitude > 0.1)
+                {
+                    relativePitch += normal;
+                }
+                else
+                {
+                    relativePitch = normal;
+                }
             }
+
+            return relativePitch;
         }
 
         public double GetAlpha()
@@ -489,20 +498,17 @@ namespace SpaceSim.Spacecrafts
             var alpha = 0.0;
             if (altitude > 0.1)
             {
-                DVector2 difference = GravitationalParent.Position - Position;
-                difference.Normalize();
                 double vAngle = GetRelativeVelocity().Angle();
                 alpha = Pitch - vAngle;
 
-                double twoPi = Math.PI * 2;
                 while (alpha > Math.PI)
                 {
-                    alpha -= twoPi;
+                    alpha -= Constants.TwoPi;
                 }
 
                 while (alpha < -Math.PI)
                 {
-                    alpha += twoPi;
+                    alpha += Constants.TwoPi;
                 }
             }
 
@@ -566,7 +572,6 @@ namespace SpaceSim.Spacecrafts
 
                 DVector2 relativeVelocity = (body.Velocity + surfaceNormal * rotationalSpeed) - Velocity;
 
-                double velocity = relativeVelocity.Length();
                 double velocityMagnitude = relativeVelocity.LengthSquared();
 
                 if (velocityMagnitude > 0)
@@ -828,10 +833,13 @@ namespace SpaceSim.Spacecrafts
             foreach (SpaceCraftBase child in children)
             {
                 AeroDynamicProperties props = child.GetAeroDynamicProperties;
+
                 if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow))
                 {
                     if (child.LiftingSurfaceArea > totalLiftArea)
-                        totalLiftArea = child.LiftingSurfaceArea;
+                    {
+                        totalLiftArea = child.LiftingSurfaceArea;   
+                    }
                 }
                 else if (props.HasFlag(AeroDynamicProperties.ExtendsFineness)
                          || props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
@@ -901,11 +909,11 @@ namespace SpaceSim.Spacecrafts
                 Velocity += (AccelerationL * dt);
 
                 // Re-normalize FTL scenarios
-                if (Velocity.LengthSquared() > FlightGlobals.SPEED_LIGHT_SQUARED)
+                if (Velocity.LengthSquared() > Constants.SpeedLightSquared)
                 {
                     Velocity.Normalize();
 
-                    Velocity *= FlightGlobals.SPEED_OF_LIGHT;
+                    Velocity *= Constants.SpeedOfLight;
                 }
 
                 // Integrate velocity

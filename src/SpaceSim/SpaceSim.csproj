@@ -111,7 +111,7 @@
     <Compile Include="Engines\Merlin1D.cs" />
     <Compile Include="Engines\Merlin1DVac.cs" />
     <Compile Include="Engines\SuperDraco.cs" />
-    <Compile Include="Physics\FlightGlobals.cs" />
+    <Compile Include="Physics\Constants.cs" />
     <Compile Include="Drawing\FpsManager.cs" />
     <Compile Include="Gauges\RetrogradeButton.cs" />
     <Compile Include="Gauges\ProgradeButton.cs" />
@@ -155,6 +155,7 @@
     <Compile Include="Spacecrafts\Falcon9SSTO\F9SSTO.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S2.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\F9S1Base.cs" />
     <Compile Include="Spacecrafts\FalconCommon\GridFin.cs" />
     <Compile Include="Spacecrafts\FalconCommon\LandingLeg.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />

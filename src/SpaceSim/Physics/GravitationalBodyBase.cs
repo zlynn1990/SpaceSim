@@ -12,8 +12,6 @@ namespace SpaceSim.Physics
 
         public abstract double Mass { get; }
         public double Pitch { get; protected set; }
-        public double Roll { get; protected set; }
-        public double Yaw { get; protected set; }
 
         public DVector2 AccelerationG { get; protected set; }
 
@@ -47,7 +45,7 @@ namespace SpaceSim.Physics
             difference.Normalize();
 
             // Gravitation ( aG = G m1 / r^2 )
-            AccelerationG += difference * FlightGlobals.GRAVITATION_CONSTANT * massDistanceRatio;
+            AccelerationG += difference * Constants.GravitationConstant * massDistanceRatio;
         }
 
         public virtual double GetRelativeAltitude()

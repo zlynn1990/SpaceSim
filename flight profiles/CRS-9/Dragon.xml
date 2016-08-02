@@ -8,7 +8,7 @@
   <Command xsi:type="Pitch">
     <StartTime>50</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-131</TargetOrientation>
+    <TargetOrientation>-130</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>110</StartTime>

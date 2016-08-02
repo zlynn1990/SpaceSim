@@ -1,3 +1,5 @@
+﻿using System;
+﻿using SpaceSim.Physics;
 ﻿using VectorMath;
 
 namespace SpaceSim.Drawing
@@ -134,8 +136,19 @@ namespace SpaceSim.Drawing
 
         public static string Degrees(double angle)
         {
-            double alpha = MathHelper.RadiansToDegrees * angle;
-            return alpha.ToString("#,##0") + "°";
+            if (angle > Constants.PiOverTwo)
+            {
+                angle = Math.PI - angle;
+            }
+
+            if (angle < -Constants.PiOverTwo)
+            {
+                angle = -(Math.PI + angle);
+            }
+
+            double displayAngle = MathHelper.RadiansToDegrees * angle;
+
+            return displayAngle.ToString("0.0") + "°";
         }
     }
 }

@@ -9,6 +9,7 @@ namespace SpaceSim.Spacecrafts
     class DemoSat : SpaceCraftBase
     {
         public override string CraftName {get { return "Satellite"; }}
+        public override string CommandFileName { get { return "demosat.xml"; } }
 
         public override double Width { get { return 5.10655; } }
         public override double Height { get { return 12.9311; } }
@@ -23,8 +24,8 @@ namespace SpaceSim.Spacecrafts
             {
                 double baseCd = GetBaseCd(0.4);
                 double alpha = GetAlpha();
-                double cosAlpha = Math.Cos(alpha);
-                return baseCd * cosAlpha;
+
+                return baseCd * Math.Cos(alpha);
             }
         }
 
@@ -34,9 +35,8 @@ namespace SpaceSim.Spacecrafts
             {
                 double baseCd = GetBaseCd(0.6);
                 double alpha = GetAlpha();
-                double sinAlpha = Math.Sin(alpha * 2.0);
-                double alphaCd = baseCd * sinAlpha;
-                return alphaCd;
+                
+                return baseCd * Math.Sin(alpha * 2.0);
             }
         }
 
@@ -45,8 +45,6 @@ namespace SpaceSim.Spacecrafts
         public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override Color IconColor { get { return Color.White; } }
-
-        public override string CommandFileName { get { return "demosat.xml"; } }
 
         private double _dryMass;
         private double _fairingMass;

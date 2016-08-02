@@ -13,6 +13,9 @@ namespace SpaceSim.Physics
 
     interface IAerodynamicBody : IPhysicsBody
     {
+        double Yaw { get; }
+        double Roll { get; }
+
         AeroDynamicProperties GetAeroDynamicProperties { get; }
 
         double HeatingRate { get; }
@@ -21,6 +24,7 @@ namespace SpaceSim.Physics
         double CrossSectionalArea { get; }
         double SkinFrictionCoefficient { get; }
         double ExposedSurfaceArea { get; }
+
         double LiftCoefficient { get; }
         double LiftingSurfaceArea { get; }
 

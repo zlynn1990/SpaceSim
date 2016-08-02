@@ -46,7 +46,7 @@ namespace SpaceSim.SolarSystem
             double massDistanceRatio = Mass / r2;
 
             // Gravitation ( aG = G m1 / r^2 )
-            return FlightGlobals.GRAVITATION_CONSTANT*massDistanceRatio;
+            return Constants.GravitationConstant*massDistanceRatio;
         }
 
         public double GetIspMultiplier(double altitude)

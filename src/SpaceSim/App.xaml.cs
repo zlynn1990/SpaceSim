@@ -18,7 +18,6 @@ namespace SpaceSim
 
             SpaceSim.MainWindow.ProfileDirectories = new List<string>
             {
-                //Path.Combine(profileDirectory, "CRS-8"),
                 Path.Combine(profileDirectory, "CRS-9"),
                 //Path.Combine(profileDirectory, "Dragon Abort"),
                 //Path.Combine(profileDirectory, "Dragon Entry"),

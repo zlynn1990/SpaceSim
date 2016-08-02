@@ -720,11 +720,6 @@ namespace SpaceSim
                     graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 535);
 
                     double alpha = targetSpaceCraft.GetAlpha();
-                    double halfPi = Math.PI / 2;
-                    if (alpha > halfPi)
-                        alpha = Math.PI - alpha;
-                    if (alpha < -halfPi)
-                        alpha = -(Math.PI + alpha);
 
                     graphics.DrawString("Alpha: " + UnitDisplay.Degrees(alpha), font, brush, 5, 565);
                 }

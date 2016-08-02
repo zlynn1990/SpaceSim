@@ -23,10 +23,8 @@ namespace SpaceSim.Spacecrafts.DragonV1
             {
                 double baseCd = GetBaseCd(0.3);
                 double alpha = GetAlpha();
-                double cosAlpha = Math.Cos(alpha);
-                double Cd = Math.Abs(baseCd * cosAlpha);
 
-                return Cd;
+                return Math.Abs(baseCd * Math.Cos(alpha));
             }
         }
 
@@ -36,8 +34,8 @@ namespace SpaceSim.Spacecrafts.DragonV1
             {
                 double baseCd = GetBaseCd(0.6);
                 double alpha = GetAlpha();
-                double sinAlpha = Math.Sin(alpha * 2);
-                return baseCd * sinAlpha;
+
+                return baseCd * Math.Sin(alpha * 2);
             }
         }
 

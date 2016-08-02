@@ -25,14 +25,14 @@ namespace SpaceSim.Spacecrafts.DragonV1
             {
                 double alpha = GetAlpha();
                 double baseCd = GetBaseCd(0.45);
-                double halfPi = Math.PI / 2;
-                if (alpha > halfPi || alpha < -halfPi)
+
+                if (alpha > Constants.PiOverTwo || alpha < -Constants.PiOverTwo)
                 {
                     baseCd = GetBaseCd(0.8);
                 }
 
-                double cosAlpha = Math.Cos(alpha);
-                baseCd *= cosAlpha;
+                baseCd *= Math.Cos(alpha);
+
                 return Math.Abs(baseCd);
             }
         }
@@ -43,14 +43,13 @@ namespace SpaceSim.Spacecrafts.DragonV1
             {
                 double alpha = GetAlpha();
                 double baseCd = GetBaseCd(0.3);
-                double sinAlpha = Math.Sin(alpha * 2.0);
-                double halfPi = Math.PI / 2;
-                if (alpha > halfPi || alpha < -halfPi)
+
+                if (alpha > Constants.PiOverTwo || alpha < -Constants.PiOverTwo)
                 {
                     baseCd = GetBaseCd(0.6);
                 }
 
-                double alphaCd = baseCd * sinAlpha;
+                double alphaCd = baseCd * Math.Sin(alpha * 2);
 
                 return alphaCd;
             }
@@ -83,8 +82,8 @@ namespace SpaceSim.Spacecrafts.DragonV1
             {
                 double area = Math.PI * Math.Pow(Width / 2, 2);
                 double alpha = GetAlpha();
-                double sinAlpha = Math.Cos(alpha * 2);
-                return Math.Abs(area * sinAlpha);
+
+                return Math.Abs(area * Math.Cos(alpha * 2));
             }
         }
 
@@ -96,6 +95,7 @@ namespace SpaceSim.Spacecrafts.DragonV1
                 double r = Width / 2;
                 double h2 = Math.Pow(Height, 2);
                 double r2 = Math.Pow(r, 2);
+
                 return Math.PI * r * (r + Math.Pow(h2 + r2, 0.5));
             }
         }

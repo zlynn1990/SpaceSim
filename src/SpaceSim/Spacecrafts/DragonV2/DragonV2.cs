@@ -25,17 +25,17 @@ namespace SpaceSim.Spacecrafts.DragonV2
                 double alpha = GetAlpha();
                 double baseCd = GetBaseCd(0.45);
                 bool isRetrograde = false;
-                double halfPi = Math.PI / 2;
-                if (alpha > halfPi || alpha < -halfPi)
+
+                if (alpha > Constants.PiOverTwo || alpha < -Constants.PiOverTwo)
                 {
                     isRetrograde = true;
                     baseCd = GetBaseCd(0.9);
                 }
 
-                double cosAlpha = Math.Cos(alpha);
-                baseCd *= cosAlpha;
+                baseCd *= Math.Cos(alpha);
 
                 double dragPreservation = 1.0;
+
                 if (isRetrograde)
                 {
                     // if retrograde
@@ -58,16 +58,13 @@ namespace SpaceSim.Spacecrafts.DragonV2
             {
                 double alpha = GetAlpha();
                 double baseCd = GetBaseCd(0.3);
-                double sinAlpha = Math.Sin(alpha * 2.0);
-                double halfPi = Math.PI / 2;
-                if (alpha > halfPi || alpha < -halfPi)
+
+                if (alpha > Constants.PiOverTwo || alpha < -Constants.PiOverTwo)
                 {
                     baseCd = GetBaseCd(0.6);
                 }
 
-                double alphaCd = baseCd * sinAlpha;
-
-                return alphaCd;
+                return  baseCd * Math.Sin(alpha * 2);
             }
         }
 

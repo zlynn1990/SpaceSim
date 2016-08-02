@@ -23,10 +23,8 @@ namespace SpaceSim.Spacecrafts.Falcon9
             {
                 double baseCd = GetBaseCd(0.5);
                 double alpha = GetAlpha();
-                double cosAlpha = Math.Cos(alpha);
-                double Cd = Math.Abs(baseCd * cosAlpha);
 
-                return Cd;
+                return Math.Abs(baseCd * Math.Cos(alpha));
             }
         }
 
@@ -36,8 +34,8 @@ namespace SpaceSim.Spacecrafts.Falcon9
             {
                 double baseCd = GetBaseCd(0.6);
                 double alpha = GetAlpha();
-                double sinAlpha = Math.Sin(alpha * 2.0);
-                return baseCd * sinAlpha;
+
+                return baseCd * Math.Sin(alpha * 2);
             }
         }
 

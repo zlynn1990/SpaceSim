@@ -12,6 +12,9 @@ namespace SpaceSim.Proxies
     /// </summary>
     class SpaceCraftProxy : GravitationalBodyBase, IAerodynamicBody
     {
+        public double Yaw { get { return 0; } }
+        public double Roll { get { return 0; } }
+
         public AeroDynamicProperties GetAeroDynamicProperties { get { return _proxy.GetAeroDynamicProperties; } }
 
         public double Altitude { get; private set; }
