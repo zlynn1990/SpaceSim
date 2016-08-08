@@ -9,6 +9,11 @@ namespace SpaceSim.Physics
 
         DVector2 AccelerationG { get; }
 
+        double Apogee { get; }
+        double Perigee { get; }
+
+        bool InOrbit { get; }
+
         void ResetAccelerations();
 
         void ResolveGravitation(IPhysicsBody other);
@@ -20,5 +25,7 @@ namespace SpaceSim.Physics
         DVector2 GetRelativeAcceleration();
 
         void SetGravitationalParent(IMassiveBody parent);
+
+        void FixedUpdate(TimeStep timeStep);
     }
 }

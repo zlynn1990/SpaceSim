@@ -27,7 +27,7 @@ namespace SpaceSim.Orbits
         /// <summary>
         /// Traces a massive body orbit by re-centering the world around the parent.
         /// </summary>
-        public static OrbitTrace TraceMassiveBody(MassiveBodyBase body)
+        public static void TraceMassiveBody(MassiveBodyBase body, OrbitTrace trace)
         {
             IMassiveBody parent = body.GravitationalParent;
 
@@ -41,7 +41,7 @@ namespace SpaceSim.Orbits
 
             double orbitalDt = GetOrbitalDt(initialPosition, proxySatellite.Velocity, out orbitalTerminationRadius);
 
-            var trace = new OrbitTrace(body.Position, altitude);
+            trace.Reset(body.Position);
 
             for (int i=0; i < 300; i++)
             {
@@ -70,14 +70,12 @@ namespace SpaceSim.Orbits
 
                 trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
             }
-
-            return trace;
         }
 
         /// <summary>
         /// Traces a space craft orbit by re-centering the world around the parent.
         /// </summary>
-        public static OrbitTrace TraceSpaceCraft(SpaceCraftBase satellite)
+        public static void TraceSpaceCraft(SpaceCraftBase satellite, OrbitTrace trace)
         {
             IMassiveBody parent = satellite.GravitationalParent;
 
@@ -126,7 +124,7 @@ namespace SpaceSim.Orbits
                 targetDt = orbitalDt;
             }
 
-            var trace = new OrbitTrace(satellite.Position - shipOffset, altitude);
+            trace.Reset(satellite.Position - shipOffset);
 
             // Simulate 300 orbital steps, more for proximity
             for (int step = 0; step < stepCount; step++)
@@ -143,8 +141,6 @@ namespace SpaceSim.Orbits
                 // Check if reference frame shifting needs to occur in atmosphere
                 if (altitude < proxyParent.AtmosphereHeight)
                 {
-                    double offsetFactor = 1.0 - (altitude / proxyParent.AtmosphereHeight);
-
                     DVector2 difference = proxyParent.Position - proxySatellite.Position;
                     difference.Normalize();
 
@@ -159,7 +155,7 @@ namespace SpaceSim.Orbits
 
                     DVector2 atmopshereVelocity = surfaceNormal * rotationalSpeed;
 
-                    proxySatellite.ApplyFrameOffset(atmopshereVelocity * offsetFactor * targetDt);
+                    proxySatellite.ApplyFrameOffset(atmopshereVelocity * targetDt);
 
                     // Return early if the trace goes into a planet
                     if (altitude <= 0)
@@ -224,8 +220,6 @@ namespace SpaceSim.Orbits
 
                 trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
             }
-
-            return trace;
         }
 
         // Finds the orbtial delta time step by assuming 200 points along the oribtal cirumference
