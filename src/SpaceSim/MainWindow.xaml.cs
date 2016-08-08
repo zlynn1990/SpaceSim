@@ -427,7 +427,7 @@ namespace SpaceSim
         /// <summary>
         /// Updates the physics bodies and resolves all forces.
         /// </summary>
-         private void Update(TimeStep timeStep)
+        private void Update(TimeStep timeStep)
         {
             ResolveGravitionalParents();
 
@@ -465,13 +465,13 @@ namespace SpaceSim
                     }
                 }
 
-                // Update spacecraft animations when update loops are low
+                // Don't update the animations every frame
                 if (timeStep.UpdateLoops < 16)
                 {
                     foreach (ISpaceCraft spaceCraft in _spaceCrafts)
                     {
                         spaceCraft.UpdateAnimations(timeStep);
-                    }   
+                    }
                 }
 
                 // Update oribitng bodies
@@ -484,6 +484,12 @@ namespace SpaceSim
                 _eventManager.Update(targetDt);
 
                 _totalElapsedSeconds += targetDt;
+            }
+
+            // Fixed update all gravitational bodies
+            foreach (IGravitationalBody body in _gravitationalBodies)
+            {
+                body.FixedUpdate(timeStep);
             }
 
             var targetSpaceCraft = _gravitationalBodies[_targetIndex] as ISpaceCraft;
@@ -515,7 +521,7 @@ namespace SpaceSim
 
             if (_camera.Zoom > 1)
             {
-                double scroll = Math.Pow(_camera.Zoom, 1.05f) * _scrollRate;
+                double scroll = Math.Pow(_camera.Zoom, 1.05f)*_scrollRate;
 
                 _camera.ChangeZoom(scroll);
             }
@@ -588,29 +594,18 @@ namespace SpaceSim
                 }
             }
 
-            double currentApogee = 0;
-            double currentPerigee = 0;
-
             // Draw all orbit traces, spacecrafts, and GDI objects
             using (Graphics graphics = RenderUtils.GetContext(false, _imageBitmap))
             {
                 RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(0, -10e12), new DVector2(0, 10e12), Color.FromArgb(40, 255, 255, 255));
                 RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(-10e12, 0), new DVector2(10e12, 0), Color.FromArgb(40, 255, 255, 255));
 
-                // Draw orbit traces
+                // Draw all massive body orbit traces
                 foreach (MassiveBodyBase massiveBody in _massiveBodies)
                 {
                     if (massiveBody is Sun) continue;
 
-                    OrbitTrace trace = OrbitHelper.TraceMassiveBody(massiveBody);
-
-                    if (target == massiveBody)
-                    {
-                        currentApogee = trace.Apogee;
-                        currentPerigee = trace.Perigee;
-                    }
-
-                    trace.Draw(graphics, cameraBounds, massiveBody);
+                    massiveBody.RenderGdi(graphics, cameraBounds);
                 }
 
                 // Draw structures
@@ -622,30 +617,7 @@ namespace SpaceSim
                 // Draw spacecraft
                 foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
                 {
-                    spaceCraft.RenderLaunchTrail(graphics, cameraBounds);
-
-                    if (spaceCraft.Visibility(cameraBounds) > 0)
-                    {
-                        RectangleD bounds = spaceCraft.ComputeBoundingBox();
-
-                        // In range for render
-                        if (cameraBounds.IntersectsWith(bounds))
-                        {
-                            spaceCraft.RenderGdi(graphics, cameraBounds);
-                        }
-                    }
-
-                    if (spaceCraft.Parent != null) continue;
-
-                    OrbitTrace trace = OrbitHelper.TraceSpaceCraft(spaceCraft);
-
-                    if (target == spaceCraft)
-                    {
-                        currentApogee = trace.Apogee;
-                        currentPerigee = trace.Perigee;
-                    }
-
-                    trace.Draw(graphics, cameraBounds, spaceCraft);
+                    spaceCraft.RenderGdi(graphics, cameraBounds);
                 }
             }
 
@@ -690,8 +662,11 @@ namespace SpaceSim
                 graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, false), font, brush, 5, 175);
                 graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 205);
 
-                graphics.DrawString("Apogee: " + UnitDisplay.Distance(currentApogee), font, brush, 5, 395);
-                graphics.DrawString("Perigee: " + UnitDisplay.Distance(currentPerigee), font, brush, 5, 425);
+                if (!(target is Sun))
+                {
+                    graphics.DrawString("Apogee: " + UnitDisplay.Distance(target.Apogee), font, brush, 5, 395);
+                    graphics.DrawString("Perigee: " + UnitDisplay.Distance(target.Perigee), font, brush, 5, 425);
+                }
 
                 graphics.DrawString("Mass: " + UnitDisplay.Mass(target.Mass), font, brush, 5, 260);
 

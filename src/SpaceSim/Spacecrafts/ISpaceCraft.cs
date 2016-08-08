@@ -11,6 +11,7 @@ namespace SpaceSim.Spacecrafts
     {
         string CraftName { get; }
         string CraftDirectory { get; }
+                string CommandFileName { get; }
 
         ISpaceCraft Parent { get; }
         List<ISpaceCraft> Children { get; }
@@ -30,9 +31,8 @@ namespace SpaceSim.Spacecrafts
         IEngine[] Engines { get; }
         IController Controller { get; }
 
-        string CommandFileName { get; }
-
         bool OnGround { get; }
+        bool InOrbit { get; }
 
         void InitializeController(EventManager eventManager);
 

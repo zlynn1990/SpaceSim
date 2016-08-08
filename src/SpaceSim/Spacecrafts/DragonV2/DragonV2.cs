@@ -81,8 +81,8 @@ namespace SpaceSim.Spacecrafts.DragonV2
             {
                 double area = Math.PI * Math.Pow(Width / 2, 2);
                 double alpha = GetAlpha();
-                double sinAlpha = Math.Cos(alpha * 2);
-                return Math.Abs(area * sinAlpha);
+
+                return Math.Abs(area * Math.Cos(alpha * 2));
             }
         }
 

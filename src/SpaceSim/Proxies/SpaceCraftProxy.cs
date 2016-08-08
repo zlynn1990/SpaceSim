@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
@@ -40,6 +41,8 @@ namespace SpaceSim.Proxies
         public DVector2 AccelerationD { get; private set; }
         public DVector2 AccelerationL { get; private set; }
         public DVector2 AccelerationN { get; private set; }
+
+        public override Color IconColor { get { return Color.White; } }
 
         private double _dryMass;
         private double _thrust;
@@ -154,6 +157,21 @@ namespace SpaceSim.Proxies
             Velocity += (AccelerationN * dt);
 
             Position += (Velocity * dt);
+        }
+
+        public override double Visibility(RectangleD cameraBounds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RectangleD ComputeBoundingBox()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void FixedUpdate(TimeStep timeStep)
+        {
+            throw new NotImplementedException();
         }
 
         private void UpdateEngines(double dt)
