@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Pitch">
+    <StartTime>10</StartTime>
+    <Duration>134</Duration>
+    <TargetOrientation>-145</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>147.3</StartTime>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>150</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-175</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>205</StartTime>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>210</StartTime>
+    <Duration>300</Duration>
+    <TargetOrientation>-200</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>535</StartTime>
+    <Duration>8000</Duration>
+    <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+</ArrayOfCommand>

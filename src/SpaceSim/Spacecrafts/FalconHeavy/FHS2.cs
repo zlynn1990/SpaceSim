@@ -58,7 +58,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
         public FHS2(string craftDirectory, DVector2 position, DVector2 velocity)
             : base(craftDirectory, position, velocity, 108185, "Textures/fh9S2.png")
         {
-            StageOffset = new DVector2(0, 13.3);
+            StageOffset = new DVector2(0, 9);
 
             Engines = new IEngine[]
             {

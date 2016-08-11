@@ -18,7 +18,7 @@ namespace SpaceSim.Spacecrafts.Falcon9SSTO
         public override double Height { get { return 47.812188; } }
 
         public F9SSTO(string craftDirectory, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 409500, "Textures/f9ssto.png", null)
+            : base(craftDirectory, position, velocity, 409500, "Textures/f9ssto.png")
         {
             StageOffset = new DVector2(0, 25.5);
 
