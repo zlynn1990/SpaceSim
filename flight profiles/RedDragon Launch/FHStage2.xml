@@ -13,7 +13,7 @@
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>5836</StartTime>
+    <StartTime>5536</StartTime>
     <Duration>0.5</Duration>
     <Throttle>100</Throttle>
     <EngineIds>

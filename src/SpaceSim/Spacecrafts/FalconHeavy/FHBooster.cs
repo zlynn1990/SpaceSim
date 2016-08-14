@@ -18,7 +18,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
         public int Id { get; private set; }
 
-        public override double DryMass { get { return 25600; } }
+        public override double DryMass { get { return 23600; } }
 
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 44.6; } }

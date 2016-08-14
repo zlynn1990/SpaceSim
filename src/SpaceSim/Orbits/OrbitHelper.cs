@@ -138,8 +138,24 @@ namespace SpaceSim.Orbits
 
                 altitude = proxyParent.GetRelativeHeight(proxySatellite.Position);
 
+                double velocity = proxySatellite.GetRelativeVelocity().Length();
+
+                double offsetFactor = 0.0;
+
+                if (altitude < proxyParent.AtmosphereHeight*2)
+                {
+                    if (velocity < 3000)
+                    {
+                        offsetFactor = 1.0;
+                    }
+                    else if (velocity < 4000)
+                    {
+                        offsetFactor = 1.0 - velocity / 3000.0;
+                    }   
+                }
+
                 // Check if reference frame shifting needs to occur in atmosphere
-                if (altitude < proxyParent.AtmosphereHeight)
+                if (offsetFactor > 0.0001)
                 {
                     DVector2 difference = proxyParent.Position - proxySatellite.Position;
                     difference.Normalize();
@@ -155,7 +171,7 @@ namespace SpaceSim.Orbits
 
                     DVector2 atmopshereVelocity = surfaceNormal * rotationalSpeed;
 
-                    proxySatellite.ApplyFrameOffset(atmopshereVelocity * targetDt);
+                    proxySatellite.ApplyFrameOffset(atmopshereVelocity * offsetFactor * targetDt);
 
                     // Return early if the trace goes into a planet
                     if (altitude <= 0)

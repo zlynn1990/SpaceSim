@@ -10,7 +10,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
     {
         public override string CraftName { get { return "FH S2 "; } }
 
-        public override double DryMass { get { return 4000; } }
+        public override double DryMass { get { return 3950; } }
 
         public override double Width { get { return 3.706; } }
         public override double Height { get { return 14.0018; } }

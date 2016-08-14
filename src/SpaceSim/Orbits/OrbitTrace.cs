@@ -61,7 +61,7 @@ namespace SpaceSim.Orbits
                 {
                     PointF localPoint = RenderUtils.WorldToScreen(orbitPoint, cameraBounds);
 
-                    if (i == _apogeeIndex)
+                    if (i == _apogeeIndex && i > 1)
                     {
                         RenderApogee(graphics, localPoint);
                     }
@@ -76,7 +76,7 @@ namespace SpaceSim.Orbits
                 }
             }
 
-            if (cameraBounds.Contains(_points[0]))
+            if (_points.Count > 0 && cameraBounds.Contains(_points[0]))
             {
                 RenderStart(graphics, cameraBounds, orbitingBody, _points[0]);
             }
