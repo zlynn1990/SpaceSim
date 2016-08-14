@@ -7,7 +7,7 @@ using VectorMath;
 
 namespace SpaceSim.Spacecrafts.DragonV2
 {
-    sealed class DragonV2 : SpaceCraftBase
+    class DragonV2 : SpaceCraftBase
     {
         public override string CraftName { get { return "DragonV2"; } }
 

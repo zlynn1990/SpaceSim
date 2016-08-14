@@ -43,6 +43,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildDragonV2Abort(planet, payload, craftDirectory);
                 case "DragonEntry":
                     return BuildDragonV2Entry(planet, payload, craftDirectory);
+                case "RedDragonFH":
+                    return BuildRedDragonFH(planet, payload, craftDirectory, offset);
                 case "GenericFH":
                     return BuildFalconHeavy(planet, payload, craftDirectory, offset);
                     default:
@@ -149,6 +151,36 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 demoSat, fhS2, fhS1, fhLeftBooster, fhRightBooster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildRedDragonFH(IMassiveBody planet, Payload payload, string craftDirectory, float offset = 0)
+        {
+            var redDragon = new RedDragon.RedDragon(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
+                                      planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
+
+            var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            redDragon.AddChild(dragonTrunk);
+            dragonTrunk.SetParent(redDragon);
+            dragonTrunk.AddChild(fhS2);
+            fhS2.SetParent(dragonTrunk);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                redDragon, dragonTrunk, fhS2, fhS1, fhLeftBooster, fhRightBooster
             };
         }
 

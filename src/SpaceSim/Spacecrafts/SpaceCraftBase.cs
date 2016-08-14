@@ -910,7 +910,8 @@ namespace SpaceSim.Spacecrafts
 
                 _trailTimer += dt;
 
-                if (!OnGround && !InOrbit && _trailTimer > 1)
+                // Somewhat arbitrary conditions for launch trails
+                if (dt < 0.1666666666 && altitude > 50 && !InOrbit && _trailTimer > 1)
                 {
                     _launchTrail.AddPoint(Position, GravitationalParent, Throttle > 0);
                     _trailTimer = 0;
@@ -1022,7 +1023,12 @@ namespace SpaceSim.Spacecrafts
 
         public override string ToString()
         {
-            return string.Format("{0} [{1}]", CraftName, MissionName);
+            if (MainWindow.ProfileDirectories.Count > 1)
+            {
+                return string.Format("{0} [{1}]", CraftName, MissionName);
+            }
+
+            return CraftName;
         }
     }
 }

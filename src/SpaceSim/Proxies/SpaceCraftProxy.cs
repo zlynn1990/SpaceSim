@@ -31,7 +31,7 @@ namespace SpaceSim.Proxies
         public double CrossSectionalArea { get { return _proxy.CrossSectionalArea; } }
         public double SkinFrictionCoefficient { get { return _proxy.SkinFrictionCoefficient; } }
         public double ExposedSurfaceArea { get { return _proxy.ExposedSurfaceArea; } }
-        public double LiftCoefficient { get { return _proxy.LiftCoefficient; } }
+        public double LiftCoefficient { get { return 0.3; } }
         public double LiftingSurfaceArea { get { return _proxy.LiftingSurfaceArea; } }
 
         public double PropellantMass { get; private set; }

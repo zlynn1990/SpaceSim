@@ -100,7 +100,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         private double _sootRatio;
 
-        protected F9S1Base(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, string sootTexturePath)
+        protected F9S1Base(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath)
             : base(craftDirectory, position, velocity, propellantMass, texturePath)
         {
             _gridFins = new[]
@@ -114,6 +114,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
                 new LandingLeg(this, new DVector2(0.94, 21), true),
                 new LandingLeg(this, new DVector2(-0.94, 21), false)
             };
+
+            string sootTexturePath = texturePath.Replace(".png", "Soot.png");
 
             // Initialized 'soot' texture and allocate the drawing buffer
             _sootTexture = new Bitmap(sootTexturePath);
