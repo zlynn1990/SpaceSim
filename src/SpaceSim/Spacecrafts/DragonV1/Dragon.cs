@@ -2,6 +2,7 @@
 using System.Drawing;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
 

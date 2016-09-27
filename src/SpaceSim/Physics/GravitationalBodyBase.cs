@@ -42,6 +42,11 @@ namespace SpaceSim.Physics
             AccelerationG = DVector2.Zero;
         }
 
+        public void ResetOrientation()
+        {
+            Pitch = 0;
+        }
+
         public virtual void ResolveGravitation(IPhysicsBody other)
         {
             DVector2 difference = other.Position - Position;

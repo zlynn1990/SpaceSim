@@ -8,6 +8,7 @@ using SpaceSim.Controllers;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Orbits;
+using SpaceSim.Particles;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
 using VectorMath;
@@ -138,6 +139,12 @@ namespace SpaceSim.Spacecrafts
         private double _trailTimer;
         private LaunchTrail _launchTrail;
 
+        private bool _requiresStaging;
+        private DVector2 _stagingForce;
+
+        private int _onGroundIterations;
+
+        private bool _showDisplayVectors;
 
         protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
             : base(position, velocity, -Math.PI * 0.5)
@@ -169,6 +176,11 @@ namespace SpaceSim.Spacecrafts
             {
                 Controller = new SimpleFlightController(this);
             }
+        }
+
+        public void ToggleDisplayVectors()
+        {
+            _showDisplayVectors = !_showDisplayVectors;
         }
 
         /// <summary>
@@ -219,9 +231,10 @@ namespace SpaceSim.Spacecrafts
                 // Simulate simple staging mechanism
                 double sAngle = StageOffset.Angle();
 
-                DVector2 stagingVector = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
+                DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
 
-                AccelerationN += stagingVector * 1000;
+                _stagingForce = stagingNormal * Mass * 0.035;
+                _requiresStaging = true;
             }
         }
 
@@ -371,6 +384,11 @@ namespace SpaceSim.Spacecrafts
         public void RemoveChild(ISpaceCraft child)
         {
             Children.Remove(child);
+        }
+
+        public void UpdateController(double dt)
+        {
+            Controller.Update(dt);
         }
 
         public override void FixedUpdate(TimeStep timeStep)
@@ -556,8 +574,18 @@ namespace SpaceSim.Spacecrafts
 
                 double rotationalSpeed = pathCirumference / body.RotationPeriod;
 
+                // Rough metric for staying on ground from frame to frame
+                if (altitude <= 0.0001)
+                {
+                    _onGroundIterations = Math.Min(_onGroundIterations + 1, 10);
+                }
+                else
+                {
+                    _onGroundIterations = Math.Max(_onGroundIterations - 1, 0);
+                }
+
                 // Simple collision detection
-                if (altitude <= 0)
+                if (_onGroundIterations > 5)
                 {
                     OnGround = true;
 
@@ -867,8 +895,6 @@ namespace SpaceSim.Spacecrafts
         /// </summary>
         public override void Update(double dt)
         {
-            Controller.Update(dt);
-
             double altitude = GetRelativeAltitude();
 
             IspMultiplier = GravitationalParent.GetIspMultiplier(altitude);
@@ -882,6 +908,13 @@ namespace SpaceSim.Spacecrafts
                     var thrustVector = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
 
                     AccelerationN += (thrustVector * Thrust) / Mass;
+                }
+
+                if (_requiresStaging)
+                {
+                    AccelerationN += _stagingForce;
+
+                    _requiresStaging = false;
                 }
 
                 // Integrate acceleration
@@ -977,13 +1010,13 @@ namespace SpaceSim.Spacecrafts
             // Only draw orbit traces and launch trails for detatched ships
             if (Parent == null)
             {
-                _launchTrail.Draw(graphics, cameraBounds, GravitationalParent);
+                if (cameraBounds.Width > 1000)
+                {
+                    _launchTrail.Draw(graphics, cameraBounds, GravitationalParent);   
+                }
 
                 // Don't draw orbit traces on the ground
-                if (!OnGround)
-                {
-                    base.RenderGdi(graphics, cameraBounds);   
-                }
+                base.RenderGdi(graphics, cameraBounds);
             }
         }
 
@@ -1018,6 +1051,34 @@ namespace SpaceSim.Spacecrafts
             if (EntryFlame != null)
             {
                 EntryFlame.Draw(graphics, cameraBounds);
+            }
+
+            // Only show the vectors when it's requested and the craft is not parented
+            if (_showDisplayVectors && Parent == null)
+            {
+                // The length of the vector is based on the width of the camera bounds
+                float lengthFactor = (float)(cameraBounds.Width * 0.1);
+
+                PointF start = RenderUtils.WorldToScreen(Position, cameraBounds);
+
+                DVector2 relativeVelocity = GetRelativeVelocity();
+
+                // Only draw the velocity vector when it can be normalized
+                if (relativeVelocity.Length() > 0)
+                {
+                    relativeVelocity.Normalize();
+
+                    PointF velocityEnd = RenderUtils.WorldToScreen(Position + relativeVelocity * lengthFactor, cameraBounds);
+
+                    graphics.DrawLine(Pens.White, start, velocityEnd);
+                }
+
+                DVector2 pitchVector = DVector2.FromAngle(Pitch);
+                pitchVector.Normalize();
+
+                PointF pitchEnd = RenderUtils.WorldToScreen(Position + pitchVector * lengthFactor, cameraBounds);
+
+                graphics.DrawLine(Pens.Red, start, pitchEnd);
             }
         }
 

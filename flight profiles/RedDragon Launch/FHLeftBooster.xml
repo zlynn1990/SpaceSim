@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Command xsi:type="Ignition">
-    <StartTime>0</StartTime>
+    <StartTime>0.00001</StartTime>
     <Duration>0.5</Duration>
     <Throttle>100</Throttle>
     <EngineIds>
@@ -17,21 +17,21 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>137</StartTime>
+    <StartTime>135.5</StartTime>
     <Duration>10</Duration>
     <TargetThrottle>80</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>147</StartTime>
+    <StartTime>145.5</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>160</StartTime>
-    <Duration>40</Duration>
-    <TargetOrientation>-10</TargetOrientation>
+    <Duration>30</Duration>
+    <TargetOrientation>-13</TargetOrientation>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>200</StartTime>
+    <StartTime>190</StartTime>
     <Duration>0.5</Duration>
     <Throttle>100</Throttle>
     <EngineIds>
@@ -41,12 +41,12 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>241</StartTime>
+    <StartTime>235.5</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Retrograde">
     <StartTime>260</StartTime>
-    <Duration>330</Duration>
+    <Duration>342</Duration>
     <InitialAdjustmentTime>50</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Deploy">
@@ -54,7 +54,7 @@
     <StartTime>350</StartTime>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>530</StartTime>
+    <StartTime>523</StartTime>
     <Duration>0.5</Duration>
     <Throttle>65</Throttle>
     <EngineIds>
@@ -64,18 +64,18 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>539</StartTime>
+    <StartTime>530</StartTime>
     <Duration>0.5</Duration>
   </Command>
-<!--   <Command xsi:type="AutoLand">
-    <StartTime>585</StartTime>
+  <Command xsi:type="AutoLand">
+    <StartTime>570</StartTime>
     <Duration>100</Duration>
     <EngineIds>
       <int>4</int>
     </EngineIds>
-  </Command> -->
+  </Command>
   <Command xsi:type="Deploy">
 	<Part>Landing Legs</Part>
-    <StartTime>595</StartTime>
+    <StartTime>598</StartTime>
   </Command>
 </ArrayOfCommand>

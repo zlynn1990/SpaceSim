@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Command xsi:type="Pitch">
+  <Command xsi:type="RelativePitch">
     <StartTime>10</StartTime>
     <Duration>134</Duration>
-    <TargetOrientation>-145</TargetOrientation>
+    <TargetOrientation>-150</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>147.3</StartTime>
+    <StartTime>145.8</StartTime>
   </Command>
-  <Command xsi:type="Pitch">
+  <Command xsi:type="RelativePitch">
     <StartTime>150</StartTime>
     <Duration>50</Duration>
     <TargetOrientation>-175</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>205</StartTime>
+    <StartTime>204</StartTime>
   </Command>
-  <Command xsi:type="Pitch">
+  <Command xsi:type="RelativePitch">
     <StartTime>210</StartTime>
     <Duration>300</Duration>
     <TargetOrientation>-200</TargetOrientation>
