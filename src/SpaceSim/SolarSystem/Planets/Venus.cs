@@ -38,8 +38,8 @@ namespace SpaceSim.SolarSystem.Planets
         public override Color IconAtmopshereColor { get { return Color.LightYellow; } }
 
         public Venus()
-            : base(OrbitHelper.GetPosition(1.07477e11, 2.29568357, DVector2.Zero),
-                   OrbitHelper.GetVelocity(1.07477e11, 2.29568357, -3.526e4, DVector2.Zero), new VenusKernel())
+            : base(OrbitHelper.FromJplEphemeris(-7.107549422541827E+07, -8.069630266378376E+07),
+                   OrbitHelper.FromJplEphemeris(2.601196797328043E+01, -2.332263510301460E+01), new VenusKernel())
         {
         }
 

@@ -28,11 +28,11 @@ namespace SpaceSim.Spacecrafts.FalconCommon
                 {
                     if (_landingLegs[0].Pitch > 0)
                     {
-                        baseCd = GetBaseCd(2.0);
+                        baseCd = GetBaseCd(1.4);
                     }
                     else if (_gridFins[0].Pitch > 0)
                     {
-                        baseCd = GetBaseCd(1.45);
+                        baseCd = GetBaseCd(1.25);
                     }
                     else
                     {
@@ -100,13 +100,13 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         private double _sootRatio;
 
-        protected F9S1Base(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath)
+        protected F9S1Base(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, double finOffset = -16.3)
             : base(craftDirectory, position, velocity, propellantMass, texturePath)
         {
             _gridFins = new[]
             {
-                new GridFin(this, new DVector2(1.3, -16.3), true),
-                new GridFin(this, new DVector2(-1.3, -16.3), false)
+                new GridFin(this, new DVector2(1.3, finOffset), true),
+                new GridFin(this, new DVector2(-1.3, finOffset), false)
             };
 
             _landingLegs = new[]
@@ -166,7 +166,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
                 {
                     if (engine.IsActive && engine.Throttle > 0)
                     {
-                        _sootRatio = Math.Min(_sootRatio + 0.01 * dt, 1.0);
+                        _sootRatio = Math.Min(_sootRatio + 0.015 * dt, 1.0);
                     }
                 }
             }

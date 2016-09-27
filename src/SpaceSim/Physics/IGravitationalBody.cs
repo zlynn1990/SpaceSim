@@ -15,6 +15,7 @@ namespace SpaceSim.Physics
         bool InOrbit { get; }
 
         void ResetAccelerations();
+        void ResetOrientation();
 
         void ResolveGravitation(IPhysicsBody other);
 

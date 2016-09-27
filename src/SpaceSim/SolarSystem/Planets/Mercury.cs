@@ -37,8 +37,8 @@ namespace SpaceSim.SolarSystem.Planets
         public override Color IconAtmopshereColor { get { return Color.White; } }
 
         public Mercury()
-            : base(OrbitHelper.GetPosition(4.6001200e10, 1.35187, DVector2.Zero),
-                   OrbitHelper.GetVelocity(4.6001200e10, 1.35187, -5.898e4, DVector2.Zero), new MercuryKernel())
+            : base(OrbitHelper.FromJplEphemeris(5.246226302537809E+07, -2.527033713925028E+07),
+                   OrbitHelper.FromJplEphemeris(1.211166887870701E+01, 4.586947862338018E+01), new MercuryKernel())
         {
         }
 

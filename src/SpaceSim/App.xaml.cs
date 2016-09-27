@@ -14,11 +14,13 @@ namespace SpaceSim
         {
             string profileDirectory = DetectProfileDirectory();
 
+            SpaceSim.MainWindow.ClockDelayInSeconds = 0;
             SpaceSim.MainWindow.FullScreen = false;
 
             SpaceSim.MainWindow.ProfileDirectories = new List<string>
             {
-                  Path.Combine(profileDirectory, "RedDragon Launch"),
+                //Path.Combine(profileDirectory, "AutoLanding Test"),
+                Path.Combine(profileDirectory, "RedDragon Launch"),
                 //Path.Combine(profileDirectory, "CRS-9"),
                 //Path.Combine(profileDirectory, "Dragon Abort"),
                 //Path.Combine(profileDirectory, "Dragon Entry"),

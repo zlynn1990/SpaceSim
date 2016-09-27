@@ -47,7 +47,9 @@ namespace SpaceSim.Spacecrafts
                     return BuildRedDragonFH(planet, payload, craftDirectory, offset);
                 case "GenericFH":
                     return BuildFalconHeavy(planet, payload, craftDirectory, offset);
-                    default:
+                case "AutoLandingTest":
+                    return BuildAutoLandingTest(planet, payload, craftDirectory);
+                default:
                     throw new Exception("Unkown craftType: " + payload.CraftType);
             }
         }
@@ -181,6 +183,17 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 redDragon, dragonTrunk, fhS2, fhS1, fhLeftBooster, fhRightBooster
+            };
+        }
+
+        public static List<ISpaceCraft> BuildAutoLandingTest(IMassiveBody planet, Payload payload, string craftDirectory)
+        {
+            var f9 = new F9S1(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 7000),
+                              planet.Velocity + new DVector2(-400, 400), 3500);
+
+            return new List<ISpaceCraft>
+            {
+                f9,
             };
         }
 
