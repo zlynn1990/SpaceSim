@@ -216,10 +216,9 @@ namespace SpaceSim
 
             // Start at nearly -Math.Pi / 2
             _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.27, earth);
-            var strongback2 = new Strongback(-1.57079, _spaceCrafts[0].TotalHeight * 0.5, earth);
 
             // Start downrange at ~300km
-            var asds = new ASDS(-1.8303485, 26, earth);
+            //var asds = new ASDS(-1.8303485, 26, earth);
 
             _gravitationalBodies = new List<IGravitationalBody>
             {
@@ -233,13 +232,8 @@ namespace SpaceSim
 
             _structures = new List<StructureBase>
             {
-                _strongback, asds
+                _strongback,// asds
             };
-
-            if (ProfileDirectories.Count > 1)
-            {
-                _structures.Add(strongback2);
-            }
 
             // Target the spacecraft
             _targetIndex = _gravitationalBodies.IndexOf(_spaceCrafts.FirstOrDefault());

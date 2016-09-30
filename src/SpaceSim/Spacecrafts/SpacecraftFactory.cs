@@ -9,6 +9,7 @@ using SpaceSim.Spacecrafts.DragonV2;
 using SpaceSim.Spacecrafts.Falcon9;
 using SpaceSim.Spacecrafts.Falcon9SSTO;
 using SpaceSim.Spacecrafts.FalconHeavy;
+using SpaceSim.Spacecrafts.ITS;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts
@@ -49,6 +50,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildFalconHeavy(planet, payload, craftDirectory, offset);
                 case "AutoLandingTest":
                     return BuildAutoLandingTest(planet, payload, craftDirectory);
+                case "ITS Crew Launch":
+                    return BuildITSCrew(planet, payload, craftDirectory, offset);
                 default:
                     throw new Exception("Unkown craftType: " + payload.CraftType);
             }
@@ -194,6 +197,22 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 f9,
+            };
+        }
+
+        private static List<ISpaceCraft> BuildITSCrew(IMassiveBody planet, Payload payload, string craftDirectory, float offset=0)
+        {
+            var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
+                                  planet.Velocity + new DVector2(-400, 0));
+
+            var booster = new ITSBooster(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            ship.AddChild(booster);
+            booster.SetParent(ship);
+
+            return new List<ISpaceCraft>
+            {
+                ship, booster
             };
         }
 
