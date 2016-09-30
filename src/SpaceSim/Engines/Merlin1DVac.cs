@@ -1,4 +1,4 @@
-﻿using SpaceSim.Drawing;
+﻿using System.Drawing;
 using SpaceSim.Particles;
 using SpaceSim.Spacecrafts;
 using VectorMath;
@@ -8,7 +8,7 @@ namespace SpaceSim.Engines
     class Merlin1DVac : EngineBase
     {
         public Merlin1DVac(ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(0, 500, 3, 0.5, 0.5, 0.1))
+            : base(parent, offset, new EngineFlame(0, Color.FromArgb(200, 255, 255, 0), 500, 3, 0.5, 0.5, 0.1))
         {
         }
 

@@ -15,13 +15,15 @@ namespace SpaceSim.Particles
 
         private Random _random;
 
+        private Color _color;
+
         private double _particleRate;
         private double _minSpread;
         private double _maxSpread;
         private double _maxAge;
         private double _angle;
 
-        public EngineFlame(int seed, int maxParticles, double particleRate,
+        public EngineFlame(int seed, Color color, int maxParticles, double particleRate,
                            double minSpread, double maxSpread, double maxAge, double angle = 0)
         {
             _random = new Random(seed);
@@ -37,6 +39,7 @@ namespace SpaceSim.Particles
                 _availableParticles.Enqueue(i);
             }
 
+            _color = color;
             _particleRate = particleRate;
             _minSpread = minSpread;
             _maxSpread = maxSpread;
@@ -129,7 +132,7 @@ namespace SpaceSim.Particles
                 }
             }
 
-            RenderUtils.DrawRectangles(graphics, particleBounds, Color.FromArgb(200, 255, 255, 0));
+            RenderUtils.DrawRectangles(graphics, particleBounds, _color);
         }
     }
 }

@@ -96,6 +96,8 @@
     <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
+    <Compile Include="Engines\Raptor.cs" />
+    <Compile Include="Engines\RaptorVac.cs" />
     <Compile Include="Particles\EngineFlame.cs" />
     <Compile Include="Drawing\EventManager.cs" />
     <Compile Include="Drawing\GpuClear.cs" />
@@ -162,6 +164,8 @@
     <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
+    <Compile Include="Spacecrafts\ITS\ITSBooster.cs" />
+    <Compile Include="Spacecrafts\ITS\ITSShip.cs" />
     <Compile Include="Spacecrafts\RedDragon\RedDragon.cs" />
     <Compile Include="Spacecrafts\SpaceCraftBase.cs" />
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
@@ -277,6 +281,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\gridFinRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\itsBooster.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\itsShip.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\landingLegLeft.png">

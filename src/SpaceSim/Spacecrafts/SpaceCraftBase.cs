@@ -233,7 +233,7 @@ namespace SpaceSim.Spacecrafts
 
                 DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
 
-                _stagingForce = stagingNormal * Mass * 0.035;
+                _stagingForce = stagingNormal * Mass * 0.005;
                 _requiresStaging = true;
             }
         }
