@@ -64,7 +64,6 @@ namespace SpaceSim
         private int _targetIndex;
 
         private Sun _sun;
-        private Strongback _strongback;
 
         private List<IGauge> _gauges;
         private ProgradeButton _progradeButton;
@@ -88,7 +87,7 @@ namespace SpaceSim
             LoadSolarSystem();
             LoadKernels();
 
-            _camera = new Camera(_gravitationalBodies[_targetIndex], 0.1);
+            _camera = new Camera(_gravitationalBodies[_targetIndex], 0.3);
             //_camera = new Camera(_gravitationalBodies[_targetIndex], 500000000);
 
             _timeStepIndex = 4;
@@ -133,8 +132,8 @@ namespace SpaceSim
                 WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
 
-                RenderUtils.ScreenWidth = 1688;
-                RenderUtils.ScreenHeight = 950;
+                //RenderUtils.ScreenWidth = 1688;
+                //RenderUtils.ScreenHeight = 950;
 
                 RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
                 RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
@@ -203,7 +202,7 @@ namespace SpaceSim
                 string profileDirectory = ProfileDirectories[i];
 
                 //List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(mars, profileDirectory, i * 30);
-                List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(earth, profileDirectory, i * 30);
+                List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(earth, profileDirectory, i * -60);
 
                 _spaceCrafts.AddRange(spaceCraft);
             }
@@ -215,7 +214,8 @@ namespace SpaceSim
             }
 
             // Start at nearly -Math.Pi / 2
-            _strongback = new Strongback(-1.5707947, _spaceCrafts[0].TotalHeight * 0.27, earth);
+            var itsMount = new ITSMount(-1.570795, -69, earth);
+            var strongback = new Strongback(-1.5708048, -32, earth);
 
             // Start downrange at ~300km
             //var asds = new ASDS(-1.8303485, 26, earth);
@@ -232,7 +232,9 @@ namespace SpaceSim
 
             _structures = new List<StructureBase>
             {
-                _strongback,// asds
+                itsMount,
+                strongback,
+                //asds
             };
 
             // Target the spacecraft
@@ -624,17 +626,18 @@ namespace SpaceSim
                     massiveBody.RenderGdi(graphics, cameraBounds);
                 }
 
+                // Draw spacecraft
+                foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
+                {
+                    spaceCraft.RenderGdi(graphics, cameraBounds);
+                }
+
                 // Draw structures
                 foreach (StructureBase structure in _structures)
                 {
                     structure.RenderGdi(graphics, cameraBounds);
                 }
 
-                // Draw spacecraft
-                foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
-                {
-                    spaceCraft.RenderGdi(graphics, cameraBounds);
-                }
             }
 
             // Draw all GUI elements (higher quality)
@@ -692,7 +695,7 @@ namespace SpaceSim
 
                     graphics.DrawString("Angle of Attack: " + UnitDisplay.Degrees(alpha), font, brush, 5, 235);
 
-                    double downrangeDistance = targetSpaceCraft.GetDownrangeDistance(_strongback.Position);
+                    double downrangeDistance = targetSpaceCraft.GetDownrangeDistance(_structures[0].Position);
 
                     graphics.DrawString("Downrange: " + UnitDisplay.Distance(downrangeDistance), font, brush, 5, 120);
 
