@@ -172,6 +172,7 @@
     <Compile Include="SolarSystem\Stars\Sun.cs" />
     <Compile Include="Physics\TimeStep.cs" />
     <Compile Include="Structures\ASDS.cs" />
+    <Compile Include="Structures\ITSMount.cs" />
     <Compile Include="Structures\Strongback.cs" />
     <Compile Include="Structures\StructureBase.cs" />
     <Compile Include="Orbits\OrbitTrace.cs" />
@@ -284,6 +285,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\itsBooster.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\itsMount.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\itsShip.png">

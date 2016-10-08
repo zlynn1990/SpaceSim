@@ -110,7 +110,7 @@ namespace SpaceSim.Proxies
         {
             DVector2 difference = body.Position - Position;
 
-            double distance = difference.Length();
+            double distance = difference.Length() - Height * 0.5;
 
             difference.Normalize();
 

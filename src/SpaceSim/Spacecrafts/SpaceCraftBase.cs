@@ -446,7 +446,7 @@ namespace SpaceSim.Spacecrafts
         {
             DVector2 difference = Position - GravitationalParent.Position;
 
-            double totalDistance = difference.Length();
+            double totalDistance = difference.Length() - TotalHeight * 0.5;
 
             return totalDistance - GravitationalParent.SurfaceRadius;
         }
@@ -556,7 +556,9 @@ namespace SpaceSim.Spacecrafts
 
             DVector2 difference = body.Position - Position;
 
-            double distance = difference.Length();
+            double heightOffset = Children.Count > 0 ? TotalHeight - Height*0.5 : Height*0.5;
+
+            double distance = difference.Length() - heightOffset;
 
             difference.Normalize();
 
@@ -591,7 +593,7 @@ namespace SpaceSim.Spacecrafts
 
                     var normal = new DVector2(-difference.X, -difference.Y);
 
-                    Position = body.Position + normal*(body.SurfaceRadius);
+                    Position = body.Position + normal * (body.SurfaceRadius + heightOffset);
 
                     Velocity = (body.Velocity + surfaceNormal*rotationalSpeed);
 
