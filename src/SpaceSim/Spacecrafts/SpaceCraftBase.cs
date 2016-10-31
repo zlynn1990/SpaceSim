@@ -152,7 +152,11 @@ namespace SpaceSim.Spacecrafts
             CraftDirectory = craftDirectory;
             Children = new List<ISpaceCraft>();
 
-            Texture = new Bitmap(texturePath);
+            if (!string.IsNullOrEmpty(texturePath))
+            {
+                Texture = new Bitmap(texturePath);    
+            }
+
             PropellantMass = propellantMass;
 
             EntryFlame = entryFlame;

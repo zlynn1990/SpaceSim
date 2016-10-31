@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
@@ -89,8 +90,10 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
+        private SpriteSheet _spriteSheet;
+
         public ITSShip(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 1769010)
-            : base(craftDirectory, position, velocity, propellantMass, "Textures/itsShip.png")
+            : base(craftDirectory, position, velocity, propellantMass, null)
         {
             Engines = new IEngine[9];
 
@@ -108,6 +111,37 @@ namespace SpaceSim.Spacecrafts.ITS
             Engines[6] = new Raptor(6, this, new DVector2(-2, Height * 0.45));
             Engines[7] = new Raptor(7, this, new DVector2(0, Height * 0.45));
             Engines[8] = new Raptor(8, this, new DVector2(2, Height * 0.45));
+
+            _spriteSheet = new SpriteSheet("Textures/itsShip.png", 6, 6);
+        }
+
+        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        {
+            double drawingRotation = Pitch + Math.PI * 0.5;
+
+            var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
+                                    screenBounds.Y + screenBounds.Height * 0.5f);
+
+            graphics.TranslateTransform(offset.X, offset.Y);
+
+            graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
+            graphics.TranslateTransform(-offset.X, -offset.Y);
+
+            // Normalize the angle to [0,360]
+            int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees + 90) % 360;
+
+            // Index into the sprite
+            int spriteIndex = (rollAngle * 36) / 360;
+
+            _spriteSheet.Draw(spriteIndex, graphics, screenBounds);
+
+            graphics.ResetTransform();
+        }
+
+        public override void Update(double dt)
+        {
+            Roll += dt;
+            base.Update(dt);
         }
     }
 }
