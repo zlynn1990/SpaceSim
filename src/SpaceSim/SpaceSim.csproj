@@ -96,6 +96,7 @@
     <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
+    <Compile Include="Drawing\SpriteSheet.cs" />
     <Compile Include="Engines\Raptor.cs" />
     <Compile Include="Engines\RaptorVac.cs" />
     <Compile Include="Particles\EngineFlame.cs" />
