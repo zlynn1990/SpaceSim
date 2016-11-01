@@ -6,10 +6,10 @@
     <TargetOrientation>-150</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>151</StartTime>
+    <StartTime>166</StartTime>
   </Command>
  <Command xsi:type="Ignition">
-    <StartTime>156</StartTime>
+    <StartTime>172</StartTime>
     <Duration>0.1</Duration>
     <Throttle>100</Throttle>
     <EngineIds>
@@ -19,20 +19,32 @@
       <int>3</int>
       <int>4</int>
       <int>5</int>
+	  <int>6</int>
+      <int>7</int>
+      <int>8</int>
     </EngineIds>
   </Command>
   <Command xsi:type="Pitch">
-    <StartTime>160</StartTime>
+    <StartTime>175</StartTime>
     <Duration>300</Duration>
-    <TargetOrientation>-210</TargetOrientation>
+    <TargetOrientation>-217</TargetOrientation>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>333</StartTime>
+    <Duration>0.5</Duration>
+	<EngineIds>
+	  <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>360</StartTime>
-    <Duration>80</Duration>
+    <StartTime>393</StartTime>
+    <Duration>50</Duration>
     <TargetThrottle>60</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>440</StartTime>
+    <StartTime>430</StartTime>
     <Duration>0.5</Duration>
   </Command>
 </ArrayOfCommand>

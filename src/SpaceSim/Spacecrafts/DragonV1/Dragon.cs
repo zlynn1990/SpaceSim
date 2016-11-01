@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Particles;
 using SpaceSim.Physics;
@@ -11,12 +10,12 @@ namespace SpaceSim.Spacecrafts.DragonV1
     sealed class Dragon : SpaceCraftBase
     {
         public override string CraftName { get { return "Dragon"; } }
+        public override string CommandFileName { get { return "dragon.xml"; } }
 
         public override double Width { get { return 3.7; } }
         public override double Height { get { return 4.194; } }
 
-        // Dragon + pressuredized cargo (1723) + unpressurized (1413)
-        public override double DryMass { get { return 7336; } }
+        public override double DryMass { get { return 4200; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
 
@@ -56,22 +55,6 @@ namespace SpaceSim.Spacecrafts.DragonV1
             }
         }
 
-        //public override double FormDragCoefficient
-        //{
-        //    get
-        //    {
-        //        if (Children.Count > 0)
-        //        {
-        //            return 0.1;
-        //        }
-
-        //        return 0.5 + _parachuteRatio * 0.2;
-        //    }
-        //}
-
-        // Base dome = 2 * pi * 1.85^2
-        // Parachute size = 2 * pi * 20^2
-
         public override double CrossSectionalArea
         {
             get { return 21.504 + _parachuteRatio * 2500; }
@@ -103,14 +86,12 @@ namespace SpaceSim.Spacecrafts.DragonV1
 
         public override Color IconColor { get { return Color.White; } }
 
-        public override string CommandFileName { get { return "dragon.xml"; } }
-
         private bool _drogueDeployed;
         private bool _parachuteDeployed;
         private double _parachuteRatio;
 
-        public Dragon(string craftDirectory, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 1388, "Textures/dragon.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
+        public Dragon(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
+            : base(craftDirectory, position, velocity, payloadMass, 1290, "Textures/dragon.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
         {
             Engines = new IEngine[0];
         }

@@ -26,6 +26,7 @@ namespace SpaceSim.Spacecrafts
         double Thrust { get; }
 
         double DryMass { get; }
+        double PayloadMass { get; }
         double PropellantMass { get; }
 
         IEngine[] Engines { get; }

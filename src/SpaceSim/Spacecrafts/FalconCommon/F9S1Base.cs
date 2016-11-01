@@ -101,7 +101,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         private double _sootRatio;
 
         protected F9S1Base(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, double finOffset = -16.3)
-            : base(craftDirectory, position, velocity, propellantMass, texturePath)
+            : base(craftDirectory, position, velocity, 0, propellantMass, texturePath)
         {
             _gridFins = new[]
             {
