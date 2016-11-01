@@ -90,7 +90,7 @@
     <Compile Include="Commands\ShutdownCommand.cs" />
     <Compile Include="Commands\StageCommand.cs" />
     <Compile Include="Commands\ThrottleCommand.cs" />
-    <Compile Include="Contracts\Payload.cs" />
+    <Compile Include="Contracts\VehicleConfig.cs" />
     <Compile Include="Contracts\Roll.cs" />
     <Compile Include="Contracts\Yaw.cs" />
     <Compile Include="Controllers\CommandController.cs" />

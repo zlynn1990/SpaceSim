@@ -12,7 +12,7 @@ namespace SpaceSim.Spacecrafts.ITS
         public override string CraftName { get { return "ITS Spaceship"; } }
         public override string CommandFileName { get { return "itsShip.xml"; } }
 
-        public override double DryMass { get { return 136078; } }
+        public override double DryMass { get { return 150000; } }
 
         public override double Width { get { return 13.9; } }
         public override double Height { get { return 49.5; } }
@@ -92,8 +92,8 @@ namespace SpaceSim.Spacecrafts.ITS
 
         private SpriteSheet _spriteSheet;
 
-        public ITSShip(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 1769010)
-            : base(craftDirectory, position, velocity, propellantMass, null)
+        public ITSShip(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass, double propellantMass = 1950000)
+            : base(craftDirectory, position, velocity, payloadMass, propellantMass, null)
         {
             Engines = new IEngine[9];
 
@@ -112,7 +112,7 @@ namespace SpaceSim.Spacecrafts.ITS
             Engines[7] = new Raptor(7, this, new DVector2(0, Height * 0.45));
             Engines[8] = new Raptor(8, this, new DVector2(2, Height * 0.45));
 
-            _spriteSheet = new SpriteSheet("Textures/itsShip.png", 6, 6);
+            _spriteSheet = new SpriteSheet("Textures/itsShip.png", 12, 12);
         }
 
         protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
@@ -136,12 +136,6 @@ namespace SpaceSim.Spacecrafts.ITS
             _spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
             graphics.ResetTransform();
-        }
-
-        public override void Update(double dt)
-        {
-            Roll += dt;
-            base.Update(dt);
         }
     }
 }

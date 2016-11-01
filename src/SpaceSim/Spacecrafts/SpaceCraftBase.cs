@@ -33,7 +33,7 @@ namespace SpaceSim.Spacecrafts
             {
                 double childMass = Children.Sum(child => child.Mass);
 
-                return childMass + DryMass + PropellantMass;
+                return childMass + DryMass + PayloadMass + PropellantMass;
             }
         }
 
@@ -83,6 +83,7 @@ namespace SpaceSim.Spacecrafts
         public double HeatingRate { get; protected set; }
 
         public abstract double DryMass { get; }
+        public double PayloadMass { get; protected set; }
         public double PropellantMass { get; protected set; }
 
         public IEngine[] Engines { get; protected set; }
@@ -146,7 +147,8 @@ namespace SpaceSim.Spacecrafts
 
         private bool _showDisplayVectors;
 
-        protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
+        protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass,
+                                 double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
             : base(position, velocity, -Math.PI * 0.5)
         {
             CraftDirectory = craftDirectory;
@@ -157,6 +159,7 @@ namespace SpaceSim.Spacecrafts
                 Texture = new Bitmap(texturePath);    
             }
 
+            PayloadMass = payloadMass;
             PropellantMass = propellantMass;
 
             EntryFlame = entryFlame;
