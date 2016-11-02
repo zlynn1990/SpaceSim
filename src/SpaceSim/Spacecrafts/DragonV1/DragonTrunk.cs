@@ -9,7 +9,6 @@ namespace SpaceSim.Spacecrafts.DragonV1
     class DragonTrunk : SpaceCraftBase
     {
         public override string CraftName { get { return "Dragon Trunk"; } }
-        public override string CommandFileName { get { return "dragonTrunk.xml"; } }
 
         public override double Width { get { return 3.8754; } }
         public override double Height { get { return 3.253; } }
@@ -56,8 +55,10 @@ namespace SpaceSim.Spacecrafts.DragonV1
 
         public override Color IconColor { get { return Color.White; } }
 
+        public override string CommandFileName { get { return "dragonTrunk.xml"; } }
+
         public DragonTrunk(string craftDirectory, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 0, 0, "Textures/dragonTrunk.png")
+            : base(craftDirectory, position, velocity, 0, "Textures/dragonTrunk.png")
         {
             StageOffset = new DVector2(0, 2.8);
 

@@ -11,7 +11,6 @@ namespace SpaceSim.Spacecrafts
     {
         string CraftName { get; }
         string CraftDirectory { get; }
-        string CommandFileName { get; }
 
         ISpaceCraft Parent { get; }
         List<ISpaceCraft> Children { get; }
@@ -26,11 +25,12 @@ namespace SpaceSim.Spacecrafts
         double Thrust { get; }
 
         double DryMass { get; }
-        double PayloadMass { get; }
         double PropellantMass { get; }
 
         IEngine[] Engines { get; }
         IController Controller { get; }
+
+        string CommandFileName { get; }
 
         bool OnGround { get; }
 
@@ -38,8 +38,6 @@ namespace SpaceSim.Spacecrafts
 
         void Stage();
         void DeployFairing();
-
-        void ToggleDisplayVectors();
 
         double GetDownrangeDistance(DVector2 pointOfReference);
 
@@ -61,7 +59,6 @@ namespace SpaceSim.Spacecrafts
         void AddChild(ISpaceCraft child);
         void RemoveChild(ISpaceCraft child);
 
-        void UpdateController(double dt);
         void UpdateAnimations(TimeStep timeStep);
         void UpdateChildren(DVector2 position, DVector2 velocity);
     }

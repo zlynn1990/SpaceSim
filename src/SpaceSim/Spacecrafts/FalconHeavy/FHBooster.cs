@@ -18,13 +18,13 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
         public int Id { get; private set; }
 
-        public override double DryMass { get { return 23600; } }
+        public override double DryMass { get { return 25600; } }
 
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 44.6; } }
 
         public FHBooster(string craftDirectory, int id, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 398887, "Textures/fhBooster" + id + ".png", -17.8)
+            : base(craftDirectory, position, velocity, 398887, "Textures/fhBooster" + id + ".png", null)
         {
             Id = id;
 

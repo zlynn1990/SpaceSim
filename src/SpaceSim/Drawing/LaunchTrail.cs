@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using SpaceSim.SolarSystem;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Drawing
@@ -18,7 +18,7 @@ namespace SpaceSim.Drawing
             _trailPowered = new List<bool>();
         }
 
-        public void AddPoint(DVector2 point, IMassiveBody parentBody, bool isPowered)
+        public void AddPoint(DVector2 point, IGravitationalBody parentBody, bool isPowered)
         {
             DVector2 offset = point - parentBody.Position;
 
@@ -28,7 +28,7 @@ namespace SpaceSim.Drawing
             _trailPowered.Add(isPowered);
         }
 
-        public void Draw(Graphics graphics, RectangleD cameraBounds, IMassiveBody parentBody)
+        public void Draw(Graphics graphics, RectangleD cameraBounds, IGravitationalBody parentBody)
         {
             var poweredTrails = new List<RectangleF>();
             var coastTrails = new List<RectangleF>();

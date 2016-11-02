@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using SpaceSim.Particles;
+using SpaceSim.Drawing;
 using SpaceSim.Physics;
 using SpaceSim.Spacecrafts;
 using VectorMath;

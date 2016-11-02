@@ -37,8 +37,8 @@ namespace SpaceSim.SolarSystem.Planets
         public override Color IconAtmopshereColor { get { return Color.IndianRed; } }
 
         public Jupiter()
-            : base(OrbitHelper.FromJplEphemeris(-8.140496172394816E+08, -2.921133413936896E+07),
-                   OrbitHelper.FromJplEphemeris(3.165828961330318E-01, -1.243819908039714E+01), new JupiterKernel())
+            : base(OrbitHelper.GetPosition(7.405736e11, 0.25750325984, DVector2.Zero),
+                   OrbitHelper.GetVelocity(7.405736e11, 0.25750325984, -1.372e4, DVector2.Zero), new JupiterKernel())
         {
         }
 

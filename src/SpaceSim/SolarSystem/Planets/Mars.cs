@@ -37,8 +37,8 @@ namespace SpaceSim.SolarSystem.Planets
         public override Color IconAtmopshereColor { get { return Color.LightSalmon; } }
 
         public Mars()
-            : base(OrbitHelper.FromJplEphemeris(1.186183757284019E+08, -1.722428244606592E+08),
-                   OrbitHelper.FromJplEphemeris(2.091501229864822E+01, 1.576687031430872E+01), new MarsKernel())
+            : base(OrbitHelper.GetPosition(2.067e11, 5.865019079167, DVector2.Zero),
+                   OrbitHelper.GetVelocity(2.067e11, 5.865019079167, -2.65e4, DVector2.Zero), new MarsKernel())
         {
         }
 

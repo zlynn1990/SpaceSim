@@ -11,7 +11,7 @@
   <Command xsi:type="Throttle">
     <StartTime>300</StartTime>
     <Duration>80</Duration>
-    <TargetThrottle>79.5</TargetThrottle>
+    <TargetThrottle>79</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>595</StartTime>

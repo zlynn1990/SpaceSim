@@ -90,24 +90,21 @@
     <Compile Include="Commands\ShutdownCommand.cs" />
     <Compile Include="Commands\StageCommand.cs" />
     <Compile Include="Commands\ThrottleCommand.cs" />
-    <Compile Include="Contracts\VehicleConfig.cs" />
+    <Compile Include="Contracts\Payload.cs" />
     <Compile Include="Contracts\Roll.cs" />
     <Compile Include="Contracts\Yaw.cs" />
     <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
-    <Compile Include="Drawing\SpriteSheet.cs" />
-    <Compile Include="Engines\Raptor.cs" />
-    <Compile Include="Engines\RaptorVac.cs" />
-    <Compile Include="Particles\EngineFlame.cs" />
+    <Compile Include="Drawing\EngineFlame.cs" />
     <Compile Include="Drawing\EventManager.cs" />
     <Compile Include="Drawing\GpuClear.cs" />
     <Compile Include="Drawing\IGdiRenderable.cs" />
     <Compile Include="Drawing\IGpuRenderable.cs" />
     <Compile Include="Drawing\IMapRenderable.cs" />
     <Compile Include="Drawing\LaunchTrail.cs" />
-    <Compile Include="Particles\Particle.cs" />
-    <Compile Include="Particles\ReEntryFlame.cs" />
+    <Compile Include="Drawing\Particle.cs" />
+    <Compile Include="Drawing\ReEntryFlame.cs" />
     <Compile Include="Drawing\RenderUtils.cs" />
     <Compile Include="Engines\EngineBase.cs" />
     <Compile Include="Engines\IEngine.cs" />
@@ -165,15 +162,11 @@
     <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
-    <Compile Include="Spacecrafts\ITS\ITSBooster.cs" />
-    <Compile Include="Spacecrafts\ITS\ITSShip.cs" />
-    <Compile Include="Spacecrafts\RedDragon\RedDragon.cs" />
     <Compile Include="Spacecrafts\SpaceCraftBase.cs" />
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
     <Compile Include="SolarSystem\Stars\Sun.cs" />
     <Compile Include="Physics\TimeStep.cs" />
     <Compile Include="Structures\ASDS.cs" />
-    <Compile Include="Structures\ITSMount.cs" />
     <Compile Include="Structures\Strongback.cs" />
     <Compile Include="Structures\StructureBase.cs" />
     <Compile Include="Orbits\OrbitTrace.cs" />
@@ -261,37 +254,19 @@
     <Content Include="Textures\fh9S1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fh9S1Soot.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Textures\fh9S2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\fhBooster1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fhBooster1Soot.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Textures\fhBooster2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Textures\fhBooster2Soot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\gridFinLeft.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\gridFinRight.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Textures\itsBooster.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Textures\itsMount.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Textures\itsShip.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\landingLegLeft.png">

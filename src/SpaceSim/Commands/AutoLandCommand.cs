@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Controls.Primitives;
 using SpaceSim.Contracts.Commands;
 using SpaceSim.Engines;
 using SpaceSim.Proxies;
@@ -11,6 +10,9 @@ namespace SpaceSim.Commands
 {
     class AutoLandCommand : CommandBase
     {
+        // Update rate of the controller in Hz
+        private const int UpdateRate = 10;
+
         private bool _landed;
 
         private double _lastUpdate;
@@ -31,6 +33,9 @@ namespace SpaceSim.Commands
 
             if (_engineIds != null)
             {
+                // Start at 55% thrust
+                _currentThrust = 55;
+
                 // Startup the required landing engines
                 foreach (int id in _engineIds)
                 {
@@ -48,28 +53,22 @@ namespace SpaceSim.Commands
             // Only run the landing algorithm while the spacecraft hasn't touched down
             if (!_landed)
             {
-                double speed = spaceCraft.GetRelativeVelocity().Length();
-
-                if (spaceCraft.OnGround || speed < 2 || spaceCraft.PropellantMass <= 0)
-                {
-                    _landed = true;
-
-                    foreach (IEngine engine in spaceCraft.Engines)
-                    {
-                        engine.Shutdown();
-                    }
-                }
-
                 double t = elapsedTime - _lastUpdate;
 
-                double altitude = spaceCraft.GetRelativeAltitude();
-
-                double updateRate = Math.Max(10 - altitude / 300, 1);
-
                 // Update required this iteration
-                if (t > 1.0 / updateRate)
+                if (t > 1.0 / UpdateRate)
                 {
                     PredictTargetThrottle(spaceCraft);
+
+                    if (spaceCraft.OnGround)
+                    {
+                        _landed = true;
+
+                        foreach (IEngine engine in spaceCraft.Engines)
+                        {
+                            engine.Shutdown();
+                        }
+                    }
 
                     _lastUpdate = elapsedTime;
                 }
@@ -78,21 +77,14 @@ namespace SpaceSim.Commands
 
         private void PredictTargetThrottle(SpaceCraftBase spaceCraft)
         {
-            double optimalThrust = _currentThrust;
-            double optimalLandingSpeed = double.PositiveInfinity;
+            double optimalThrust = 0;
+            DVector2 lowestVelocity = new DVector2(10e6, 10e6);
 
             for (int i = -1; i <= 1; i++)
             {
-                double thrust = 65;
+                double thrust = _currentThrust + i;
 
-                if (_currentThrust > 0)
-                {
-                    thrust = _currentThrust;
-                }
-
-                thrust += i * 0.5;
-
-                if (thrust < 60 || thrust > 100)
+                if (thrust < 0 || thrust > 100)
                 {
                     continue;
                 }
@@ -100,6 +92,11 @@ namespace SpaceSim.Commands
                 IMassiveBody parent = spaceCraft.GravitationalParent;
 
                 DVector2 initialPosition = spaceCraft.Position - parent.Position;
+
+                var shipOffset = new DVector2(Math.Cos(spaceCraft.Pitch)*(spaceCraft.TotalWidth - spaceCraft.Width),
+                    Math.Sin(spaceCraft.Pitch)*(spaceCraft.TotalHeight - spaceCraft.Height))*0.5;
+
+                initialPosition -= shipOffset;
 
                 var proxyParent = new MassiveBodyProxy(DVector2.Zero, DVector2.Zero, parent);
                 var proxySatellite = new SpaceCraftProxy(initialPosition, spaceCraft.Velocity - parent.Velocity, spaceCraft);
@@ -113,47 +110,28 @@ namespace SpaceSim.Commands
                 proxySatellite.SetGravitationalParent(proxyParent);
 
                 // Simulate until the rocket runs out of fuel or touches down
-                for (int step = 0; step < 1000; step++)
+                for (int step = 0; step < 2000; step++)
                 {
                     proxySatellite.ResetAccelerations();
                     proxySatellite.ResolveGravitation(proxyParent);
                     proxySatellite.ResolveAtmopsherics(proxyParent);
 
-                    if (proxySatellite.PropellantMass <= 0)
+                    proxySatellite.Update(0.02);
+
+                    if (proxySatellite.Altitude <= spaceCraft.Height * 0.65)
                     {
-                        break;
-                    }
-
-                    if (proxySatellite.OnGround)
-                    {
-                        double landingSpeed = proxySatellite.RelativeVelocity.Length();
-
-                        // If the rocket is in motion search for the best speed always
-                        if (_currentThrust > 0)
+                        if (proxySatellite.RelativeVelocity.Length() < lowestVelocity.Length())
                         {
-                            if (landingSpeed < optimalLandingSpeed)
-                            {
-                                optimalLandingSpeed = landingSpeed;
-                                optimalThrust = thrust;
-
-                                break;
-                            }
-                        }
-                        // Otherwise enforce the landing speed is very good to start
-                        else if (landingSpeed < 5)
-                        {
-                            optimalLandingSpeed = landingSpeed;
+                            lowestVelocity = proxySatellite.RelativeVelocity;
                             optimalThrust = thrust;
 
                             break;
                         }
                     }
-
-                    proxySatellite.Update(0.05);
                 }
             }
 
-            // Set the target engines to the optimal computed thrust
+            // Set the target engines to 100% thrust
             if (_engineIds != null)
             {
                 // Startup the required landing engines

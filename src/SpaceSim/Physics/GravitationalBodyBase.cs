@@ -1,12 +1,9 @@
-﻿using System.Drawing;
-using SpaceSim.Drawing;
-using SpaceSim.Orbits;
-using SpaceSim.SolarSystem;
+﻿using SpaceSim.SolarSystem;
 using VectorMath;
 
 namespace SpaceSim.Physics
 {
-    abstract class GravitationalBodyBase : IGravitationalBody, IGdiRenderable, IMapRenderable
+    abstract class GravitationalBodyBase : IGravitationalBody
     {
         public IMassiveBody GravitationalParent { get; protected set; }
 
@@ -18,33 +15,17 @@ namespace SpaceSim.Physics
 
         public DVector2 AccelerationG { get; protected set; }
 
-        public double Apogee { get { return OrbitTrace.Apogee; } }
-        public double Perigee { get { return OrbitTrace.Perigee; } }
-
-        public bool InOrbit { get { return Apogee > 0 && Perigee > 0; } }
-
-        public abstract Color IconColor { get; }
-
-        protected OrbitTrace OrbitTrace;
-
         protected GravitationalBodyBase(DVector2 position, DVector2 velocity, double pitch)
         {
             Position = position;
             Velocity = velocity;
 
             Pitch = pitch;
-
-            OrbitTrace = new OrbitTrace();
         }
 
         public virtual void ResetAccelerations()
         {
             AccelerationG = DVector2.Zero;
-        }
-
-        public void ResetOrientation()
-        {
-            Pitch = 0;
         }
 
         public virtual void ResolveGravitation(IPhysicsBody other)
@@ -89,21 +70,11 @@ namespace SpaceSim.Physics
             return Pitch - GravitationalParent.Pitch;
         }
 
-        public abstract double Visibility(RectangleD cameraBounds);
-        public abstract RectangleD ComputeBoundingBox();
-
         public abstract void Update(double dt);
 
         public void SetGravitationalParent(IMassiveBody parent)
         {
             GravitationalParent = parent;
-        }
-
-        public abstract void FixedUpdate(TimeStep timeStep);
-
-        public virtual void RenderGdi(Graphics graphics, RectangleD cameraBounds)
-        {
-            OrbitTrace.Draw(graphics, cameraBounds, this);
         }
     }
 }

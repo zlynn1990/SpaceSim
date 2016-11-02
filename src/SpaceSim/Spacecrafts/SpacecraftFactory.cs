@@ -9,58 +9,51 @@ using SpaceSim.Spacecrafts.DragonV2;
 using SpaceSim.Spacecrafts.Falcon9;
 using SpaceSim.Spacecrafts.Falcon9SSTO;
 using SpaceSim.Spacecrafts.FalconHeavy;
-using SpaceSim.Spacecrafts.ITS;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts
 {
     static class SpacecraftFactory
     {
-        private static XmlSerializer VehicleSerializer;
+        private static XmlSerializer PayloadSerializer;
 
         static SpacecraftFactory()
         {
-            VehicleSerializer = new XmlSerializer(typeof(VehicleConfig));
+            PayloadSerializer = new XmlSerializer(typeof(Payload));
         }
 
         public static List<ISpaceCraft> BuildSpaceCraft(IMassiveBody planet, string craftDirectory, float offset = 0)
         {
-            VehicleConfig vehicle = GetPayload(craftDirectory);
+            Payload payload = GetPayload(craftDirectory);
 
-            if (string.IsNullOrEmpty(vehicle.VehicleType))
+            if (string.IsNullOrEmpty(payload.CraftType))
             {
                 throw new Exception("Please specify a craftType in the payload.xml!");
             }
 
-            switch (vehicle.VehicleType)
+            switch (payload.CraftType)
             {
                 case "GenericF9":
-                    return BuildF9(planet, vehicle, craftDirectory, offset);
+                    return BuildF9(planet, payload, craftDirectory, offset);
                 case "DragonF9":
-                    return BuildF9Dragon(planet, craftDirectory, vehicle, offset);
+                    return BuildF9Dragon(planet, craftDirectory, offset);
                 case "F9SSTO":
                     return BuildF9SSTO(planet, craftDirectory);
                 case "DragonAbort":
-                    return BuildDragonV2Abort(planet, vehicle, craftDirectory);
+                    return BuildDragonV2Abort(planet, payload, craftDirectory);
                 case "DragonEntry":
-                    return BuildDragonV2Entry(planet, vehicle, craftDirectory);
-                case "RedDragonFH":
-                    return BuildRedDragonFH(planet, vehicle, craftDirectory, offset);
+                    return BuildDragonV2Entry(planet, payload, craftDirectory);
                 case "GenericFH":
-                    return BuildFalconHeavy(planet, vehicle, craftDirectory, offset);
-                case "AutoLandingTest":
-                    return BuildAutoLandingTest(planet, vehicle, craftDirectory);
-                case "ITS Crew Launch":
-                    return BuildITSCrew(planet, vehicle, craftDirectory, offset);
-                default:
-                    throw new Exception("Unkown craftType: " + vehicle.VehicleType);
+                    return BuildFalconHeavy(planet, payload, craftDirectory, offset);
+                    default:
+                    throw new Exception("Unkown craftType: " + payload.CraftType);
             }
         }
 
-        private static List<ISpaceCraft> BuildF9(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        private static List<ISpaceCraft> BuildF9(IMassiveBody planet, Payload payload, string craftDirectory, float offset = 0)
         {
             var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
-                                      planet.Velocity + new DVector2(-400, 0), vehicle.PayloadMass);
+                                      planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
 
             var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
             var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 13.3);
@@ -76,9 +69,9 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
-        private static List<ISpaceCraft> BuildF9Dragon(IMassiveBody planet, string craftDirectory, VehicleConfig vehicle, float offset = 0)
+        private static List<ISpaceCraft> BuildF9Dragon(IMassiveBody planet, string craftDirectory, float offset = 0)
         {
-            var dragon = new Dragon(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius), planet.Velocity, vehicle.PayloadMass);
+            var dragon = new Dragon(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius), planet.Velocity);
             var dragonTrunk = new DragonTrunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
             var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
@@ -105,9 +98,11 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft> { f9SSTO };
         }
 
-        private static List<ISpaceCraft> BuildDragonV2Abort(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory)
+        private static List<ISpaceCraft> BuildDragonV2Abort(IMassiveBody planet, Payload payload, string craftDirectory)
         {
-            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity, vehicle.PayloadMass);
+            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius),
+                                                planet.Velocity, payload.DryMass, payload.PropellantMass);
+
             var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
             dragon.AddChild(dragonTrunk);
@@ -116,10 +111,10 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft> { dragon, dragonTrunk };
         }
 
-        private static List<ISpaceCraft> BuildDragonV2Entry(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory)
+        private static List<ISpaceCraft> BuildDragonV2Entry(IMassiveBody planet, Payload payload, string craftDirectory)
         {
             var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius*0.75, planet.SurfaceRadius*-0.75),
-                                               planet.Velocity + new DVector2(-6000, -5100), vehicle.PayloadMass);
+                                               planet.Velocity + new DVector2(-6000, -5100), payload.DryMass, payload.PropellantMass);
 
             var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
@@ -131,10 +126,10 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft> { dragon, dragonTrunk };
         }
 
-        private static List<ISpaceCraft> BuildFalconHeavy(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        private static List<ISpaceCraft> BuildFalconHeavy(IMassiveBody planet, Payload payload, string craftDirectory, float offset = 0)
         {
             var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
-                                      planet.Velocity + new DVector2(-400, 0), vehicle.PayloadMass);
+                                      planet.Velocity + new DVector2(-400, 0), payload.DryMass, payload.PropellantMass);
 
             var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
             var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero);
@@ -157,68 +152,11 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
-        private static List<ISpaceCraft> BuildRedDragonFH(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        private static Payload GetPayload(string path)
         {
-            var redDragon = new RedDragon.RedDragon(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
-                                      planet.Velocity + new DVector2(-400, 0), vehicle.PayloadMass);
-
-            var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
-
-            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
-            var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero);
-
-            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
-            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
-
-            redDragon.AddChild(dragonTrunk);
-            dragonTrunk.SetParent(redDragon);
-            dragonTrunk.AddChild(fhS2);
-            fhS2.SetParent(dragonTrunk);
-            fhS2.AddChild(fhS1);
-            fhS1.SetParent(fhS2);
-            fhS1.AddChild(fhLeftBooster);
-            fhS1.AddChild(fhRightBooster);
-            fhLeftBooster.SetParent(fhS1);
-            fhRightBooster.SetParent(fhS1);
-
-            return new List<ISpaceCraft>
+            using (var stream = new FileStream(Path.Combine(path, "payload.xml"), FileMode.Open))
             {
-                redDragon, dragonTrunk, fhS2, fhS1, fhLeftBooster, fhRightBooster
-            };
-        }
-
-        public static List<ISpaceCraft> BuildAutoLandingTest(IMassiveBody planet, VehicleConfig payload, string craftDirectory)
-        {
-            var f9 = new F9S1(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 7000),
-                              planet.Velocity + new DVector2(-400, 400), 3500);
-
-            return new List<ISpaceCraft>
-            {
-                f9,
-            };
-        }
-
-        private static List<ISpaceCraft> BuildITSCrew(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset=0)
-        {
-            var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
-                                  planet.Velocity + new DVector2(-400, 0), vehicle.PayloadMass);
-
-            var booster = new ITSBooster(craftDirectory, DVector2.Zero, DVector2.Zero);
-
-            ship.AddChild(booster);
-            booster.SetParent(ship);
-
-            return new List<ISpaceCraft>
-            {
-                ship, booster
-            };
-        }
-
-        private static VehicleConfig GetPayload(string path)
-        {
-            using (var stream = new FileStream(Path.Combine(path, "VehicleConfig.xml"), FileMode.Open))
-            {
-                return (VehicleConfig)VehicleSerializer.Deserialize(stream);
+                return (Payload)PayloadSerializer.Deserialize(stream);
             }
         }
     }

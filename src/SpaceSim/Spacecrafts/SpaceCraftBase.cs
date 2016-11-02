@@ -7,19 +7,16 @@ using SpaceSim.Commands;
 using SpaceSim.Controllers;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
-using SpaceSim.Orbits;
-using SpaceSim.Particles;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts
 {
-    abstract class SpaceCraftBase : GravitationalBodyBase, IAerodynamicBody, ISpaceCraft
+    abstract class SpaceCraftBase : GravitationalBodyBase, IAerodynamicBody, ISpaceCraft, IMapRenderable, IGdiRenderable
     {
         public abstract string CraftName { get; }
         public string CraftDirectory { get; protected set; }
-        public abstract string CommandFileName { get; }
 
         public ISpaceCraft Parent { get; protected set; }
         public List<ISpaceCraft> Children { get; protected set; }
@@ -33,7 +30,7 @@ namespace SpaceSim.Spacecrafts
             {
                 double childMass = Children.Sum(child => child.Mass);
 
-                return childMass + DryMass + PayloadMass + PropellantMass;
+                return childMass + DryMass + PropellantMass;
             }
         }
 
@@ -83,11 +80,12 @@ namespace SpaceSim.Spacecrafts
         public double HeatingRate { get; protected set; }
 
         public abstract double DryMass { get; }
-        public double PayloadMass { get; protected set; }
         public double PropellantMass { get; protected set; }
 
         public IEngine[] Engines { get; protected set; }
         public IController Controller { get; protected set; }
+
+        public abstract string CommandFileName { get; }
 
         public bool OnGround { get; private set; }
 
@@ -127,6 +125,8 @@ namespace SpaceSim.Spacecrafts
         public DVector2 AccelerationN { get; protected set; }
         public DVector2 AccelerationL { get; protected set; }
 
+        public abstract Color IconColor { get; }
+
         protected Bitmap Texture;
         protected DVector2 StageOffset;
 
@@ -140,26 +140,13 @@ namespace SpaceSim.Spacecrafts
         private double _trailTimer;
         private LaunchTrail _launchTrail;
 
-        private bool _requiresStaging;
-        private DVector2 _stagingForce;
-
-        private int _onGroundIterations;
-
-        private bool _showDisplayVectors;
-
-        protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass,
-                                 double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
+        protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
             : base(position, velocity, -Math.PI * 0.5)
         {
             CraftDirectory = craftDirectory;
             Children = new List<ISpaceCraft>();
 
-            if (!string.IsNullOrEmpty(texturePath))
-            {
-                Texture = new Bitmap(texturePath);    
-            }
-
-            PayloadMass = payloadMass;
+            Texture = new Bitmap(texturePath);
             PropellantMass = propellantMass;
 
             EntryFlame = entryFlame;
@@ -183,11 +170,6 @@ namespace SpaceSim.Spacecrafts
             {
                 Controller = new SimpleFlightController(this);
             }
-        }
-
-        public void ToggleDisplayVectors()
-        {
-            _showDisplayVectors = !_showDisplayVectors;
         }
 
         /// <summary>
@@ -238,10 +220,9 @@ namespace SpaceSim.Spacecrafts
                 // Simulate simple staging mechanism
                 double sAngle = StageOffset.Angle();
 
-                DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
+                DVector2 stagingVector = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
 
-                _stagingForce = stagingNormal * Mass * 0.005;
-                _requiresStaging = true;
+                AccelerationN += stagingVector * 1000;
             }
         }
 
@@ -393,19 +374,6 @@ namespace SpaceSim.Spacecrafts
             Children.Remove(child);
         }
 
-        public void UpdateController(double dt)
-        {
-            Controller.Update(dt);
-        }
-
-        public override void FixedUpdate(TimeStep timeStep)
-        {
-            if (Parent == null)
-            {
-                OrbitHelper.TraceSpaceCraft(this, OrbitTrace);   
-            }
-        }
-
         public virtual void UpdateAnimations(TimeStep timeStep)
         {
             // Only use re-entry flames for separated bodies
@@ -422,10 +390,8 @@ namespace SpaceSim.Spacecrafts
 
         public virtual void UpdateChildren(DVector2 position, DVector2 velocity)
         {
-            var rotationOffset = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
-
-            Position = position - new DVector2(StageOffset.X * rotationOffset.Y + StageOffset.Y * rotationOffset.X,
-                                               -StageOffset.X * rotationOffset.X + StageOffset.Y * rotationOffset.Y);
+            Position = position - new DVector2(StageOffset.X*Math.Sin(Pitch) + StageOffset.Y*Math.Cos(Pitch),
+                                               -StageOffset.X*Math.Cos(Pitch) + StageOffset.Y*Math.Sin(Pitch));
             Velocity.X = velocity.X;
             Velocity.Y = velocity.Y;
 
@@ -453,7 +419,7 @@ namespace SpaceSim.Spacecrafts
         {
             DVector2 difference = Position - GravitationalParent.Position;
 
-            double totalDistance = difference.Length() - TotalHeight * 0.5;
+            double totalDistance = difference.Length();
 
             return totalDistance - GravitationalParent.SurfaceRadius;
         }
@@ -563,9 +529,7 @@ namespace SpaceSim.Spacecrafts
 
             DVector2 difference = body.Position - Position;
 
-            double heightOffset = Children.Count > 0 ? TotalHeight - Height*0.5 : Height*0.5;
-
-            double distance = difference.Length() - heightOffset;
+            double distance = difference.Length();
 
             difference.Normalize();
 
@@ -583,24 +547,14 @@ namespace SpaceSim.Spacecrafts
 
                 double rotationalSpeed = pathCirumference / body.RotationPeriod;
 
-                // Rough metric for staying on ground from frame to frame
-                if (altitude <= 0.0001)
-                {
-                    _onGroundIterations = Math.Min(_onGroundIterations + 1, 10);
-                }
-                else
-                {
-                    _onGroundIterations = Math.Max(_onGroundIterations - 1, 0);
-                }
-
                 // Simple collision detection
-                if (_onGroundIterations > 5)
+                if (altitude <= 0)
                 {
                     OnGround = true;
 
                     var normal = new DVector2(-difference.X, -difference.Y);
 
-                    Position = body.Position + normal * (body.SurfaceRadius + heightOffset);
+                    Position = body.Position + normal*(body.SurfaceRadius);
 
                     Velocity = (body.Velocity + surfaceNormal*rotationalSpeed);
 
@@ -744,6 +698,33 @@ namespace SpaceSim.Spacecrafts
             }
 
             return totalFormDragArea;
+        }
+
+        private double HeatingRadius()
+        {
+            double radius = 0;
+            AeroDynamicProperties props = GetAeroDynamicProperties;
+            if (!props.Equals(AeroDynamicProperties.None))
+                radius = Width / 2;
+
+            return ChildHeatingRadius(Children, radius);
+        }
+
+        private double ChildHeatingRadius(List<ISpaceCraft> children, double radius)
+        {
+            foreach (SpaceCraftBase child in children)
+            {
+                AeroDynamicProperties props = child.GetAeroDynamicProperties;
+                if (!props.Equals(AeroDynamicProperties.None))
+                {
+                    if (child.Width / 2 > radius)
+                        radius = child.Width / 2;
+                }
+
+                radius = ChildHeatingRadius(child.Children, radius);
+            }
+
+            return radius;
         }
 
         /// <summary>
@@ -904,6 +885,8 @@ namespace SpaceSim.Spacecrafts
         /// </summary>
         public override void Update(double dt)
         {
+            Controller.Update(dt);
+
             double altitude = GetRelativeAltitude();
 
             IspMultiplier = GravitationalParent.GetIspMultiplier(altitude);
@@ -917,13 +900,6 @@ namespace SpaceSim.Spacecrafts
                     var thrustVector = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
 
                     AccelerationN += (thrustVector * Thrust) / Mass;
-                }
-
-                if (_requiresStaging)
-                {
-                    AccelerationN += _stagingForce;
-
-                    _requiresStaging = false;
                 }
 
                 // Integrate acceleration
@@ -952,8 +928,7 @@ namespace SpaceSim.Spacecrafts
 
                 _trailTimer += dt;
 
-                // Somewhat arbitrary conditions for launch trails
-                if (dt < 0.1666666666 && altitude > 50 && !InOrbit && _trailTimer > 1)
+                if (_trailTimer > 1 && !OnGround)
                 {
                     _launchTrail.AddPoint(Position, GravitationalParent, Throttle > 0);
                     _trailTimer = 0;
@@ -962,7 +937,7 @@ namespace SpaceSim.Spacecrafts
         }
 
         // Return an inflated bounding box for better drawing results
-        public override RectangleD ComputeBoundingBox()
+        public virtual RectangleD ComputeBoundingBox()
         {
             if (Width > Height)
             {
@@ -972,7 +947,7 @@ namespace SpaceSim.Spacecrafts
             return new RectangleD(Position.X - Height, Position.Y - Height, Height * 2, Height * 2);
         }
 
-        public override double Visibility(RectangleD cameraBounds)
+        public double Visibility(RectangleD cameraBounds)
         {
             double distanceRatio = TotalHeight / cameraBounds.Width;
 
@@ -993,40 +968,23 @@ namespace SpaceSim.Spacecrafts
         /// Renders the space craft at it's correct scale and rotation according to the camera.
         /// The engines are rendered first and then the space craft body.
         /// </summary>
-        public override void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public void RenderGdi(Graphics graphics, RectangleD cameraBounds)
         {
-            // Only draws the ship if it's visible
-            if (Visibility(cameraBounds) > 0)
-            {
-                RectangleD bounds = ComputeBoundingBox();
+            RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
 
-                // In range for render
-                if (cameraBounds.IntersectsWith(bounds))
-                {
-                    RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
+            // Saftey
+            if (screenBounds.Width > RenderUtils.ScreenWidth * 500) return;
 
-                    // Saftey
-                    if (screenBounds.Width > RenderUtils.ScreenWidth * 500) return;
+            RenderBelow(graphics, cameraBounds);
 
-                    RenderBelow(graphics, cameraBounds);
+            RenderShip(graphics, cameraBounds, screenBounds);
 
-                    RenderShip(graphics, cameraBounds, screenBounds);
+            RenderAbove(graphics, cameraBounds);
+        }
 
-                    RenderAbove(graphics, cameraBounds);
-                }
-            }
-
-            // Only draw orbit traces and launch trails for detatched ships
-            if (Parent == null)
-            {
-                if (cameraBounds.Width > 1000)
-                {
-                    _launchTrail.Draw(graphics, cameraBounds, GravitationalParent);   
-                }
-
-                // Don't draw orbit traces on the ground
-                base.RenderGdi(graphics, cameraBounds);
-            }
+        public void RenderLaunchTrail(Graphics graphics, RectangleD cameraBounds)
+        {
+            _launchTrail.Draw(graphics, cameraBounds, GravitationalParent);
         }
 
         protected virtual void RenderBelow(Graphics graphics, RectangleD cameraBounds)
@@ -1061,44 +1019,11 @@ namespace SpaceSim.Spacecrafts
             {
                 EntryFlame.Draw(graphics, cameraBounds);
             }
-
-            // Only show the vectors when it's requested and the craft is not parented
-            if (_showDisplayVectors && Parent == null)
-            {
-                // The length of the vector is based on the width of the camera bounds
-                float lengthFactor = (float)(cameraBounds.Width * 0.1);
-
-                PointF start = RenderUtils.WorldToScreen(Position, cameraBounds);
-
-                DVector2 relativeVelocity = GetRelativeVelocity();
-
-                // Only draw the velocity vector when it can be normalized
-                if (relativeVelocity.Length() > 0)
-                {
-                    relativeVelocity.Normalize();
-
-                    PointF velocityEnd = RenderUtils.WorldToScreen(Position + relativeVelocity * lengthFactor, cameraBounds);
-
-                    graphics.DrawLine(Pens.White, start, velocityEnd);
-                }
-
-                DVector2 pitchVector = DVector2.FromAngle(Pitch);
-                pitchVector.Normalize();
-
-                PointF pitchEnd = RenderUtils.WorldToScreen(Position + pitchVector * lengthFactor, cameraBounds);
-
-                graphics.DrawLine(Pens.Red, start, pitchEnd);
-            }
         }
 
         public override string ToString()
         {
-            if (MainWindow.ProfileDirectories.Count > 1)
-            {
-                return string.Format("{0} [{1}]", CraftName, MissionName);
-            }
-
-            return CraftName;
+            return string.Format("{0} [{1}]", CraftName, MissionName);
         }
     }
 }

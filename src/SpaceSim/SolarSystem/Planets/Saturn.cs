@@ -42,8 +42,8 @@ namespace SpaceSim.SolarSystem.Planets
         }
 
         public Saturn()
-            : base(OrbitHelper.FromJplEphemeris(-3.667006922888632E+08, -1.455132410758398E+09),
-                   OrbitHelper.FromJplEphemeris(8.836135826121589E+00, -2.389892378353466E+00), new SaturnKernel())
+            : base(OrbitHelper.GetPosition(1.3526e12, 1.6132416870058, DVector2.Zero),
+                   OrbitHelper.GetVelocity(1.3526e12, 1.6132416870058, -1.018e4, DVector2.Zero), new SaturnKernel())
         {
         }
 

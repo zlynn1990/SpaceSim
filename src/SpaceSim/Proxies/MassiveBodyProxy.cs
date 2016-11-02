@@ -19,8 +19,6 @@ namespace SpaceSim.Proxies
         public double RotationRate { get { return _proxy.RotationRate; } }
         public double RotationPeriod { get { return _proxy.RotationPeriod; } }
 
-        public override Color IconColor { get { return Color.White; } }
-
         public Color IconAtmopshereColor { get { return _proxy.IconAtmopshereColor; } }
 
         private IMassiveBody _proxy;
@@ -65,21 +63,6 @@ namespace SpaceSim.Proxies
             // Integrate for position
             Velocity += (AccelerationG * dt);
             Position += (Velocity * dt);
-        }
-
-        public override void FixedUpdate(TimeStep timeStep)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override double Visibility(RectangleD cameraBounds)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override RectangleD ComputeBoundingBox()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

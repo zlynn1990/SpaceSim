@@ -19,17 +19,6 @@ namespace SpaceSim.Commands
 
         public override void Initialize(SpaceCraftBase spaceCraft)
         {
-            // If no engines are requested start them all
-            if (_engineIds == null)
-            {
-                _engineIds = new int[spaceCraft.Engines.Length];
-
-                for (int i = 0; i < _engineIds.Length; i++)
-                {
-                    _engineIds[i] = i;
-                }
-            }
-
             if (_engineIds.Length > 0 && spaceCraft.Engines.Length > 0)
             {
                 IEngine engine = spaceCraft.Engines[_engineIds[0]];

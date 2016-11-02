@@ -28,8 +28,7 @@
     <Duration>450</Duration>
     <TargetOrientation>-195</TargetOrientation>
   </Command>
-  <Command xsi:type="Deploy">
-	<Part>Fairing</Part>
+  <Command xsi:type="Fairing">
     <StartTime>222</StartTime>
   </Command>
   <Command xsi:type="Pitch">

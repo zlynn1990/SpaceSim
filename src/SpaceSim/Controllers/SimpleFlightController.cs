@@ -17,8 +17,6 @@ namespace SpaceSim.Controllers
 
         public SimpleFlightController(SpaceCraftBase spaceCraft)
         {
-            ElapsedTime -= MainWindow.ClockDelayInSeconds;
-
             SpaceCraft = spaceCraft;
         }
 

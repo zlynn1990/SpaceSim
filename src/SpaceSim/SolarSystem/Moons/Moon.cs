@@ -36,9 +36,9 @@ namespace SpaceSim.SolarSystem.Moons
         public override Color IconColor { get { return Color.LightGray; } }
         public override Color IconAtmopshereColor { get { return Color.White; } }
 
-        public Moon(DVector2 parentPositon, DVector2 parentVelocity)
-            : base(OrbitHelper.FromJplEphemeris(-1.275488485528684E+05, -3.756609087364946E+05) + parentPositon,
-                   OrbitHelper.FromJplEphemeris(9.291844409239249E-01, -2.857101216046916E-01) + parentVelocity, new MoonKernel())
+        public Moon(DVector2 positionOffset, DVector2 velocityOffset)
+             : base(OrbitHelper.GetPosition(3.63295e8, 0.2967059, positionOffset),
+                    OrbitHelper.GetVelocity(3.63295e8, 0.2967059, -1076.0, velocityOffset), new MoonKernel())
         {
         }
 

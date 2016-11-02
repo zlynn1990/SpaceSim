@@ -3,7 +3,6 @@ using System.Drawing;
 using Cloo;
 using OpenCLWrapper;
 using SpaceSim.Drawing;
-using SpaceSim.Orbits;
 using SpaceSim.Physics;
 using VectorMath;
 
@@ -19,6 +18,7 @@ namespace SpaceSim.SolarSystem
         public abstract double RotationRate { get; }
         public abstract double RotationPeriod { get; }
 
+        public abstract Color IconColor { get; }
         public abstract Color IconAtmopshereColor { get; }
 
         private ComputeKernel _computeKernel;
@@ -73,14 +73,14 @@ namespace SpaceSim.SolarSystem
             get { return SurfaceRadius + AtmosphereHeight; }
         }
 
-        public override RectangleD ComputeBoundingBox()
+        public virtual RectangleD ComputeBoundingBox()
         {
             double totalRadius = BoundingRadius;
 
             return new RectangleD(Position.X - totalRadius, Position.Y - totalRadius, totalRadius * 2, totalRadius * 2);
         }
 
-        public override double Visibility(RectangleD cameraBounds)
+        public virtual double Visibility(RectangleD cameraBounds)
         {
             double distanceRatio = BoundingRadius / cameraBounds.Width;
 
@@ -103,11 +103,6 @@ namespace SpaceSim.SolarSystem
             {
                 _computeKernel = clProxy.CreateKernel(Kernel);
             }
-        }
-
-        public override void FixedUpdate(TimeStep timeStep)
-        {
-            OrbitHelper.TraceMassiveBody(this, OrbitTrace);
         }
 
         public void RenderCl(OpenCLProxy clProxy, RectangleD cameraBounds, IPhysicsBody sun)

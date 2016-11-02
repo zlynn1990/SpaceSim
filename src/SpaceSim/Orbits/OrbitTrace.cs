@@ -15,21 +15,12 @@ namespace SpaceSim.Orbits
         private int _apogeeIndex;
         private int _perigeeIndex;
 
-        public OrbitTrace()
+        public OrbitTrace(DVector2 start, double altitude)
         {
-            _points = new List<DVector2>();
-        }
+            Apogee = altitude;
+            Perigee = altitude;
 
-        public void Reset(DVector2 start)
-        {
-            Apogee = 0;
-            Perigee = double.MaxValue;
-
-            _apogeeIndex = 0;
-            _perigeeIndex = 0;
-
-            _points.Clear();
-            _points.Add(start);
+            _points = new List<DVector2> { start };
         }
 
         public void AddPoint(DVector2 point, double altitude)
@@ -61,7 +52,7 @@ namespace SpaceSim.Orbits
                 {
                     PointF localPoint = RenderUtils.WorldToScreen(orbitPoint, cameraBounds);
 
-                    if (i == _apogeeIndex && i > 1)
+                    if (i == _apogeeIndex)
                     {
                         RenderApogee(graphics, localPoint);
                     }
@@ -76,31 +67,26 @@ namespace SpaceSim.Orbits
                 }
             }
 
-            if (_points.Count > 0 && cameraBounds.Contains(_points[0]))
+           if (cameraBounds.Contains(_points[0]))
             {
-                RenderStart(graphics, cameraBounds, orbitingBody, _points[0]);
+                double visibility = orbitingBody.Visibility(cameraBounds);
+
+                if (visibility < 1)
+                {
+                    PointF iconPoint = RenderUtils.WorldToScreen(_points[0], cameraBounds);
+
+                    var iconBounds = new RectangleF(iconPoint.X - 5, iconPoint.Y - 5, 10, 10);
+
+                    var iconColor = Color.FromArgb((int)((1 - visibility) * 255),
+                                                   orbitingBody.IconColor.R,
+                                                   orbitingBody.IconColor.G,
+                                                   orbitingBody.IconColor.B);
+
+                    graphics.FillEllipse(new SolidBrush(iconColor), iconBounds);
+                }
             }
 
-            RenderUtils.DrawRectangles(graphics, traceBounds, orbitingBody.IconColor);
-        }
-
-        private static void RenderStart(Graphics graphics, RectangleD cameraBounds, IMapRenderable orbitingBody, DVector2 start)
-        {
-            double visibility = orbitingBody.Visibility(cameraBounds);
-
-            if (visibility < 1)
-            {
-                PointF iconPoint = RenderUtils.WorldToScreen(start, cameraBounds);
-
-                var iconBounds = new RectangleF(iconPoint.X - 5, iconPoint.Y - 5, 10, 10);
-
-                var iconColor = Color.FromArgb((int)((1 - visibility) * 255),
-                                               orbitingBody.IconColor.R,
-                                               orbitingBody.IconColor.G,
-                                               orbitingBody.IconColor.B);
-
-                graphics.FillEllipse(new SolidBrush(iconColor), iconBounds);
-            }
+           RenderUtils.DrawRectangles(graphics, traceBounds, orbitingBody.IconColor);
         }
 
         private static void RenderApogee(Graphics graphics, PointF localPoint)
