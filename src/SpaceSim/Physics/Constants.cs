@@ -1,7 +1,11 @@
-﻿namespace SpaceSim.Physics
+﻿using System;
+
+namespace SpaceSim.Physics
 {
     public static class Constants
     {
+        public static DateTime Epoch = new DateTime(2016, 9, 9);
+
         public const double GravitationConstant = 6.67384e-11;
 
         public const double SpeedOfLight = 2.998e8;

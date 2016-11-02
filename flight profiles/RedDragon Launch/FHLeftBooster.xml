@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0.00001</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>135.5</StartTime>
+    <Duration>10</Duration>
+    <TargetThrottle>80</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>145.5</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>160</StartTime>
+    <Duration>30</Duration>
+    <TargetOrientation>-13</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>190</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>235.5</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>260</StartTime>
+    <Duration>342</Duration>
+    <InitialAdjustmentTime>50</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Deploy">
+	<Part>Grid Fins</Part>
+    <StartTime>350</StartTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>523</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>65</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>530</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="AutoLand">
+    <StartTime>570</StartTime>
+    <Duration>100</Duration>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Deploy">
+	<Part>Landing Legs</Part>
+    <StartTime>598</StartTime>
+  </Command>
+</ArrayOfCommand>

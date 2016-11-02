@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
@@ -20,18 +21,47 @@ namespace SpaceSim.Proxies
         public double Altitude { get; private set; }
         public DVector2 RelativeVelocity { get; private set; }
 
-        public override double Mass { get { return _dryMass + PropellantMass; } }
+        public bool OnGround { get; private set; }
 
+        public override double Mass { get { return _proxy.DryMass + PropellantMass; } }
+
+        public double Width { get { return _proxy.Width; }}
         public double Height {get { return _proxy.Height; }}
 
-        public double HeatingRate { get { return _proxy.HeatingRate; } }
+        public double HeatingRate { get { return 0; } }
 
-        public double FormDragCoefficient { get { return _proxy.FormDragCoefficient; } }
-        public double CrossSectionalArea { get { return _proxy.CrossSectionalArea; } }
-        public double SkinFrictionCoefficient { get { return _proxy.SkinFrictionCoefficient; } }
-        public double ExposedSurfaceArea { get { return _proxy.ExposedSurfaceArea; } }
-        public double LiftCoefficient { get { return _proxy.LiftCoefficient; } }
-        public double LiftingSurfaceArea { get { return _proxy.LiftingSurfaceArea; } }
+        public double FormDragCoefficient
+        {
+            get
+            {
+                return 1.2;
+            }
+        }
+        public double CrossSectionalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+
+        public double SkinFrictionCoefficient
+        {
+            get
+            {
+                double velocity = RelativeVelocity.Length();
+                double viscosity = GravitationalParent.GetAtmosphericViscosity(Altitude);
+                double reynoldsNumber = (velocity * Height) / viscosity;
+
+                return 0.455 / Math.Pow(Math.Log10(reynoldsNumber), 2.58);
+            }
+        }
+
+        public double ExposedSurfaceArea
+        {
+            get
+            {
+                // A = 2πrh + πr2
+                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+            }
+        }
+
+        public double LiftCoefficient { get { return 0.3; } }
+        public double LiftingSurfaceArea { get { return Width * Height; } }
 
         public double PropellantMass { get; private set; }
 
@@ -41,7 +71,8 @@ namespace SpaceSim.Proxies
         public DVector2 AccelerationL { get; private set; }
         public DVector2 AccelerationN { get; private set; }
 
-        private double _dryMass;
+        public override Color IconColor { get { return Color.White; } }
+
         private double _thrust;
 
         private SpaceCraftBase _proxy;
@@ -49,7 +80,6 @@ namespace SpaceSim.Proxies
         public SpaceCraftProxy(DVector2 position, DVector2 velocity, SpaceCraftBase spaceCraft)
             : base(position, velocity, spaceCraft.Pitch)
         {
-            _dryMass = spaceCraft.DryMass;
             PropellantMass = spaceCraft.PropellantMass;
 
             Engines = new IEngine[spaceCraft.Engines.Length];
@@ -80,7 +110,7 @@ namespace SpaceSim.Proxies
         {
             DVector2 difference = body.Position - Position;
 
-            double distance = difference.Length();
+            double distance = difference.Length() - Height * 0.5;
 
             difference.Normalize();
 
@@ -103,12 +133,18 @@ namespace SpaceSim.Proxies
                 {
                     var normal = new DVector2(-difference.X, -difference.Y);
 
-                    Position = body.Position + normal * (body.SurfaceRadius);
+                    Position = body.Position + normal*(body.SurfaceRadius);
 
                     Pitch = normal.Angle();
 
                     AccelerationN.X = -AccelerationG.X;
                     AccelerationN.Y = -AccelerationG.Y;
+
+                    OnGround = true;
+                }
+                else
+                {
+                    OnGround = false;
                 }
 
                 double atmosphericDensity = body.GetAtmosphericDensity(Altitude);
@@ -126,14 +162,10 @@ namespace SpaceSim.Proxies
                     double skinFrictionTerm = SkinFrictionCoefficient * ExposedSurfaceArea;
                     double dragTerm = formDragTerm + skinFrictionTerm;
 
-                    double liftTerm = LiftCoefficient * LiftingSurfaceArea;
-
                     // Drag ( Fd = 0.5pv^2dA )
                     DVector2 dragForce = normalizedRelativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * dragTerm);
-                    DVector2 liftForce = normalizedRelativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * liftTerm);
 
-                    AccelerationD += dragForce / Mass;
-                    AccelerationN += liftForce / Mass;
+                    AccelerationD = dragForce / Mass;
                 }
             }
         }
@@ -156,15 +188,28 @@ namespace SpaceSim.Proxies
             Position += (Velocity * dt);
         }
 
+        public override double Visibility(RectangleD cameraBounds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RectangleD ComputeBoundingBox()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void FixedUpdate(TimeStep timeStep)
+        {
+            throw new NotImplementedException();
+        }
+
         private void UpdateEngines(double dt)
         {
             _thrust = 0;
 
             if (Engines.Length > 0 && PropellantMass > 0)
             {
-                double altitude = GetRelativeAltitude();
-
-                double ispMultiplier = GravitationalParent.GetIspMultiplier(altitude);
+                double ispMultiplier = GravitationalParent.GetIspMultiplier(Altitude);
 
                 foreach (IEngine engine in Engines)
                 {

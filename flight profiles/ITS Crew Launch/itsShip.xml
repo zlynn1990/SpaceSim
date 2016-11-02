@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Pitch">
+    <StartTime>10</StartTime>
+    <Duration>140</Duration>
+    <TargetOrientation>-150</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>166</StartTime>
+  </Command>
+ <Command xsi:type="Ignition">
+    <StartTime>172</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+	  <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>175</StartTime>
+    <Duration>300</Duration>
+    <TargetOrientation>-217</TargetOrientation>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>333</StartTime>
+    <Duration>0.5</Duration>
+	<EngineIds>
+	  <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>393</StartTime>
+    <Duration>50</Duration>
+    <TargetThrottle>60</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>430</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+</ArrayOfCommand>

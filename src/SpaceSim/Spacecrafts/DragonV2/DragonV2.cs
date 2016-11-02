@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Drawing;
 using SpaceSim.Engines;
-using SpaceSim.Drawing;
+using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.DragonV2
 {
-    sealed class DragonV2 : SpaceCraftBase
+    class DragonV2 : SpaceCraftBase
     {
         public override string CraftName { get { return "DragonV2"; } }
+        public override string CommandFileName { get { return "dragon.xml"; } }
 
         public override double Width { get { return 3.7; } }
         public override double Height { get { return 4.15; } }
 
-        public override double DryMass { get { return _dryMass; } }
+        public override double DryMass { get { return 6400; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
 
@@ -81,8 +82,8 @@ namespace SpaceSim.Spacecrafts.DragonV2
             {
                 double area = Math.PI * Math.Pow(Width / 2, 2);
                 double alpha = GetAlpha();
-                double sinAlpha = Math.Cos(alpha * 2);
-                return Math.Abs(area * sinAlpha);
+
+                return Math.Abs(area * Math.Cos(alpha * 2));
             }
         }
 
@@ -98,20 +99,15 @@ namespace SpaceSim.Spacecrafts.DragonV2
             }
         }
 
-        public override string CommandFileName { get { return "dragon.xml"; } }
-
         public override Color IconColor { get { return Color.White; } }
 
-        private double _dryMass;
         private bool _drogueDeployed;
         private bool _parachuteDeployed;
         private double _parachuteRatio;
 
-        public DragonV2(string craftDirectory, DVector2 position, DVector2 velocity, double dryMass, double propellantMass)
-            : base(craftDirectory, position, velocity, propellantMass, "Textures/dragonV2.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
+        public DragonV2(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
+            : base(craftDirectory, position, velocity, payloadMass, 1388, "Textures/dragonV2.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
         {
-            _dryMass = dryMass;
-
             Engines = new IEngine[]
             {
                 new SuperDraco(0, this, new DVector2(-1.35, 0.1), -0.15),

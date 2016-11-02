@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using SpaceSim.Physics;
 using SpaceSim.Proxies;
 using SpaceSim.SolarSystem;
 using SpaceSim.Spacecrafts;
@@ -9,25 +11,57 @@ namespace SpaceSim.Orbits
     static class OrbitHelper
     {
         /// <summary>
-        /// Gets the position of an object in periapsis form.
+        /// Converts orbital data from JPL Emphemeris data.
         /// </summary>
-        public static DVector2 GetPosition(double periapsis, double longitudeOfPeriapsis, DVector2 offset)
+        public static DVector2 FromJplEphemeris(double x, double y)
         {
-            return new DVector2(Math.Cos(longitudeOfPeriapsis), Math.Sin(longitudeOfPeriapsis)) * periapsis + offset;
+            return new DVector2(x, -y) * 1000;
         }
 
-        /// <summary>
-        /// Gets the velocity of an object in periapsis form.
-        /// </summary>
-        public static DVector2 GetVelocity(double periapsis, double longitudeOfPeriapsis, double speed, DVector2 offset)
+        public static void SimulateToTime(List<IMassiveBody> bodies, DateTime targetDate, double timeStep)
         {
-            return new DVector2(Math.Cos(longitudeOfPeriapsis + Math.PI*0.5), Math.Sin(longitudeOfPeriapsis + Math.PI*0.5)) * speed + offset;
+            if (targetDate < Constants.Epoch)
+            {
+                throw new Exception("Starting date must be greater than the epoch: " + Constants.Epoch.ToLongDateString());
+            }
+
+            TimeSpan timeToSimulate = targetDate - Constants.Epoch;
+
+            int iterations = (int)(timeToSimulate.TotalSeconds / timeStep);
+
+            for (int i = 0; i < iterations; i++)
+            {
+                // Resolve n body massive body forces
+                foreach (IMassiveBody bodyA in bodies)
+                {
+                    bodyA.ResetAccelerations();
+
+                    foreach (IMassiveBody bodyB in bodies)
+                    {
+                        if (bodyA == bodyB) continue;
+
+                        bodyA.ResolveGravitation(bodyB);
+                    }
+                }
+
+                // Update bodies
+                foreach (IMassiveBody body in bodies)
+                {
+                    body.Update(timeStep);
+                }
+            }
+
+            // Reset bodies to their starting rotations so spacecraft behave correctly
+            foreach (IMassiveBody body in bodies)
+            {
+                body.ResetOrientation();
+            }
         }
 
         /// <summary>
         /// Traces a massive body orbit by re-centering the world around the parent.
         /// </summary>
-        public static OrbitTrace TraceMassiveBody(MassiveBodyBase body)
+        public static void TraceMassiveBody(MassiveBodyBase body, OrbitTrace trace)
         {
             IMassiveBody parent = body.GravitationalParent;
 
@@ -37,11 +71,10 @@ namespace SpaceSim.Orbits
             var proxySatellite = new MassiveBodyProxy(initialPosition, body.Velocity - parent.Velocity, body);
 
             double orbitalTerminationRadius;
-            double altitude = body.GetRelativeAltitude();
 
             double orbitalDt = GetOrbitalDt(initialPosition, proxySatellite.Velocity, out orbitalTerminationRadius);
 
-            var trace = new OrbitTrace(body.Position, altitude);
+            trace.Reset(body.Position);
 
             for (int i=0; i < 300; i++)
             {
@@ -51,7 +84,7 @@ namespace SpaceSim.Orbits
 
                 proxySatellite.Update(orbitalDt);
 
-                altitude = proxyParent.GetRelativeHeight(proxySatellite.Position);
+                double altitude = proxyParent.GetRelativeHeight(proxySatellite.Position);
 
                 // Check expensive termination conditions after half of the iterations
                 if (i > 150)
@@ -70,14 +103,12 @@ namespace SpaceSim.Orbits
 
                 trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
             }
-
-            return trace;
         }
 
         /// <summary>
         /// Traces a space craft orbit by re-centering the world around the parent.
         /// </summary>
-        public static OrbitTrace TraceSpaceCraft(SpaceCraftBase satellite)
+        public static void TraceSpaceCraft(SpaceCraftBase satellite, OrbitTrace trace)
         {
             IMassiveBody parent = satellite.GravitationalParent;
 
@@ -126,7 +157,7 @@ namespace SpaceSim.Orbits
                 targetDt = orbitalDt;
             }
 
-            var trace = new OrbitTrace(satellite.Position - shipOffset, altitude);
+            trace.Reset(satellite.Position - shipOffset);
 
             // Simulate 300 orbital steps, more for proximity
             for (int step = 0; step < stepCount; step++)
@@ -140,11 +171,25 @@ namespace SpaceSim.Orbits
 
                 altitude = proxyParent.GetRelativeHeight(proxySatellite.Position);
 
-                // Check if reference frame shifting needs to occur in atmosphere
-                if (altitude < proxyParent.AtmosphereHeight)
-                {
-                    double offsetFactor = 1.0 - (altitude / proxyParent.AtmosphereHeight);
+                double velocity = proxySatellite.GetRelativeVelocity().Length();
 
+                double offsetFactor = 0.0;
+
+                if (altitude < proxyParent.AtmosphereHeight*2)
+                {
+                    if (velocity < 3000)
+                    {
+                        offsetFactor = 1.0;
+                    }
+                    else if (velocity < 4000)
+                    {
+                        offsetFactor = 1.0 - velocity / 3000.0;
+                    }   
+                }
+
+                // Check if reference frame shifting needs to occur in atmosphere
+                if (offsetFactor > 0.0001)
+                {
                     DVector2 difference = proxyParent.Position - proxySatellite.Position;
                     difference.Normalize();
 
@@ -224,8 +269,6 @@ namespace SpaceSim.Orbits
 
                 trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
             }
-
-            return trace;
         }
 
         // Finds the orbtial delta time step by assuming 200 points along the oribtal cirumference

@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using SpaceSim.Kernels;
+using SpaceSim.Orbits;
 using VectorMath;
 
 namespace SpaceSim.SolarSystem.Moons
@@ -34,8 +35,9 @@ namespace SpaceSim.SolarSystem.Moons
         public override Color IconColor { get { return Color.LightBlue; } }
         public override Color IconAtmopshereColor { get { return Color.AliceBlue; } }
 
-        public Europa(DVector2 position, DVector2 velocity)
-            : base(position, velocity, new EuropaKernel())
+        public Europa(DVector2 parentPositon, DVector2 parentVelocity)
+            : base(OrbitHelper.FromJplEphemeris(6.156481591252791E+05, 2.501017249378511E+05) + parentPositon,
+                   OrbitHelper.FromJplEphemeris(-5.263255140302287E+00, 1.282255171501272E+01) + parentVelocity, new EuropaKernel())
         {
         }
 

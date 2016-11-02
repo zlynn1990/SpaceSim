@@ -37,8 +37,8 @@ namespace SpaceSim.SolarSystem.Planets
         public override Color IconAtmopshereColor { get { return Color.LightSkyBlue; } }
 
         public Earth()
-            : base(OrbitHelper.GetPosition(1.47095e11, 1.7967674211, DVector2.Zero),
-                   OrbitHelper.GetVelocity(1.47095e11, 1.7967674211, -3.029e4, DVector2.Zero), new EarthKernel())
+            : base(OrbitHelper.FromJplEphemeris(1.470669705624798E+08, -3.465263667484938E+07),
+                   OrbitHelper.FromJplEphemeris(6.445708901348731E+00, 2.887242866160539E+01), new EarthKernel())
         {
         }
 

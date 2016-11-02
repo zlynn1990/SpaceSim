@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0.00001</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>30</StartTime>
+    <Duration>10</Duration>
+    <TargetThrottle>60</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>147</StartTime>
+    <Duration>5</Duration>
+    <TargetThrottle>100</TargetThrottle>
+  </Command>
+   <Command xsi:type="Throttle">
+    <StartTime>192</StartTime>
+    <Duration>9</Duration>
+    <TargetThrottle>80</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>201</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>220</StartTime>
+    <Duration>518</Duration>
+    <InitialAdjustmentTime>50</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>340</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>85</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>345</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Deploy">
+	<Part>Grid Fins</Part>
+    <StartTime>500</StartTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>622</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>65</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>647.5</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="AutoLand">
+    <StartTime>700</StartTime>
+    <Duration>100</Duration>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Deploy">
+	<Part>Landing Legs</Part>
+    <StartTime>732</StartTime>
+  </Command>
+</ArrayOfCommand>

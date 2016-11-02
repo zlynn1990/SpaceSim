@@ -14,7 +14,7 @@ namespace SpaceSim.Spacecrafts
         public override double Width { get { return 5.10655; } }
         public override double Height { get { return 12.9311; } }
 
-        public override double DryMass { get { return _dryMass + _fairingMass; } }
+        public override double DryMass { get { return _fairingMass; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
 
@@ -46,13 +46,11 @@ namespace SpaceSim.Spacecrafts
 
         public override Color IconColor { get { return Color.White; } }
 
-        private double _dryMass;
         private double _fairingMass;
 
-        public DemoSat(string craftDirectory, DVector2 position, DVector2 velocity, double dryMass, double propellantMass)
-            : base(craftDirectory, position, velocity, propellantMass, "Textures/fairing.png")
+        public DemoSat(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
+            : base(craftDirectory, position, velocity, payloadMass, 0, "Textures/fairing.png")
         {
-            _dryMass = dryMass;
             _fairingMass = 1750;
 
             Engines = new IEngine[0];
