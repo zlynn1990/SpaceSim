@@ -29,8 +29,8 @@ namespace SpaceSim.Drawing
 
         public void Draw(int spriteIndex, Graphics graphics, RectangleF screenBounds)
         {
-            int spriteX = spriteIndex/Cols;
-            int spriteY = spriteIndex - spriteX*Cols;
+            int spriteX = spriteIndex / Rows;
+            int spriteY = spriteIndex - spriteX * Rows;
 
             var source = new RectangleF(spriteX * _spriteWidth, spriteY * _spriteHeight, _spriteWidth, _spriteHeight);
 
