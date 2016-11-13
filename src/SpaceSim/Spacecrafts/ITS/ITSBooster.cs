@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
 
@@ -90,8 +92,8 @@ namespace SpaceSim.Spacecrafts.ITS
 
         private SpriteSheet _spriteSheet;
 
-        public ITSBooster(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 6700000)
-            : base(craftDirectory, position, velocity, 0, propellantMass, null)
+        public ITSBooster(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 6078138)
+            : base(craftDirectory, position, velocity, 0, propellantMass, "Textures/itsBooster.png")
         {
             StageOffset = new DVector2(0, 59.5);
 
@@ -101,9 +103,9 @@ namespace SpaceSim.Spacecrafts.ITS
             {
                 double engineOffsetX = (i - 21.0) / 21.0;
 
-                var offset = new DVector2(engineOffsetX * Width * 0.38, Height * 0.45);
+                var offset = new DVector2(engineOffsetX * Width * 0.34, Height * 0.48);
 
-                Engines[i] = new Raptor(i, this, offset);
+                Engines[i] = new Raptor40(i, this, offset);
             }
 
             _spriteSheet = new SpriteSheet("Textures/itsBooster.png", 4, 12);
@@ -133,6 +135,8 @@ namespace SpaceSim.Spacecrafts.ITS
             _spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
             graphics.ResetTransform();
+
+            //Debug.WriteLine(string.Format("spriteIndex={0}", spriteIndex));
         }
     }
 }

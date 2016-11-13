@@ -29,7 +29,7 @@ namespace SpaceSim.Spacecrafts
 
             if (string.IsNullOrEmpty(vehicle.VehicleType))
             {
-                throw new Exception("Please specify a craftType in the payload.xml!");
+                throw new Exception("Please specify a craftType in the VehicleConfig.xml!");
             }
 
             switch (vehicle.VehicleType)
@@ -52,8 +52,10 @@ namespace SpaceSim.Spacecrafts
                     return BuildAutoLandingTest(planet, vehicle, craftDirectory);
                 case "ITS Crew Launch":
                     return BuildITSCrew(planet, vehicle, craftDirectory, offset);
+                case "ITS Earth EDL":
+                    return BuildItsEarthEDL(planet, vehicle, craftDirectory, offset);
                 default:
-                    throw new Exception("Unkown craftType: " + vehicle.VehicleType);
+                    throw new Exception("Unknown craftType: " + vehicle.VehicleType);
             }
         }
 
@@ -211,6 +213,17 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 ship, booster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildItsEarthEDL(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        {
+            var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius - 150000),
+                                  planet.Velocity + new DVector2(-7400, 700), vehicle.PayloadMass, vehicle.PropellantMass);
+
+            return new List<ISpaceCraft>
+            {
+                ship
             };
         }
 

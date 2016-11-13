@@ -33,7 +33,7 @@ namespace SpaceSim.Spacecrafts
             {
                 double childMass = Children.Sum(child => child.Mass);
 
-                return childMass + DryMass + PayloadMass + PropellantMass;
+                return childMass + DryMass + PropellantMass;
             }
         }
 
@@ -146,9 +146,10 @@ namespace SpaceSim.Spacecrafts
         private int _onGroundIterations;
 
         private bool _showDisplayVectors;
+        private DateTime start = DateTime.Now, timestamp = DateTime.Now;
 
         protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass,
-                                 double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
+            double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
             : base(position, velocity, -Math.PI * 0.5)
         {
             CraftDirectory = craftDirectory;
@@ -159,7 +160,6 @@ namespace SpaceSim.Spacecrafts
                 Texture = new Bitmap(texturePath);    
             }
 
-            PayloadMass = payloadMass;
             PropellantMass = propellantMass;
 
             EntryFlame = entryFlame;
@@ -629,22 +629,30 @@ namespace SpaceSim.Spacecrafts
 
                     relativeVelocity.Normalize();
 
-                    double formDragTerm = TotalFormDragCoefficient() * TotalFormDragArea();
-                    double skinFrictionTerm = TotalSkinFrictionCoefficient() * TotalSkinFrictionArea();
+                    double formDragCoefficient = TotalFormDragCoefficient();
+                    double skinFrictionCoefficient = TotalSkinFrictionCoefficient();
+                    double liftCoefficient = TotalLiftCoefficient();
+
+
+                    double formDragTerm = formDragCoefficient * TotalFormDragArea();
+                    double skinFrictionTerm = skinFrictionCoefficient * TotalSkinFrictionArea();
 
                     double dragTerm = formDragTerm;
                     if (!double.IsNaN(skinFrictionTerm))
                         dragTerm += skinFrictionTerm;
 
-                    double liftTerm = TotalLiftCoefficient() * TotalLiftArea();
+                    double liftTerm = liftCoefficient * TotalLiftArea() * Math.Cos(Roll);
+                    double turnTerm = liftCoefficient * TotalLiftArea() * Math.Sin(Roll);
 
                     // Form Drag ( Fd = 0.5pv^2dA )
                     // Skin friction ( Fs = 0.5CfpV^2S )
                     DVector2 drag = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * dragTerm);
                     DVector2 lift = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * liftTerm);
+                    DVector2 turn = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * turnTerm);
 
                     AccelerationD = drag / Mass;
                     DVector2 accelerationLift = lift / Mass;
+                    DVector2 accelerationTurn = turn / Mass;
 
                     double alpha = GetAlpha();
                     double halfPi = Math.PI / 2;
@@ -660,6 +668,21 @@ namespace SpaceSim.Spacecrafts
                         AccelerationL.X += accelerationLift.Y;
                         AccelerationL.Y -= accelerationLift.X;
                     }
+
+                    //if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
+                    //{
+                    //    string filename = MissionName + ".csv";
+
+                    //    if (!File.Exists(filename))
+                    //    {
+                    //        File.AppendAllText(filename, "Altitude, Ma, Acceleration, alpha, roll, dragTerm, liftTerm, turnTerm\r\n");
+                    //    }
+
+                    //    timestamp = DateTime.Now;
+                    //    string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}, {5:N3}, {6:N3}, {7:N3}\r\n",
+                    //        altitude / 1000, MachNumber * 10, GetRelativeAcceleration().Length() * 10, alpha, Roll, dragTerm, liftTerm, turnTerm);
+                    //    File.AppendAllText(filename, contents);
+                    //}
                 }
             }
             else

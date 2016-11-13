@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
@@ -14,7 +15,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
         public override double DryMass { get { return 150000; } }
 
-        public override double Width { get { return 13.9; } }
+        public override double Width { get { return 13; } }
         public override double Height { get { return 49.5; } }
 
         public override double LiftingSurfaceArea { get { return Width * Height; } }
@@ -24,7 +25,7 @@ namespace SpaceSim.Spacecrafts.ITS
         {
             get
             {
-                double baseCd = GetBaseCd(0.6);
+                double baseCd = GetBaseCd(0.4);
                 double alpha = GetAlpha();
 
                 return baseCd * Math.Sin(alpha * 2);
@@ -66,8 +67,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
                 if (alpha > Constants.PiOverTwo || alpha < -Constants.PiOverTwo)
                 {
-                    baseCd = GetBaseCd(0.8);
-
+                    baseCd = GetBaseCd(0.6);
                     isRetrograde = true;
                 }
 
@@ -92,7 +92,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
         private SpriteSheet _spriteSheet;
 
-        public ITSShip(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass, double propellantMass = 1950000)
+        public ITSShip(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass, double propellantMass = 1769010)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, null)
         {
             Engines = new IEngine[9];
@@ -102,15 +102,15 @@ namespace SpaceSim.Spacecrafts.ITS
             {
                 double engineOffsetX = (i - 2.5) / 2.5;
 
-                var offset = new DVector2(engineOffsetX * Width * 0.2, Height * 0.45);
+                var offset = new DVector2(engineOffsetX * Width * 0.25, Height * 0.48);
 
                 Engines[i] = new RaptorVac(i, this, offset);
             }
 
-            // Raptor SL engines
-            Engines[6] = new Raptor(6, this, new DVector2(-2, Height * 0.45));
-            Engines[7] = new Raptor(7, this, new DVector2(0, Height * 0.45));
-            Engines[8] = new Raptor(8, this, new DVector2(2, Height * 0.45));
+            // Raptor SL 50 engines
+            Engines[6] = new Raptor50(6, this, new DVector2(-2, Height * 0.48));
+            Engines[7] = new Raptor50(7, this, new DVector2(0, Height * 0.48));
+            Engines[8] = new Raptor50(8, this, new DVector2(2, Height * 0.48));
 
             _spriteSheet = new SpriteSheet("Textures/itsShip.png", 12, 12);
         }
@@ -124,14 +124,26 @@ namespace SpaceSim.Spacecrafts.ITS
 
             graphics.TranslateTransform(offset.X, offset.Y);
 
-            graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
+            float pitchAngle = (float)(drawingRotation * 180 / Math.PI);
+            float rollFactor = (float)Math.Cos(Roll);
+            float alphaAngle = (float)(GetAlpha() * 180 / Math.PI);
+            float rotateAngle = (pitchAngle - alphaAngle) + alphaAngle * rollFactor;
+
+            if(this.MissionName.Contains("EDL"))
+                graphics.RotateTransform(rotateAngle);
+            else
+                graphics.RotateTransform(pitchAngle);
+
             graphics.TranslateTransform(-offset.X, -offset.Y);
 
             // Normalize the angle to [0,360]
-            int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees + 90) % 360;
+            int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
 
             // Index into the sprite
-            int spriteIndex = (rollAngle * 36) / 360;
+            int ships = _spriteSheet.Cols * _spriteSheet.Rows;
+            int spriteIndex = (rollAngle * ships) / 360;
+            while (spriteIndex < 0)
+                spriteIndex += ships;
 
             _spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 

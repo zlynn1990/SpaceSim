@@ -140,8 +140,11 @@ namespace SpaceSim
             }
             else
             {
-                RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth - 200;
-                RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight - 100;
+                RenderUtils.ScreenWidth = 1920;
+                RenderUtils.ScreenHeight = 1080;
+
+                //RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth - 200;
+                //RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight - 100;
             }
 
             RenderUtils.ScreenArea = RenderUtils.ScreenWidth * RenderUtils.ScreenHeight;
@@ -683,8 +686,8 @@ namespace SpaceSim
 
                 if (!(target is Sun))
                 {
-                    graphics.DrawString("Apogee: " + UnitDisplay.Distance(target.Apogee), font, brush, 5, 425);
-                    graphics.DrawString("Perigee: " + UnitDisplay.Distance(target.Perigee), font, brush, 5, 455);
+                    graphics.DrawString("Apogee: " + UnitDisplay.Distance(target.Apogee), font, brush, 5, 455);
+                    graphics.DrawString("Perigee: " + UnitDisplay.Distance(target.Perigee), font, brush, 5, 485);
                 }
 
                 graphics.DrawString("Mass: " + UnitDisplay.Mass(target.Mass), font, brush, 5, 290);
@@ -702,20 +705,22 @@ namespace SpaceSim
                     graphics.DrawString("Thrust: " + UnitDisplay.Force(targetSpaceCraft.Thrust), font, brush, 5, 320);
 
                     DVector2 dragForce = targetSpaceCraft.AccelerationD * targetSpaceCraft.Mass;
-                    DVector2 liftForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass;
+                    DVector2 liftForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass * Math.Cos(targetSpaceCraft.Roll);
+                    DVector2 turnForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass * Math.Sin(targetSpaceCraft.Roll);
 
                     graphics.DrawString("Drag: " + UnitDisplay.Force(dragForce.Length()), font, brush, 5, 350);
                     graphics.DrawString("Lift: " + UnitDisplay.Force(liftForce.Length()), font, brush, 5, 380);
+                    graphics.DrawString("Turn: " + UnitDisplay.Force(turnForce.Length()), font, brush, 5, 410);
 
                     double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(altitude);
 
-                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 505);
+                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 535);
 
                     double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
 
-                    graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 535);
+                    graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 565);
 
-                    graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 565);
+                    graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 595);
                 }
 
                 graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 80, 5);

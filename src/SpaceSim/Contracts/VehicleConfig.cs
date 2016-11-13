@@ -8,5 +8,7 @@ namespace SpaceSim.Contracts
         public string VehicleType { get; set; }
 
         public double PayloadMass { get; set; }
+
+        public double PropellantMass { get; set; }
     }
 }
