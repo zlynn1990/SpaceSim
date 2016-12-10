@@ -54,6 +54,12 @@ namespace SpaceSim.Spacecrafts
                     return BuildITSCrew(planet, vehicle, craftDirectory, offset);
                 case "ITS Earth EDL":
                     return BuildItsEarthEDL(planet, vehicle, craftDirectory, offset);
+                case "ITS Earth Aerocapture":
+                    return BuildItsEarthAerocapture(planet, vehicle, craftDirectory, offset);
+                case "ITS Mars Aerocapture":
+                    return BuildItsMarsAerocapture(planet, vehicle, craftDirectory, offset);
+                case "ITS Mars EDL":
+                    return BuildItsMarsEDL(planet, vehicle, craftDirectory, offset);
                 default:
                     throw new Exception("Unknown craftType: " + vehicle.VehicleType);
             }
@@ -216,10 +222,43 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
+        private static List<ISpaceCraft> BuildItsEarthAerocapture(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        {
+            var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius - 150000),
+                                  planet.Velocity + new DVector2(-12500, 1700), vehicle.PayloadMass, vehicle.PropellantMass);
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
         private static List<ISpaceCraft> BuildItsEarthEDL(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
         {
             var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius - 150000),
                                   planet.Velocity + new DVector2(-7400, 700), vehicle.PayloadMass, vehicle.PropellantMass);
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildItsMarsAerocapture(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        {
+            var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius - 100000),
+                                  planet.Velocity + new DVector2(-8500, 1800), vehicle.PayloadMass, vehicle.PropellantMass);
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildItsMarsEDL(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        {
+            var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius - 100000),
+                                  planet.Velocity + new DVector2(-3300, 300), vehicle.PayloadMass, vehicle.PropellantMass);
 
             return new List<ISpaceCraft>
             {

@@ -94,7 +94,7 @@ namespace SpaceSim.Spacecrafts
         public abstract AeroDynamicProperties GetAeroDynamicProperties { get; }
 
         public abstract double FormDragCoefficient { get; }
-        public abstract double CrossSectionalArea { get; }
+        public abstract double FrontalArea { get; }
         public abstract double ExposedSurfaceArea { get; }
         public abstract double LiftingSurfaceArea { get; }
         public abstract double LiftCoefficient { get; }
@@ -633,7 +633,6 @@ namespace SpaceSim.Spacecrafts
                     double skinFrictionCoefficient = TotalSkinFrictionCoefficient();
                     double liftCoefficient = TotalLiftCoefficient();
 
-
                     double formDragTerm = formDragCoefficient * TotalFormDragArea();
                     double skinFrictionTerm = skinFrictionCoefficient * TotalSkinFrictionArea();
 
@@ -669,20 +668,20 @@ namespace SpaceSim.Spacecrafts
                         AccelerationL.Y -= accelerationLift.X;
                     }
 
-                    //if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
-                    //{
-                    //    string filename = MissionName + ".csv";
+                    if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
+                    {
+                        string filename = MissionName + ".csv";
 
-                    //    if (!File.Exists(filename))
-                    //    {
-                    //        File.AppendAllText(filename, "Altitude, Ma, Acceleration, alpha, roll, dragTerm, liftTerm, turnTerm\r\n");
-                    //    }
+                        if (!File.Exists(filename))
+                        {
+                            File.AppendAllText(filename, "Altitude, Ma, Acceleration, alpha, roll, HeatingRate, dragTerm, liftTerm, turnTerm\r\n");
+                        }
 
-                    //    timestamp = DateTime.Now;
-                    //    string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}, {5:N3}, {6:N3}, {7:N3}\r\n",
-                    //        altitude / 1000, MachNumber * 10, GetRelativeAcceleration().Length() * 10, alpha, Roll, dragTerm, liftTerm, turnTerm);
-                    //    File.AppendAllText(filename, contents);
-                    //}
+                        timestamp = DateTime.Now;
+                        string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}, {5:N3}, {6:N3}, {7:N3}, {8:N3}\r\n",
+                            altitude / 1000, MachNumber * 10, GetRelativeAcceleration().Length() * 10, alpha * MathHelper.RadiansToDegrees, Roll * MathHelper.RadiansToDegrees, HeatingRate / 100000, dragTerm/10, liftTerm/10, turnTerm/10);
+                        File.AppendAllText(filename, contents);
+                    }
                 }
             }
             else
@@ -742,7 +741,7 @@ namespace SpaceSim.Spacecrafts
             if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow) ||
                 props.HasFlag(AeroDynamicProperties.ExtendsFineness))
             {
-                totalFormDragArea = CrossSectionalArea;
+                totalFormDragArea = FrontalArea;
             }
 
             return GetChildFormDragArea(Children, totalFormDragArea);
@@ -755,12 +754,12 @@ namespace SpaceSim.Spacecrafts
                 AeroDynamicProperties props = child.GetAeroDynamicProperties;
                 if (props.HasFlag(AeroDynamicProperties.ExposedToAirFlow))
                 {
-                    if (child.CrossSectionalArea > totalFormDragArea)
-                        totalFormDragArea = child.CrossSectionalArea;
+                    if (child.FrontalArea > totalFormDragArea)
+                        totalFormDragArea = child.FrontalArea;
                 }
                 else if (props.HasFlag(AeroDynamicProperties.ExtendsCrossSection))
                 {
-                    totalFormDragArea += child.CrossSectionalArea;
+                    totalFormDragArea += child.FrontalArea;
                 }
 
                 totalFormDragArea = GetChildFormDragArea(child.Children, totalFormDragArea);

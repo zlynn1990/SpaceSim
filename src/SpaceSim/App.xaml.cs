@@ -20,7 +20,10 @@ namespace SpaceSim
             SpaceSim.MainWindow.ProfileDirectories = new List<string>
             {
                 //Path.Combine(profileDirectory, "ITS Crew Launch"),
+                //Path.Combine(profileDirectory, "ITS Earth Aerocapture"),
                 Path.Combine(profileDirectory, "ITS Earth EDL"),
+                //Path.Combine(profileDirectory, "ITS Mars Aerocapture"),
+                //Path.Combine(profileDirectory, "ITS Mars EDL"),
                 //Path.Combine(profileDirectory, "AutoLanding Test"),
                 //Path.Combine(profileDirectory, "RedDragon Launch"),
                 //Path.Combine(profileDirectory, "CRS-9"),

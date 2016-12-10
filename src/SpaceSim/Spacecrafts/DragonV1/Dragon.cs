@@ -55,7 +55,7 @@ namespace SpaceSim.Spacecrafts.DragonV1
             }
         }
 
-        public override double CrossSectionalArea
+        public override double FrontalArea
         {
             get { return 21.504 + _parachuteRatio * 2500; }
         }

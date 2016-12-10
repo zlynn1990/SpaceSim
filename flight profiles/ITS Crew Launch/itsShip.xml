@@ -81,7 +81,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>2605</StartTime>
+    <StartTime>2605.5</StartTime>
     <Duration>0.5</Duration>
   </Command>
 

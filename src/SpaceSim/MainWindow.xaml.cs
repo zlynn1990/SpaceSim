@@ -140,8 +140,11 @@ namespace SpaceSim
             }
             else
             {
-                RenderUtils.ScreenWidth = 1920;
-                RenderUtils.ScreenHeight = 1080;
+                //RenderUtils.ScreenWidth = 1920;
+                //RenderUtils.ScreenHeight = 1080;
+
+                RenderUtils.ScreenWidth = 1280;
+                RenderUtils.ScreenHeight = 720;
 
                 //RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth - 200;
                 //RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight - 100;

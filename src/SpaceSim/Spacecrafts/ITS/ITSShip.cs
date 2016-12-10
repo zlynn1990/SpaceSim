@@ -5,6 +5,7 @@ using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
+using System.IO;
 
 namespace SpaceSim.Spacecrafts.ITS
 {
@@ -13,13 +14,17 @@ namespace SpaceSim.Spacecrafts.ITS
         public override string CraftName { get { return "ITS Spaceship"; } }
         public override string CommandFileName { get { return "itsShip.xml"; } }
 
-        public override double DryMass { get { return 150000; } }
+        public override double DryMass { get { return 150000 + payloadMass; } }
 
         public override double Width { get { return 13; } }
         public override double Height { get { return 49.5; } }
 
-        public override double LiftingSurfaceArea { get { return Width * Height; } }
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
+
+        DateTime timestamp = DateTime.Now;
+        double payloadMass = 0;
+
+        public override double LiftingSurfaceArea { get { return Math.Abs(Width * Height * Math.Cos(GetAlpha())); } }
 
         public override double LiftCoefficient
         {
@@ -32,14 +37,15 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
-        public override double CrossSectionalArea
+        public override double FrontalArea
         {
             get
             {
-                double area = Math.PI * Math.Pow(Width / 2, 2);
                 double alpha = GetAlpha();
+                double crossSectionalArea = Math.PI * Math.Pow(Width / 2, 2);
+                double sideArea = Width * Height;
 
-                return Math.Abs(area * Math.Cos(alpha));
+                return Math.Abs(crossSectionalArea * Math.Cos(alpha)) + Math.Abs(sideArea * Math.Sin(alpha));
             }
         }
 
@@ -48,7 +54,7 @@ namespace SpaceSim.Spacecrafts.ITS
             get
             {
                 // A = 2πrh + πr2
-                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+                return 2 * Math.PI * (Width / 2) * Height + FrontalArea;
             }
         }
 
@@ -71,7 +77,7 @@ namespace SpaceSim.Spacecrafts.ITS
                     isRetrograde = true;
                 }
 
-                double dragCoefficient = Math.Abs(baseCd * Math.Cos(alpha));
+                double dragCoefficient = Math.Abs(baseCd * Math.Sin(alpha));
                 double dragPreservation = 1.0;
 
                 if (isRetrograde)
@@ -113,6 +119,8 @@ namespace SpaceSim.Spacecrafts.ITS
             Engines[8] = new Raptor50(8, this, new DVector2(2, Height * 0.48));
 
             _spriteSheet = new SpriteSheet("Textures/itsShip.png", 12, 12);
+
+            this.payloadMass = payloadMass;
         }
 
         protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
@@ -129,7 +137,7 @@ namespace SpaceSim.Spacecrafts.ITS
             float alphaAngle = (float)(GetAlpha() * 180 / Math.PI);
             float rotateAngle = (pitchAngle - alphaAngle) + alphaAngle * rollFactor;
 
-            if(this.MissionName.Contains("EDL"))
+            if(this.MissionName.Contains("EDL") || this.MissionName.Contains("Aerocapture"))
                 graphics.RotateTransform(rotateAngle);
             else
                 graphics.RotateTransform(pitchAngle);
@@ -148,6 +156,21 @@ namespace SpaceSim.Spacecrafts.ITS
             _spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
             graphics.ResetTransform();
+
+            //if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
+            //{
+            //    string filename = MissionName + ".csv";
+
+            //    if (!File.Exists(filename))
+            //    {
+            //        File.AppendAllText(filename, "Ma, FormDragCoefficient, SkinFrictionCoefficient, LiftCoefficient, pitchAngle\r\n");
+            //    }
+
+            //    timestamp = DateTime.Now;
+            //    string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}\r\n",
+            //        MachNumber, FormDragCoefficient, SkinFrictionCoefficient, LiftCoefficient, pitchAngle);
+            //    File.AppendAllText(filename, contents);
+            //}
         }
     }
 }

@@ -40,13 +40,13 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
             }
         }
 
-        public override double CrossSectionalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+        public override double FrontalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
         public override double ExposedSurfaceArea
         {
             get
             {
                 // A = 2πrh + πr2
-                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+                return 2 * Math.PI * (Width / 2) * Height + FrontalArea;
             }
         }
 

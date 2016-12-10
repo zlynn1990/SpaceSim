@@ -40,8 +40,8 @@ namespace SpaceSim.Spacecrafts
             }
         }
 
-        public override double CrossSectionalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
-        public override double ExposedSurfaceArea { get { return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea; } }
+        public override double FrontalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+        public override double ExposedSurfaceArea { get { return 2 * Math.PI * (Width / 2) * Height + FrontalArea; } }
         public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override Color IconColor { get { return Color.White; } }

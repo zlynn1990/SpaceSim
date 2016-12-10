@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="RelativePitch">
+    <StartTime>0</StartTime>
+    <Duration>0</Duration>
+    <TargetOrientation>232</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1</StartTime>
+    <Duration>79</Duration>
+    <TargetOrientation>237</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Roll">
+    <StartTime>80</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>126</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>80</StartTime>
+    <Duration>80</Duration>
+    <TargetOrientation>242</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Roll">
+    <StartTime>160</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>248</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>160</StartTime>
+    <Duration>80</Duration>
+    <TargetOrientation>240</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="Roll">
+    <StartTime>300</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>360</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="RelativePitch">
+    <StartTime>480</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>180</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Prograde">
+    <StartTime>690</StartTime>
+    <Duration>8000</Duration>
+    <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+  
+  <Command xsi:type="Ignition">
+    <StartTime>1880</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>50</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>1883</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+
+
+
+  
+</ArrayOfCommand>

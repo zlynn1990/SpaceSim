@@ -21,7 +21,7 @@ namespace SpaceSim.Physics
         double HeatingRate { get; }
 
         double FormDragCoefficient { get; }
-        double CrossSectionalArea { get; }
+        double FrontalArea { get; }
         double SkinFrictionCoefficient { get; }
         double ExposedSurfaceArea { get; }
 

@@ -83,7 +83,8 @@ namespace SpaceSim.Commands
 
             for (int i = -1; i <= 1; i++)
             {
-                double thrust = 65;
+                double thrust = 40;
+                // double thrust = 65;
 
                 if (_currentThrust > 0)
                 {
@@ -92,7 +93,8 @@ namespace SpaceSim.Commands
 
                 thrust += i * 0.5;
 
-                if (thrust < 60 || thrust > 100)
+                if (thrust < 40 || thrust > 100)
+                //if (thrust < 60 || thrust > 100)
                 {
                     continue;
                 }

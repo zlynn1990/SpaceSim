@@ -32,7 +32,7 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
-        public override double CrossSectionalArea
+        public override double FrontalArea
         {
             get
             {
@@ -47,7 +47,7 @@ namespace SpaceSim.Spacecrafts.ITS
             get
             {
                 // A = 2πrh + πr2
-                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+                return 2 * Math.PI * (Width / 2) * Height + FrontalArea;
             }
         }
 

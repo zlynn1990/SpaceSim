@@ -37,7 +37,7 @@ namespace SpaceSim.Proxies
                 return 1.2;
             }
         }
-        public double CrossSectionalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+        public double FrontalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
 
         public double SkinFrictionCoefficient
         {
@@ -56,7 +56,7 @@ namespace SpaceSim.Proxies
             get
             {
                 // A = 2πrh + πr2
-                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+                return 2 * Math.PI * (Width / 2) * Height + FrontalArea;
             }
         }
 
@@ -158,7 +158,7 @@ namespace SpaceSim.Proxies
                     DVector2 normalizedRelativeVelocity = RelativeVelocity.Clone();
                     normalizedRelativeVelocity.Normalize();
 
-                    double formDragTerm = FormDragCoefficient * CrossSectionalArea;
+                    double formDragTerm = FormDragCoefficient * FrontalArea;
                     double skinFrictionTerm = SkinFrictionCoefficient * ExposedSurfaceArea;
                     double dragTerm = formDragTerm + skinFrictionTerm;
 

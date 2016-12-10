@@ -67,6 +67,10 @@ namespace SpaceSim.Commands
                     {
                         commands.Add(new AutoLandCommand(contract as AutoLand));
                     }
+                    else if (contract is Cant)
+                    {
+                        commands.Add(new CantCommand(contract as Cant));
+                    }
                     else if (contract is Pitch)
                     {
                         commands.Add(new PitchCommand(contract as Pitch));

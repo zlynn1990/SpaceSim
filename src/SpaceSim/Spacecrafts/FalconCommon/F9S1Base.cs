@@ -72,7 +72,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             }
         }
 
-        public override double CrossSectionalArea
+        public override double FrontalArea
         {
             get
             {
@@ -88,7 +88,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             get
             {
                 // A = 2πrh + πr2
-                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+                return 2 * Math.PI * (Width / 2) * Height + FrontalArea;
             }
         }
 

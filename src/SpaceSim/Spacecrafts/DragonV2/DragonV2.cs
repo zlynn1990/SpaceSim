@@ -71,7 +71,7 @@ namespace SpaceSim.Spacecrafts.DragonV2
 
         // Base dome = 2 * pi * 1.85^2
         // Parachute size = 2 * pi * 20^2
-        public override double CrossSectionalArea
+        public override double FrontalArea
         {
             get { return 21.504 + _parachuteRatio * 2500; }
         }

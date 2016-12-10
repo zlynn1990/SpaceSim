@@ -41,14 +41,14 @@ namespace SpaceSim.Spacecrafts.DragonV1
         }
 
         // Cylinder - 2 * pi * r * h
-        public override double CrossSectionalArea { get { return 27.6579; } }
+        public override double FrontalArea { get { return 27.6579; } }
 
         public override double ExposedSurfaceArea
         {
             get
             {
                 // A = 2πrh + πr2
-                return 2 * Math.PI * (Width / 2) * Height + CrossSectionalArea;
+                return 2 * Math.PI * (Width / 2) * Height + FrontalArea;
             }
         }
 

@@ -24,12 +24,12 @@ namespace SpaceSim.Engines
 
         public override IEngine Clone()
         {
-            return new Raptor40(0, Parent, Offset);
+            return new Raptor50(0, Parent, Offset);
         }
 
         public override string ToString()
         {
-            return "Raptor";
+            return "Raptor50";
         }
     }
 }
