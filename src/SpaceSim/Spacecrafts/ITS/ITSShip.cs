@@ -137,7 +137,7 @@ namespace SpaceSim.Spacecrafts.ITS
             float alphaAngle = (float)(GetAlpha() * 180 / Math.PI);
             float rotateAngle = (pitchAngle - alphaAngle) + alphaAngle * rollFactor;
 
-            if(this.MissionName.Contains("EDL") || this.MissionName.Contains("Aerocapture"))
+            if(this.MissionName.Contains("EDL") || this.MissionName.Contains("Aerocapture") || this.MissionName.Contains("Direct"))
                 graphics.RotateTransform(rotateAngle);
             else
                 graphics.RotateTransform(pitchAngle);

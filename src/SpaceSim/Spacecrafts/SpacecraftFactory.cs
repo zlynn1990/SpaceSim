@@ -60,6 +60,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildItsMarsAerocapture(planet, vehicle, craftDirectory, offset);
                 case "ITS Mars EDL":
                     return BuildItsMarsEDL(planet, vehicle, craftDirectory, offset);
+                case "ITS Mars Direct":
+                    return BuildItsMarsAerocapture(planet, vehicle, craftDirectory, offset);
                 default:
                     throw new Exception("Unknown craftType: " + vehicle.VehicleType);
             }

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Roll">
+    <StartTime>0</StartTime>
+    <Duration>0</Duration>
+    <TargetOrientation>0</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>0</StartTime>
+    <Duration>0</Duration>
+    <TargetOrientation>-112.3</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1</StartTime>
+    <Duration>59</Duration>
+    <TargetOrientation>-104.6</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>60</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-100</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Roll">
+    <StartTime>70</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>180</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>110</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-110.75</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>140</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-105</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>180</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-105</TargetOrientation>
+  </Command>
+
+   <Command xsi:type="Roll"> 
+     <StartTime>220</StartTime> 
+     <Duration>20</Duration> 
+     <TargetOrientation>0</TargetOrientation> 
+   </Command> 
+   <Command xsi:type="RelativePitch"> 
+     <StartTime>220</StartTime> 
+     <Duration>60</Duration> 
+     <TargetOrientation>-105</TargetOrientation> 
+   </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>280</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-110</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>320</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-120</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>360</StartTime>
+    <Duration>81</Duration>
+    <TargetOrientation>-135</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>441</StartTime>
+    <Duration>29</Duration>
+    <TargetOrientation>-135</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Retrograde">
+    <StartTime>480</StartTime>
+    <Duration>40</Duration>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+
+  <Command xsi:type="Cant">
+    <StartTime>485</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>45</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>490</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+
+  <Command xsi:type="Cant">
+    <StartTime>523.5</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>0</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>523.5</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-90</TargetOrientation>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>523.5</StartTime>
+    <Duration>1</Duration>
+    <TargetThrottle>20</TargetThrottle>
+  </Command>
+  
+  <Command xsi:type="Shutdown">
+    <StartTime>530</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+
+
+</ArrayOfCommand>
