@@ -207,8 +207,8 @@ namespace SpaceSim
             {
                 string profileDirectory = ProfileDirectories[i];
 
-                List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(mars, profileDirectory, i * 30);
-                //List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(earth, profileDirectory, i * -60);
+                //List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(mars, profileDirectory, i * 30);
+                List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(earth, profileDirectory, i * -60);
 
                 _spaceCrafts.AddRange(spaceCraft);
             }

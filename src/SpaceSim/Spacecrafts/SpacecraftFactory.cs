@@ -56,6 +56,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildItsEarthEDL(planet, vehicle, craftDirectory, offset);
                 case "ITS Earth Aerocapture":
                     return BuildItsEarthAerocapture(planet, vehicle, craftDirectory, offset);
+                case "ITS Earth Direct":
+                    return BuildItsEarthAerocapture(planet, vehicle, craftDirectory, offset);
                 case "ITS Mars Aerocapture":
                     return BuildItsMarsAerocapture(planet, vehicle, craftDirectory, offset);
                 case "ITS Mars EDL":

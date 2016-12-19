@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="RelativePitch">
+    <StartTime>0</StartTime>
+    <Duration>0</Duration>
+    <TargetOrientation>-128</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1</StartTime>
+    <Duration>79</Duration>
+    <TargetOrientation>-123</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Roll">
+    <StartTime>80</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>126</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>80</StartTime>
+    <Duration>80</Duration>
+    <TargetOrientation>-118</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Roll">
+    <StartTime>160</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>245</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>160</StartTime>
+    <Duration>80</Duration>
+    <TargetOrientation>-120</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="Roll">
+    <StartTime>300</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>80</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>300</StartTime>
+    <Duration>120</Duration>
+    <TargetOrientation>-120</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Roll">
+    <StartTime>420</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-60</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>420</StartTime>
+    <Duration>120</Duration>
+    <TargetOrientation>-130</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="Roll">
+    <StartTime>540</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>50</TargetOrientation>
+  </Command>
+    <Command xsi:type="RelativePitch">
+    <StartTime>540</StartTime>
+    <Duration>120</Duration>
+    <TargetOrientation>-130</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="Roll">
+    <StartTime>660</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-40</TargetOrientation>
+  </Command>
+    <Command xsi:type="RelativePitch">
+    <StartTime>660</StartTime>
+    <Duration>120</Duration>
+    <TargetOrientation>-135</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="Roll">
+    <StartTime>780</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>0</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>780</StartTime>
+    <Duration>300</Duration>
+    <TargetOrientation>-135</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="Retrograde">
+    <StartTime>1080</StartTime>
+    <Duration>90</Duration>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+  
+  <Command xsi:type="Cant">
+    <StartTime>1085</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>45</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>1090</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>50</Throttle>
+    <EngineIds>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  
+  <Command xsi:type="Shutdown">
+    <StartTime>1105</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  
+  <Command xsi:type="Cant">
+    <StartTime>1135</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>0</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>1141.5</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>60</Throttle>
+    <EngineIds>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>1163</StartTime>
+    <Duration>5</Duration>
+    <TargetThrottle>25</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>1173</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  
+  <!--<Command xsi:type="AutoLand">
+    <StartTime>1140</StartTime>
+    <Duration>30</Duration>
+    <EngineIds>
+      <int>6</int>
+      <int>7</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>-->
+</ArrayOfCommand>
