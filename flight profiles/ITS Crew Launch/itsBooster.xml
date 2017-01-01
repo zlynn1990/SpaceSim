@@ -6,21 +6,26 @@
     <Throttle>100</Throttle>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>95</StartTime>
-    <Duration>55</Duration>
+    <StartTime>125</StartTime>
+    <Duration>50</Duration>
     <TargetThrottle>65</TargetThrottle>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>130</StartTime>
+    <Duration>5</Duration>
+    <Message>... thus limiting acceleration to 3Gs</Message>
+  </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>155</StartTime>
+    <StartTime>167</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>158</StartTime>
-    <Duration>10</Duration>
-    <TargetOrientation>0</TargetOrientation>
+    <StartTime>168</StartTime>
+    <Duration>7</Duration>
+    <TargetOrientation>-13</TargetOrientation>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>170</StartTime>
+    <StartTime>175</StartTime>
     <Duration>0.1</Duration>
     <Throttle>100</Throttle>
     <EngineIds>
@@ -47,27 +52,52 @@
       <int>31</int>
     </EngineIds>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>180</StartTime>
+    <Duration>5</Duration>
+    <Message>Note that the 15° pitch of the booster increases the loft</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>185</StartTime>
+    <Duration>5</Duration>
+    <Message>... optimising the range provided by the boostback burn</Message>
+  </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>191.13268</StartTime>
+    <StartTime>194.631</StartTime>
     <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>200</StartTime>
+    <Duration>5</Duration>
+    <Message>... however the trajectory does not yet appear sufficient for RTLS</Message>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>200</StartTime>
-    <Duration>30</Duration>
-    <TargetOrientation>145</TargetOrientation>
+    <Duration>20</Duration>
+    <TargetOrientation>-240</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>230</StartTime>
-    <Duration>100</Duration>
-    <TargetOrientation>215</TargetOrientation>
+    <StartTime>220</StartTime>
+    <Duration>210</Duration>
+    <TargetOrientation>-120</TargetOrientation>
   </Command>
-  <Command xsi:type="Retrograde">
-    <StartTime>330</StartTime>
-    <Duration>150</Duration>
-    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  <Command xsi:type="RelativePitch">
+    <StartTime>430</StartTime>
+    <Duration>115</Duration>
+    <TargetOrientation>-120</TargetOrientation>
   </Command>
-  <!--<Command xsi:type="Ignition">
-    <StartTime>395</StartTime>
+  <Command xsi:type="Post">
+    <StartTime>490</StartTime>
+    <Duration>5</Duration>
+    <Message>As the booster enters the lower atmosphere, it's alpha begins to generate significant lift</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>505</StartTime>
+    <Duration>5</Duration>
+    <Message>... and the predicted landing point begins to move towards the launch site</Message>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>541.95</StartTime>
     <Duration>0.1</Duration>
     <Throttle>100</Throttle>
     <EngineIds>
@@ -76,17 +106,22 @@
       <int>22</int>
     </EngineIds>
   </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>542</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-90</TargetOrientation>
+  </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>405</StartTime>
+    <StartTime>553</StartTime>
     <Duration>0.5</Duration>
-  </Command>-->
-  <Command xsi:type="AutoLand">
-    <StartTime>460</StartTime>
+  </Command>
+  <!--<Command xsi:type="AutoLand">
+    <StartTime>390</StartTime>
     <Duration>30</Duration>
     <EngineIds>
       <int>20</int>
       <int>21</int>
       <int>22</int>
     </EngineIds>
-  </Command>
+  </Command>-->
 </ArrayOfCommand>

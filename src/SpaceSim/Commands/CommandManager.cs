@@ -17,7 +17,7 @@ namespace SpaceSim.Commands
                 typeof (Throttle), typeof(Deploy),
                 typeof(Retrograde), typeof(Prograde), typeof(AutoLand),
                 typeof(Cant), typeof (Pitch), typeof (RelativePitch),
-                typeof(Roll), typeof(Yaw)
+                typeof(Roll), typeof(Yaw), typeof(Post)
             });
         }
 
@@ -86,6 +86,10 @@ namespace SpaceSim.Commands
                     else if (contract is Yaw)
                     {
                         commands.Add(new YawCommand(contract as Yaw));
+                    }
+                    else if (contract is Post)
+                    {
+                        commands.Add(new PostCommand(contract as Post));
                     }
                 }
 

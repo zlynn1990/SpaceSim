@@ -1,20 +1,70 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Post">
+    <StartTime>10</StartTime>
+    <Duration>5</Duration>
+    <Message>Rolling to inverted for positive gravity turn to orbit</Message>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>10</StartTime>
     <Duration>140</Duration>
-    <TargetOrientation>-165</TargetOrientation>
+    <TargetOrientation>-160</TargetOrientation>
   </Command>
   <Command xsi:type="Roll">
     <StartTime>10</StartTime>
     <Duration>10</Duration>
     <TargetOrientation>180</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>15</StartTime>
+    <Duration>5</Duration>
+    <Message>... not necessary for orbit, but would improve the view of the Earth for the crew</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>30</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 2X for initial ascent</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>60</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 1</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>65</StartTime>
+    <Duration>5</Duration>
+    <Message>Maximum aerodynamic pressure</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>83</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 2</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>103</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 3</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>118</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 4 and half the launch mass has been burnt</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>143</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 6</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>150</StartTime>
+    <Duration>5</Duration>
+    <Message>Reducing update speed to 1X for staging</Message>
+  </Command>
   <Command xsi:type="Stage">
-    <StartTime>156</StartTime>
+    <StartTime>167.5</StartTime>
   </Command>
  <Command xsi:type="Ignition">
-    <StartTime>159</StartTime>
+    <StartTime>173</StartTime>
     <Duration>0.1</Duration>
     <Throttle>100</Throttle>
     <EngineIds>
@@ -30,17 +80,37 @@
     </EngineIds>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>160</StartTime>
+    <StartTime>180</StartTime>
     <Duration>30</Duration>
-    <TargetOrientation>-175</TargetOrientation>
+    <TargetOrientation>-170</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
-    <StartTime>190</StartTime>
+    <StartTime>210</StartTime>
     <Duration>70</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>223</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 10</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>230</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 8X for ascent to orbit</Message>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>280</StartTime>
+    <Duration>130</Duration>
     <TargetOrientation>-185</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>303</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 15</Message>
+  </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>260</StartTime>
+    <StartTime>320</StartTime>
     <Duration>0.5</Duration>
     <EngineIds>
       <int>6</int>
@@ -48,27 +118,47 @@
       <int>8</int>
     </EngineIds>
   </Command>
-  <Command xsi:type="Pitch">
-    <StartTime>260</StartTime>
-    <Duration>130</Duration>
-    <TargetOrientation>-190</TargetOrientation>
+  <Command xsi:type="Post">
+    <StartTime>371</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 20</Message>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>300</StartTime>
-    <Duration>80</Duration>
-    <TargetThrottle>60</TargetThrottle>
+    <StartTime>400</StartTime>
+    <Duration>26</Duration>
+    <TargetThrottle>82</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>387.5</StartTime>
+    <StartTime>426</StartTime>
     <Duration>0.5</Duration>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>430</StartTime>
+    <Duration>5</Duration>
+    <Message>Note that although apogee is about 280 kms, we have not yet acheived orbit</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>435</StartTime>
+    <Duration>5</Duration>
+    <Message>... the perigee can be increased by a short circularisation burn at apogee</Message>
+  </Command>
   <Command xsi:type="Prograde">
-    <StartTime>390</StartTime>
+    <StartTime>460</StartTime>
     <Duration>8000</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>570</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 100X for cruise to circularisation burn</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>2000</StartTime>
+    <Duration>100</Duration>
+    <Message>Decreasing update speed for the circularisation burn</Message>
+  </Command>
   <Command xsi:type="Ignition">
-    <StartTime>2600</StartTime>
+    <StartTime>2190</StartTime>
     <Duration>0.1</Duration>
     <Throttle>30</Throttle>
     <EngineIds>
@@ -81,8 +171,13 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>2605.5</StartTime>
+    <StartTime>2195</StartTime>
     <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>2200</StartTime>
+    <Duration>5</Duration>
+    <Message>Circularised orbit to roughly 300 x 300 kms</Message>
   </Command>
 
 </ArrayOfCommand>

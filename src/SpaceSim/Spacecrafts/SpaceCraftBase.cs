@@ -10,6 +10,7 @@ using SpaceSim.Engines;
 using SpaceSim.Orbits;
 using SpaceSim.Particles;
 using SpaceSim.Physics;
+using SpaceSim.Properties;
 using SpaceSim.SolarSystem;
 using VectorMath;
 
@@ -640,8 +641,13 @@ namespace SpaceSim.Spacecrafts
                     if (!double.IsNaN(skinFrictionTerm))
                         dragTerm += skinFrictionTerm;
 
-                    double liftTerm = liftCoefficient * TotalLiftArea() * Math.Cos(Roll);
-                    double turnTerm = liftCoefficient * TotalLiftArea() * Math.Sin(Roll);
+                    double liftTerm = liftCoefficient * TotalLiftArea();
+                    double turnTerm = 0;
+                    if (Settings.Default.UseTheTurnForce)
+                    {
+                        turnTerm = liftTerm * Math.Sin(Roll);
+                        liftTerm *= Math.Cos(Roll);
+                    }
 
                     // Form Drag ( Fd = 0.5pv^2dA )
                     // Skin friction ( Fs = 0.5CfpV^2S )
@@ -656,8 +662,8 @@ namespace SpaceSim.Spacecrafts
                     double alpha = GetAlpha();
                     double halfPi = Math.PI / 2;
                     bool isRetrograde = alpha > halfPi || alpha < -halfPi;
-
-                    if (isRetrograde)
+                    
+                    if (Settings.Default.UseTheTurnForce && isRetrograde)
                     {
                         AccelerationL.X -= accelerationLift.Y;
                         AccelerationL.Y += accelerationLift.X;
@@ -668,19 +674,22 @@ namespace SpaceSim.Spacecrafts
                         AccelerationL.Y -= accelerationLift.X;
                     }
 
-                    if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
+                    if (Settings.Default.WriteCsv)
                     {
-                        string filename = MissionName + ".csv";
-
-                        if (!File.Exists(filename))
+                        if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
                         {
-                            File.AppendAllText(filename, "Altitude, Ma, Acceleration, alpha, roll, HeatingRate, dragTerm, liftTerm, turnTerm\r\n");
-                        }
+                            string filename = MissionName + ".csv";
 
-                        timestamp = DateTime.Now;
-                        string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}, {5:N3}, {6:N3}, {7:N3}, {8:N3}\r\n",
-                            altitude / 1000, MachNumber * 10, GetRelativeAcceleration().Length() * 10, alpha * MathHelper.RadiansToDegrees, Roll * MathHelper.RadiansToDegrees, HeatingRate / 100000, dragTerm/10, liftTerm/10, turnTerm/10);
-                        File.AppendAllText(filename, contents);
+                            if (!File.Exists(filename))
+                            {
+                                File.AppendAllText(filename, "Altitude, Ma, Acceleration, alpha, roll, HeatingRate, dragTerm, liftTerm, turnTerm\r\n");
+                            }
+
+                            timestamp = DateTime.Now;
+                            string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}, {5:N3}, {6:N3}, {7:N3}, {8:N3}\r\n",
+                                altitude / 1000, MachNumber * 10, GetRelativeAcceleration().Length() * 10, alpha * MathHelper.RadiansToDegrees, Roll * MathHelper.RadiansToDegrees, HeatingRate / 100000, dragTerm / 10, liftTerm / 10, turnTerm / 10);
+                            File.AppendAllText(filename, contents);
+                        }
                     }
                 }
             }

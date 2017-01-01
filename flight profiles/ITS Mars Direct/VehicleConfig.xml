@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <VehicleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <VehicleType>ITS Mars Direct</VehicleType>
-  <PayloadMass>200000</PayloadMass>
+  <PayloadMass>350000</PayloadMass>
   <PropellantMass>100000</PropellantMass>
 </VehicleConfig>

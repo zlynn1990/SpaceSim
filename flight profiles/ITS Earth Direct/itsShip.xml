@@ -11,6 +11,62 @@
     <TargetOrientation>-123</TargetOrientation>
   </Command>
 
+  <Command xsi:type="Post">
+    <StartTime>0</StartTime>
+    <Duration>5</Duration>
+    <Message>In this simulation alpha is initially 60° to limit acceleration to 3Gs ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>6</StartTime>
+    <Duration>5</Duration>
+    <Message>... as the ship descends lift will gradually increase ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>12</StartTime>
+    <Duration>5</Duration>
+    <Message>... until the ship levels out at an altitude of about 60kms.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>19</StartTime>
+    <Duration>5</Duration>
+    <Message>Unless lift can then be reduced, the ship will 'bounce' back to space.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>26</StartTime>
+    <Duration>5</Duration>
+    <Message>One way to reduce lift, but still maintain drag is to bank the ship ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>34</StartTime>
+    <Duration>5</Duration>
+    <Message>... and perform wide sweeping turns, still keeping alpha near 60°.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>41</StartTime>
+    <Duration>5</Duration>
+    <Message>The first two turns are performed above orbital velocity, so some negative lift is required</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>47</StartTime>
+    <Duration>5</Duration>
+    <Message>... and can be acheived by banking at 126° to port, and then 115° to starboard.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>54</StartTime>
+    <Duration>5</Duration>
+    <Message>The next four turns are below orbital velocity, banking at 80, 60, 50 and 40° ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>60</StartTime>
+    <Duration>5</Duration>
+    <Message>... until velocity is so much reduced, that banking is no longer required.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>67</StartTime>
+    <Duration>5</Duration>
+    <Message>Finally, the ship performs a retro-propulsive landing, not unlike Falcon 9.</Message>
+  </Command>
+
   <Command xsi:type="Roll">
     <StartTime>80</StartTime>
     <Duration>10</Duration>
@@ -20,6 +76,26 @@
     <StartTime>80</StartTime>
     <Duration>80</Duration>
     <TargetOrientation>-118</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>90</StartTime>
+    <Duration>5</Duration>
+    <Message>As the ship begins to slow, the apogee steadily drops below 50,000kms.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>100</StartTime>
+    <Duration>5</Duration>
+    <Message>Now is the point of maximum thermal stress</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>120</StartTime>
+    <Duration>5</Duration>
+    <Message>... and now is the point of both maximum dynamic pressure and G force.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>145</StartTime>
+    <Duration>5</Duration>
+    <Message>Just prior to the next roll reversal, the apogee will drop below 20,000kms.</Message>
   </Command>
 
   <Command xsi:type="Roll">
@@ -33,6 +109,27 @@
     <TargetOrientation>-120</TargetOrientation>
   </Command>
   
+  <Command xsi:type="Post">
+    <StartTime>190</StartTime>
+    <Duration>5</Duration>
+    <Message>The apogee has now dropped below 8,000kms.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>200</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 8X for a minute.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>270</StartTime>
+    <Duration>5</Duration>
+    <Message>The ship is now travelling at less than 8km/s ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>276</StartTime>
+    <Duration>5</Duration>
+    <Message>... and will soon have insufficient velocity to complete an aerocapture back to Earth orbit.</Message>
+  </Command>
+  
   <Command xsi:type="Roll">
     <StartTime>300</StartTime>
     <Duration>10</Duration>
@@ -42,6 +139,17 @@
     <StartTime>300</StartTime>
     <Duration>120</Duration>
     <TargetOrientation>-120</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="Post">
+    <StartTime>315</StartTime>
+    <Duration>5</Duration>
+    <Message>From this point on, lift/drag needs to be maintained by gradually reducing alpha.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>321</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 8X for the next four turns.</Message>
   </Command>
 
   <Command xsi:type="Roll">
@@ -86,6 +194,22 @@
     <StartTime>780</StartTime>
     <Duration>300</Duration>
     <TargetOrientation>-135</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="Post">
+    <StartTime>800</StartTime>
+    <Duration>5</Duration>
+    <Message>From this point on, the ship will be generating as much lift as possible ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>806</StartTime>
+    <Duration>5</Duration>
+    <Message>... in order to prolong the glide for as long as possible ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>812</StartTime>
+    <Duration>5</Duration>
+    <Message>... and save fuel for the retropropulsion and landing burns.</Message>
   </Command>
   
   <Command xsi:type="Retrograde">
@@ -133,10 +257,10 @@
   <Command xsi:type="Throttle">
     <StartTime>1163</StartTime>
     <Duration>5</Duration>
-    <TargetThrottle>25</TargetThrottle>
+    <TargetThrottle>28</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>1173</StartTime>
+    <StartTime>1176.5</StartTime>
     <Duration>0.5</Duration>
   </Command>
   

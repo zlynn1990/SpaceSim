@@ -6,6 +6,7 @@ using SpaceSim.Engines;
 using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
+using System.IO;
 
 namespace SpaceSim.Spacecrafts.ITS
 {
@@ -21,6 +22,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
         public override double LiftingSurfaceArea { get { return Width * Height; } }
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
+        DateTime timestamp = DateTime.Now;
 
         public override double LiftCoefficient
         {
@@ -47,7 +49,7 @@ namespace SpaceSim.Spacecrafts.ITS
             get
             {
                 // A = 2πrh + πr2
-                return 2 * Math.PI * (Width / 2) * Height + FrontalArea;
+                return 2 * Math.PI * (Width / 2) * Height + Math.PI * Math.Pow(Width / 2, 2);
             }
         }
 
@@ -92,7 +94,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
         private SpriteSheet _spriteSheet;
 
-        public ITSBooster(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 6078138)
+        public ITSBooster(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 6700000)
             : base(craftDirectory, position, velocity, 0, propellantMass, "Textures/itsBooster.png")
         {
             StageOffset = new DVector2(0, 59.5);
@@ -136,7 +138,20 @@ namespace SpaceSim.Spacecrafts.ITS
 
             graphics.ResetTransform();
 
-            //Debug.WriteLine(string.Format("spriteIndex={0}", spriteIndex));
+            if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
+            {
+                string filename = MissionName + ".csv";
+
+                if (!File.Exists(filename))
+                {
+                    File.AppendAllText(filename, "Ma, FormDragCoefficient, SkinFrictionCoefficient, LiftCoefficient, rollAngle\r\n");
+                }
+
+                timestamp = DateTime.Now;
+                string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}\r\n",
+                    MachNumber, FormDragCoefficient, SkinFrictionCoefficient, LiftCoefficient, rollAngle);
+                File.AppendAllText(filename, contents);
+            }
         }
     }
 }

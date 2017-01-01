@@ -18,6 +18,7 @@ using SpaceSim.Drawing;
 using SpaceSim.Gauges;
 using SpaceSim.Orbits;
 using SpaceSim.Physics;
+using SpaceSim.Properties;
 using SpaceSim.SolarSystem;
 using SpaceSim.SolarSystem.Moons;
 using SpaceSim.SolarSystem.Planets;
@@ -77,6 +78,9 @@ namespace SpaceSim
 
         private bool _isPaused;
         private double _totalElapsedSeconds;
+
+        int _bmIndex = 0;
+        DateTime now = DateTime.Now;
 
         public MainWindow()
         {
@@ -143,8 +147,14 @@ namespace SpaceSim
                 //RenderUtils.ScreenWidth = 1920;
                 //RenderUtils.ScreenHeight = 1080;
 
+                //RenderUtils.ScreenWidth = 1600;
+                //RenderUtils.ScreenHeight = 900;
+
                 RenderUtils.ScreenWidth = 1280;
                 RenderUtils.ScreenHeight = 720;
+
+                //RenderUtils.ScreenWidth = 960;
+                //RenderUtils.ScreenHeight = 540;
 
                 //RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth - 200;
                 //RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight - 100;
@@ -199,7 +209,8 @@ namespace SpaceSim
             ResolveMassiveBodyParents();
 
             // Simulate the planets out to May 2018 with a 6000 second time step
-            OrbitHelper.SimulateToTime(_massiveBodies, new DateTime(2018, 5, 1), 300);
+            //OrbitHelper.SimulateToTime(_massiveBodies, new DateTime(2018, 5, 1), 300);
+            OrbitHelper.SimulateToTime(_massiveBodies, new DateTime(2018, 8, 1), 300);
 
             _spaceCrafts = new List<ISpaceCraft>();
 
@@ -239,7 +250,7 @@ namespace SpaceSim
             _structures = new List<StructureBase>
             {
                 itsMount,
-                strongback,
+                //strongback,
                 //asds
             };
 
@@ -643,7 +654,6 @@ namespace SpaceSim
                 {
                     structure.RenderGdi(graphics, cameraBounds);
                 }
-
             }
 
             // Draw all GUI elements (higher quality)
@@ -726,7 +736,7 @@ namespace SpaceSim
                     graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 595);
                 }
 
-                graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 80, 5);
+                graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 160, 5);
             }
         }
 
@@ -741,7 +751,19 @@ namespace SpaceSim
 
                 _backBuffer.WritePixels(source, bmpData.Scan0, RenderUtils.ScreenArea * 4, RenderUtils.ScreenWidth * 4);
 
+                if (Settings.Default.WriteBitmaps)
+                {
+                    TimeSpan elapsed = DateTime.Now - now;
+                    if (elapsed.Milliseconds >= 40)
+                    {
+                        now = DateTime.Now;
+                        string bitmap = Path.Combine(".\\Bitmaps", string.Format("{0:D6}.png", _bmIndex++));
+                        _imageBitmap.Save(bitmap, ImageFormat.Png);
+                    }
+                }
+
                 _imageBitmap.UnlockBits(bmpData);
+
 
             }), DispatcherPriority.Render, null);
         }

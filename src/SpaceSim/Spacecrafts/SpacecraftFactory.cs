@@ -202,7 +202,7 @@ namespace SpaceSim.Spacecrafts
         public static List<ISpaceCraft> BuildAutoLandingTest(IMassiveBody planet, VehicleConfig payload, string craftDirectory)
         {
             var f9 = new F9S1(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 7000),
-                              planet.Velocity + new DVector2(-400, 400), 3500);
+                planet.Velocity + new DVector2(-400, 400), 3500);
 
             return new List<ISpaceCraft>
             {
@@ -213,7 +213,7 @@ namespace SpaceSim.Spacecrafts
         private static List<ISpaceCraft> BuildITSCrew(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset=0)
         {
             var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
-                                  planet.Velocity + new DVector2(-400, 0), vehicle.PayloadMass);
+                planet.Velocity + new DVector2(-400, 0), vehicle.PayloadMass, vehicle.PropellantMass);
 
             var booster = new ITSBooster(craftDirectory, DVector2.Zero, DVector2.Zero);
 
