@@ -757,6 +757,8 @@ namespace SpaceSim
                     if (elapsed.Milliseconds >= 40)
                     {
                         now = DateTime.Now;
+                        if (!Directory.Exists(".\\Bitmaps"))
+                            Directory.CreateDirectory(".\\Bitmaps");
                         string bitmap = Path.Combine(".\\Bitmaps", string.Format("{0:D6}.png", _bmIndex++));
                         _imageBitmap.Save(bitmap, ImageFormat.Png);
                     }

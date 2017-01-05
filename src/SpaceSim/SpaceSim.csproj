@@ -188,6 +188,7 @@
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
     <Compile Include="Spacecrafts\ITS\ITSBooster.cs" />
     <Compile Include="Spacecrafts\ITS\ITSShip.cs" />
+    <Compile Include="Spacecrafts\ITS\ITSTanker.cs" />
     <Compile Include="Spacecrafts\RedDragon\RedDragon.cs" />
     <Compile Include="Spacecrafts\SpaceCraftBase.cs" />
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
@@ -313,6 +314,9 @@
     <Content Include="Textures\itsMount.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Textures\itsTanker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Textures\itsShip.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

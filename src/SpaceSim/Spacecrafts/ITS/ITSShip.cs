@@ -147,6 +147,41 @@ namespace SpaceSim.Spacecrafts.ITS
             // Normalize the angle to [0,360]
             int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
 
+            int heatingRate = Math.Min((int)this.HeatingRate, 2000000);
+            if (heatingRate > 100000)
+            {
+                Random rnd = new Random();
+                float noise = (float)rnd.NextDouble();
+                float width = screenBounds.Width / (3 + noise);
+                float height = screenBounds.Height / (18 + noise);
+                RectangleF plasmaRect = screenBounds;
+                plasmaRect.Inflate(new SizeF(width, height));
+
+                int alpha = Math.Min(heatingRate / 7800, 255);
+                int red = alpha;
+                int green = Math.Max(red - 128, 0) * 2;
+                int blue = 0;
+                Color glow = Color.FromArgb(alpha, red, green, blue);
+
+                float penWidth = width / 12;
+                Pen glowPen = new Pen(glow, penWidth);
+                glowPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                glowPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+                graphics.DrawArc(glowPen, plasmaRect, 220, 100);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.75), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, 200, 140);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.5), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, 180, 180);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.25), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, 160, 220);
+            }
+
             // Index into the sprite
             int ships = _spriteSheet.Cols * _spriteSheet.Rows;
             int spriteIndex = (rollAngle * ships) / 360;

@@ -52,6 +52,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildAutoLandingTest(planet, vehicle, craftDirectory);
                 case "ITS Crew Launch":
                     return BuildITSCrew(planet, vehicle, craftDirectory, offset);
+                case "ITS Tanker SSTO":
+                    return BuildITSTanker(planet, vehicle, craftDirectory, offset);
                 case "ITS Earth EDL":
                     return BuildItsEarthEDL(planet, vehicle, craftDirectory, offset);
                 case "ITS Earth Aerocapture":
@@ -223,6 +225,17 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 ship, booster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildITSTanker(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        {
+            var tanker = new ITSTanker(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
+                planet.Velocity + new DVector2(-400, 0), vehicle.PayloadMass, vehicle.PropellantMass);
+
+            return new List<ISpaceCraft>
+            {
+                tanker
             };
         }
 
