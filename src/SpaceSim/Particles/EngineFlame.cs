@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using SpaceSim.Drawing;
 using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Particles
 {
-    class EngineFlame
+    class EngineFlame : ParticleSystem
     {
-        private Particle[] _particles;
-
-        private Queue<int> _availableParticles;
-
         private Random _random;
-
-        private Color _color;
 
         private double _particleRate;
         private double _minSpread;
@@ -25,21 +17,10 @@ namespace SpaceSim.Particles
 
         public EngineFlame(int seed, Color color, int maxParticles, double particleRate,
                            double minSpread, double maxSpread, double maxAge, double angle = 0)
+            :base(maxParticles, color)
         {
             _random = new Random(seed);
 
-            _particles = new Particle[maxParticles];
-
-            _availableParticles = new Queue<int>(maxParticles);
-
-            for (int i =0; i < maxParticles; i++)
-            {
-                _particles[i] = new Particle();
-
-                _availableParticles.Enqueue(i);
-            }
-
-            _color = color;
             _particleRate = particleRate;
             _minSpread = minSpread;
             _maxSpread = maxSpread;
@@ -97,42 +78,6 @@ namespace SpaceSim.Particles
                     }
                 }
             }
-        }
-
-        public void Draw(Graphics graphics, RectangleD cameraBounds)
-        {
-            var particleBounds = new List<RectangleF>();
-
-            float particleScale;
-
-            // Scale particle size with viewport width
-            if (cameraBounds.Width > 1000)
-            {
-                particleScale = 1;
-            }
-            else
-            {
-                particleScale = (float)(1.22e-6 * cameraBounds.Width * cameraBounds.Width - 4.8e-3 * cameraBounds.Width + 4.4);
-            }
-
-            float halfParticleScale = particleScale * 0.5f;
-
-            foreach (Particle particle in _particles)
-            {
-                if (particle.IsActive)
-                {
-                    if (cameraBounds.Contains(particle.Position))
-                    {
-                        PointF localPoint = RenderUtils.WorldToScreen(particle.Position, cameraBounds);
-
-                        particleBounds.Add(new RectangleF(localPoint.X - halfParticleScale,
-                                                          localPoint.Y - halfParticleScale,
-                                                          particleScale, particleScale));
-                    }
-                }
-            }
-
-            RenderUtils.DrawRectangles(graphics, particleBounds, _color);
         }
     }
 }

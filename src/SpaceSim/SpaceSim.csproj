@@ -128,6 +128,7 @@
     <Compile Include="Drawing\IMapRenderable.cs" />
     <Compile Include="Drawing\LaunchTrail.cs" />
     <Compile Include="Particles\Particle.cs" />
+    <Compile Include="Particles\ParticleSystem.cs" />
     <Compile Include="Particles\ReEntryFlame.cs" />
     <Compile Include="Drawing\RenderUtils.cs" />
     <Compile Include="Engines\EngineBase.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Engines\Merlin1D.cs" />
     <Compile Include="Engines\Merlin1DVac.cs" />
     <Compile Include="Engines\SuperDraco.cs" />
+    <Compile Include="Particles\Smoke.cs" />
     <Compile Include="Physics\Constants.cs" />
     <Compile Include="Drawing\FpsManager.cs" />
     <Compile Include="Gauges\RetrogradeButton.cs" />

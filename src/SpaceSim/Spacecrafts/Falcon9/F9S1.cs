@@ -9,12 +9,12 @@ namespace SpaceSim.Spacecrafts.Falcon9
         public override string CraftName { get { return "F9 S1"; } }
         public override string CommandFileName { get { return "F9S1.xml"; } }
 
-        public override double DryMass { get { return 25600; } }
+        public override double DryMass { get { return 22200; } }
 
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 47.812188; } }
 
-        public F9S1(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 398887)
+        public F9S1(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 411000)
             : base(craftDirectory, position, velocity, propellantMass, "Textures/f9S1.png")
         {
             StageOffset = new DVector2(0, 25.5);

@@ -58,7 +58,7 @@ namespace SpaceSim.Engines
 
         public abstract double Thrust(double ispMultiplier);
 
-        public abstract double MassFlowRate();
+        public abstract double MassFlowRate(double ispMultiplier);
 
         public abstract IEngine Clone();
 

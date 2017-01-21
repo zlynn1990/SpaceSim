@@ -18,7 +18,7 @@ namespace SpaceSim.Engines
         void AdjustCant(double targetAngle);
 
         double Thrust(double ispMultiplier);
-        double MassFlowRate();
+        double MassFlowRate(double ispMultiplier);
 
         IEngine Clone();
 

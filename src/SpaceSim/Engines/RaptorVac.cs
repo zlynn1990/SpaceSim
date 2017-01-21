@@ -17,7 +17,7 @@ namespace SpaceSim.Engines
             return 3500000 * Throttle * 0.01;
         }
 
-        public override double MassFlowRate()
+        public override double MassFlowRate(double ispMultiplier)
         {
             return 933 * Throttle * 0.01;
         }
