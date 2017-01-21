@@ -136,25 +136,17 @@ namespace SpaceSim
                 WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
 
-                //RenderUtils.ScreenWidth = 1688;
-                //RenderUtils.ScreenHeight = 950;
+                RenderUtils.ScreenWidth = 1600;
+                RenderUtils.ScreenHeight = 900;
 
-                RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
-                RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
+                //RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
+                //RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
             }
             else
             {
-                //RenderUtils.ScreenWidth = 1920;
-                //RenderUtils.ScreenHeight = 1080;
+                RenderUtils.ScreenWidth = 1600;
+                RenderUtils.ScreenHeight = 900;
 
-                //RenderUtils.ScreenWidth = 1600;
-                //RenderUtils.ScreenHeight = 900;
-
-                RenderUtils.ScreenWidth = 1280;
-                RenderUtils.ScreenHeight = 720;
-
-                //RenderUtils.ScreenWidth = 960;
-                //RenderUtils.ScreenHeight = 540;
 
                 //RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth - 200;
                 //RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight - 100;
@@ -231,11 +223,11 @@ namespace SpaceSim
             }
 
             // Start at nearly -Math.Pi / 2
-            var itsMount = new ITSMount(-1.570795, -69, earth);
-            var strongback = new Strongback(-1.5708048, -32, earth);
+            //var itsMount = new ITSMount(-1.570795, -69, earth);
+            var strongback = new Strongback(-1.5707953, -32, earth);
 
             // Start downrange at ~300km
-            //var asds = new ASDS(-1.8303485, 26, earth);
+            var asds = new ASDS(-1.629594, 1.5, earth);
 
             _gravitationalBodies = new List<IGravitationalBody>
             {
@@ -249,9 +241,9 @@ namespace SpaceSim
 
             _structures = new List<StructureBase>
             {
-                itsMount,
-                //strongback,
-                //asds
+                //itsMount,
+                strongback,
+                asds
             };
 
             // Target the spacecraft
@@ -643,16 +635,16 @@ namespace SpaceSim
                     massiveBody.RenderGdi(graphics, cameraBounds);
                 }
 
-                // Draw spacecraft
-                foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
-                {
-                    spaceCraft.RenderGdi(graphics, cameraBounds);
-                }
-
                 // Draw structures
                 foreach (StructureBase structure in _structures)
                 {
                     structure.RenderGdi(graphics, cameraBounds);
+                }
+
+                // Draw spacecraft
+                foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
+                {
+                    spaceCraft.RenderGdi(graphics, cameraBounds);
                 }
             }
 
@@ -699,8 +691,8 @@ namespace SpaceSim
 
                 if (!(target is Sun))
                 {
-                    graphics.DrawString("Apogee: " + UnitDisplay.Distance(target.Apogee), font, brush, 5, 455);
-                    graphics.DrawString("Perigee: " + UnitDisplay.Distance(target.Perigee), font, brush, 5, 485);
+                    graphics.DrawString("Apogee: " + UnitDisplay.Distance(target.Apogee), font, brush, 5, 435);
+                    graphics.DrawString("Perigee: " + UnitDisplay.Distance(target.Perigee), font, brush, 5, 465);
                 }
 
                 graphics.DrawString("Mass: " + UnitDisplay.Mass(target.Mass), font, brush, 5, 290);
@@ -719,24 +711,22 @@ namespace SpaceSim
 
                     DVector2 dragForce = targetSpaceCraft.AccelerationD * targetSpaceCraft.Mass;
                     DVector2 liftForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass * Math.Cos(targetSpaceCraft.Roll);
-                    DVector2 turnForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass * Math.Sin(targetSpaceCraft.Roll);
 
                     graphics.DrawString("Drag: " + UnitDisplay.Force(dragForce.Length()), font, brush, 5, 350);
                     graphics.DrawString("Lift: " + UnitDisplay.Force(liftForce.Length()), font, brush, 5, 380);
-                    graphics.DrawString("Turn: " + UnitDisplay.Force(turnForce.Length()), font, brush, 5, 410);
 
                     double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(altitude);
 
-                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 535);
+                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 520);
 
                     double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
 
-                    graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 565);
+                    graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 550);
 
-                    graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 595);
+                    graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 580);
                 }
 
-                graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 160, 5);
+                graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 80, 5);
             }
         }
 

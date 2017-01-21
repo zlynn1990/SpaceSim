@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
+using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
 
@@ -98,6 +99,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         private Bitmap _drawingBuffer;
         private Bitmap _sootTexture;
 
+        private Smoke _engineSmoke;
+
         private double _sootRatio;
 
         protected F9S1Base(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, double finOffset = -16.3)
@@ -120,6 +123,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             // Initialized 'soot' texture and allocate the drawing buffer
             _sootTexture = new Bitmap(sootTexturePath);
             _drawingBuffer = new Bitmap(_sootTexture.Width, _sootTexture.Height);
+
+            _engineSmoke = new Smoke(1000, Color.FromArgb(100, 100, 100, 100));
         }
 
         public override void DeployGridFins()
@@ -136,6 +141,22 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             {
                 landingLeg.Deploy();
             }
+        }
+
+        public override void UpdateAnimations(TimeStep timeStep)
+        {
+            DVector2 retrogradeVelocity = GetRelativeVelocity();
+            retrogradeVelocity.Negate();
+
+            DVector2 engineBase = Position - DVector2.FromAngle(Pitch) * Height * 0.5;
+
+            double altitude = GetRelativeAltitude();
+
+            double atmosphericDensity = GravitationalParent.GetAtmosphericDensity(altitude);
+
+            _engineSmoke.Update(timeStep, engineBase, Velocity, retrogradeVelocity, atmosphericDensity, _sootRatio);
+
+            base.UpdateAnimations(timeStep);
         }
 
         public override void Update(double dt)
@@ -155,12 +176,13 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             DVector2 velocity = GetRelativeVelocity();
             double altitude = GetRelativeAltitude();
 
-            velocity.Normalize();
+            DVector2 normalizedVelocity = velocity.Clone();
+            normalizedVelocity.Normalize();
 
             DVector2 rotation = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
 
             // If we are going retro-grade and firing rockets adds soot
-            if (altitude < 70000 && velocity.Dot(rotation) < 0)
+            if (altitude < 70000 && normalizedVelocity.Dot(rotation) < 0 && velocity.Length() > 400)
             {
                 foreach (IEngine engine in Engines)
                 {
@@ -232,6 +254,13 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             {
                 landingLeg.RenderGdi(graphics, cameraBounds);
             }
+        }
+
+        protected override void RenderAbove(Graphics graphics, RectangleD cameraBounds)
+        {
+            base.RenderAbove(graphics, cameraBounds);
+
+            _engineSmoke.Draw(graphics, cameraBounds);
         }
     }
 }

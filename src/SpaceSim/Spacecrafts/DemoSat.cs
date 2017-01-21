@@ -8,7 +8,7 @@ namespace SpaceSim.Spacecrafts
 {
     class DemoSat : SpaceCraftBase
     {
-        public override string CraftName {get { return "Satellite"; }}
+        public override string CraftName { get { return "Iridium-1"; } }
         public override string CommandFileName { get { return "demosat.xml"; } }
 
         public override double Width { get { return 5.10655; } }

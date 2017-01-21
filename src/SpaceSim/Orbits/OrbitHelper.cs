@@ -205,13 +205,13 @@ namespace SpaceSim.Orbits
                     DVector2 atmopshereVelocity = surfaceNormal * rotationalSpeed;
 
                     proxySatellite.ApplyFrameOffset(atmopshereVelocity * offsetFactor * targetDt);
+                }
 
-                    // Return early if the trace goes into a planet
-                    if (altitude <= 0)
-                    {
-                        trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
-                        break;
-                    }
+                // Return early if the trace goes into a planet
+                if (altitude <= 0)
+                {
+                    trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
+                    break;
                 }
 
                 // Determine the correct change overs from orbital to surface proximity

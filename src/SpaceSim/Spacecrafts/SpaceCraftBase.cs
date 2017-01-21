@@ -34,7 +34,7 @@ namespace SpaceSim.Spacecrafts
             {
                 double childMass = Children.Sum(child => child.Mass);
 
-                return childMass + DryMass + PropellantMass;
+                return childMass + DryMass + PayloadMass + PropellantMass;
             }
         }
 
@@ -84,7 +84,7 @@ namespace SpaceSim.Spacecrafts
         public double HeatingRate { get; protected set; }
 
         public abstract double DryMass { get; }
-        public double PayloadMass { get; protected set; }
+        public double PayloadMass { get; set; }
         public double PropellantMass { get; protected set; }
 
         public IEngine[] Engines { get; protected set; }
@@ -138,6 +138,9 @@ namespace SpaceSim.Spacecrafts
 
         protected string MissionName;
 
+        private double _cachedAltitude;
+        private DVector2 _cachedRelativeVelocity;
+
         private double _trailTimer;
         private LaunchTrail _launchTrail;
 
@@ -147,7 +150,6 @@ namespace SpaceSim.Spacecrafts
         private int _onGroundIterations;
 
         private bool _showDisplayVectors;
-        private DateTime start = DateTime.Now, timestamp = DateTime.Now;
 
         protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass,
             double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
@@ -161,6 +163,7 @@ namespace SpaceSim.Spacecrafts
                 Texture = new Bitmap(texturePath);    
             }
 
+            PayloadMass = payloadMass;
             PropellantMass = propellantMass;
 
             EntryFlame = entryFlame;
@@ -168,6 +171,8 @@ namespace SpaceSim.Spacecrafts
             MissionName = craftDirectory.Substring(craftDirectory.LastIndexOf('\\') + 1);
 
             _launchTrail = new LaunchTrail();
+
+            _cachedRelativeVelocity = DVector2.Zero;
         }
 
         public void InitializeController(EventManager eventManager)
@@ -241,7 +246,7 @@ namespace SpaceSim.Spacecrafts
 
                 DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
 
-                _stagingForce = stagingNormal * Mass * 0.005;
+                _stagingForce = stagingNormal * Mass * 0.02;
                 _requiresStaging = true;
             }
         }
@@ -394,50 +399,6 @@ namespace SpaceSim.Spacecrafts
             Children.Remove(child);
         }
 
-        public void UpdateController(double dt)
-        {
-            Controller.Update(dt);
-        }
-
-        public override void FixedUpdate(TimeStep timeStep)
-        {
-            if (Parent == null)
-            {
-                OrbitHelper.TraceSpaceCraft(this, OrbitTrace);   
-            }
-        }
-
-        public virtual void UpdateAnimations(TimeStep timeStep)
-        {
-            // Only use re-entry flames for separated bodies
-            if (EntryFlame != null && Children.Count == 0)
-            {
-                EntryFlame.Update(timeStep, Position, Velocity, Pitch, HeatingRate);
-            }
-
-            foreach (IEngine engine in Engines)
-            {
-                engine.Update(timeStep, IspMultiplier);
-            }
-        }
-
-        public virtual void UpdateChildren(DVector2 position, DVector2 velocity)
-        {
-            var rotationOffset = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
-
-            Position = position - new DVector2(StageOffset.X * rotationOffset.Y + StageOffset.Y * rotationOffset.X,
-                                               -StageOffset.X * rotationOffset.X + StageOffset.Y * rotationOffset.Y);
-            Velocity.X = velocity.X;
-            Velocity.Y = velocity.Y;
-
-            MachNumber = velocity.Length() * 0.0029411764;
-
-            foreach (ISpaceCraft child in Children)
-            {
-                child.UpdateChildren(Position, Velocity);
-            }
-        }
-
         public override void ResetAccelerations()
         {
             AccelerationD = DVector2.Zero;
@@ -452,11 +413,7 @@ namespace SpaceSim.Spacecrafts
         /// </summary>
         public override double GetRelativeAltitude()
         {
-            DVector2 difference = Position - GravitationalParent.Position;
-
-            double totalDistance = difference.Length() - TotalHeight * 0.5;
-
-            return totalDistance - GravitationalParent.SurfaceRadius;
+            return _cachedAltitude;
         }
 
         public override DVector2 GetRelativeAcceleration()
@@ -470,26 +427,7 @@ namespace SpaceSim.Spacecrafts
         /// </summary>
         public override DVector2 GetRelativeVelocity()
         {
-            double altitude = GetRelativeAltitude();
-
-            if (altitude > GravitationalParent.AtmosphereHeight)
-            {
-                return Velocity - GravitationalParent.Velocity;
-            }
-
-            DVector2 difference = GravitationalParent.Position - Position;
-            difference.Normalize();
-
-            var surfaceNormal = new DVector2(-difference.Y, difference.X);
-
-            double altitudeFromCenter = altitude + GravitationalParent.SurfaceRadius;
-
-            // Distance of circumference at this altitude ( c= 2r * pi )
-            double pathCirumference = 2 * Math.PI * altitudeFromCenter;
-
-            double rotationalSpeed = pathCirumference / GravitationalParent.RotationPeriod;
-
-            return Velocity - (GravitationalParent.Velocity + surfaceNormal * rotationalSpeed);
+            return _cachedRelativeVelocity.Clone();
         }
 
         public override double GetRelativePitch()
@@ -564,14 +502,7 @@ namespace SpaceSim.Spacecrafts
 
             DVector2 difference = body.Position - Position;
 
-            double heightOffset = Children.Count > 0 ? TotalHeight - Height*0.5 : Height*0.5;
-
-            double distance = difference.Length() - heightOffset;
-
-            difference.Normalize();
-
-            double altitude = distance - body.SurfaceRadius;
-
+            double heightOffset = Children.Count > 0 ? TotalHeight - Height*0.5 : Height*0.5;                        double distance = difference.Length() - heightOffset;                        difference.Normalize();            double altitude = distance - body.SurfaceRadius;
             // The spacecraft is in the bodies atmopshere
             if (altitude < body.AtmosphereHeight)
             {
@@ -653,11 +584,9 @@ namespace SpaceSim.Spacecrafts
                     // Skin friction ( Fs = 0.5CfpV^2S )
                     DVector2 drag = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * dragTerm);
                     DVector2 lift = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * liftTerm);
-                    DVector2 turn = relativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * turnTerm);
 
                     AccelerationD = drag / Mass;
                     DVector2 accelerationLift = lift / Mass;
-                    DVector2 accelerationTurn = turn / Mass;
 
                     double alpha = GetAlpha();
                     double halfPi = Math.PI / 2;
@@ -672,24 +601,6 @@ namespace SpaceSim.Spacecrafts
                     {
                         AccelerationL.X += accelerationLift.Y;
                         AccelerationL.Y -= accelerationLift.X;
-                    }
-
-                    if (Settings.Default.WriteCsv)
-                    {
-                        if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
-                        {
-                            string filename = MissionName + ".csv";
-
-                            if (!File.Exists(filename))
-                            {
-                                File.AppendAllText(filename, "Altitude, Ma, Acceleration, alpha, roll, HeatingRate, dragTerm, liftTerm, turnTerm\r\n");
-                            }
-
-                            timestamp = DateTime.Now;
-                            string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}, {5:N3}, {6:N3}, {7:N3}, {8:N3}\r\n",
-                                altitude / 1000, MachNumber * 10, GetRelativeAcceleration().Length() * 10, alpha * MathHelper.RadiansToDegrees, Roll * MathHelper.RadiansToDegrees, HeatingRate / 100000, dragTerm / 10, liftTerm / 10, turnTerm / 10);
-                            File.AppendAllText(filename, contents);
-                        }
                     }
                 }
             }
@@ -918,7 +829,7 @@ namespace SpaceSim.Spacecrafts
 
                     Thrust += engine.Thrust(IspMultiplier);
 
-                    PropellantMass = Math.Max(0, PropellantMass - engine.MassFlowRate() * dt);
+                    PropellantMass = Math.Max(0, PropellantMass - engine.MassFlowRate(IspMultiplier) * dt);
                 }
             }
 
@@ -930,11 +841,57 @@ namespace SpaceSim.Spacecrafts
             }
         }
 
+        public void UpdateController(double dt)
+        {
+            Controller.Update(dt);
+        }
+
+        public override void FixedUpdate(TimeStep timeStep)
+        {
+            if (Parent == null)
+            {
+                OrbitHelper.TraceSpaceCraft(this, OrbitTrace);
+            }
+        }
+
+        public virtual void UpdateAnimations(TimeStep timeStep)
+        {
+            // Only use re-entry flames for separated bodies
+            if (EntryFlame != null && Children.Count == 0)
+            {
+                EntryFlame.Update(timeStep, Position, Velocity, Pitch, HeatingRate);
+            }
+
+            foreach (IEngine engine in Engines)
+            {
+                engine.Update(timeStep, IspMultiplier);
+            }
+        }
+
+        public virtual void UpdateChildren(DVector2 position, DVector2 velocity)
+        {
+            var rotationOffset = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
+
+            Position = position - new DVector2(StageOffset.X * rotationOffset.Y + StageOffset.Y * rotationOffset.X,
+                                               -StageOffset.X * rotationOffset.X + StageOffset.Y * rotationOffset.Y);
+            Velocity.X = velocity.X;
+            Velocity.Y = velocity.Y;
+
+            MachNumber = velocity.Length() * 0.0029411764;
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.UpdateChildren(Position, Velocity);
+            }
+        }
+
         /// <summary>
         /// Updates the spacecraft and it's children.
         /// </summary>
         public override void Update(double dt)
         {
+            ComputeCachedProperties();
+
             double altitude = GetRelativeAltitude();
 
             IspMultiplier = GravitationalParent.GetIspMultiplier(altitude);
@@ -984,11 +941,42 @@ namespace SpaceSim.Spacecrafts
                 _trailTimer += dt;
 
                 // Somewhat arbitrary conditions for launch trails
-                if (dt < 0.1666666666 && altitude > 50 && !InOrbit && _trailTimer > 1)
+                if (dt < 0.1666666666 && _cachedAltitude > 50 && !InOrbit && _trailTimer > 1)
                 {
                     _launchTrail.AddPoint(Position, GravitationalParent, Throttle > 0);
                     _trailTimer = 0;
                 }
+            }
+        }
+
+        private void ComputeCachedProperties()
+        {
+            DVector2 difference = GravitationalParent.Position - Position;
+
+            double totalDistance = difference.Length() - TotalHeight * 0.5;
+
+            _cachedAltitude = totalDistance - GravitationalParent.SurfaceRadius;
+
+            double altitude = GetRelativeAltitude();
+
+            if (altitude > GravitationalParent.AtmosphereHeight)
+            {
+                _cachedRelativeVelocity = Velocity - GravitationalParent.Velocity;
+            }
+            else
+            {
+                difference.Normalize();
+
+                var surfaceNormal = new DVector2(-difference.Y, difference.X);
+
+                double altitudeFromCenter = altitude + GravitationalParent.SurfaceRadius;
+
+                // Distance of circumference at this altitude ( c= 2r * pi )
+                double pathCirumference = 2 * Math.PI * altitudeFromCenter;
+
+                double rotationalSpeed = pathCirumference / GravitationalParent.RotationPeriod;
+
+                _cachedRelativeVelocity = Velocity - (GravitationalParent.Velocity + surfaceNormal * rotationalSpeed);   
             }
         }
 

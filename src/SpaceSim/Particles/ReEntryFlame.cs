@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using SpaceSim.Drawing;
 using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Particles
 {
-    class ReEntryFlame
+    class ReEntryFlame : ParticleSystem
     {
-        private Particle[] _particles;
-        private Queue<int> _availableParticles;
-
         private Random _random;
         private double _particleRate;
 
@@ -19,19 +15,9 @@ namespace SpaceSim.Particles
         private double _offsetLength;
 
         public ReEntryFlame(int maxParticles, double particleRate, DVector2 offset)
+            : base(maxParticles, Color.FromArgb(50, 255, 255, 0))
         {
             _random = new Random();
-
-            _particles = new Particle[maxParticles];
-
-            _availableParticles = new Queue<int>(maxParticles);
-
-            for (int i = 0; i < maxParticles; i++)
-            {
-                _particles[i] = new Particle();
-
-                _availableParticles.Enqueue(i);
-            }
 
             _particleRate = particleRate;
 
@@ -91,26 +77,6 @@ namespace SpaceSim.Particles
                     }
                 }
             }
-        }
-
-        public void Draw(Graphics graphics, RectangleD cameraBounds)
-        {
-            var particleBounds = new List<RectangleF>();
-
-            foreach (Particle particle in _particles)
-            {
-                if (particle.IsActive)
-                {
-                    if (cameraBounds.Contains(particle.Position))
-                    {
-                        PointF localPoint = RenderUtils.WorldToScreen(particle.Position, cameraBounds);
-
-                        particleBounds.Add(new RectangleF(localPoint.X - 1.5f, localPoint.Y - 1.5f, 3, 3));
-                    }
-                }
-            }
-
-            RenderUtils.DrawRectangles(graphics, particleBounds, Color.FromArgb(50, 255, 255, 0));
         }
     }
 }

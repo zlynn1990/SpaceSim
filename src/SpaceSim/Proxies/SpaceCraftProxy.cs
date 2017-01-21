@@ -23,21 +23,16 @@ namespace SpaceSim.Proxies
 
         public bool OnGround { get; private set; }
 
-        public override double Mass { get { return _proxy.DryMass + PropellantMass; } }
+        public override double Mass { get { return _proxy.Mass; } }
 
         public double Width { get { return _proxy.Width; }}
         public double Height {get { return _proxy.Height; }}
 
+
         public double HeatingRate { get { return 0; } }
 
-        public double FormDragCoefficient
-        {
-            get
-            {
-                return 1.2;
-            }
-        }
-        public double FrontalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+        public double FormDragCoefficient { get { return _proxy.FormDragCoefficient; } }
+        public double FrontalArea { get { return _proxy.FrontalArea; } }
 
         public double SkinFrictionCoefficient
         {
@@ -51,17 +46,10 @@ namespace SpaceSim.Proxies
             }
         }
 
-        public double ExposedSurfaceArea
-        {
-            get
-            {
-                // A = 2πrh + πr2
-                return 2 * Math.PI * (Width / 2) * Height + FrontalArea;
-            }
-        }
+        public double ExposedSurfaceArea { get { return _proxy.ExposedSurfaceArea; } }
 
-        public double LiftCoefficient { get { return 0.3; } }
-        public double LiftingSurfaceArea { get { return Width * Height; } }
+        public double LiftCoefficient { get { return _proxy.LiftCoefficient; } }
+        public double LiftingSurfaceArea { get { return _proxy.LiftingSurfaceArea; } }
 
         public double PropellantMass { get; private set; }
 
@@ -165,7 +153,11 @@ namespace SpaceSim.Proxies
                     // Drag ( Fd = 0.5pv^2dA )
                     DVector2 dragForce = normalizedRelativeVelocity * (0.5 * atmosphericDensity * velocityMagnitude * dragTerm);
 
-                    AccelerationD = dragForce / Mass;
+                    // Reject insane forces
+                    if (dragForce.Length() < 50000000)
+                    {
+                        AccelerationD = dragForce / Mass;
+                    }
                 }
             }
         }
@@ -217,7 +209,7 @@ namespace SpaceSim.Proxies
 
                     _thrust += engine.Thrust(ispMultiplier);
 
-                    PropellantMass = Math.Max(0, PropellantMass - engine.MassFlowRate() * dt);
+                    PropellantMass = Math.Max(0, PropellantMass - engine.MassFlowRate(ispMultiplier) * dt);
                 }
             }
         }
