@@ -70,13 +70,16 @@ namespace SpaceSim.Orbits
             var proxyParent = new MassiveBodyProxy(DVector2.Zero, DVector2.Zero, parent);
             var proxySatellite = new MassiveBodyProxy(initialPosition, body.Velocity - parent.Velocity, body);
 
-            double orbitalTerminationRadius;
-
-            double orbitalDt = GetOrbitalDt(initialPosition, proxySatellite.Velocity, out orbitalTerminationRadius);
+            double orbitalDt = GetOrbitalDt(initialPosition.Length(), parent.Mass, proxySatellite.Velocity.Length());
 
             trace.Reset(body.Position);
 
-            for (int i=0; i < 300; i++)
+            // Assumes that the parent is (0,0) which will be true in this case
+            double previousAngle = proxySatellite.Position.Angle();
+            double totalAngularDisplacement = 0;
+
+            // Max of 1000 steps, in practice it's 150-200
+            for (int i = 0; i < 1000; i++)
             {
                 proxySatellite.ResetAccelerations();
 
@@ -84,22 +87,19 @@ namespace SpaceSim.Orbits
 
                 proxySatellite.Update(orbitalDt);
 
-                double altitude = proxyParent.GetRelativeHeight(proxySatellite.Position);
+                double currentAngle = proxySatellite.Position.Angle();
 
-                // Check expensive termination conditions after half of the iterations
-                if (i > 150)
+                totalAngularDisplacement += DeltaAngle(currentAngle, previousAngle);
+
+                // Made a full orbit
+                if (totalAngularDisplacement > Math.PI * 2)
                 {
-                    DVector2 offsetVector = proxySatellite.Position - initialPosition;
-
-                    double distanceFromStart = offsetVector.Length();
-
-                    // Terminate and add the end point
-                    if (distanceFromStart < orbitalTerminationRadius)
-                    {
-                        trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
-                        break;
-                    }
+                    break;
                 }
+
+                previousAngle = currentAngle;
+
+                double altitude = proxyParent.GetRelativeHeight(proxySatellite.Position);
 
                 trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
             }
@@ -131,7 +131,6 @@ namespace SpaceSim.Orbits
             double orbitalDt = 0;
 
             bool isOrbiting;
-            double orbitalTerminationRadius = 0;
 
             double altitude = proxyParent.GetRelativeHeight(proxySatellite.Position);
             double proximityAltitude = proxyParent.SurfaceRadius * 0.15;
@@ -152,14 +151,18 @@ namespace SpaceSim.Orbits
 
                 isOrbiting = true;
 
-                orbitalDt = GetOrbitalDt(initialPosition, proxySatellite.Velocity, out orbitalTerminationRadius);
+                orbitalDt = GetOrbitalDt(initialPosition.Length(), parent.Mass, proxySatellite.Velocity.Length());
 
                 targetDt = orbitalDt;
             }
 
+            // Assumes that the parent is (0,0) which will be true in this case
+            double previousAngle = proxySatellite.Position.Angle();
+            double totalAngularDisplacement = 0;
+
             trace.Reset(satellite.Position - shipOffset);
 
-            // Simulate 300 orbital steps, more for proximity
+            // Update steps based on orbit vs atmosphere
             for (int step = 0; step < stepCount; step++)
             {
                 proxySatellite.ResetAccelerations();
@@ -168,6 +171,18 @@ namespace SpaceSim.Orbits
                 proxySatellite.ResolveAtmopsherics(proxyParent);
 
                 proxySatellite.Update(targetDt);
+
+                double currentAngle = proxySatellite.Position.Angle();
+
+                totalAngularDisplacement += DeltaAngle(currentAngle, previousAngle);
+
+                // Made a full orbit
+                if (totalAngularDisplacement > Math.PI * 2)
+                {
+                    break;
+                }
+
+                previousAngle = currentAngle;
 
                 altitude = proxyParent.GetRelativeHeight(proxySatellite.Position);
 
@@ -236,7 +251,7 @@ namespace SpaceSim.Orbits
                 {
                     if (altitude > proximityAltitude)
                     {
-                        orbitalDt = GetOrbitalDt(proxySatellite.Position, proxySatellite.Velocity, out orbitalTerminationRadius);
+                        orbitalDt = GetOrbitalDt(proxySatellite.Position.Length(), parent.Mass, proxySatellite.Velocity.Length());
 
                         targetDt = MathHelper.Lerp(targetDt, orbitalDt, 0.1);
 
@@ -252,38 +267,22 @@ namespace SpaceSim.Orbits
                     }
                 }
 
-                // Check expensive termination conditions after half of the iterations
-                if (isOrbiting && step > 100)
-                {
-                    DVector2 offsetVector = proxySatellite.Position - initialPosition;
-
-                    double distanceFromStart = offsetVector.Length();
-
-                    // Terminate and add the end point
-                    if (distanceFromStart < orbitalTerminationRadius)
-                    {
-                        trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
-                        break;
-                    }
-                }
-
                 trace.AddPoint(proxySatellite.Position + parent.Position, altitude);
             }
         }
 
-        // Finds the orbtial delta time step by assuming 200 points along the oribtal cirumference
-        private static double GetOrbitalDt(DVector2 positon, DVector2 velocity, out double terminationRadius)
+        // Finds the orbtial delta time step by assuming 300 points along the oribtal cirumference
+        private static double GetOrbitalDt(double distance, double parentMass, double velocity)
         {
-            double orbitalAltitude = positon.Length();
+            double circularVelocity = Math.Sqrt((Constants.GravitationConstant * parentMass) / distance);
 
-            double approximateOrbitDiameter = orbitalAltitude * 2 * Math.PI;
+            double velocityRatio = velocity / circularVelocity;
 
-            // Terminate the trace if it comes within 1/100 of starting point
-            terminationRadius = approximateOrbitDiameter * 0.01;
+            double approximateOrbitDiameter = distance * 2 * Math.PI;
 
-            double approximateOrbitPeriod = approximateOrbitDiameter / velocity.Length();
+            double approximateOrbitPeriod = approximateOrbitDiameter / velocity;
 
-            return approximateOrbitPeriod * 0.005;
+            return Math.Max(approximateOrbitPeriod * 0.0033 * velocityRatio, 125);
         }
 
         private static double GetProximityDt(double altitude, double proxityAltitude)
@@ -291,6 +290,23 @@ namespace SpaceSim.Orbits
             double altitudeRatio = altitude / proxityAltitude;
 
             return Math.Max(altitudeRatio * 15, 1);
+        }
+
+        private static double DeltaAngle(double angle1, double angle2)
+        {
+            double difference = angle2 - angle1;
+
+            while (difference < -Constants.PiOverTwo)
+            {
+                difference += Math.PI;
+            }
+
+            while (difference > Constants.PiOverTwo)
+            {
+                difference -= Math.PI;
+            }
+
+            return Math.Abs(difference);
         }
     }
 }
