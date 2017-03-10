@@ -24,6 +24,20 @@ namespace SpaceSim.Controllers
             }
         }
 
+        // Finds the next upcoming burn time, zero if none are avaiable
+        public double NextBurnTime()
+        {
+            foreach (CommandBase command in _queuedCommands)
+            {
+                if (command is IgnitionCommand)
+                {
+                    return command.StartTime;
+                }
+            }
+
+            return 0;
+        }
+
         public override void Update(double dt)
         {
             base.Update(dt);
