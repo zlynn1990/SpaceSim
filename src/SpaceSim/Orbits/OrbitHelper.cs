@@ -92,7 +92,7 @@ namespace SpaceSim.Orbits
                 totalAngularDisplacement += DeltaAngle(currentAngle, previousAngle);
 
                 // Made a full orbit
-                if (totalAngularDisplacement > Math.PI * 2)
+                if (totalAngularDisplacement > Constants.TwoPi)
                 {
                     break;
                 }
@@ -177,7 +177,7 @@ namespace SpaceSim.Orbits
                 totalAngularDisplacement += DeltaAngle(currentAngle, previousAngle);
 
                 // Made a full orbit
-                if (totalAngularDisplacement > Math.PI * 2)
+                if (totalAngularDisplacement > Constants.TwoPi)
                 {
                     break;
                 }
@@ -212,8 +212,8 @@ namespace SpaceSim.Orbits
 
                     double altitudeFromCenter = altitude + proxyParent.SurfaceRadius;
 
-                    // Distance of circumference at this altitude ( c= 2r * pi )
-                    double pathCirumference = 2 * Math.PI * altitudeFromCenter;
+                    // Distance of circumference at this altitude ( c= r * 2pi )
+                    double pathCirumference = Constants.TwoPi * altitudeFromCenter;
 
                     double rotationalSpeed = pathCirumference / parent.RotationPeriod;
 
@@ -278,7 +278,7 @@ namespace SpaceSim.Orbits
 
             double velocityRatio = velocity / circularVelocity;
 
-            double approximateOrbitDiameter = distance * 2 * Math.PI;
+            double approximateOrbitDiameter = distance * Constants.TwoPi;
 
             double approximateOrbitPeriod = approximateOrbitDiameter / velocity;
 

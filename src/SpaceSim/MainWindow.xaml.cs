@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Cloo;
 using OpenCLWrapper;
+using SpaceSim.Controllers;
 using SpaceSim.Drawing;
 using SpaceSim.Gauges;
 using SpaceSim.Orbits;
@@ -51,6 +52,7 @@ namespace SpaceSim
 
         private int _timeStepIndex;
         private List<TimeStep> _timeSteps;
+        private bool _userUpdatedTimesteps;
 
         private OpenCLProxy _clProxy;
         private GpuClear _gpuClear;
@@ -94,32 +96,8 @@ namespace SpaceSim
             _camera = new Camera(_gravitationalBodies[_targetIndex], 0.3);
             //_camera = new Camera(_gravitationalBodies[_targetIndex], 500000000);
 
-            _timeStepIndex = 4;
-
-            _timeSteps = new List<TimeStep>
-            {
-                new TimeStep {Multiplier = 0.01, UpdateLoops = 1, Dt = 0.000166666667},
-                new TimeStep {Multiplier = 0.1, UpdateLoops = 1, Dt = 0.001666667},
-                new TimeStep {Multiplier = 0.25, UpdateLoops = 2, Dt = 0.00208333333333333333333333333333},
-                new TimeStep {Multiplier = 0.5, UpdateLoops = 2, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 1, UpdateLoops = 4, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 2, UpdateLoops = 8, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 4, UpdateLoops = 16, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 8, UpdateLoops = 32, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 16, UpdateLoops = 64, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 32, UpdateLoops = 128, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 100, UpdateLoops = 256, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 500, UpdateLoops = 100, Dt = 0.0833333333},
-                new TimeStep {Multiplier = 1000, UpdateLoops = 200, Dt = 0.0833333333},
-                new TimeStep {Multiplier = 2000, UpdateLoops = 200, Dt = 0.1666666666},
-                new TimeStep {Multiplier = 5000, UpdateLoops = 500, Dt = 0.1666666666},
-                new TimeStep {Multiplier = 10000, UpdateLoops = 1000, Dt = 0.1666666666},
-                new TimeStep {Multiplier = 50000, UpdateLoops = 1000, Dt = 0.8333333333333},
-                new TimeStep {Multiplier = 100000, UpdateLoops = 2000, Dt = 0.8333333333333},
-                new TimeStep {Multiplier = 1000000, UpdateLoops = 2000, Dt = 8.333333333333},
-                new TimeStep {Multiplier = 5000000, UpdateLoops = 2000, Dt = 41.66666666666},
-                new TimeStep {Multiplier = 20000000, UpdateLoops = 2000, Dt = 166.66666666664},
-            };
+            _timeStepIndex = TimeStep.RealTimeIndex;
+            _timeSteps = TimeStep.Defaults();
 
             _isPaused = true;
             _isActive = true;
@@ -146,7 +124,6 @@ namespace SpaceSim
             {
                 RenderUtils.ScreenWidth = 1600;
                 RenderUtils.ScreenHeight = 900;
-
 
                 //RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth - 200;
                 //RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight - 100;
@@ -200,17 +177,12 @@ namespace SpaceSim
 
             ResolveMassiveBodyParents();
 
-            // Simulate the planets out to May 2018 with a 6000 second time step
-            //OrbitHelper.SimulateToTime(_massiveBodies, new DateTime(2018, 5, 1), 300);
-            OrbitHelper.SimulateToTime(_massiveBodies, new DateTime(2018, 8, 1), 300);
-
             _spaceCrafts = new List<ISpaceCraft>();
 
             for (int i = 0; i < ProfileDirectories.Count; i++)
             {
                 string profileDirectory = ProfileDirectories[i];
 
-                //List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(mars, profileDirectory, i * 30);
                 List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(earth, profileDirectory, i * -60);
 
                 _spaceCrafts.AddRange(spaceCraft);
@@ -223,7 +195,6 @@ namespace SpaceSim
             }
 
             // Start at nearly -Math.Pi / 2
-            //var itsMount = new ITSMount(-1.570795, -69, earth);
             var strongback = new Strongback(-1.5707953, -32, earth);
 
             // Start downrange at ~300km
@@ -265,14 +236,7 @@ namespace SpaceSim
 
                 _clProxy = new OpenCLProxy(useSoftware);
 
-                if (Directory.Exists("Kernels"))
-                {
-                    KernelManager.GenerateKernels("Kernels");
-                }
-                else
-                {
-                    KernelManager.GenerateKernels("../../Kernels");
-                }
+                KernelManager.GenerateKernels(Directory.Exists("Kernels") ? "Kernels" : "../../Kernels");
 
                 _clProxy.CreateIntArgument("resX", RenderUtils.ScreenWidth);
                 _clProxy.CreateIntArgument("resY", RenderUtils.ScreenHeight);
@@ -338,11 +302,13 @@ namespace SpaceSim
             if (e.Key == Key.OemComma && _timeStepIndex > 0)
             {
                 _timeStepIndex--;
+                _userUpdatedTimesteps = true;
             }
 
             if (e.Key == Key.OemPeriod && _timeStepIndex < _timeSteps.Count - 1)
             {
                 _timeStepIndex++;
+                _userUpdatedTimesteps = true;
             }
 
             if (e.Key == Key.OemCloseBrackets && !_isPaused)
@@ -424,6 +390,38 @@ namespace SpaceSim
             }
         }
 
+        // Adjusts the timestep to ensure burns aren't missed at normal speed
+        private void AdjustSpeedForBurns(TimeStep timeStep)
+        {
+            // Nothing to do already realtime
+            if (_timeStepIndex <= TimeStep.RealTimeIndex) return;
+
+            // Don't override the user for steps < 100
+            if (timeStep.Multiplier <= 100 && _userUpdatedTimesteps) return;
+
+            // Future timestep accounting for 5 iterations + padding to be safe
+            double stepEnd = timeStep.Dt * timeStep.UpdateLoops * 5 + _totalElapsedSeconds + 2;
+
+            foreach (ISpaceCraft spaceCraft in _spaceCrafts)
+            {
+                var controller = spaceCraft.Controller as CommandController;
+
+                // Spacecraft uses command controller
+                if (controller != null)
+                {
+                    double nextBurn = controller.NextBurnTime();
+
+                    if (nextBurn > 0 && nextBurn < stepEnd)
+                    {
+                        _timeStepIndex--;
+                        _userUpdatedTimesteps = false;
+
+                        break;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Main game loop - update - draw - sleep
         /// </summary>
@@ -452,6 +450,7 @@ namespace SpaceSim
         {
             ResolveMassiveBodyParents();
             ResolveSpaceCraftParents();
+            AdjustSpeedForBurns(timeStep);
 
             double targetDt = (_isPaused) ? 0 : timeStep.Dt;
 
