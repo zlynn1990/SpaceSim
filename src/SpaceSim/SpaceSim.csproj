@@ -117,6 +117,7 @@
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
     <Compile Include="Drawing\SpriteSheet.cs" />
+    <Compile Include="Drawing\TextDisplay.cs" />
     <Compile Include="Engines\Raptor40.cs" />
     <Compile Include="Engines\Raptor50.cs" />
     <Compile Include="Engines\RaptorVac.cs" />

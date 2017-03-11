@@ -81,6 +81,8 @@ namespace SpaceSim
         private bool _isPaused;
         private double _totalElapsedSeconds;
 
+        private TextDisplay _textDisplay;
+
         int _bmIndex = 0;
         DateTime now = DateTime.Now;
 
@@ -155,6 +157,8 @@ namespace SpaceSim
                 new ThrustGauge(new Point(RenderUtils.ScreenWidth - 195, RenderUtils.ScreenHeight - 75)),
                 new Scale(new Point(75, RenderUtils.ScreenHeight - 25))
             };
+
+            _textDisplay = new TextDisplay();
         }
 
         private void LoadSolarSystem()
@@ -396,8 +400,8 @@ namespace SpaceSim
             // Nothing to do already realtime
             if (_timeStepIndex <= TimeStep.RealTimeIndex) return;
 
-            // Don't override the user for steps < 100
-            if (timeStep.Multiplier <= 100 && _userUpdatedTimesteps) return;
+            // Don't override the user for steps < real time
+            if (_timeStepIndex <= TimeStep.MaxRealTimeIndex && _userUpdatedTimesteps) return;
 
             // Future timestep accounting for 5 iterations + padding to be safe
             double stepEnd = timeStep.Dt * timeStep.UpdateLoops * 5 + _totalElapsedSeconds + 2;
@@ -562,8 +566,7 @@ namespace SpaceSim
         /// </summary>
         private unsafe void DrawFrame(TimeStep timeStep, FpsManager frameTimer)
         {
-            var font = new Font("Verdana Bold", 14);
-            var brush = new SolidBrush(Color.White);
+            _textDisplay.Clear();
 
             RectangleD cameraBounds = _camera.GetBounds();
 
@@ -674,58 +677,89 @@ namespace SpaceSim
                 int elapsedYears = elapsedTime.Days / 365;
                 int elapsedDays = elapsedTime.Days % 365;
 
-                graphics.DrawString("Elapsed Time: " + string.Format("Y: {0} D: {1} H: {2} M: {3} S: {4}", elapsedYears, elapsedDays, elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds), font, brush, 5, 5);
-                graphics.DrawString("Update Speed: " + timeStep.Multiplier + " X", font, brush, 5, 35);
+                // Main timing display
+                _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
+                {
+                    "Elapsed Time: " + string.Format("Y: {0} D: {1} H: {2} M: {3} S: {4}", elapsedYears, elapsedDays, elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds),
+                    "Update Speed: " + timeStep.Multiplier
+                });
 
-                double altitude = target.GetRelativeAltitude();
+                // Target display
+                _textDisplay.AddTextBlock(StringAlignment.Center, string.Format("Target: {0}", target));
 
-                graphics.DrawString("Altitude: " + UnitDisplay.Distance(altitude), font, brush, 5, 90);
-
-                graphics.DrawString(string.Format("Target: {0}", target), font, brush, RenderUtils.ScreenWidth / 2.0f, 5, new StringFormat { Alignment = StringAlignment.Center });
+                // FPS
+                _textDisplay.AddTextBlock(StringAlignment.Far, "FPS: " + frameTimer.CurrentFps);
 
                 double targetVelocity = target.GetRelativeVelocity().Length();
 
-                graphics.DrawString("Relative Speed: " + UnitDisplay.Speed(targetVelocity, false), font, brush, 5, 175);
-                graphics.DrawString("Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()), font, brush, 5, 205);
+                // Info for altitude
+                var altitudeInfo = new List<string> { "Altitude: " + UnitDisplay.Distance(target.GetRelativeAltitude()) };
 
-                if (!(target is Sun))
-                {
-                    graphics.DrawString("Apogee: " + UnitDisplay.Distance(target.Apogee), font, brush, 5, 435);
-                    graphics.DrawString("Perigee: " + UnitDisplay.Distance(target.Perigee), font, brush, 5, 465);
-                }
-
-                graphics.DrawString("Mass: " + UnitDisplay.Mass(target.Mass), font, brush, 5, 290);
-
+                // Add downrange if spacecraft exists
                 if (targetSpaceCraft != null)
                 {
-                    double alpha = targetSpaceCraft.GetAlpha();
-
-                    graphics.DrawString("Angle of Attack: " + UnitDisplay.Degrees(alpha), font, brush, 5, 235);
-
                     double downrangeDistance = targetSpaceCraft.GetDownrangeDistance(_structures[0].Position);
 
-                    graphics.DrawString("Downrange: " + UnitDisplay.Distance(downrangeDistance), font, brush, 5, 120);
+                    altitudeInfo.Add("Downrange: " + UnitDisplay.Distance(downrangeDistance));
+                }
 
-                    graphics.DrawString("Thrust: " + UnitDisplay.Force(targetSpaceCraft.Thrust), font, brush, 5, 320);
+                _textDisplay.AddTextBlock(StringAlignment.Near, altitudeInfo);
 
+                // Info for speed / acceleration
+                var movementInfo = new List<string>
+                {
+                    "Relative Speed: " + UnitDisplay.Speed(targetVelocity, false),
+                    "Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()),
+                };
+
+                // Add angle of attack if it exists
+                if (targetSpaceCraft != null)
+                {
+                    movementInfo.Add("Angle of Attack: " + UnitDisplay.Degrees(targetSpaceCraft.GetAlpha()));
+                }
+
+                _textDisplay.AddTextBlock(StringAlignment.Near, movementInfo);
+
+                var forceInfo = new List<string> { "Mass: " + UnitDisplay.Mass(target.Mass) };
+
+                // Add additional forces
+                if (targetSpaceCraft != null)
+                {
                     DVector2 dragForce = targetSpaceCraft.AccelerationD * targetSpaceCraft.Mass;
                     DVector2 liftForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass * Math.Cos(targetSpaceCraft.Roll);
 
-                    graphics.DrawString("Drag: " + UnitDisplay.Force(dragForce.Length()), font, brush, 5, 350);
-                    graphics.DrawString("Lift: " + UnitDisplay.Force(liftForce.Length()), font, brush, 5, 380);
-
-                    double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(altitude);
-
-                    graphics.DrawString("Air Density: " + UnitDisplay.Density(density), font, brush, 5, 520);
-
-                    double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
-
-                    graphics.DrawString("Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure), font, brush, 5, 550);
-
-                    graphics.DrawString("Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate), font, brush, 5, 580);
+                    forceInfo.Add("Thrust: " + UnitDisplay.Force(targetSpaceCraft.Thrust));
+                    forceInfo.Add("Drag: " + UnitDisplay.Force(dragForce.Length()));
+                    forceInfo.Add("Lift: " + UnitDisplay.Force(liftForce.Length()));
                 }
 
-                graphics.DrawString("FPS: " + frameTimer.CurrentFps, font, brush, RenderUtils.ScreenWidth - 80, 5);
+                _textDisplay.AddTextBlock(StringAlignment.Near, forceInfo);
+
+                // Don't show apogee/perigee info for the sun
+                if (!(target is Sun))
+                {
+                    _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
+                    {
+                        "Apogee: " + UnitDisplay.Distance(target.Apogee),
+                        "Perigee: " + UnitDisplay.Distance(target.Perigee)
+                    });
+                }
+
+                // Add atmospheric info if the spaceship is the target
+                if (targetSpaceCraft != null)
+                {
+                    double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(target.GetRelativeAltitude());
+                    double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
+
+                    _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
+                    {
+                        "Air Density: " + UnitDisplay.Density(density),
+                        "Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure),
+                        "Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate)
+                    });
+                }
+
+                _textDisplay.Draw(graphics);
             }
         }
 

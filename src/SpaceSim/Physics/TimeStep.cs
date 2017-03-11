@@ -15,6 +15,11 @@ namespace SpaceSim.Physics
             get { return 4; }
         }
 
+        public static int MaxRealTimeIndex
+        {
+            get { return 10; }
+        }
+
         public static List<TimeStep> Defaults()
         {
             return new List<TimeStep>
@@ -29,17 +34,17 @@ namespace SpaceSim.Physics
                 new TimeStep {Multiplier = 8, UpdateLoops = 32, Dt = 0.00416666666666666666666666666667},
                 new TimeStep {Multiplier = 16, UpdateLoops = 64, Dt = 0.00416666666666666666666666666667},
                 new TimeStep {Multiplier = 32, UpdateLoops = 128, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 100, UpdateLoops = 256, Dt = 0.00416666666666666666666666666667},
-                new TimeStep {Multiplier = 500, UpdateLoops = 100, Dt = 0.0833333333},
-                new TimeStep {Multiplier = 1000, UpdateLoops = 200, Dt = 0.0833333333},
-                new TimeStep {Multiplier = 2000, UpdateLoops = 200, Dt = 0.1666666666},
-                new TimeStep {Multiplier = 5000, UpdateLoops = 500, Dt = 0.1666666666},
-                new TimeStep {Multiplier = 10000, UpdateLoops = 1000, Dt = 0.1666666666},
-                new TimeStep {Multiplier = 50000, UpdateLoops = 1000, Dt = 0.8333333333333},
-                new TimeStep {Multiplier = 100000, UpdateLoops = 2000, Dt = 0.8333333333333},
-                new TimeStep {Multiplier = 1000000, UpdateLoops = 2000, Dt = 8.333333333333},
-                new TimeStep {Multiplier = 5000000, UpdateLoops = 2000, Dt = 41.66666666666},
-                new TimeStep {Multiplier = 20000000, UpdateLoops = 2000, Dt = 166.66666666664},
+                new TimeStep {Multiplier = 100, UpdateLoops = 400, Dt = 0.00416666666666666666666666666667},
+                new TimeStep {Multiplier = 500, UpdateLoops = 400, Dt = 0.02083333333333333333333333333335},
+                new TimeStep {Multiplier = 1000, UpdateLoops = 400, Dt = 0.0416666666666666666666666666667},
+                new TimeStep {Multiplier = 5000, UpdateLoops = 400, Dt = 0.2083333333333333333333333333335},
+                new TimeStep {Multiplier = 20000, UpdateLoops = 400, Dt = 0.833333333333333333333333333334},
+                new TimeStep {Multiplier = 100000, UpdateLoops = 400, Dt = 4.16666666666666666666666666667},
+                new TimeStep {Multiplier = 500000, UpdateLoops = 400, Dt = 20.83333333333333333333333333335},
+                new TimeStep {Multiplier = 2000000, UpdateLoops = 400, Dt = 83.3333333333333333333333333334},
+                new TimeStep {Multiplier = 10000000, UpdateLoops = 400, Dt = 416.666666666666666666666666667},
+                new TimeStep {Multiplier = 50000000, UpdateLoops = 400, Dt = 2083.333333333333333333333333335},
+                new TimeStep {Multiplier = 200000000, UpdateLoops = 400, Dt = 8333.33333333333333333333333334},
             };
         }
     }
