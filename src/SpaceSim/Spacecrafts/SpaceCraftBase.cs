@@ -142,7 +142,7 @@ namespace SpaceSim.Spacecrafts
         private DVector2 _cachedRelativeVelocity;
 
         private double _trailTimer;
-        private LaunchTrail _launchTrail;
+        private Dictionary<string, LaunchTrail> _launchTrails;
 
         private bool _requiresStaging;
         private DVector2 _stagingForce;
@@ -170,7 +170,7 @@ namespace SpaceSim.Spacecrafts
 
             MissionName = craftDirectory.Substring(craftDirectory.LastIndexOf('\\') + 1);
 
-            _launchTrail = new LaunchTrail();
+            _launchTrails = new Dictionary<string, LaunchTrail>();
 
             _cachedRelativeVelocity = DVector2.Zero;
         }
@@ -502,7 +502,14 @@ namespace SpaceSim.Spacecrafts
 
             DVector2 difference = body.Position - Position;
 
-            double heightOffset = Children.Count > 0 ? TotalHeight - Height*0.5 : Height*0.5;                        double distance = difference.Length() - heightOffset;                        difference.Normalize();            double altitude = distance - body.SurfaceRadius;
+            double heightOffset = Children.Count > 0 ? TotalHeight - Height*0.5 : Height*0.5;
+            
+            double distance = difference.Length() - heightOffset;
+            
+            difference.Normalize();
+
+            double altitude = distance - body.SurfaceRadius;
+
             // The spacecraft is in the bodies atmopshere
             if (altitude < body.AtmosphereHeight)
             {
@@ -943,7 +950,14 @@ namespace SpaceSim.Spacecrafts
                 // Somewhat arbitrary conditions for launch trails
                 if (dt < 0.1666666666 && _cachedAltitude > 50 && !InOrbit && _trailTimer > 1)
                 {
-                    _launchTrail.AddPoint(Position, GravitationalParent, Throttle > 0);
+                    string parentName = GravitationalParent.ToString();
+
+                    if (!_launchTrails.ContainsKey(parentName))
+                    {
+                        _launchTrails.Add(parentName, new LaunchTrail());
+                    }
+
+                    _launchTrails[parentName].AddPoint(Position, GravitationalParent, Throttle > 0);
                     _trailTimer = 0;
                 }
             }
@@ -1040,7 +1054,12 @@ namespace SpaceSim.Spacecrafts
             {
                 if (cameraBounds.Width > 1000)
                 {
-                    _launchTrail.Draw(graphics, cameraBounds, GravitationalParent);   
+                    string parentName = GravitationalParent.ToString();
+
+                    if (_launchTrails.ContainsKey(parentName))
+                    {
+                        _launchTrails[parentName].Draw(graphics, cameraBounds, GravitationalParent);  
+                    } 
                 }
 
                 // Don't draw orbit traces on the ground
