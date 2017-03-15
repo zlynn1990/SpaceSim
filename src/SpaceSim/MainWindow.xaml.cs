@@ -181,6 +181,8 @@ namespace SpaceSim
 
             ResolveMassiveBodyParents();
 
+            OrbitHelper.SimulateToTime(_massiveBodies, new DateTime(2018, 12, 17), 300);
+
             _spaceCrafts = new List<ISpaceCraft>();
 
             for (int i = 0; i < ProfileDirectories.Count; i++)

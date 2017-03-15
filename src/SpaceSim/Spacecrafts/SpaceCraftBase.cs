@@ -14,6 +14,8 @@ using SpaceSim.Properties;
 using SpaceSim.SolarSystem;
 using VectorMath;
 
+using System.Reflection;
+
 namespace SpaceSim.Spacecrafts
 {
     abstract class SpaceCraftBase : GravitationalBodyBase, IAerodynamicBody, ISpaceCraft
@@ -48,7 +50,30 @@ namespace SpaceSim.Spacecrafts
 
         public double TotalHeight
         {
-            get { return Height + Children.Sum(spaceCraft => spaceCraft.TotalHeight); }
+            get
+            {
+                double height = Height;
+                foreach (ISpaceCraft child in Children)
+                {
+                    height = GetChildHeight(height, child);
+                }
+                return height;
+            }
+        }
+
+        private static double GetChildHeight(double height, ISpaceCraft spacecraft)
+        {
+            PropertyInfo prop = spacecraft.GetType().GetProperty("GetAeroDynamicProperties");
+            AeroDynamicProperties props = (AeroDynamicProperties)prop.GetValue(spacecraft, null);
+            if (props == AeroDynamicProperties.ExtendsFineness)
+                height += spacecraft.Height;
+
+            foreach (ISpaceCraft child in spacecraft.Children)
+            {
+                height = GetChildHeight(height, child);
+            }
+
+            return height;
         }
 
         /// <summary>

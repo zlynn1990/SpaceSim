@@ -46,6 +46,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildDragonV2Entry(planet, vehicle, craftDirectory);
                 case "RedDragonFH":
                     return BuildRedDragonFH(planet, vehicle, craftDirectory, offset);
+                case "Grey Dragon Flyby":
+                    return BuildGreyDragonFH(planet, vehicle, craftDirectory, offset);
                 case "GenericFH":
                     return BuildFalconHeavy(planet, vehicle, craftDirectory, offset);
                 case "AutoLandingTest":
@@ -121,7 +123,7 @@ namespace SpaceSim.Spacecrafts
 
         private static List<ISpaceCraft> BuildDragonV2Abort(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory)
         {
-            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity, vehicle.PayloadMass);
+            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity, vehicle.PayloadMass, vehicle.PropellantMass);
             var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
             dragon.AddChild(dragonTrunk);
@@ -133,7 +135,7 @@ namespace SpaceSim.Spacecrafts
         private static List<ISpaceCraft> BuildDragonV2Entry(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory)
         {
             var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius*0.75, planet.SurfaceRadius*-0.75),
-                                               planet.Velocity + new DVector2(-6000, -5100), vehicle.PayloadMass);
+                                               planet.Velocity + new DVector2(-6000, -5100), vehicle.PayloadMass, vehicle.PropellantMass);
 
             var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
@@ -198,6 +200,36 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 redDragon, dragonTrunk, fhS2, fhS1, fhLeftBooster, fhRightBooster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildGreyDragonFH(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory, float offset = 0)
+        {
+            var dragon = new GreyDragon.GreyDragon(craftDirectory, planet.Position + new DVector2(offset, -planet.SurfaceRadius),
+                                      planet.Velocity + new DVector2(-400, 0), vehicle.PayloadMass, vehicle.PropellantMass);
+
+            var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            dragon.AddChild(dragonTrunk);
+            dragonTrunk.SetParent(dragon);
+            dragonTrunk.AddChild(fhS2);
+            fhS2.SetParent(dragonTrunk);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                dragon, dragonTrunk, fhS2, fhS1, fhLeftBooster, fhRightBooster
             };
         }
 

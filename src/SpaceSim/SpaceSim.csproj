@@ -188,6 +188,7 @@
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
+    <Compile Include="Spacecrafts\GreyDragon\GreyDragon.cs" />
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
     <Compile Include="Spacecrafts\ITS\ITSBooster.cs" />
     <Compile Include="Spacecrafts\ITS\ITSShip.cs" />
