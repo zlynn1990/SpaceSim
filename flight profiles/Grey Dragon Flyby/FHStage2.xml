@@ -22,11 +22,11 @@
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>3665</StartTime>
-    <Duration>65</Duration>
-    <TargetThrottle>60</TargetThrottle>
+    <Duration>40</Duration>
+    <TargetThrottle>61.75</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>3701.413</StartTime>
+    <StartTime>3705</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Prograde">
