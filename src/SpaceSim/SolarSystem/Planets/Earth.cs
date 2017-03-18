@@ -25,12 +25,12 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double RotationRate
         {
-            get { return -7.2722052166e-6; }
+            get { return -7.2722052166e-5; }
         }
 
         public override double RotationPeriod
         {
-            get { return 864000; }
+            get { return 86400; }
         }
 
         public override Color IconColor { get { return Color.Green; } }

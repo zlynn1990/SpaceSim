@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <VehicleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <VehicleType>Grey Dragon Flyby</VehicleType>
-  <PayloadMass>1500</PayloadMass>
-  <PropellantMass>3500</PropellantMass>
+  <PayloadMass>2000</PayloadMass>
+  <PropellantMass>3000</PropellantMass>
 </VehicleConfig>

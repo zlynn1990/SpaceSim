@@ -14,11 +14,11 @@
     <TargetOrientation>-180</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>194</StartTime>
+    <StartTime>186</StartTime>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>200</StartTime>
-    <Duration>300</Duration>
+    <StartTime>190</StartTime>
+    <Duration>310</Duration>
     <TargetOrientation>-183</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
@@ -46,21 +46,20 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>950456.25</StartTime>
+    <StartTime>950450.5</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>950460</StartTime>
-    <Duration>449540</Duration>
+    <Duration>539940</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>1396800</StartTime>
+    <StartTime>1490400</StartTime>
   </Command>
   <Command xsi:type="Retrograde">
-    <StartTime>1396810</StartTime>
-    <Duration>10000</Duration>
+    <StartTime>1490410</StartTime>
+    <Duration>86400</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
   </Command>
-  
 </ArrayOfCommand>

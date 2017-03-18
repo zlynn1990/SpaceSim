@@ -74,11 +74,11 @@
   </Command>
   <Command xsi:type="Retrograde">
     <StartTime>510</StartTime>
-    <Duration>14</Duration>
+    <Duration>20</Duration>
     <InitialAdjustmentTime>5</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>512.9</StartTime>
+    <StartTime>520.66</StartTime>
     <Duration>0.5</Duration>
     <Throttle>65</Throttle>
     <EngineIds>
@@ -87,10 +87,10 @@
   </Command>
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
-    <StartTime>518.8</StartTime>
+    <StartTime>526.66</StartTime>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>524.8</StartTime>
+    <StartTime>532.66</StartTime>
     <Duration>0.5</Duration>
   </Command>
 </ArrayOfCommand>
