@@ -77,10 +77,9 @@
     <StartTime>500</StartTime>
     <Duration>0.5</Duration>
   </Command>
-  <Command xsi:type="Ignition">
-    <StartTime>579.73</StartTime>
-    <Duration>0.5</Duration>
-    <Throttle>65</Throttle>
+  <Command xsi:type="AutoLand">
+    <StartTime>570</StartTime>
+    <Duration>50</Duration>
     <EngineIds>
       <int>0</int>
       <int>4</int>
@@ -90,9 +89,5 @@
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
     <StartTime>579.73</StartTime>
-  </Command>
-  <Command xsi:type="Shutdown">
-    <StartTime>583</StartTime>
-    <Duration>0.5</Duration>
   </Command>
 </ArrayOfCommand>

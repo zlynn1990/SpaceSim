@@ -38,12 +38,14 @@ namespace SpaceSim.Particles
             // Interpolate between spreads based on ISP
             double spreadMultiplier = (1.0 - ispMultiplier) * _minSpread + ispMultiplier * _maxSpread;
 
+            double throttleMultiplier = Math.Max(throttle, 0.3) * 0.01;
+
             // Add new particles if nessecary
             for (int i = 0; i < particles; i++)
             {
                 if (_availableParticles.Count > 0)
                 {
-                    double velocityFactor = _random.Next(200, 300);
+                    double velocityFactor = _random.Next(200, 300) * throttleMultiplier;
                     double spread = _random.NextDouble() - 0.5;
 
                     DVector2 velocity = DVector2.FromAngle(retrograde + spread * spreadMultiplier);
