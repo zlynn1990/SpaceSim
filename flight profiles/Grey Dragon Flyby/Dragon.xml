@@ -29,11 +29,11 @@
   <Command xsi:type="Stage">
     <StartTime>3760</StartTime>
   </Command>
-  <Command xsi:type="Retrograde">
-    <StartTime>950400</StartTime> <!-- 11 days -->
-    <Duration>60</Duration>
-    <InitialAdjustmentTime>20</InitialAdjustmentTime>
-  </Command>
+	<Command xsi:type="RelativePitch">
+	  <StartTime>950400</StartTime>
+	  <Duration>20</Duration>
+	  <TargetOrientation>-7.3</TargetOrientation>
+	</Command>
   <Command xsi:type="Ignition">
     <StartTime>950430</StartTime>
     <Duration>0.5</Duration>
@@ -53,9 +53,6 @@
     <StartTime>950460</StartTime>
     <Duration>539940</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
-  </Command>
-  <Command xsi:type="Stage">
-    <StartTime>1490400</StartTime>
   </Command>
   <Command xsi:type="Retrograde">
     <StartTime>1490410</StartTime>

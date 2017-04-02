@@ -106,11 +106,13 @@ namespace SpaceSim.Spacecrafts
         }
 
         public double Thrust { get; protected set; }
-        public double HeatingRate { get; protected set; }
+        public virtual double StagingForce { get { return Mass * 0.02; } }
 
         public abstract double DryMass { get; }
         public double PayloadMass { get; set; }
         public double PropellantMass { get; protected set; }
+
+        public double HeatingRate { get; protected set; }
 
         public IEngine[] Engines { get; protected set; }
         public IController Controller { get; protected set; }
@@ -170,7 +172,6 @@ namespace SpaceSim.Spacecrafts
         private Dictionary<string, LaunchTrail> _launchTrails;
 
         private bool _requiresStaging;
-        private DVector2 _stagingForce;
 
         private int _onGroundIterations;
 
@@ -266,12 +267,6 @@ namespace SpaceSim.Spacecrafts
                 Parent.RemoveChild(this);
                 Parent = null;
 
-                // Simulate simple staging mechanism
-                double sAngle = StageOffset.Angle();
-
-                DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
-
-                _stagingForce = stagingNormal * Mass * 0.02;
                 _requiresStaging = true;
             }
         }
@@ -285,6 +280,11 @@ namespace SpaceSim.Spacecrafts
         /// Deploys the grid fins.
         /// </summary>
         public virtual void DeployGridFins() { }
+
+        /// <summary>
+        /// Deploys the parachutes.
+        /// </summary>
+        public virtual void DeployParachutes() { }
 
         /// <summary>
         /// Deploys the landing legs.
@@ -941,7 +941,12 @@ namespace SpaceSim.Spacecrafts
 
                 if (_requiresStaging)
                 {
-                    AccelerationN += _stagingForce;
+                    // Simulate simple staging mechanism
+                    double sAngle = StageOffset.Angle();
+
+                    DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
+
+                    AccelerationN += stagingNormal * StagingForce;
 
                     _requiresStaging = false;
                 }
@@ -973,7 +978,7 @@ namespace SpaceSim.Spacecrafts
                 _trailTimer += dt;
 
                 // Somewhat arbitrary conditions for launch trails
-                if (dt < 0.1666666666 && _cachedAltitude > 50 && !InOrbit && _trailTimer > 1)
+                if (dt < 0.1666666666 && !InOrbit && _cachedAltitude > 50 && _cachedAltitude < GravitationalParent.AtmosphereHeight * 2 && _trailTimer > 1)
                 {
                     string parentName = GravitationalParent.ToString();
 

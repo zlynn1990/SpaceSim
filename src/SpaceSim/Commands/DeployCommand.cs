@@ -34,6 +34,9 @@ namespace SpaceSim.Commands
                 case "Landing Legs":
                     spaceCraft.DeployLandingLegs();
                     break;
+                case "Parachutes":
+                    spaceCraft.DeployParachutes();
+                    break;
                 default:
                     throw new Exception(string.Format("{0} is not a known deployable!", _part));
             }

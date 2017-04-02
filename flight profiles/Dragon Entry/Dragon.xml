@@ -1,31 +1,64 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Command xsi:type="Prograde">
-    <StartTime>1</StartTime>
-	<Duration>220</Duration>
-	<InitialAdjustmentTime>0</InitialAdjustmentTime>
+    <StartTime>5</StartTime>
+	  <Duration>20</Duration>
+	  <InitialAdjustmentTime>20</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>200</StartTime>
+    <StartTime>30</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>40</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-160</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-340</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>55</StartTime>
+    <Duration>25</Duration>
+    <TargetOrientation>-395</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>80</StartTime>
+    <Duration>65</Duration>
+    <TargetOrientation>-390</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>145</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>-340</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>165</StartTime>
+    <Duration>45</Duration>
+    <TargetOrientation>-340</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>210</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>-390</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>230</StartTime>
+    <Duration>190</Duration>
+    <TargetOrientation>-390</TargetOrientation>
   </Command>
   <Command xsi:type="Retrograde">
-    <StartTime>230</StartTime>
-	<Duration>1200</Duration>
-	<InitialAdjustmentTime>30</InitialAdjustmentTime>
+    <StartTime>440</StartTime>
+	  <Duration>200</Duration>
+	  <InitialAdjustmentTime>0.1</InitialAdjustmentTime>
   </Command>
-  <Command xsi:type="Ignition">
-    <StartTime>1170</StartTime>
-    <Duration>0.1</Duration>
-    <Throttle>17</Throttle>
-    <EngineIds>
-      <int>0</int>
-      <int>1</int>
-      <int>2</int>
-      <int>3</int>
-      <int>4</int>
-      <int>5</int>
-      <int>6</int>
-      <int>7</int>
-    </EngineIds>
+  <Command xsi:type="Deploy">
+    <Part>Parachutes</Part>
+    <StartTime>650</StartTime>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Parachutes</Part>
+    <StartTime>770</StartTime>
   </Command>
 </ArrayOfCommand>

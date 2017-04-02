@@ -28,7 +28,7 @@
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>170</StartTime>
-    <Duration>14</Duration>
+    <Duration>12.9</Duration>
     <TargetThrottle>85</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
@@ -50,13 +50,8 @@
       <int>8</int>
     </EngineIds>
   </Command>
-  <!--<Command xsi:type="Throttle">
-    <StartTime>255</StartTime>
-    <Duration>5</Duration>
-    <TargetThrottle>90</TargetThrottle>
-  </Command>-->
   <Command xsi:type="Shutdown">
-    <StartTime>260</StartTime>
+    <StartTime>259.5</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Deploy">
@@ -74,20 +69,18 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>500</StartTime>
+    <StartTime>499.5</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="AutoLand">
-    <StartTime>570</StartTime>
+    <StartTime>573</StartTime>
     <Duration>50</Duration>
     <EngineIds>
-      <int>0</int>
       <int>4</int>
-      <int>8</int>
     </EngineIds>
   </Command>
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
-    <StartTime>579.73</StartTime>
+    <StartTime>584</StartTime>
   </Command>
 </ArrayOfCommand>
