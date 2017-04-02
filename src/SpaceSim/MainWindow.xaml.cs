@@ -12,8 +12,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using System.Xml.Serialization;
 using Cloo;
 using OpenCLWrapper;
+using SpaceSim.Contracts;
 using SpaceSim.Controllers;
 using SpaceSim.Drawing;
 using SpaceSim.Gauges;
@@ -40,7 +42,7 @@ namespace SpaceSim
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static List<string> ProfileDirectories;
+        public static List<string> ProfilePaths;
         public static bool FullScreen;
 
         public static int ClockDelayInSeconds;
@@ -116,19 +118,13 @@ namespace SpaceSim
                 WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
 
-                RenderUtils.ScreenWidth = 1600;
-                RenderUtils.ScreenHeight = 900;
-
-                //RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
-                //RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
+                RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
+                RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
             }
             else
             {
                 RenderUtils.ScreenWidth = 1600;
                 RenderUtils.ScreenHeight = 900;
-
-                //RenderUtils.ScreenWidth = (int)SystemParameters.PrimaryScreenWidth - 200;
-                //RenderUtils.ScreenHeight = (int)SystemParameters.PrimaryScreenHeight - 100;
             }
 
             RenderUtils.ScreenArea = RenderUtils.ScreenWidth * RenderUtils.ScreenHeight;
@@ -140,6 +136,19 @@ namespace SpaceSim
             _backBuffer = new WriteableBitmap(RenderUtils.ScreenWidth, RenderUtils.ScreenHeight, 96, 96, PixelFormats.Bgra32, null);
 
             BackBuffer.Source = _backBuffer;
+        }
+
+        private IMassiveBody LocatePlanet(string planetName)
+        {
+            foreach (IMassiveBody body in _massiveBodies)
+            {
+                if (body.ToString().Equals(planetName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return body;
+                }
+            }
+
+            throw new Exception("Could not find planet: " + planetName);
         }
 
         private void LoadGui()
@@ -181,17 +190,27 @@ namespace SpaceSim
 
             ResolveMassiveBodyParents();
 
-            OrbitHelper.SimulateToTime(_massiveBodies, new DateTime(2018, 12, 17), 300);
-
             _spaceCrafts = new List<ISpaceCraft>();
+            _structures = new List<StructureBase>();
 
-            for (int i = 0; i < ProfileDirectories.Count; i++)
+            MissionConfig primaryMission = MissionConfig.Load(ProfilePaths[0]);
+
+            // Forward simulate the mission if nessecary
+            if (primaryMission.LaunchDate > DateTime.MinValue)
             {
-                string profileDirectory = ProfileDirectories[i];
+                OrbitHelper.SimulateToTime(_massiveBodies, primaryMission.LaunchDate, 300);   
+            }
 
-                List<ISpaceCraft> spaceCraft = SpacecraftFactory.BuildSpaceCraft(earth, profileDirectory, i * -60);
+            // Load missions
+            for (int i = 0; i < ProfilePaths.Count; i++)
+            {
+                MissionConfig missionConfig = MissionConfig.Load(ProfilePaths[i]);
 
-                _spaceCrafts.AddRange(spaceCraft);
+                IMassiveBody targetPlanet = LocatePlanet(missionConfig.ParentPlanet);
+
+                _spaceCrafts.AddRange(SpacecraftFactory.BuildSpaceCraft(targetPlanet, missionConfig, ProfilePaths[i]));
+
+                _structures.AddRange(StructureFactory.Load(targetPlanet, ProfilePaths[i]));
             }
 
             // Initialize the spacecraft controllers
@@ -199,12 +218,6 @@ namespace SpaceSim
             {
                 spaceCraft.InitializeController(_eventManager);
             }
-
-            // Start at nearly -Math.Pi / 2
-            var strongback = new Strongback(-1.5707953, -32, earth);
-
-            // Start downrange at ~300km
-            var asds = new ASDS(-1.629594, 1.5, earth);
 
             _gravitationalBodies = new List<IGravitationalBody>
             {
@@ -215,13 +228,6 @@ namespace SpaceSim
             {
                 _gravitationalBodies.Add(spaceCraft);
             }
-
-            _structures = new List<StructureBase>
-            {
-                //itsMount,
-                strongback,
-                asds
-            };
 
             // Target the spacecraft
             _targetIndex = _gravitationalBodies.IndexOf(_spaceCrafts.FirstOrDefault());
@@ -512,11 +518,11 @@ namespace SpaceSim
                     spaceCraft.UpdateController(targetDt);
                 }
 
-                _camera.Update(targetDt);
-                _eventManager.Update(targetDt);
-
                 _totalElapsedSeconds += targetDt;
             }
+
+            _camera.Update(TimeStep.RealTimeDt);
+            _eventManager.Update(TimeStep.RealTimeDt);
 
             // Fixed update all gravitational bodies
             foreach (IGravitationalBody body in _gravitationalBodies)
@@ -748,18 +754,18 @@ namespace SpaceSim
                 }
 
                 // Add atmospheric info if the spaceship is the target
-                if (targetSpaceCraft != null)
-                {
-                    double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(target.GetRelativeAltitude());
-                    double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
+                //if (targetSpaceCraft != null)
+                //{
+                //    double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(target.GetRelativeAltitude());
+                //    double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
 
-                    _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
-                    {
-                        "Air Density: " + UnitDisplay.Density(density),
-                        "Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure),
-                        "Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate)
-                    });
-                }
+                //    _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
+                //    {
+                //        "Air Density: " + UnitDisplay.Density(density),
+                //        "Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure),
+                //        "Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate)
+                //    });
+                //}
 
                 _textDisplay.Draw(graphics);
             }

@@ -1161,7 +1161,7 @@ namespace SpaceSim.Spacecrafts
 
         public override string ToString()
         {
-            if (MainWindow.ProfileDirectories.Count > 1)
+            if (MainWindow.ProfilePaths.Count > 1)
             {
                 return string.Format("{0} [{1}]", CraftName, MissionName);
             }

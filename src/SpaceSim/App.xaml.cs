@@ -17,9 +17,9 @@ namespace SpaceSim
             SpaceSim.MainWindow.ClockDelayInSeconds = 0;
             SpaceSim.MainWindow.FullScreen = false;
 
-            SpaceSim.MainWindow.ProfileDirectories = new List<string>
+            SpaceSim.MainWindow.ProfilePaths = new List<string>
             {
-                //Path.Combine(profileDirectory, "Iridium NEXT"),
+                Path.Combine(profileDirectory, "Iridium NEXT"),
                 //Path.Combine(profileDirectory, "ITS Crew Launch"),
                 //Path.Combine(profileDirectory, "ITS Tanker SSTO"),
                 //Path.Combine(profileDirectory, "ITS Earth Aerocapture"),
@@ -38,8 +38,14 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "Orbcomm-OG2"),
                 //Path.Combine(profileDirectory, "SES9"),
                 //Path.Combine(profileDirectory, "Thaicom-8"),
-                Path.Combine(profileDirectory, "Grey Dragon Flyby"),
+                //Path.Combine(profileDirectory, "Grey Dragon Flyby"),
             };
+
+            if (SpaceSim.MainWindow.ProfilePaths == null ||
+                SpaceSim.MainWindow.ProfilePaths.Count == 0)
+            {
+                throw new Exception("Must specify at least one mission profile!");
+            }
         }
 
         private string DetectProfileDirectory()
