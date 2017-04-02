@@ -379,7 +379,7 @@ namespace SpaceSim
 
                 foreach (IMassiveBody bodyB in _massiveBodies)
                 {
-                    double massRatio = Math.Pow(spaceCraft.Mass / bodyB.Mass, 0.45);
+                    double massRatio = Math.Pow(spaceCraft.Mass / bodyB.Mass, 0.4);
 
                     DVector2 difference = spaceCraft.Position - bodyB.Position;
 

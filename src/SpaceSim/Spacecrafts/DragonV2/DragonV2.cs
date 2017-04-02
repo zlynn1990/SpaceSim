@@ -17,7 +17,10 @@ namespace SpaceSim.Spacecrafts.DragonV2
 
         public override double DryMass { get { return 4200; } }
 
-        public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
+        public override AeroDynamicProperties GetAeroDynamicProperties
+        {
+            get { return AeroDynamicProperties.ExposedToAirFlow; }
+        }
 
         public override double FormDragCoefficient
         {
@@ -65,7 +68,8 @@ namespace SpaceSim.Spacecrafts.DragonV2
                     baseCd = GetBaseCd(0.6);
                 }
 
-                return  baseCd * Math.Sin(alpha * 2);
+                double alphaCd = baseCd * Math.Sin(alpha * 2);
+                return -alphaCd;
             }
         }
 
@@ -138,7 +142,7 @@ namespace SpaceSim.Spacecrafts.DragonV2
             SetThrottle(100);
         }
 
-        public void DeployParachutes()
+        public override void DeployParachutes()
         {
             if (!_drogueDeployed)
             {
@@ -155,7 +159,7 @@ namespace SpaceSim.Spacecrafts.DragonV2
         {
             if (_drogueDeployed)
             {
-                _parachuteRatio = Math.Min(_parachuteRatio + dt * 0.03, 0.3);
+                _parachuteRatio = Math.Min(_parachuteRatio + dt * 0.03, 0.15);
             }
             else if (_parachuteDeployed)
             {
@@ -163,6 +167,61 @@ namespace SpaceSim.Spacecrafts.DragonV2
             }
 
             base.Update(dt);
+        }
+
+        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        {
+            double drawingRotation = Pitch + Math.PI * 0.5;
+
+            var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
+                screenBounds.Y + screenBounds.Height * 0.5f);
+
+            graphics.TranslateTransform(offset.X, offset.Y);
+
+            float pitchAngle = (float)(drawingRotation * 180 / Math.PI);
+
+            graphics.RotateTransform(pitchAngle);
+            graphics.TranslateTransform(-offset.X, -offset.Y);
+
+            int heatingRate = Math.Min((int)this.HeatingRate, 2000000);
+            if (heatingRate > 100000)
+            {
+                Random rnd = new Random();
+                float noise = (float)rnd.NextDouble();
+                float width = screenBounds.Width / (3 + noise);
+                float height = screenBounds.Height / (18 + noise);
+                RectangleF plasmaRect = screenBounds;
+                plasmaRect.Inflate(screenBounds.Width / 2, screenBounds.Height / 4);
+                plasmaRect.Inflate(new SizeF(width, height));
+
+                int alpha = Math.Min(heatingRate / 7800, 255);
+                int red = alpha;
+                int green = Math.Max(red - 128, 0) * 2;
+                int blue = 0;
+                Color glow = Color.FromArgb(alpha, red, green, blue);
+
+                float penWidth = width / 12;
+                Pen glowPen = new Pen(glow, penWidth);
+                glowPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                glowPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+                graphics.DrawArc(glowPen, plasmaRect, 40, 100);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.75), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, 20, 140);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.5), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, 0, 180);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.25), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, -20, 220);
+            }
+
+            graphics.DrawImage(Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+
+            graphics.ResetTransform();
         }
     }
 }

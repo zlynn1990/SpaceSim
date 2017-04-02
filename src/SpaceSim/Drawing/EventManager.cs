@@ -54,7 +54,11 @@ namespace SpaceSim.Drawing
             {
                 int lastIndex = _eventMessages.Count - 1;
 
-                if (_eventMessages[lastIndex].StartTime + DisplayTime < _elapsedTime)
+                if (_eventMessages.Count > 5)
+                {
+                    _eventMessages.RemoveAt(lastIndex);
+                }
+                else if (_eventMessages[lastIndex].StartTime + DisplayTime < _elapsedTime)
                 {
                     _eventMessages.RemoveAt(lastIndex);
                 }

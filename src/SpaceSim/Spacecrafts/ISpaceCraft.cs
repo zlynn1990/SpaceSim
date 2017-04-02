@@ -24,6 +24,7 @@ namespace SpaceSim.Spacecrafts
 
         double Throttle { get; }
         double Thrust { get; }
+        double StagingForce { get; }
 
         double DryMass { get; }
         double PayloadMass { get; }

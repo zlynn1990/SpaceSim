@@ -20,6 +20,11 @@ namespace SpaceSim.Physics
             get { return 10; }
         }
 
+        public static double RealTimeDt
+        {
+            get { return 0.01666666666666666666666666666667; }
+        }
+
         public static List<TimeStep> Defaults()
         {
             return new List<TimeStep>

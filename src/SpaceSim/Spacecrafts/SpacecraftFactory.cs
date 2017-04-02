@@ -134,8 +134,8 @@ namespace SpaceSim.Spacecrafts
 
         private static List<ISpaceCraft> BuildDragonV2Entry(IMassiveBody planet, VehicleConfig vehicle, string craftDirectory)
         {
-            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius*0.75, planet.SurfaceRadius*-0.75),
-                                               planet.Velocity + new DVector2(-6000, -5100), vehicle.PayloadMass, vehicle.PropellantMass);
+            var dragon = new GreyDragon.GreyDragon(craftDirectory, planet.Position + new DVector2(0, planet.SurfaceRadius + 200000.0),
+                                               planet.Velocity + new DVector2(11000, -1650), vehicle.PayloadMass, vehicle.PropellantMass);
 
             var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 

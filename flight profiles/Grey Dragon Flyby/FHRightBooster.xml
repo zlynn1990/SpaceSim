@@ -41,7 +41,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>213.5</StartTime>
+    <StartTime>212.7</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Retrograde">
@@ -73,14 +73,13 @@
     <TargetOrientation>-120</TargetOrientation>
   </Command>
   <Command xsi:type="Retrograde">
-    <StartTime>510</StartTime>
-    <Duration>23</Duration>
+    <StartTime>505</StartTime>
+    <Duration>25</Duration>
     <InitialAdjustmentTime>5</InitialAdjustmentTime>
   </Command>
-  <Command xsi:type="Ignition">
-    <StartTime>522.73</StartTime>
-    <Duration>0.5</Duration>
-    <Throttle>65</Throttle>
+  <Command xsi:type="AutoLand">
+    <StartTime>515</StartTime>
+    <Duration>100</Duration>
     <EngineIds>
       <int>4</int>
     </EngineIds>
@@ -88,9 +87,5 @@
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
     <StartTime>528.73</StartTime>
-  </Command>
-  <Command xsi:type="Shutdown">
-    <StartTime>534.73</StartTime>
-    <Duration>0.5</Duration>
   </Command>
 </ArrayOfCommand>

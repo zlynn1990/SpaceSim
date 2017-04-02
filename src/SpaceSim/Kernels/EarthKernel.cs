@@ -35,11 +35,11 @@ namespace SpaceSim.Kernels
 
                 if (sunDotProduct < 0)
                 {
-                    sunDotProduct = 0.05f;
+                    sunDotProduct = 0.1f;
                 }
                 else
                 {
-                    sunDotProduct = 0.05f + sunDotProduct * 0.95f;
+                    sunDotProduct = 0.1f + sunDotProduct * 0.9f;
                 }
 
                 if (distance < EARTH_RADIUS)

@@ -10,6 +10,8 @@ namespace SpaceSim.Orbits
 {
     static class OrbitHelper
     {
+        private static double AngularCutoff = Constants.TwoPi - 0.01;
+
         /// <summary>
         /// Converts orbital data from JPL Emphemeris data.
         /// </summary>
@@ -92,7 +94,7 @@ namespace SpaceSim.Orbits
                 totalAngularDisplacement += DeltaAngle(currentAngle, previousAngle);
 
                 // Made a full orbit
-                if (totalAngularDisplacement > Constants.TwoPi)
+                if (totalAngularDisplacement > AngularCutoff)
                 {
                     break;
                 }
@@ -177,7 +179,7 @@ namespace SpaceSim.Orbits
                 totalAngularDisplacement += DeltaAngle(currentAngle, previousAngle);
 
                 // Made a full orbit
-                if (totalAngularDisplacement > Constants.TwoPi)
+                if (totalAngularDisplacement > AngularCutoff)
                 {
                     break;
                 }
