@@ -2,12 +2,15 @@
 
 namespace VectorMath
 {
+    [Serializable]
     public class DVector2
     {
         public static DVector2 Zero { get { return new DVector2(0, 0); } }
 
         public double X;
         public double Y;
+
+        public DVector2() { }
 
         public DVector2(double x, double y)
         {

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<MissionConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VehicleType>GreyDragonFH</VehicleType>
+  <PayloadMass>2000</PayloadMass>
+  <ParentPlanet>Earth</ParentPlanet>
+  <LaunchDate>2018-12-17T00:00:00</LaunchDate>
+</MissionConfig>

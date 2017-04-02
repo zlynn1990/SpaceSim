@@ -103,6 +103,7 @@
     <Compile Include="Contracts\Commands\Prograde.cs" />
     <Compile Include="Contracts\Commands\RelativePitch.cs" />
     <Compile Include="Contracts\Commands\Retrograde.cs" />
+    <Compile Include="Contracts\Commands\Roll.cs" />
     <Compile Include="Contracts\Commands\Shutdown.cs" />
     <Compile Include="Contracts\Commands\Stage.cs" />
     <Compile Include="Contracts\Commands\Throttle.cs" />
@@ -110,9 +111,9 @@
     <Compile Include="Commands\ShutdownCommand.cs" />
     <Compile Include="Commands\StageCommand.cs" />
     <Compile Include="Commands\ThrottleCommand.cs" />
-    <Compile Include="Contracts\VehicleConfig.cs" />
-    <Compile Include="Contracts\Roll.cs" />
-    <Compile Include="Contracts\Yaw.cs" />
+    <Compile Include="Contracts\Commands\Yaw.cs" />
+    <Compile Include="Contracts\MissionConfig.cs" />
+    <Compile Include="Contracts\StructureConfig.cs" />
     <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Structures\StructureBase.cs" />
     <Compile Include="Orbits\OrbitTrace.cs" />
     <Compile Include="Drawing\UnitDisplay.cs" />
+    <Compile Include="Structures\StructureFactory.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
