@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
@@ -8,7 +9,7 @@ namespace SpaceSim.Spacecrafts
 {
     class DemoSat : SpaceCraftBase
     {
-        public override string CraftName { get { return "Iridium-1"; } }
+        public override string CraftName { get { return _craftName; } }
         public override string CommandFileName { get { return "demosat.xml"; } }
 
         public override double Width { get { return 5.10655; } }
@@ -47,11 +48,14 @@ namespace SpaceSim.Spacecrafts
         public override Color IconColor { get { return Color.White; } }
 
         private double _fairingMass;
+        private string _craftName;
 
         public DemoSat(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
             : base(craftDirectory, position, velocity, payloadMass, 0, "Textures/fairing.png")
         {
             _fairingMass = 1750;
+
+            _craftName = new DirectoryInfo(craftDirectory).Name;
 
             Engines = new IEngine[0];
         }
