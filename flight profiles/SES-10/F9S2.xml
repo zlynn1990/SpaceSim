@@ -9,14 +9,14 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>225</StartTime>
+    <StartTime>230</StartTime>
     <Duration>10</Duration>
-    <TargetThrottle>102</TargetThrottle>
+    <TargetThrottle>94</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>290</StartTime>
+    <StartTime>420</StartTime>
     <Duration>10</Duration>
-    <TargetThrottle>100</TargetThrottle>
+    <TargetThrottle>90</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>517</StartTime>
@@ -31,9 +31,9 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>1598</StartTime>
-    <Duration>44</Duration>
-    <TargetThrottle>45</TargetThrottle>
+    <StartTime>1604</StartTime>
+    <Duration>38</Duration>
+    <TargetThrottle>52.5</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>1642</StartTime>

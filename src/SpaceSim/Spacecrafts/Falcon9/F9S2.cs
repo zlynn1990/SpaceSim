@@ -56,7 +56,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
         public override Color IconColor { get { return Color.White; } }
 
         public F9S2(string craftDirectory, DVector2 position, DVector2 velocity, double stageOffset)
-            : base(craftDirectory, position, velocity, 0, 107500, "Textures/fh9S2.png")
+            : base(craftDirectory, position, velocity, 0, 103500, "Textures/fh9S2.png")
         {
             StageOffset = new DVector2(0, stageOffset);
 

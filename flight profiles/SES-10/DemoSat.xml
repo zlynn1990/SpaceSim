@@ -18,7 +18,7 @@
   <Command xsi:type="RelativePitch">
     <StartTime>110</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-162</TargetOrientation>
+    <TargetOrientation>-161</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
     <StartTime>160</StartTime>
@@ -30,7 +30,7 @@
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>170</StartTime>
-    <Duration>55</Duration>
+    <Duration>35</Duration>
     <TargetOrientation>-150</TargetOrientation>
   </Command>
   <Command xsi:type="Deploy">
@@ -44,18 +44,23 @@
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>235</StartTime>
-    <Duration>115</Duration>
-    <TargetOrientation>-158</TargetOrientation>
+    <Duration>65</Duration>
+    <TargetOrientation>-162</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>300</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-166</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>350</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-183</TargetOrientation>
+    <TargetOrientation>-173</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>400</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-177</TargetOrientation>
+    <TargetOrientation>-185</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>450</StartTime>

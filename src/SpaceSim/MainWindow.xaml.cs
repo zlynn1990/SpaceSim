@@ -754,18 +754,18 @@ namespace SpaceSim
                 }
 
                 // Add atmospheric info if the spaceship is the target
-                //if (targetSpaceCraft != null)
-                //{
-                //    double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(target.GetRelativeAltitude());
-                //    double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
+                if (targetSpaceCraft != null)
+                {
+                    double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(target.GetRelativeAltitude());
+                    double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
 
-                //    _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
-                //    {
-                //        "Air Density: " + UnitDisplay.Density(density),
-                //        "Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure),
-                //        "Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate)
-                //    });
-                //}
+                    _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
+                    {
+                        "Air Density: " + UnitDisplay.Density(density),
+                        "Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure),
+                        "Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate)
+                    });
+                }
 
                 _textDisplay.Draw(graphics);
             }
