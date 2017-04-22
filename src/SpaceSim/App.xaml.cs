@@ -19,7 +19,8 @@ namespace SpaceSim
 
             SpaceSim.MainWindow.ProfilePaths = new List<string>
             {
-                Path.Combine(profileDirectory, "Iridium NEXT"),
+                Path.Combine(profileDirectory, "SES-10"),
+                //Path.Combine(profileDirectory, "Iridium NEXT"),
                 //Path.Combine(profileDirectory, "ITS Crew Launch"),
                 //Path.Combine(profileDirectory, "ITS Tanker SSTO"),
                 //Path.Combine(profileDirectory, "ITS Earth Aerocapture"),
