@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ArrayOfStructureConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <StructureConfig>
+    <Type>Strongback</Type>
+	<DownrangeDistance>0</DownrangeDistance>
+	<HeightOffset>-25</HeightOffset>
+  </StructureConfig>
+  <StructureConfig>
+    <Type>ServiceTower</Type>
+	<DownrangeDistance>-40</DownrangeDistance>
+	<HeightOffset>-43</HeightOffset>
+  </StructureConfig>
+</ArrayOfStructureConfig>

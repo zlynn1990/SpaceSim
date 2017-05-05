@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-105</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-118</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>100</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-125</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>141</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>140</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-130</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>150</StartTime>
+    <Duration>55</Duration>
+    <TargetOrientation>-150</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>205</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>205</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-159</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>215</StartTime>
+    <Duration>65</Duration>
+    <TargetOrientation>-162</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>280</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-166</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>330</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-173</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>380</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-185</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>430</StartTime>
+    <Duration>30</Duration>
+    <TargetOrientation>-185</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>555</StartTime>
+    <Duration>3000</Duration>
+    <InitialAdjustmentTime>25</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>1920</StartTime>
+  </Command>
+</ArrayOfCommand>

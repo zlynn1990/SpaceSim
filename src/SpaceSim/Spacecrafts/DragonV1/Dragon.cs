@@ -91,7 +91,7 @@ namespace SpaceSim.Spacecrafts.DragonV1
         private double _parachuteRatio;
 
         public Dragon(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
-            : base(craftDirectory, position, velocity, payloadMass, 1290, "Textures/dragon.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
+            : base(craftDirectory, position, velocity, payloadMass, 1290, "Dragon/V1/capsule.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
         {
             Engines = new IEngine[0];
         }

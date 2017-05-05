@@ -11,7 +11,7 @@ namespace SpaceSim.Structures
         public override Color IconColor { get { return Color.White; } }
 
         public ServiceTower(double surfaceAngle, double height, IMassiveBody parent)
-            : base(surfaceAngle, height, "Textures/servicetower.png", parent)
+            : base(surfaceAngle, height, "Textures/Structures/servicetower.png", parent)
         {
         }
     }

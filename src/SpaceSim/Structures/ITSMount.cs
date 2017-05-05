@@ -11,7 +11,7 @@ namespace SpaceSim.Structures
         public override Color IconColor { get { return Color.White; } }
 
         public ITSMount(double surfaceAngle, double height, IMassiveBody parent)
-            : base(surfaceAngle, height, "Textures/itsMount.png", parent)
+            : base(surfaceAngle, height, "Textures/Structures/itsMount.png", parent)
         {
         }
     }

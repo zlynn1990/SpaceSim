@@ -95,7 +95,7 @@ namespace SpaceSim.Spacecrafts.ITS
         private SpriteSheet _spriteSheet;
 
         public ITSBooster(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 6700000)
-            : base(craftDirectory, position, velocity, 0, propellantMass, "Textures/itsBooster.png")
+            : base(craftDirectory, position, velocity, 0, propellantMass, "Its/booster.png")
         {
             StageOffset = new DVector2(0, 59.5);
 
@@ -110,7 +110,7 @@ namespace SpaceSim.Spacecrafts.ITS
                 Engines[i] = new Raptor40(i, this, offset);
             }
 
-            _spriteSheet = new SpriteSheet("Textures/itsBooster.png", 4, 12);
+            _spriteSheet = new SpriteSheet("Textures/Spacecraft/Its/booster.png", 4, 12);
         }
 
         protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)

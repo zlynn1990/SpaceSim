@@ -186,7 +186,14 @@ namespace SpaceSim.Spacecrafts
 
             if (!string.IsNullOrEmpty(texturePath))
             {
-                Texture = new Bitmap(texturePath);    
+                string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
+
+                if (!File.Exists(fullPath))
+                {
+                    throw new FileNotFoundException("Could not find texture!", fullPath);
+                }
+
+                Texture = new Bitmap(fullPath);    
             }
 
             PayloadMass = payloadMass;

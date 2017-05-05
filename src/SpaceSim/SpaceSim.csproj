@@ -184,6 +184,7 @@
     <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S2.cs" />
     <Compile Include="Spacecrafts\FalconCommon\F9S1Base.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\Fairing.cs" />
     <Compile Include="Spacecrafts\FalconCommon\GridFin.cs" />
     <Compile Include="Spacecrafts\FalconCommon\LandingLeg.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
@@ -261,82 +262,82 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Rocket.ico" />
-    <Content Include="Textures\asds.png">
+    <Content Include="Textures\Structures\asds.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\dragon.png">
+    <Content Include="Textures\Spacecrafts\Dragon\V1\capsule.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\dragonTrunk.png">
+    <Content Include="Textures\Spacecrafts\Dragon\V1\trunk.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\dragonTrunkV2.png">
+    <Content Include="Textures\Spacecrafts\Dragon\V2\trunk.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\dragonV2.png">
+    <Content Include="Textures\Spacecrafts\Dragon\V2\capsule.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\f9S1.png">
+    <Content Include="Textures\Spacecrafts\Falcon\9\S1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\f9S1Soot.png">
+    <Content Include="Textures\Spacecrafts\Falcon\9\S1Soot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\f9ssto.png">
+    <Content Include="Textures\Spacecrafts\Falcon\9\ssto.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fairing.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Common\fairing.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fh9S1.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Heavy\S1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fh9S1Soot.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Heavy\S1Soot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fh9S2.png">
+    <Content Include="Textures\Spacecrafts\Falcon\9\S2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fhBooster1.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Heavy\booster1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fhBooster1Soot.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Heavy\booster1Soot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fhBooster2.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Heavy\booster2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\fhBooster2Soot.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Heavy\booster2Soot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\gridFinLeft.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinLeft.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\gridFinRight.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinRight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\itsBooster.png">
+    <Content Include="Textures\Spacecrafts\Its\booster.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\itsMount.png">
+    <Content Include="Textures\Structures\itsMount.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Textures\itsTanker.png">
+    <Resource Include="Textures\Spacecrafts\Its\tanker.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Textures\itsShip.png">
+    <Content Include="Textures\Spacecrafts\Its\ship.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\landingLegLeft.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegLeft.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\landingLegRight.png">
+    <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegRight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\servicetower.png">
+    <Content Include="Textures\Structures\servicetower.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Textures\strongback.png">
+    <Content Include="Textures\Structures\strongback.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -357,6 +358,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
