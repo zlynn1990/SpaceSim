@@ -31,12 +31,15 @@ namespace SpaceSim.Commands
 
             if (_engineIds != null)
             {
+                _currentThrust = 55;
+
                 // Startup the required landing engines
                 foreach (int id in _engineIds)
                 {
                     IEngine engine = spaceCraft.Engines[id];
 
                     engine.Startup();
+                    engine.AdjustThrottle(55);
                 }
             }
         }
@@ -83,18 +86,11 @@ namespace SpaceSim.Commands
 
             for (int i = -1; i <= 1; i++)
             {
-                double thrust = 40;
-                // double thrust = 65;
+                double thrust = _currentThrust;
 
-                if (_currentThrust > 0)
-                {
-                    thrust = _currentThrust;
-                }
-
-                thrust += i * 0.5;
+                thrust += i;
 
                 if (thrust < 40 || thrust > 100)
-                //if (thrust < 60 || thrust > 100)
                 {
                     continue;
                 }
@@ -130,25 +126,13 @@ namespace SpaceSim.Commands
                     {
                         double landingSpeed = proxySatellite.RelativeVelocity.Length();
 
-                        // If the rocket is in motion search for the best speed always
-                        if (_currentThrust > 0)
-                        {
-                            if (landingSpeed < optimalLandingSpeed)
-                            {
-                                optimalLandingSpeed = landingSpeed;
-                                optimalThrust = thrust;
-
-                                break;
-                            }
-                        }
-                        // Otherwise enforce the landing speed is very good to start
-                        else if (landingSpeed < 5)
+                        if (landingSpeed < optimalLandingSpeed)
                         {
                             optimalLandingSpeed = landingSpeed;
                             optimalThrust = thrust;
-
-                            break;
                         }
+
+                        break;
                     }
 
                     proxySatellite.Update(0.05);
@@ -166,10 +150,7 @@ namespace SpaceSim.Commands
                     engine.AdjustThrottle(optimalThrust);
                 }
 
-                if (optimalThrust > 0)
-                {
-                    _currentThrust = optimalThrust;
-                }
+                _currentThrust = optimalThrust;
             }
         }
     }

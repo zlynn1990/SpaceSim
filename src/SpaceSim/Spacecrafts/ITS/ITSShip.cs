@@ -118,7 +118,7 @@ namespace SpaceSim.Spacecrafts.ITS
             Engines[7] = new Raptor50(7, this, new DVector2(0, Height * 0.48));
             Engines[8] = new Raptor50(8, this, new DVector2(2, Height * 0.48));
 
-            _spriteSheet = new SpriteSheet("Textures/itsShip.png", 12, 12);
+            _spriteSheet = new SpriteSheet("Textures/Spacecraft/Its/ship.png", 12, 12);
 
             this.payloadMass = payloadMass;
         }

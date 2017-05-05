@@ -11,7 +11,7 @@ namespace SpaceSim.Structures
         public override Color IconColor { get { return Color.White; } }
 
         public ASDS(double surfaceAngle, double height, IMassiveBody parent)
-            : base(surfaceAngle, height, "Textures/asds.png", parent)
+            : base(surfaceAngle, height, "Textures/Structures/asds.png", parent)
         {
         }
     }

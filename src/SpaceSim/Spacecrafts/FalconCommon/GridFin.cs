@@ -34,7 +34,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _offsetLength = offset.Length();
             _offsetRotation = _offsetRotation = offset.Angle() - Math.PI / 2.0;
 
-            _texture = isLeft ? new Bitmap("Textures/gridFinLeft.png") : new Bitmap("Textures/gridFinRight.png");
+            _texture = isLeft ? new Bitmap("Textures/Spacecrafts/Falcon/Common/gridFinLeft.png") :
+                                new Bitmap("Textures/Spacecrafts/Falcon/Common//gridFinRight.png");
 
         }
 

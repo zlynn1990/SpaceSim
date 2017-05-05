@@ -51,7 +51,7 @@ namespace SpaceSim.Spacecrafts
         private string _craftName;
 
         public DemoSat(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
-            : base(craftDirectory, position, velocity, payloadMass, 0, "Textures/fairing.png")
+            : base(craftDirectory, position, velocity, payloadMass, 0, "Falcon/Common/fairing.png")
         {
             _fairingMass = 1750;
 

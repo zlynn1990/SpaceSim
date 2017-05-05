@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Particles;
@@ -120,8 +121,15 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
             string sootTexturePath = texturePath.Replace(".png", "Soot.png");
 
+            string fullSootPath = Path.Combine("Textures/Spacecrafts", sootTexturePath);
+
+            if (!File.Exists(fullSootPath))
+            {
+                throw new FileNotFoundException("Could not find texture!", fullSootPath);
+            }
+
             // Initialized 'soot' texture and allocate the drawing buffer
-            _sootTexture = new Bitmap(sootTexturePath);
+            _sootTexture = new Bitmap(fullSootPath);
             _drawingBuffer = new Bitmap(_sootTexture.Width, _sootTexture.Height);
 
             _engineSmoke = new Smoke(1000, Color.FromArgb(100, 100, 100, 100));
