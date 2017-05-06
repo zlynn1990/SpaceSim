@@ -98,14 +98,11 @@ namespace SpaceSim.Drawing
 
         public static string Mass(double mass)
         {
-            if (mass > 10000000)
-            {
-                return mass.ToString("0.#e0") + " kg";
-            }
-
             if (mass > 1000)
             {
-                return mass.ToString("#,##0") + " kg";
+                mass *= 0.001;
+
+                return mass.ToString("#,##0.0") + " mT";
             }
 
             return mass.ToString("#,##0.0") + " kg";

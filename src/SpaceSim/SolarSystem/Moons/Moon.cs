@@ -20,7 +20,7 @@ namespace SpaceSim.SolarSystem.Moons
 
         public override double AtmosphereHeight
         {
-            get { return 6.371e5; }
+            get { return 0.0; }
         }
 
         public override double RotationRate
@@ -44,7 +44,7 @@ namespace SpaceSim.SolarSystem.Moons
 
         public override double GetAtmosphericDensity(double height)
         {
-            return 0.001;
+            return 0.0;
         }
 
         public override string ToString()
