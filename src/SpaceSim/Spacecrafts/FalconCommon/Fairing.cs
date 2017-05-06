@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using SpaceSim.Particles;
+using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
 
@@ -8,10 +8,10 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 {
     class Fairing : SpaceCraftBase
     {
-        public override string CraftName { get { return "DragonV2"; } }
-        public override string CommandFileName { get { return "dragon.xml"; } }
+        public override string CraftName { get { return _isLeft ? "Fairing Left" : "Fairing Right"; } }
+        public override string CommandFileName { get { return _isLeft ? "fairingLeft.xml" : "fairingRight.xml"; } }
 
-        public override double Width { get { return 3.7; } }
+        public override double Width { get { return 2.553275; } }
         public override double Height { get { return 12.9311; } }
 
         public override double DryMass { get { return 875; } }
@@ -21,33 +21,56 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             get { return AeroDynamicProperties.ExposedToAirFlow; }
         }
 
-        public override double LiftingSurfaceArea { get { return Width * Height; } }
+        public override double StagingForce
+        {
+            get { return 1500; }
+        }
 
         public override double FormDragCoefficient
         {
-            get { throw new NotImplementedException(); }
-        }
+            get
+            {
+                double baseCd = GetBaseCd(0.4);
+                double alpha = GetAlpha();
 
-        public override double FrontalArea
-        {
-            get { return 1; }
-        }
-
-        public override double ExposedSurfaceArea
-        {
-            get { throw new NotImplementedException(); }
+                return baseCd * Math.Cos(alpha);
+            }
         }
 
         public override double LiftCoefficient
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                double baseCd = GetBaseCd(0.6);
+                double alpha = GetAlpha();
+
+                return baseCd * Math.Sin(alpha * 2.0);
+            }
         }
+
+        public override double FrontalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+        public override double ExposedSurfaceArea { get { return 2 * Math.PI * (Width / 2) * Height + FrontalArea; } }
+        public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override Color IconColor { get { return Color.White; } }
 
-        public Fairing(string craftDirectory, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 0, 0, "Falcon/Common/fairing.png", null)
+        private bool _isLeft;
+
+        public Fairing(string craftDirectory, DVector2 position, DVector2 velocity, bool isLeft)
+            : base(craftDirectory, position, velocity, 0, 0, isLeft ? "Falcon/Common/fairingLeft.png" : "Falcon/Common/fairingRight.png", null)
         {
+            _isLeft = isLeft;
+
+            if (_isLeft)
+            {
+                StageOffset = new DVector2(-1.26, -2.2);
+            }
+            else
+            {
+                StageOffset = new DVector2(1.26, -2.2);
+            }
+
+            Engines = new IEngine[0];
         }
     }
 }

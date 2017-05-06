@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using SpaceSim.Engines;
+﻿using SpaceSim.Engines;
 using SpaceSim.Physics;
 using SpaceSim.Spacecrafts.FalconCommon;
 using VectorMath;

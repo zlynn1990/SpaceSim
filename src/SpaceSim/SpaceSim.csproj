@@ -262,6 +262,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Rocket.ico" />
+    <Content Include="Textures\Spacecrafts\Falcon\Common\fairingLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\fairingRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Satellites\default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Structures\asds.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -284,9 +293,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Falcon\9\ssto.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Textures\Spacecrafts\Falcon\Common\fairing.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Falcon\Heavy\S1.png">
