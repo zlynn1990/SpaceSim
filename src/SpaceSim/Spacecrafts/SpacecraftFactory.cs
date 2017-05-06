@@ -6,6 +6,7 @@ using SpaceSim.Spacecrafts.DragonV1;
 using SpaceSim.Spacecrafts.DragonV2;
 using SpaceSim.Spacecrafts.Falcon9;
 using SpaceSim.Spacecrafts.Falcon9SSTO;
+using SpaceSim.Spacecrafts.FalconCommon;
 using SpaceSim.Spacecrafts.FalconHeavy;
 using SpaceSim.Spacecrafts.ITS;
 using VectorMath;
@@ -61,9 +62,14 @@ namespace SpaceSim.Spacecrafts
         {
             var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset, planet.Velocity, config.PayloadMass);
 
-            var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
-            var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 13.3);
+            var fairingLeft = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, true);
+            var fairingRight = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, false);
 
+            demoSat.AttachFairings(fairingLeft, fairingRight);
+
+            var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 11.2);
+            
             demoSat.AddChild(f9S2);
             f9S2.SetParent(demoSat);
             f9S2.AddChild(f9S1);
@@ -71,7 +77,7 @@ namespace SpaceSim.Spacecrafts
 
             return new List<ISpaceCraft>
             {
-                demoSat, f9S2, f9S1
+                demoSat, f9S2, f9S1, fairingLeft, fairingRight
             };
         }
 
