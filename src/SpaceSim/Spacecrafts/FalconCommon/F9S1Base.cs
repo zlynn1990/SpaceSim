@@ -30,15 +30,15 @@ namespace SpaceSim.Spacecrafts.FalconCommon
                 {
                     if (_landingLegs[0].Pitch > 0)
                     {
-                        baseCd = GetBaseCd(1.4);
+                        baseCd = GetBaseCd(1.2);
                     }
                     else if (_gridFins[0].Pitch > 0)
                     {
-                        baseCd = GetBaseCd(1.25);
+                        baseCd = GetBaseCd(0.9);
                     }
                     else
                     {
-                        baseCd = GetBaseCd(0.8);
+                        baseCd = GetBaseCd(0.6);
                     }
 
                     isRetrograde = true;
