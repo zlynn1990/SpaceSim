@@ -16,7 +16,7 @@
     <TargetOrientation>-125</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>141</StartTime>
+    <StartTime>142</StartTime>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>140</StartTime>

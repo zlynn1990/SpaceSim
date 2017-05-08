@@ -25,12 +25,19 @@
     <TargetOrientation>-2</TargetOrientation>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>157</StartTime>
+    <StartTime>156</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>63.2</Throttle>
+    <Throttle>75</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>164</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>68.2</Throttle>
     <EngineIds>
       <int>0</int>
-      <int>4</int>
       <int>8</int>
     </EngineIds>
   </Command>

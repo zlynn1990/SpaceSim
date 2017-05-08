@@ -37,11 +37,11 @@ namespace SpaceSim.Particles
             // Scale particle size with viewport width
             if (cameraBounds.Width > 1000)
             {
-                particleScale = 1;
+                particleScale = 1.5f;
             }
             else
             {
-                particleScale = (float)(1.22e-6 * cameraBounds.Width * cameraBounds.Width - 4.8e-3 * cameraBounds.Width + 4.4);
+                particleScale = (float)(1.22e-6 * cameraBounds.Width * cameraBounds.Width - 4.8e-3 * cameraBounds.Width + 5.5);
             }
 
             float halfParticleScale = particleScale * 0.5f;
