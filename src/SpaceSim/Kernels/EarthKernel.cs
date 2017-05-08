@@ -59,9 +59,9 @@ namespace SpaceSim.Kernels
                 {
                     double ratio = (distance - EARTH_RADIUS) / EARTH_ATMOSPHERE;
 
-                    int red = (int)((63 - ratio * 63) * sunDotProduct);
-                    int green = (int)((134 - ratio * 134) * sunDotProduct);
-                    int blue = (int)((205 - ratio * 205) * sunDotProduct);
+                    int red = (int)((24 - ratio * 24) * sunDotProduct);
+                    int green = (int)((104 - ratio * 104) * sunDotProduct);
+                    int blue = (int)((185 - ratio * 185) * sunDotProduct);
 
                     image[index] = ALPHA | blue | (green << 8) | (red << 16);
                 }

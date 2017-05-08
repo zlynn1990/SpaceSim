@@ -10,6 +10,9 @@ namespace SpaceSim.Commands
         private double _throttle;
         private int[] _engineIds;
 
+        private double _initialThrottle;
+        private double _throttleDifferential;
+
         public IgnitionCommand(Ignition ignition)
             : base(ignition.StartTime , ignition.Duration)
         {
@@ -19,6 +22,9 @@ namespace SpaceSim.Commands
 
         public override void Initialize(SpaceCraftBase spaceCraft)
         {
+            _initialThrottle = spaceCraft.Throttle;
+            _throttleDifferential = _throttle - _initialThrottle;
+
             // If no engines are requested start them all
             if (_engineIds == null)
             {
@@ -73,7 +79,7 @@ namespace SpaceSim.Commands
         {
             double timeRatio = (elapsedTime - StartTime) / Duration;
 
-            spaceCraft.SetThrottle(_throttle * timeRatio);
+            spaceCraft.SetThrottle(_throttleDifferential * timeRatio + _initialThrottle);
         }
     }
 }

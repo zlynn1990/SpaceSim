@@ -34,6 +34,9 @@ namespace SpaceSim.Commands
                 case "Landing Legs":
                     spaceCraft.DeployLandingLegs();
                     break;
+                case "Drogues":
+                    spaceCraft.DeployDrogues();
+                    break;
                 case "Parachutes":
                     spaceCraft.DeployParachutes();
                     break;

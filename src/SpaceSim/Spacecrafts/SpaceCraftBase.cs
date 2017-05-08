@@ -289,6 +289,11 @@ namespace SpaceSim.Spacecrafts
         public virtual void DeployGridFins() { }
 
         /// <summary>
+        /// Deploys the drogues.
+        /// </summary>
+        public virtual void DeployDrogues() { }
+
+        /// <summary>
         /// Deploys the parachutes.
         /// </summary>
         public virtual void DeployParachutes() { }
