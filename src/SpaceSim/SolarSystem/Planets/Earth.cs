@@ -47,29 +47,29 @@ namespace SpaceSim.SolarSystem.Planets
         {
             if (altitude > AtmosphereHeight) return 0;
 
-            double tempurature;
+            double temperature;
             double pressure;
 
             if (altitude > 25098.756)
             {
-                tempurature = -205.05 + 0.0053805776 * altitude;
+                temperature = -205.05 + 0.0053805776 * altitude;
 
-                pressure = 51.97 * Math.Pow((tempurature + 459.7) / 389.98, -11.388);
+                pressure = 51.97 * Math.Pow((temperature + 459.7) / 389.98, -11.388);
             }
             else if (altitude > 11019.13)
             {
-                tempurature = -70;
+                temperature = -70;
 
                 pressure = 473.1 * Math.Exp(1.73 - 0.00015748032 * altitude);
             }
             else
             {
-                tempurature = 59 - 0.0116797904 * altitude;
+                temperature = 59 - 0.0116797904 * altitude;
 
-                pressure = 2116 * Math.Pow((tempurature + 459.7) / 518.6, 5.256);   
+                pressure = 2116 * Math.Pow((temperature + 459.7) / 518.6, 5.256);   
             }
 
-            double density = pressure / (1718 * (tempurature + 459.7));
+            double density = pressure / (1718 * (temperature + 459.7));
 
             return density * 515.379;
         }
