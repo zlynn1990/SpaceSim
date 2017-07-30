@@ -50,8 +50,9 @@ namespace SpaceSim.Kernels
 
                     double textureFactor = 0.25 * sin(worldAngle * 500) + 0.75;
 
-                    int red = (int)(sunDotProduct * 63 * ratio * textureFactor);
-                    int green = (int)(sunDotProduct * 255 * ratio * textureFactor);
+                    int red = (int)(sunDotProduct * 127 * ratio * textureFactor);
+                    int green = (int)(sunDotProduct * 225 * ratio * textureFactor);
+                    int blue = (int)(sunDotProduct * 63 * ratio * textureFactor);
 
                     image[index] = ALPHA | (green << 8) | (red << 16);
                 }
@@ -59,9 +60,9 @@ namespace SpaceSim.Kernels
                 {
                     double ratio = (distance - EARTH_RADIUS) / EARTH_ATMOSPHERE;
 
-                    int red = (int)((24 - ratio * 24) * sunDotProduct);
-                    int green = (int)((104 - ratio * 104) * sunDotProduct);
-                    int blue = (int)((185 - ratio * 185) * sunDotProduct);
+                    int red = (int)((105 - ratio * 105) * sunDotProduct);
+                    int green = (int)((170 - ratio * 170) * sunDotProduct);
+                    int blue = (int)((235 - ratio * 235) * sunDotProduct);
 
                     image[index] = ALPHA | blue | (green << 8) | (red << 16);
                 }

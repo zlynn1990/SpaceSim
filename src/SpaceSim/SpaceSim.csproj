@@ -197,6 +197,8 @@
     <Compile Include="Spacecrafts\ITS\ITSBooster.cs" />
     <Compile Include="Spacecrafts\ITS\ITSShip.cs" />
     <Compile Include="Spacecrafts\ITS\ITSTanker.cs" />
+    <Compile Include="Spacecrafts\ITS\ScaledBFR.cs" />
+    <Compile Include="Spacecrafts\ITS\ScaledBFS.cs" />
     <Compile Include="Spacecrafts\RedDragon\RedDragon.cs" />
     <Compile Include="Spacecrafts\SpaceCraftBase.cs" />
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
@@ -279,6 +281,12 @@
     <Content Include="Textures\Spacecrafts\Falcon\Common\parachuteRight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\Its\scaledBFR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Its\scaledBFS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Satellites\default.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -339,9 +347,9 @@
     <Content Include="Textures\Structures\itsMount.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Textures\Spacecrafts\Its\tanker.png">
+    <Content Include="Textures\Spacecrafts\Its\tanker.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Content Include="Textures\Spacecrafts\Its\ship.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

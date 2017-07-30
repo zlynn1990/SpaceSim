@@ -53,6 +53,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildITSTanker(planet, config, craftDirectory);
                 case "ItsEDL":
                     return BuildItsEDL(planet, config, craftDirectory);
+                case "Scaled BFR Launch":
+                    return BuildScaledBFR(planet, config, craftDirectory);
                 default:
                     throw new Exception("Unknown vehicle type: " + config.VehicleType);
             }
@@ -266,6 +268,22 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildScaledBFR(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new ScaledBFS(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius),
+                planet.Velocity + new DVector2(-400, 0), config.PayloadMass, 670000);
+
+            var booster = new ScaledBFR(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            ship.AddChild(booster);
+            booster.SetParent(ship);
+
+            return new List<ISpaceCraft>
+            {
+                ship, booster
             };
         }
     }

@@ -113,7 +113,7 @@ namespace SpaceSim.Spacecrafts.DragonV1
             SetThrottle(100);
         }
 
-        public void DeployParachutes()
+        public override void DeployParachutes()
         {
             if (!_drogueDeployed)
             {

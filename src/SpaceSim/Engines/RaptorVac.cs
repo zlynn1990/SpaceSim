@@ -8,7 +8,7 @@ namespace SpaceSim.Engines
     class RaptorVac : EngineBase
     {
         public RaptorVac(int id, ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(id, Color.FromArgb(255, 159, 227, 255), 100, 2, 0.2, 0.6, 0.1))
+            : base(parent, offset, new EngineFlame(id, Color.FromArgb(63, 159, 227, 255), 100, 2, 0.2, 0.6, 0.1))
         {
         }
 

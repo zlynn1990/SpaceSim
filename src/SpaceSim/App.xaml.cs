@@ -19,7 +19,7 @@ namespace SpaceSim
 
             SpaceSim.MainWindow.ProfilePaths = new List<string>
             {
-                Path.Combine(profileDirectory, "NROL-76"),
+                //Path.Combine(profileDirectory, "NROL-76"),
                 //Path.Combine(profileDirectory, "SES-10"),
                 //Path.Combine(profileDirectory, "Iridium NEXT"),
                 //Path.Combine(profileDirectory, "ITS Crew Launch"),
@@ -41,6 +41,7 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "SES9"),
                 //Path.Combine(profileDirectory, "Thaicom-8"),
                 //Path.Combine(profileDirectory, "Grey Dragon Flyby"),
+                Path.Combine(profileDirectory, "Scaled BFR Launch"),
             };
 
             if (SpaceSim.MainWindow.ProfilePaths == null ||

@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Post">
+    <StartTime>6</StartTime>
+    <Duration>5</Duration>
+    <Message>This is a 0.75 scale simulation of an ITS cargo mission to LEO ...</Message>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-115</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>12</StartTime>
+    <Duration>5</Duration>
+    <Message>...using 19 Raptor SL engines for a liftoff T/W of 1.4</Message>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-150</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>100</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-160</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>153</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>154</StartTime>
+    <Duration>6</Duration>
+    <TargetOrientation>-155</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>160</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>170</StartTime>
+    <Duration>130</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>270</StartTime>
+    <Duration>0.5</Duration>
+    <EngineIds>
+      <int>3</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>300</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>305</StartTime>
+    <Duration>70</Duration>
+    <TargetThrottle>50</TargetThrottle>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>340</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-190</TargetOrientation>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>350</StartTime>
+    <Duration>25</Duration>
+    <TargetOrientation>-200</TargetOrientation>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>374.7</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>400</StartTime>
+    <Duration>8000</Duration>
+    <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>2030</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>30</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>1</int>
+      <int>2</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>2033.6</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>2039</StartTime>
+    <Duration>5</Duration>
+    <Message>LEO has been circularised to roughly 300 x 300 kms</Message>
+  </Command>
+</ArrayOfCommand>
