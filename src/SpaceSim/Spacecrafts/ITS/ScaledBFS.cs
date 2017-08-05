@@ -15,7 +15,7 @@ namespace SpaceSim.Spacecrafts.ITS
         public override string CommandFileName { get { return "miniCargo.xml"; } }
 
         public override double DryMass { get { return 37800; } }
-        public override double Width { get { return 9; } }
+        public override double Width { get { return 10; } }
         public override double Height { get { return 37.125; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
@@ -97,9 +97,12 @@ namespace SpaceSim.Spacecrafts.ITS
 
         //private SpriteSheet _spriteSheet;
 
-        public ScaledBFS(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass, double propellantMass = 1050000)
+        public ScaledBFS(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 0, double propellantMass = 1050000)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, null)
         {
+            //StageOffset = new DVector2(0, 0);
+            StageOffset = new DVector2(0, 24);
+
             Engines = new IEngine[4];
 
             // Raptor Vac engines

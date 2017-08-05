@@ -35,6 +35,14 @@
     <TargetOrientation>-8</TargetOrientation>
   </Command>
   <Command xsi:type="Ignition">
+    <StartTime>156</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>40</Throttle>
+    <EngineIds>
+      <int>9</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Ignition">
     <StartTime>160</StartTime>
     <Duration>0.1</Duration>
     <Throttle>100</Throttle>
@@ -52,7 +60,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>187.55</StartTime>
+    <StartTime>187.40542</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="RelativePitch">
@@ -84,20 +92,20 @@
   <Command xsi:type="RelativePitch">
     <StartTime>410</StartTime>
     <Duration>5</Duration>
-    <TargetOrientation>-120.005</TargetOrientation>
+    <TargetOrientation>-120.000</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>415</StartTime>
     <Duration>62</Duration>
-    <TargetOrientation>-120.005</TargetOrientation>
+    <TargetOrientation>-120.000</TargetOrientation>
   </Command>
   <Command xsi:type="Retrograde">
     <StartTime>477</StartTime>
-    <Duration>19.3</Duration>
+    <Duration>21</Duration>
     <InitialAdjustmentTime>5</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>482.54</StartTime>
+    <StartTime>484.1</StartTime>
     <Duration>0.1</Duration>
     <Throttle>40</Throttle>
     <EngineIds>
@@ -107,7 +115,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>496</StartTime>
+    <StartTime>497.5</StartTime>
     <Duration>0.5</Duration>
     <EngineIds>
       <int>8</int>
@@ -115,7 +123,7 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>496.5</StartTime>
+    <StartTime>498.1</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <!--<Command xsi:type="AutoLand">

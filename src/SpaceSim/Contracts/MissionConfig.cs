@@ -18,7 +18,7 @@ namespace SpaceSim.Contracts
 
         public DVector2 VelocityOffset { get; set; }
 
-        public DateTime LaunchDate { get; set; }
+        public string LaunchDate { get; set; }
 
         /// <summary>
         /// Loads a mission from a profile path.

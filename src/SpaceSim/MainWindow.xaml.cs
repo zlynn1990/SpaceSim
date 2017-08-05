@@ -195,10 +195,11 @@ namespace SpaceSim
 
             MissionConfig primaryMission = MissionConfig.Load(ProfilePaths[0]);
 
-            // Forward simulate the mission if nessecary
-            if (primaryMission.LaunchDate > DateTime.MinValue)
+            // Forward simulate the mission if necessary
+            DateTime launchDate;
+            if(DateTime.TryParse(primaryMission.LaunchDate, out launchDate))
             {
-                OrbitHelper.SimulateToTime(_massiveBodies, primaryMission.LaunchDate, 300);   
+                OrbitHelper.SimulateToTime(_massiveBodies, launchDate, 300);   
             }
 
             // Load missions

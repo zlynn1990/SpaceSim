@@ -194,6 +194,7 @@
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
     <Compile Include="Spacecrafts\GreyDragon\GreyDragon.cs" />
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
+    <Compile Include="Spacecrafts\ITS\Carousel.cs" />
     <Compile Include="Spacecrafts\ITS\ITSBooster.cs" />
     <Compile Include="Spacecrafts\ITS\ITSShip.cs" />
     <Compile Include="Spacecrafts\ITS\ITSTanker.cs" />
