@@ -25,7 +25,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
             {
                 double engineOffsetX = (i - 4.0) / 4.0;
 
-                var offset = new DVector2(engineOffsetX * Width * 0.3, Height * 0.45);
+                var offset = new DVector2(engineOffsetX * Width * 0.3, Height * 0.48);
 
                 Engines[i] = new Merlin1D(i, this, offset);
             }

@@ -31,7 +31,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _parent = parent;
 
             _offsetLength = offset.Length();
-            _offsetRotation = _offsetRotation = offset.Angle() - Math.PI / 2.0;
+            _offsetRotation = offset.Angle() - Math.PI / 2.0;
 
             if(isLeft)
                 _texture = new Bitmap("Textures/Spacecrafts/Falcon/Common/parachuteLeft.png");

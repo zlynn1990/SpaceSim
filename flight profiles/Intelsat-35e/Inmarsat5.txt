@@ -1,0 +1,5 @@
+[quote author=Proponent link=topic=43178.msg1692281#msg1692281 date=1498040730]
+What's the duration of the burn?
+[/quote]
+
+About a minute. For what it's worth, here is the output from my Inmarsat-5 sim. The orbit at SECO1 is about 160 x 590 kms, and mass is 25.5mT. At SECO2, mass is 11.6mT. A 4° plane change from 28.5 to 24.5° would require an additional 540m/s, for a burn to depletion S2 total of 9.9mT. Subtracting 6.1mT for the satellite, gives 3.8mT S2 dry mass, a bit lower than I would have expected. 

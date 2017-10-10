@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-94</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-123</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>110</StartTime>
+    <Duration>34</Duration>
+    <TargetOrientation>-130</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>149</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>149</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-125</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>158</StartTime>
+    <Duration>252</Duration>
+    <TargetOrientation>-170</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>224</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>410</StartTime>
+    <Duration>70</Duration>
+    <TargetOrientation>-185</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>590</StartTime>
+    <Duration>10000</Duration>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>609</StartTime>
+  </Command>
+</ArrayOfCommand>

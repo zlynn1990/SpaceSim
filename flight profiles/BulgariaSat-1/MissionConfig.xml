@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<MissionConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VehicleType>GenericF9</VehicleType>
+  <PayloadMass>3700</PayloadMass>
+  <ParentPlanet>Earth</ParentPlanet>
+</MissionConfig>

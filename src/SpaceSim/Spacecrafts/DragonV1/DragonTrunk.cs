@@ -57,7 +57,7 @@ namespace SpaceSim.Spacecrafts.DragonV1
         public override Color IconColor { get { return Color.White; } }
 
         public DragonTrunk(string craftDirectory, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 0, 0, "Textures/dragonTrunk.png")
+            : base(craftDirectory, position, velocity, 0, 0, "Dragon/V1/trunk.png")
         {
             StageOffset = new DVector2(0, 2.8);
 

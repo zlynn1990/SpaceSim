@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0.00001</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>90</Throttle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>5</StartTime>
+    <Duration>0.5</Duration>
+    <TargetThrottle>100</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>30</StartTime>
+    <Duration>10</Duration>
+    <TargetThrottle>60</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>132</StartTime>
+    <Duration>5</Duration>
+    <TargetThrottle>100</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>152</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>157</StartTime>
+    <Duration>13</Duration>
+    <TargetOrientation>-8</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>164</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>40</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>171</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>2</int>
+      <int>4</int>
+      <int>6</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>228.215</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>230</StartTime>
+    <Duration>195</Duration>
+    <TargetOrientation>-115</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+	  <Part>Grid Fins</Part>
+    <StartTime>240</StartTime>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>425</StartTime>
+    <Duration>25</Duration>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>450</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>65</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>453</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>65</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>473</StartTime>
+    <Duration>0.5</Duration>
+    <EngineIds>
+      <int>0</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>474</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>475</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-120</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>480</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-120</TargetOrientation>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>540</StartTime>
+    <Duration>33</Duration>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>550.95</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>60</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Landing Legs</Part>
+    <StartTime>568.1</StartTime>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>574.1</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+</ArrayOfCommand>

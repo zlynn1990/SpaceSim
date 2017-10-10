@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ArrayOfStructureConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <StructureConfig>
+    <Type>Strongback</Type>
+    <DownrangeDistance>0</DownrangeDistance>
+    <HeightOffset>-25</HeightOffset>
+  </StructureConfig>
+  <StructureConfig>
+    <Type>Edwards</Type>
+    <DownrangeDistance>3687300</DownrangeDistance>
+    <HeightOffset>90</HeightOffset>
+  </StructureConfig>
+</ArrayOfStructureConfig>

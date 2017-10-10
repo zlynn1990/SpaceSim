@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 
@@ -95,7 +96,7 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
-        //private SpriteSheet _spriteSheet;
+        private SpriteSheet _spriteSheet;
 
         public ScaledBFS(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 0, double propellantMass = 1050000)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, null)
@@ -103,18 +104,18 @@ namespace SpaceSim.Spacecrafts.ITS
             //StageOffset = new DVector2(0, 0);
             StageOffset = new DVector2(0, 24);
 
-            Engines = new IEngine[4];
+            Engines = new IEngine[6];
 
             // Raptor Vac engines
             for (int i = 0; i < 3; i++)
             {
                 double engineOffsetX = (i - 1.0) / 1.0;
                 var offset = new DVector2(engineOffsetX * Width * 0.2, Height * 0.45);
-                Engines[i] = new RaptorVac(i, this, offset);
+                Engines[i] = new RaptorVac2016(i, this, offset);
             }
 
             // Raptor SL 40 engines
-            Engines[3] = new Raptor50(3, this, new DVector2(0, Height * 0.4));
+            //Engines[3] = new Raptor50(3, this, new DVector2(0, Height * 0.4));
 
             //Engines = new IEngine[9];
 
@@ -127,18 +128,18 @@ namespace SpaceSim.Spacecrafts.ITS
             //}
 
             // Mini Raptor SL 50 engines
-            //for (int i = 6; i < 9; i++)
-            //{
-            //    double engineOffsetX = (i - 7.0) / 1.0;
-            //    var offset = new DVector2(engineOffsetX * Width * 0.1, Height * 0.475);
-            //    Engines[i] = new MiniRaptor50(i, this, offset);
-            //}
+            for (int i = 3; i < 6; i++)
+            {
+                double engineOffsetX = (i - 4.0) / 2.0;
+                var offset = new DVector2(engineOffsetX * Width * 0.1, Height * 0.475);
+                Engines[i] = new MiniRaptor50(i, this, offset);
+            }
 
-            //_spriteSheet = new SpriteSheet("Textures/Spacecraft/Its/tanker.png", 12, 12);
+            _spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/scaledShip.png", 12, 12);
 
-            string texturePath = "Its/scaledBFS.png";
-            string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
-            this.Texture = new Bitmap(fullPath);
+            //string texturePath = "Its/scaledBFS.png";
+            //string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
+            //this.Texture = new Bitmap(fullPath);
 
             this.payloadMass = payloadMass;
         }
@@ -203,14 +204,14 @@ namespace SpaceSim.Spacecrafts.ITS
             }
 
             // Index into the sprite
-            //int ships = _spriteSheet.Cols * _spriteSheet.Rows;
-            //int spriteIndex = (rollAngle * ships) / 360;
-            //while (spriteIndex < 0)
-            //    spriteIndex += ships;
+            int ships = _spriteSheet.Cols * _spriteSheet.Rows;
+            int spriteIndex = (rollAngle * ships) / 360;
+            while (spriteIndex < 0)
+                spriteIndex += ships;
 
-            //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
+            _spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
-            graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+            //graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
             graphics.ResetTransform();
 
             //if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))

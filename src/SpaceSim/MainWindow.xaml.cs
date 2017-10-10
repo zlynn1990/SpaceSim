@@ -43,7 +43,7 @@ namespace SpaceSim
     public partial class MainWindow : Window
     {
         public static List<string> ProfilePaths;
-        public static bool FullScreen;
+        //public static bool FullScreen;
 
         public static int ClockDelayInSeconds;
 
@@ -85,7 +85,7 @@ namespace SpaceSim
 
         private TextDisplay _textDisplay;
 
-        int _bmIndex = 0;
+        int _bmIndex = Settings.Default.FirstBitmapIndex;
         DateTime now = DateTime.Now;
 
         public MainWindow()
@@ -113,7 +113,7 @@ namespace SpaceSim
         {
             Mouse.OverrideCursor = Cursors.None;
 
-            if (FullScreen)
+            if (Settings.Default.FullScreen)
             {
                 WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
@@ -123,6 +123,8 @@ namespace SpaceSim
             }
             else
             {
+                //RenderUtils.ScreenWidth = 1280;
+                //RenderUtils.ScreenHeight = 720;
                 RenderUtils.ScreenWidth = 1600;
                 RenderUtils.ScreenHeight = 900;
             }
@@ -153,7 +155,7 @@ namespace SpaceSim
 
         private void LoadGui()
         {
-            _eventManager = new EventManager(new Point(RenderUtils.ScreenWidth / 2, 50), 5, 0.25);
+            _eventManager = new EventManager(new Point(RenderUtils.ScreenWidth / 2, 60), 5, 0.25);
 
             _progradeButton = new ProgradeButton(new Point(RenderUtils.ScreenWidth - 160, RenderUtils.ScreenHeight - 105));
             _retrogradeButton = new RetrogradeButton(new Point(RenderUtils.ScreenWidth - 160, RenderUtils.ScreenHeight - 45));
@@ -689,7 +691,7 @@ namespace SpaceSim
                 // Main timing display
                 _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
                 {
-                    "Elapsed Time: " + string.Format("Y: {0} D: {1} H: {2} M: {3} S: {4}", elapsedYears, elapsedDays, elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds),
+                    "Elapsed Time: " + string.Format("Y:{0} D:{1} H:{2} M:{3} S:{4}", elapsedYears, elapsedDays, elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds),
                     "Update Speed: " + timeStep.Multiplier
                 });
 

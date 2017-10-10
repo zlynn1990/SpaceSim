@@ -499,6 +499,9 @@ namespace SpaceSim.Spacecrafts
 
         public double GetAlpha()
         {
+            if (GravitationalParent == null)
+                return 0.0;
+
             double altitude = GetRelativeAltitude();
             if (altitude > GravitationalParent.AtmosphereHeight)
             {
@@ -1096,12 +1099,15 @@ namespace SpaceSim.Spacecrafts
             {
                 if (cameraBounds.Width > 1000)
                 {
-                    string parentName = GravitationalParent.ToString();
-
-                    if (_launchTrails.ContainsKey(parentName))
+                    if (GravitationalParent != null)
                     {
-                        _launchTrails[parentName].Draw(graphics, cameraBounds, GravitationalParent);  
-                    } 
+                        string parentName = GravitationalParent.ToString();
+
+                        if (_launchTrails.ContainsKey(parentName))
+                        {
+                            _launchTrails[parentName].Draw(graphics, cameraBounds, GravitationalParent);
+                        }
+                    }
                 }
 
                 // Don't draw orbit traces on the ground

@@ -192,7 +192,8 @@ namespace SpaceSim.Orbits
 
                 double offsetFactor = 0.0;
 
-                if (altitude < proxyParent.AtmosphereHeight*2)
+                //if (altitude < proxyParent.AtmosphereHeight*2)
+                if (altitude < proxyParent.AtmosphereHeight * 4)
                 {
                     if (velocity < 3000)
                     {

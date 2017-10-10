@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0.01</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>84</Throttle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>5</StartTime>
+    <Duration>0.1</Duration>
+    <TargetThrottle>91</TargetThrottle>
+  </Command>
+  <!--<Command xsi:type="Post">
+    <StartTime>11</StartTime>
+    <Duration>5</Duration>
+    <Message>The CRS-11 hosted webcast provided complete S1 velocity and altitude data ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>17</StartTime>
+    <Duration>5</Duration>
+    <Message>... enhancing the accuracy of the SpaceSim Falcon 9 model.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>23</StartTime>
+    <Duration>5</Duration>
+    <Message>We can infer many of the flight parameters from the model ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>29</StartTime>
+    <Duration>5</Duration>
+    <Message>... e.g. throttle for most of the ascent was at 91% of the published Block 5 values.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>35</StartTime>
+    <Duration>5</Duration>
+    <Message>The tightly choreographed boostback and entry burns can be analysed in some detail ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>41</StartTime>
+    <Duration>5</Duration>
+    <Message>... e.g., a minimum thrust ullage burn started half way through the flip at 2:40.</Message>
+  </Command>-->
+  <Command xsi:type="Throttle">
+    <StartTime>50</StartTime>
+    <Duration>0.1</Duration>
+    <TargetThrottle>77</TargetThrottle>
+  </Command>
+  <!--<Command xsi:type="Post">
+    <StartTime>56</StartTime>
+    <Duration>5</Duration>
+    <Message>Also, note the 1:3:1 entry burn at 6:10.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>62</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing the update speed to 4x.</Message>
+  </Command>-->
+  <Command xsi:type="Throttle">
+    <StartTime>75</StartTime>
+    <Duration>1</Duration>
+    <TargetThrottle>91</TargetThrottle>
+  </Command>
+  <!--<Command xsi:type="Post">
+    <StartTime>130</StartTime>
+    <Duration>5</Duration>
+    <Message>Decreasing the update speed for staging.</Message>
+  </Command>-->
+  <Command xsi:type="Shutdown">
+    <StartTime>142</StartTime>
+    <Duration>1</Duration>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>150</StartTime>
+    <Duration>15</Duration>
+    <TargetOrientation>3.75</TargetOrientation>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>160</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>40</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>164</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>97.5</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>4</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>204</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>220</StartTime>
+    <Duration>140</Duration>
+    <TargetOrientation>-100</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+	<Part>Grid Fins</Part>
+    <StartTime>230</StartTime>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>360</StartTime>
+    <Duration>22</Duration>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>370</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>74</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>374</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>74</Throttle>
+    <EngineIds>
+      <int>0</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>380</StartTime>
+    <Duration>0.5</Duration>
+    <EngineIds>
+      <int>0</int>
+      <int>8</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>382</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>382</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-116.6</TargetOrientation>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>425</StartTime>
+    <Duration>33</Duration>
+    <InitialAdjustmentTime>5</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>430</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>82</Throttle>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
+  <Command xsi:type="Deploy">
+	  <Part>Landing Legs</Part>
+    <StartTime>453</StartTime>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>460</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+</ArrayOfCommand>

@@ -1,5 +1,7 @@
 ﻿using SpaceSim.SolarSystem;
 
+using System;
+
 namespace SpaceSim.Kernels
 {
     class EarthKernel : SymbolKernel, IMassiveKernel
@@ -59,10 +61,10 @@ namespace SpaceSim.Kernels
                 else
                 {
                     double ratio = (distance - EARTH_RADIUS) / EARTH_ATMOSPHERE;
-
-                    int red = (int)((105 - ratio * 105) * sunDotProduct);
-                    int green = (int)((170 - ratio * 170) * sunDotProduct);
-                    int blue = (int)((235 - ratio * 235) * sunDotProduct);
+                    
+                    int red = (int)((125 - ratio * 125) * sunDotProduct);
+                    int green = (int)((188 - ratio * 188) * sunDotProduct);
+                    int blue = (int)((255 - ratio * 255) * sunDotProduct);
 
                     image[index] = ALPHA | blue | (green << 8) | (red << 16);
                 }

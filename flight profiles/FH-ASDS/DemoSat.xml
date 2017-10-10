@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>120</Duration>
+    <TargetOrientation>-160</TargetOrientation>
+  </Command>
+  <!--<Command xsi:type="Post">
+    <StartTime>11</StartTime>
+    <Duration>5</Duration>
+    <Message>The Falcon Heavy will have phenomenal T/W ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>16</StartTime>
+    <Duration>5</Duration>
+    <Message>... compared to the CRS-11 mission profile, it will leap from the pad.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>22</StartTime>
+    <Duration>5</Duration>
+    <Message>With the side boosters RTLS, and the core to ASDS ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>28</StartTime>
+    <Duration>5</Duration>
+    <Message>... this sim predicts 34mT payload to LEO.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>34</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 4x for ascent to orbit.</Message>
+  </Command>-->
+  <Command xsi:type="Stage">
+    <StartTime>132</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>135</StartTime>
+    <Duration>45</Duration>
+    <TargetOrientation>-168</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>181</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>182</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-162</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>190</StartTime>
+    <Duration>170</Duration>
+    <TargetOrientation>-177</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>205</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>360</StartTime>
+    <Duration>180</Duration>
+    <TargetOrientation>-184</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>600</StartTime>
+    <Duration>8000</Duration>
+    <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>3380</StartTime>
+  </Command>
+</ArrayOfCommand>

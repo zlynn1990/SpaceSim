@@ -8,18 +8,20 @@ namespace SpaceSim.Engines
     class RaptorVac : EngineBase
     {
         public RaptorVac(int id, ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(id, Color.FromArgb(63, 159, 227, 255), 100, 2, 0.2, 0.6, 0.1))
+            : base(parent, offset, new EngineFlame(id, Color.FromArgb(23, 209, 173, 199), 200, 2, 0.2, 0.6, 0.1))
         {
         }
 
         public override double Thrust(double ispMultiplier)
         {
-            return 3500000 * Throttle * 0.01;
+            return 1900000 * Throttle * 0.01;
+            //return 2280000 * Throttle * 0.01;
         }
 
         public override double MassFlowRate(double ispMultiplier)
         {
-            return 933 * Throttle * 0.01;
+            return 525 * Throttle * 0.01;
+            //return 630 * Throttle * 0.01;
         }
 
         public override IEngine Clone()

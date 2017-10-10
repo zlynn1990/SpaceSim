@@ -30,7 +30,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
                 {
                     if (_landingLegs[0].Pitch > 0)
                     {
-                        baseCd = GetBaseCd(1.2);
+                        baseCd = GetBaseCd(1.6);
                     }
                     else if (_gridFins[0].Pitch > 0)
                     {

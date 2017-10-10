@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0</StartTime>
+    <Duration>0.2</Duration>
+    <Throttle>90</Throttle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>60</StartTime>
+    <Duration>5</Duration>
+    <TargetThrottle>83</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>87</StartTime>
+    <Duration>5</Duration>
+    <TargetThrottle>94</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>120</StartTime>
+    <Duration>5</Duration>
+    <TargetThrottle>90</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>147</StartTime>
+    <Duration>18</Duration>
+    <TargetThrottle>72</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>164</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>170</StartTime>
+    <Duration>1000</Duration>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+</ArrayOfCommand>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Prograde">
+    <StartTime>0.1</StartTime>
+    <Duration>226900</Duration>
+    <InitialAdjustmentTime>0</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>19120</StartTime>
+  </Command>
+  
+</ArrayOfCommand>

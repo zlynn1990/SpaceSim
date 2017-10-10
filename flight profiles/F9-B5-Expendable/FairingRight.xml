@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Prograde">
+    <StartTime>220</StartTime>
+    <Duration>1000</Duration>
+    <InitialAdjustmentTime>5</InitialAdjustmentTime>
+  </Command>
+</ArrayOfCommand>

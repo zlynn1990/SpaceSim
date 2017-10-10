@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-98</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-110</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>100</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-115</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>154</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>155</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-105</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>160</StartTime>
+    <Duration>80</Duration>
+    <TargetOrientation>-105</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>180</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>240</StartTime>
+    <Duration>180</Duration>
+    <TargetOrientation>-165</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>480</StartTime>
+    <Duration>10</Duration>
+    <Message>Note the Formosat-5 S2 AoA moving from positive to extreme negative as it approaches SECO.</Message>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>420</StartTime>
+    <Duration>140</Duration>
+    <TargetOrientation>-232</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>600</StartTime>
+    <Duration>3000</Duration>
+    <InitialAdjustmentTime>25</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>679</StartTime>
+  </Command>
+</ArrayOfCommand>

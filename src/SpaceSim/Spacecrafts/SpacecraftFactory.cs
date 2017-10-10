@@ -29,10 +29,21 @@ namespace SpaceSim.Spacecrafts
 
             switch (config.VehicleType)
             {
+                case "BFR Crew Launch":
+                case "BFR Direct GTO":
+                    return BuildBFRCrew(planet, config, craftDirectory);
+                case "BFS to GEO":
+                    return BuildBfsLeo(planet, config, craftDirectory);
                 case "GenericF9":
                     return BuildGenericF9(planet, config, craftDirectory);
                 case "DragonF9":
                     return BuildF9Dragon(planet, config, craftDirectory);
+                case "X37B":
+                    return BuildX37B(planet, config, craftDirectory);
+                case "F9S2 Earth EDL":
+                    return BuildF9S2EDL(planet, config, craftDirectory);
+                case "F9S2 Earth LEO EDL":
+                    return BuildF9S2LEOEDL(planet, config, craftDirectory);
                 case "F9SSTO":
                     return BuildF9SSTO(planet, craftDirectory);
                 case "DragonAbort":
@@ -55,6 +66,16 @@ namespace SpaceSim.Spacecrafts
                     return BuildItsEDL(planet, config, craftDirectory);
                 case "Scaled BFR Launch":
                     return BuildScaledBFR(planet, config, craftDirectory);
+                case "Scaled BFR GTO":
+                    return BuildScaledBfrGto(planet, config, craftDirectory);
+                case "Scaled BFS TLI":
+                    return BuildScaledBfsTLI(planet, config, craftDirectory);
+                case "Scaled BFS LL":
+                    return BuildScaledBfsLL(planet, config, craftDirectory);
+                case "Scaled BFS TEI":
+                    return BuildScaledBfsTEI(planet, config, craftDirectory);
+                case "Scaled BFS EDL":
+                    return BuildScaledBfsEDL(planet, config, craftDirectory);
                 default:
                     throw new Exception("Unknown vehicle type: " + config.VehicleType);
             }
@@ -83,6 +104,29 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
+        private static List<ISpaceCraft> BuildX37B(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var x37b = new X37B(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset, planet.Velocity, config.PayloadMass);
+
+            var fairingLeft = new Fairing(craftDirectory, x37b.Position, DVector2.Zero, true);
+            var fairingRight = new Fairing(craftDirectory, x37b.Position, DVector2.Zero, false);
+
+            x37b.AttachFairings(fairingLeft, fairingRight);
+
+            var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 11.2);
+
+            x37b.AddChild(f9S2);
+            f9S2.SetParent(x37b);
+            f9S2.AddChild(f9S1);
+            f9S1.SetParent(f9S2);
+
+            return new List<ISpaceCraft>
+            {
+                x37b, f9S2, f9S1, fairingLeft, fairingRight
+            };
+        }
+
         private static List<ISpaceCraft> BuildF9Dragon(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
             var dragon = new Dragon(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset, planet.Velocity, config.PayloadMass);
@@ -101,6 +145,28 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 dragon, dragonTrunk, f9S2, f9S1
+            };
+        }
+
+        private static List<ISpaceCraft> BuildF9S2LEOEDL(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var s2 = new F9S2B(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 150000),
+                                  planet.Velocity + new DVector2(-7400, 700), 0, 1000);
+
+            return new List<ISpaceCraft>
+            {
+                s2
+            };
+        }
+
+        private static List<ISpaceCraft> BuildF9S2EDL(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var s2 = new F9S2B(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 150000),
+                                  planet.Velocity + new DVector2(-10000, 850), 0, 1000);
+
+            return new List<ISpaceCraft>
+            {
+                s2
             };
         }
 
@@ -141,6 +207,11 @@ namespace SpaceSim.Spacecrafts
         {
             var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset,
                                       planet.Velocity + new DVector2(-400, 0) + config.VelocityOffset, config.PayloadMass);
+
+            var fairingLeft = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, true);
+            var fairingRight = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, false);
+
+            demoSat.AttachFairings(fairingLeft, fairingRight);
 
             var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
             var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero);
@@ -233,6 +304,39 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
+        private static List<ISpaceCraft> BuildBFRCrew(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new BFS(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius),
+                planet.Velocity + new DVector2(-400, 0), config.PayloadMass);
+
+            var booster = new BFR(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            ship.AddChild(booster);
+            booster.SetParent(ship);
+
+            return new List<ISpaceCraft>
+            {
+                ship, booster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildBfsLeo(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var carousel = new Carousel(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius + 300000.0, 0), planet.Velocity + new DVector2(0, -7730), config.PayloadMass);
+
+            var ship = new BFS(craftDirectory, DVector2.Zero, DVector2.Zero, 0, 1100000);
+            //var ship = new BFS(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius + 300000.0, 0),
+            //    planet.Velocity + new DVector2(0, -7730), config.PayloadMass, 997800);
+
+            carousel.AddChild(ship);
+            ship.SetParent(carousel);
+
+            return new List<ISpaceCraft>
+            {
+                carousel, ship
+            };
+        }
+
         private static List<ISpaceCraft> BuildITSCrew(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
             var ship = new ITSShip(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius),
@@ -284,6 +388,69 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 ship, booster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildScaledBfrGto(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var carousel = new Carousel(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset, planet.Velocity, config.PayloadMass);
+
+            var ship = new ScaledBFS(craftDirectory, DVector2.Zero, DVector2.Zero, 0, 823000);
+
+            var booster = new ScaledBFR(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            carousel.AddChild(ship);
+            ship.SetParent(carousel);
+            ship.AddChild(booster);
+            booster.SetParent(ship);
+
+            return new List<ISpaceCraft>
+            {
+                carousel, ship, booster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildScaledBfsTLI(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new ScaledBFS(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius + 300000.0, 0),
+                planet.Velocity + new DVector2(0, -7730), config.PayloadMass, 997800);
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildScaledBfsLL(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new ScaledBFS(craftDirectory, planet.Position + new DVector2(- planet.SurfaceRadius - 160000.0, 0),
+                planet.Velocity + new DVector2(0, -1609), config.PayloadMass, 315000);
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildScaledBfsTEI(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new ScaledBFS(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0),
+                planet.Velocity + new DVector2(0, 0), config.PayloadMass, 136600);
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildScaledBfsEDL(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new ScaledBFS(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 150000),
+                                  planet.Velocity + new DVector2(-10800, 1161.2), config.PayloadMass, 20000);
+
+            return new List<ISpaceCraft>
+            {
+                ship
             };
         }
     }

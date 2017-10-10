@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Roll">
+    <StartTime>0</StartTime>
+    <Duration>0</Duration>
+    <TargetOrientation>180</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>0</StartTime>
+    <Duration>0</Duration>
+    <TargetOrientation>-125.8</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1</StartTime>
+    <Duration>240</Duration>
+    <TargetOrientation>-125.8</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>2</StartTime>
+    <Duration>5</Duration>
+    <Message>SpaceX have indicated that they would like to recover the Falcon second stage ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>8</StartTime>
+    <Duration>5</Duration>
+    <Message>... but the difficulty of this task cannot be underestimated.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>14</StartTime>
+    <Duration>5</Duration>
+    <Message>Earth EDL at 10km/s will generate heat over 10x greater than S1 recovery.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>20</StartTime>
+    <Duration>5</Duration>
+    <Message>With its mass concentrated at the tail, S2 would not be passively stable ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>26</StartTime>
+    <Duration>5</Duration>
+    <Message>... so a combination of passive and active control mechanisms will be required.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>32</StartTime>
+    <Duration>5</Duration>
+    <Message>E.g. ballast at the nose, nitrogen thrusters, split body flaps ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>38</StartTime>
+    <Duration>5</Duration>
+    <Message>... drogue chutes, parafoils, and skids for landing.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>44</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 4x.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>90</StartTime>
+    <Duration>5</Duration>
+    <Message>In order to increase drag whilst controlling altitude, fly wide sweeping arcs as per shuttle.</Message>
+  </Command>
+  
+  <!-- roll to 95 -->
+  <Command xsi:type="Roll">
+    <StartTime>120</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>95</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>130</StartTime>
+    <Duration>80</Duration>
+    <TargetOrientation>87</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>195</StartTime>
+    <Duration>5</Duration>
+    <Message>Maximum heating rate, similar to Grey Dragon re-entry.</Message>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>210</StartTime>
+    <Duration>30</Duration>
+    <TargetOrientation>95</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="RelativePitch">
+    <StartTime>240</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>250</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>255</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>272.5</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>260</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-125.8</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>260</StartTime>
+    <Duration>120</Duration>
+    <TargetOrientation>272</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="RelativePitch">
+    <StartTime>380</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>390</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>87.5</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>400</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-125.8</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>400</StartTime>
+    <Duration>120</Duration>
+    <TargetOrientation>85</TargetOrientation>
+  </Command>
+
+  <Command xsi:type="RelativePitch">
+    <StartTime>520</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>530</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-87.5</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>540</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-125.8</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>550</StartTime>
+    <Duration>150</Duration>
+    <TargetOrientation>-82.5</TargetOrientation>
+  </Command>
+  
+  <Command xsi:type="Post">
+    <StartTime>660</StartTime>
+    <Duration>5</Duration>
+    <Message>Once subsonic, a drogue chute could be deployed.</Message>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>700</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>710</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>0</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>710</StartTime>
+    <Duration>370</Duration>
+    <TargetOrientation>-190</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Drogues</Part>
+    <StartTime>720</StartTime>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>1050</StartTime>
+    <Duration>5</Duration>
+    <Message>Once velocity has reduced sufficiently, a parafoil could be deployed</Message>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Parachutes</Part>
+    <StartTime>1080</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1080</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Landing Legs</Part>
+    <StartTime>1227</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1232</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-160</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1237</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+</ArrayOfCommand>

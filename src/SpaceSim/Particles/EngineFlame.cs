@@ -29,8 +29,11 @@ namespace SpaceSim.Particles
         }
 
         public void Update(TimeStep timeStep, DVector2 enginePosition, DVector2 shipVelocity,
-                           double rotation, double throttle, double ispMultiplier)
+                           double rotation, double throttle, double ispMultiplier, double angle = 0)
         {
+            if (angle != 0)
+                _angle = angle;
+
             double retrograde = rotation + Math.PI + _angle;
 
             int particles = (int)((throttle * _particleRate)  / timeStep.UpdateLoops);

@@ -6,6 +6,8 @@ using SpaceSim.Physics;
 using SpaceSim.Spacecrafts.FalconCommon;
 using VectorMath;
 
+using SpaceSim.Properties;
+
 namespace SpaceSim.Spacecrafts
 {
     class DemoSat : SpaceCraftBase
@@ -103,6 +105,7 @@ namespace SpaceSim.Spacecrafts
         private Fairing _leftFairing;
         private Fairing _rightFairing;
         private bool _deployedFairings;
+        DateTime timestamp = DateTime.Now;
 
         public DemoSat(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
             : base(craftDirectory, position, velocity, payloadMass, 0, "Satellites/default.png")
@@ -149,6 +152,25 @@ namespace SpaceSim.Spacecrafts
 
             _leftFairing.RenderGdi(graphics, cameraBounds);
             _rightFairing.RenderGdi(graphics, cameraBounds);
+
+            if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
+            {
+                string filename = MissionName + ".csv";
+
+                if (!File.Exists(filename))
+                {
+                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                }
+
+                timestamp = DateTime.Now;
+
+                string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
+                    this.GetRelativeVelocity().Length(),
+                    this.GetRelativeAcceleration().Length() * 100,
+                    this.GetRelativeAltitude() / 100,
+                    this.Throttle * 10);
+                File.AppendAllText(filename, contents);
+            }
         }
     }
 }

@@ -2,6 +2,8 @@
 using SpaceSim.Spacecrafts;
 using VectorMath;
 
+using System;
+
 namespace SpaceSim.Commands
 {
     class ProgradeCommand : CommandBase
@@ -32,6 +34,10 @@ namespace SpaceSim.Commands
             prograde.Normalize();
 
             double retrogradeAngle = prograde.Angle();
+            if (retrogradeAngle > 0)
+            {
+                retrogradeAngle -= Math.PI * 2;
+            }
 
             double adjustRatio = (elapsedTime - StartTime) / _adjustmentTime;
 

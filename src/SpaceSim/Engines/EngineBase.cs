@@ -70,7 +70,7 @@ namespace SpaceSim.Engines
 
             double throttle = (IsActive && Parent.PropellantMass > 0) ? Throttle : 0;
 
-            _engineFlame.Update(timeStep, Parent.Position - offset, Parent.Velocity, Parent.Pitch, throttle, ispMultiplier);
+            _engineFlame.Update(timeStep, Parent.Position - offset, Parent.Velocity, Parent.Pitch, throttle, ispMultiplier, Cant * Offset.X);
         }
 
         public void Draw(Graphics graphics, RectangleD cameraBounds)

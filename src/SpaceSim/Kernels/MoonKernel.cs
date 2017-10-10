@@ -39,7 +39,7 @@ namespace SpaceSim.Kernels
                 }
                 else
                 {
-                    sunDotProduct = 0.05f + sunDotProduct * 0.95f;
+                    sunDotProduct = 0.035f + sunDotProduct * 0.65f;
                 }
 
                 double ratio = distance / MOON_RADIUS;
