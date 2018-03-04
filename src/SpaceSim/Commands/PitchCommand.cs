@@ -22,6 +22,7 @@ namespace SpaceSim.Commands
         public override void Initialize(SpaceCraftBase spaceCraft)
         {
             _currentOrientation = spaceCraft.Pitch;
+            _targetOrientation += spaceCraft.OriginSurfaceAngle;
 
             EventManager.AddMessage($"Pitching to {_displayOrientation.ToString("0.0")} degrees", spaceCraft);
         }
@@ -36,7 +37,7 @@ namespace SpaceSim.Commands
         {
             double ratio = (elapsedTime - StartTime) / Duration;
 
-            spaceCraft.SetPitch(_currentOrientation * (1 - ratio) + _targetOrientation * ratio + spaceCraft.OriginSurfaceAngle);
+            spaceCraft.SetPitch(MathHelper.LerpAngle(_currentOrientation, _targetOrientation, ratio));
         }
     }
 }

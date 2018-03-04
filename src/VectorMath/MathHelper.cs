@@ -1,4 +1,6 @@
-﻿namespace VectorMath
+﻿using System;
+
+namespace VectorMath
 {
     public static class MathHelper
     {
@@ -13,6 +15,25 @@
         public static double Lerp(double from, double to, double t)
         {
             return from + t * (to - from);
+        }
+
+        public static double LerpAngle(double from, double to, double t)
+        {
+            double difference = Math.Abs(to - from);
+
+            if (difference > Math.PI)
+            {
+                if (to > from)
+                {
+                    from += Math.PI * 2;
+                }
+                else
+                {
+                    to += Math.PI * 2;
+                }
+            }
+
+            return from + (to - from) * t;
         }
 
         public static int Clamp(int val, int min, int max)
