@@ -118,6 +118,7 @@ namespace SpaceSim.Spacecrafts
         public IController Controller { get; protected set; }
 
         public bool OnGround { get; private set; }
+        public double OriginSurfaceAngle { get; private set; }
 
         public abstract AeroDynamicProperties GetAeroDynamicProperties { get; }
 
@@ -227,6 +228,22 @@ namespace SpaceSim.Spacecrafts
         public void ToggleDisplayVectors()
         {
             _showDisplayVectors = !_showDisplayVectors;
+        }
+
+        public void SetSurfacePosition(DVector2 position, double surfaceAngle)
+        {
+            Pitch = surfaceAngle;
+            OriginSurfaceAngle = surfaceAngle + Constants.PiOverTwo;
+
+            if (Parent == null)
+            {
+                Position = position;
+            }
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.SetSurfacePosition(position, surfaceAngle);
+            }
         }
 
         /// <summary>

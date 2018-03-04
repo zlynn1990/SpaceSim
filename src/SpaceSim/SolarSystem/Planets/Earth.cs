@@ -2,7 +2,6 @@
 using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
-using VectorMath;
 
 namespace SpaceSim.SolarSystem.Planets
 {
@@ -26,13 +25,11 @@ namespace SpaceSim.SolarSystem.Planets
         public override double RotationRate
         {
             get { return -7.2722052166e-5; }
-            //get { return -7.2722052166e-6; }
         }
 
         public override double RotationPeriod
         {
             get { return 86400; }
-            //get { return 864000; }
         }
 
         public override Color IconColor { get { return Color.Green; } }

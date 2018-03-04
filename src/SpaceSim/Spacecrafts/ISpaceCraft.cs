@@ -34,6 +34,7 @@ namespace SpaceSim.Spacecrafts
         IController Controller { get; }
 
         bool OnGround { get; }
+        double OriginSurfaceAngle { get; }
 
         void InitializeController(EventManager eventManager);
 
@@ -42,6 +43,7 @@ namespace SpaceSim.Spacecrafts
 
         void ToggleDisplayVectors();
 
+        void SetSurfacePosition(DVector2 positon, double surfaceAngle);
         double GetDownrangeDistance(DVector2 pointOfReference);
 
         void SetThrottle(double throttle, int[] engineIds = null);

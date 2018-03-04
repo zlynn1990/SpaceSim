@@ -23,12 +23,12 @@ namespace SpaceSim.Commands
         {
             _currentOrientation = spaceCraft.Pitch;
 
-            EventManager.AddMessage(string.Format("Pitching to {0} degrees", _displayOrientation.ToString("0.0")), spaceCraft);
+            EventManager.AddMessage($"Pitching to {_displayOrientation.ToString("0.0")} degrees", spaceCraft);
         }
 
         public override void Finalize(SpaceCraftBase spaceCraft)
         {
-            spaceCraft.SetPitch(_targetOrientation);
+            spaceCraft.SetPitch(_targetOrientation + spaceCraft.OriginSurfaceAngle);
         }
 
         // Interpolate between current and target orientation over the duration
@@ -36,7 +36,7 @@ namespace SpaceSim.Commands
         {
             double ratio = (elapsedTime - StartTime) / Duration;
 
-            spaceCraft.SetPitch(_currentOrientation * (1 - ratio) + _targetOrientation * ratio);
+            spaceCraft.SetPitch(_currentOrientation * (1 - ratio) + _targetOrientation * ratio + spaceCraft.OriginSurfaceAngle);
         }
     }
 }

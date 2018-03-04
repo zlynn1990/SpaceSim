@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
 using VectorMath;
@@ -58,6 +59,11 @@ namespace SpaceSim.Proxies
         public double GetAtmosphericViscosity(double altitude)
         {
             return _proxy.GetAtmosphericViscosity(altitude);
+        }
+
+        public double GetSurfaceAngle(DateTime localTime, IMassiveBody sun)
+        {
+            return _proxy.GetSurfaceAngle(localTime, sun);
         }
 
         public override void Update(double dt)
