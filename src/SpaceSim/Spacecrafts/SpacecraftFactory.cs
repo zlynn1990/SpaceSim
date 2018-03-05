@@ -82,6 +82,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildGreyDragonFH(planet, config, craftDirectory);
                 case "GenericFH":
                     return BuildFalconHeavy(planet, config, craftDirectory);
+                case "FH-Demo":
+                    return BuildFalconHeavyDemo(planet, config, craftDirectory);
                 case "AutoLandingTest":
                     return BuildAutoLandingTest(planet, config, craftDirectory);
                 case "ITS Crew Launch":
@@ -257,6 +259,37 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 demoSat, fhS2, fhS1, fhLeftBooster, fhRightBooster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildFalconHeavyDemo(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var roadster = new Roadster(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0) + config.PositionOffset,
+                          planet.Velocity + new DVector2(0, -400) + config.VelocityOffset, config.PayloadMass);
+
+            var fairingLeft = new Fairing(craftDirectory, roadster.Position, DVector2.Zero, true, -5.0);
+            var fairingRight = new Fairing(craftDirectory, roadster.Position, DVector2.Zero, false, -5.0);
+
+            roadster.AttachFairings(fairingLeft, fairingRight);
+
+            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero, 404272);
+            var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero, 8.4);
+
+            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero, 396772);
+            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero, 396772);
+
+            roadster.AddChild(fhS2);
+            fhS2.SetParent(roadster);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                roadster, fhS2, fhLeftBooster, fhS1, fhRightBooster, fairingLeft, fairingRight
             };
         }
 
