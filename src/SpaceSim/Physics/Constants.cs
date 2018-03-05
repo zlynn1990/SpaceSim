@@ -4,7 +4,7 @@ namespace SpaceSim.Physics
 {
     public static class Constants
     {
-        public static DateTime Epoch = new DateTime(2016, 9, 9);
+        public static DateTime Epoch = new DateTime(2016, 9, 9, 6, 53, 0, DateTimeKind.Utc);
 
         public const double GravitationConstant = 6.67384e-11;
 

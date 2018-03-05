@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SpaceSim.Contracts;
+using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
 using SpaceSim.Spacecrafts.DragonV1;
 using SpaceSim.Spacecrafts.DragonV2;
@@ -15,7 +16,7 @@ namespace SpaceSim.Spacecrafts
 {
     static class SpacecraftFactory
     {
-        public static List<ISpaceCraft> BuildSpaceCraft(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        public static List<ISpaceCraft> BuildSpaceCraft(IMassiveBody planet, double surfaceAngle, MissionConfig config, string craftDirectory)
         {
             if (string.IsNullOrEmpty(config.VehicleType))
             {
@@ -27,6 +28,31 @@ namespace SpaceSim.Spacecrafts
                 throw new Exception("Must specify a parent planet for the launch vehicle!");
             }
 
+            var planetOffset = new DVector2(Math.Cos(surfaceAngle) * planet.SurfaceRadius,
+                                           Math.Sin(surfaceAngle) * planet.SurfaceRadius);
+
+            List<ISpaceCraft> spaceCrafts = GenerateSpaceCraft(planet, config, craftDirectory);
+
+            if (spaceCrafts.Count == 0)
+            {
+                throw new Exception("No spacecrafts produced!");
+            }
+
+            ISpaceCraft primaryCraft = spaceCrafts[0];
+
+            DVector2 distanceFromSurface = primaryCraft.Position - planet.Position;
+
+            // If the ship is spawned on the planet update it's position to the correct surface angle
+            if (distanceFromSurface.Length() * 0.999 < planet.SurfaceRadius)
+            {
+                primaryCraft.SetSurfacePosition(planet.Position + planetOffset, surfaceAngle);
+            }
+
+            return spaceCrafts;
+        }
+
+        private static List<ISpaceCraft> GenerateSpaceCraft(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
             switch (config.VehicleType)
             {
                 case "BFR Crew Launch":

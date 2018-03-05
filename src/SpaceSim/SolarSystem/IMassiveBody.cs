@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using SpaceSim.Physics;
 
 namespace SpaceSim.SolarSystem
@@ -18,5 +19,7 @@ namespace SpaceSim.SolarSystem
         double GetIspMultiplier(double altitude);
         double GetAtmosphericDensity(double altitude);
         double GetAtmosphericViscosity(double altitude);
+
+        double GetSurfaceAngle(DateTime localTime, IMassiveBody sun);
     }
 }

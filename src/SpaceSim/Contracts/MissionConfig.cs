@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Contracts
@@ -19,6 +20,19 @@ namespace SpaceSim.Contracts
         public DVector2 VelocityOffset { get; set; }
 
         public string LaunchDate { get; set; }
+
+        public DateTime GetLaunchDate()
+        {
+            DateTime date;
+
+            if (DateTime.TryParse(LaunchDate, out date))
+            {
+                return date;
+            }
+
+            // Default to epoch if no date is found
+            return Constants.Epoch;
+        }
 
         /// <summary>
         /// Loads a mission from a profile path.

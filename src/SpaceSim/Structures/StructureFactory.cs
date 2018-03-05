@@ -9,7 +9,7 @@ namespace SpaceSim.Structures
 {
     static class StructureFactory
     {
-        public static List<StructureBase> Load(IMassiveBody planet, string missionProfile)
+        public static List<StructureBase> Load(IMassiveBody planet, double launchAngle, string missionProfile)
         {
             var structures = new List<StructureBase>();
 
@@ -22,11 +22,11 @@ namespace SpaceSim.Structures
 
             using (var stream = new FileStream(structurePath, FileMode.Open))
             {
-                var structureConfigs =  (List<StructureConfig>)configSerializer.Deserialize(stream);
+                var structureConfigs = (List<StructureConfig>)configSerializer.Deserialize(stream);
 
                 foreach (StructureConfig structureConfig in structureConfigs)
                 {
-                    double surfaceAngle = GetSurfaceAngle(planet, structureConfig.DownrangeDistance);
+                    double surfaceAngle = GetDownrangeAngle(planet, structureConfig.DownrangeDistance) + launchAngle;
 
                     switch (structureConfig.Type)
                     {
@@ -55,13 +55,13 @@ namespace SpaceSim.Structures
             return structures;
         }
 
-        private static double GetSurfaceAngle(IMassiveBody planet, double downrangeDistance)
+        private static double GetDownrangeAngle(IMassiveBody planet, double downrangeDistance)
         {
             double circumference = 2 * Math.PI * planet.SurfaceRadius;
 
             double downrangeRatio = -downrangeDistance / circumference;
 
-            return downrangeRatio * Math.PI * 2 - Math.PI / 2;
+            return downrangeRatio * Math.PI * 2;
         }
     }
 }

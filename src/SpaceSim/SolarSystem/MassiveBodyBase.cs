@@ -68,6 +68,17 @@ namespace SpaceSim.SolarSystem
             return 1.48e-5;
         }
 
+        public double GetSurfaceAngle(DateTime localTime, IMassiveBody sun)
+        {
+            DVector2 sunDifference = sun.Position - Position;
+
+            double noonAngle = sunDifference.Angle();
+
+            TimeSpan noonOffset = new TimeSpan(localTime.Hour, localTime.Minute, localTime.Second) - new TimeSpan(12, 0, 0);
+
+            return noonAngle + noonOffset.TotalSeconds * RotationRate;
+        }
+
         public virtual double BoundingRadius
         {
             get { return SurfaceRadius + AtmosphereHeight; }

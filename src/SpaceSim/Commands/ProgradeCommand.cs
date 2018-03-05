@@ -47,7 +47,7 @@ namespace SpaceSim.Commands
             }
             else
             {
-                double interpolatedAdjust = _curentOrientation * (1 - adjustRatio) + retrogradeAngle * adjustRatio;
+                double interpolatedAdjust = MathHelper.LerpAngle(_curentOrientation, retrogradeAngle, adjustRatio);
 
                 spaceCraft.SetPitch(interpolatedAdjust);
             }

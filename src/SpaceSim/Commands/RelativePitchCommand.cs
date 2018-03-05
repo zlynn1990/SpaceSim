@@ -30,7 +30,7 @@ namespace SpaceSim.Commands
         {
             double ratio = (elapsedTime - StartTime) / Duration;
 
-            spaceCraft.SetRelativePitch(_currentRelativePitch * (1 - ratio) + _targetRelativePitch * ratio);
+            spaceCraft.SetRelativePitch(MathHelper.LerpAngle(_currentRelativePitch, _targetRelativePitch, ratio));
         }
     }
 }

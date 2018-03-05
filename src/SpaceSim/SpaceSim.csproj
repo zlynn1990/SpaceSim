@@ -210,8 +210,6 @@
     <Compile Include="Spacecrafts\ITS\ScaledBFR.cs" />
     <Compile Include="Spacecrafts\ITS\ScaledBFS.cs" />
     <Compile Include="Spacecrafts\ITS\TiGridFin.cs" />
-    <Compile Include="Spacecrafts\Korea\Hwasong-14\14S1.cs" />
-    <Compile Include="Spacecrafts\Korea\Hwasong-14\14S2.cs" />
     <Compile Include="Spacecrafts\NewGlenn\NGFairing.cs" />
     <Compile Include="Spacecrafts\NewGlenn\NGLandingLeg.cs" />
     <Compile Include="Spacecrafts\NewGlenn\NGS1.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -79,6 +80,8 @@ namespace SpaceSim
         private List<IMassiveBody> _massiveBodies;
         private List<StructureBase> _structures; 
         private List<IGravitationalBody> _gravitationalBodies;
+
+        private DateTime _originTime;
 
         private bool _isPaused;
         private double _totalElapsedSeconds;
@@ -197,12 +200,9 @@ namespace SpaceSim
 
             MissionConfig primaryMission = MissionConfig.Load(ProfilePaths[0]);
 
-            // Forward simulate the mission if necessary
-            DateTime launchDate;
-            if(DateTime.TryParse(primaryMission.LaunchDate, out launchDate))
-            {
-                OrbitHelper.SimulateToTime(_massiveBodies, launchDate, 300);   
-            }
+            _originTime = primaryMission.GetLaunchDate();
+
+            OrbitHelper.SimulateToTime(_massiveBodies, _originTime, 300);
 
             // Load missions
             for (int i = 0; i < ProfilePaths.Count; i++)
@@ -211,9 +211,11 @@ namespace SpaceSim
 
                 IMassiveBody targetPlanet = LocatePlanet(missionConfig.ParentPlanet);
 
-                _spaceCrafts.AddRange(SpacecraftFactory.BuildSpaceCraft(targetPlanet, missionConfig, ProfilePaths[i]));
+                double launchAngle = targetPlanet.GetSurfaceAngle(_originTime, _sun);
 
-                _structures.AddRange(StructureFactory.Load(targetPlanet, ProfilePaths[i]));
+                _spaceCrafts.AddRange(SpacecraftFactory.BuildSpaceCraft(targetPlanet, launchAngle, missionConfig, ProfilePaths[i]));
+
+                _structures.AddRange(StructureFactory.Load(targetPlanet, launchAngle, ProfilePaths[i]));
             }
 
             // Initialize the spacecraft controllers
@@ -688,11 +690,14 @@ namespace SpaceSim
                 int elapsedYears = elapsedTime.Days / 365;
                 int elapsedDays = elapsedTime.Days % 365;
 
+                DateTime localTime = _originTime + elapsedTime;
+
                 // Main timing display
                 _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
                 {
-                    "Elapsed Time: " + string.Format("Y:{0} D:{1} H:{2} M:{3} S:{4}", elapsedYears, elapsedDays, elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds),
-                    "Update Speed: " + timeStep.Multiplier
+                    $"Origin Time: {localTime.ToShortDateString()} {localTime.ToShortTimeString()}",
+                    $"Elapsed Time: Y:{elapsedYears} D:{elapsedDays} H:{elapsedTime.Hours} M:{elapsedTime.Minutes} S:{elapsedTime.Seconds}",
+                    $"Update Speed: {timeStep.Multiplier}"
                 });
 
                 // Target display

@@ -118,6 +118,7 @@ namespace SpaceSim.Spacecrafts
         public IController Controller { get; protected set; }
 
         public bool OnGround { get; private set; }
+        public double OriginSurfaceAngle { get; private set; }
 
         public abstract AeroDynamicProperties GetAeroDynamicProperties { get; }
 
@@ -227,6 +228,22 @@ namespace SpaceSim.Spacecrafts
         public void ToggleDisplayVectors()
         {
             _showDisplayVectors = !_showDisplayVectors;
+        }
+
+        public void SetSurfacePosition(DVector2 position, double surfaceAngle)
+        {
+            Pitch = surfaceAngle;
+            OriginSurfaceAngle = surfaceAngle + Constants.PiOverTwo;
+
+            if (Parent == null)
+            {
+                Position = position;
+            }
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.SetSurfacePosition(position, surfaceAngle);
+            }
         }
 
         /// <summary>
@@ -398,22 +415,11 @@ namespace SpaceSim.Spacecrafts
 
         public void SetRelativePitch(double pitch)
         {
-            double altitude = GetRelativeAltitude();
-            if (altitude > GravitationalParent.AtmosphereHeight)
-            {
-                Pitch = GravitationalParent.Pitch + pitch;
-            }
-            else
-            {
-                DVector2 difference = GravitationalParent.Position - Position;
-                difference.Normalize();
-                var surfaceNormal = new DVector2(difference.Y, difference.X);
-                double normal = surfaceNormal.Angle();
-                if (double.IsNaN(normal))
-                    Pitch = GravitationalParent.Pitch + pitch;
-                else
-                    Pitch = GravitationalParent.Pitch + pitch - normal;
-            }
+            DVector2 difference = GravitationalParent.Position - Position;
+            difference.Normalize();
+            double surfaceNormal = difference.Angle() - Constants.PiOverTwo;
+
+            Pitch = surfaceNormal + pitch;
 
             foreach (ISpaceCraft child in Children)
             {
@@ -469,32 +475,11 @@ namespace SpaceSim.Spacecrafts
 
         public override double GetRelativePitch()
         {
-            double altitude = GetRelativeAltitude();
-            double relativePitch = Pitch - GravitationalParent.Pitch;
-
-            if (altitude > GravitationalParent.AtmosphereHeight)
-            {
-                return relativePitch;
-            }
-
             DVector2 difference = GravitationalParent.Position - Position;
             difference.Normalize();
-            var surfaceNormal = new DVector2(difference.Y, difference.X);
-            double normal = surfaceNormal.Angle();
+            double surfaceNormal = difference.Angle() - Constants.PiOverTwo;
 
-            if (!double.IsNaN(normal))
-            {
-                if (altitude > 0.1)
-                {
-                    relativePitch += normal;
-                }
-                else
-                {
-                    relativePitch = normal;
-                }
-            }
-
-            return relativePitch;
+            return Pitch - surfaceNormal;
         }
 
         public double GetAlpha()
