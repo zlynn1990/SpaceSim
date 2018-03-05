@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
@@ -112,22 +113,22 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _parachute.Update(dt);
         }
 
-        public override void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public override void RenderGdi(Graphics graphics, Camera camera)
         {
             if (_isHidden) return;
 
-            base.RenderGdi(graphics, cameraBounds);
+            base.RenderGdi(graphics, camera);
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
-            base.RenderShip(graphics, cameraBounds, screenBounds);
+            base.RenderShip(graphics, camera, screenBounds);
 
             if(_drogueChute.IsDeploying() || _drogueChute.IsDeployed())
-                _drogueChute.RenderGdi(graphics, cameraBounds);
+                _drogueChute.RenderGdi(graphics, camera);
 
             if (_parachute.IsDeploying() || _parachute.IsDeployed())
-                _parachute.RenderGdi(graphics, cameraBounds);
+                _parachute.RenderGdi(graphics, camera);
         }
     }
 }

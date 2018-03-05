@@ -202,7 +202,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             }
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             // Build the main texture (a combination of base and soot)
             using (Graphics graphics2 = RenderUtils.GetContext(false, _drawingBuffer))
@@ -243,10 +243,10 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);
 
+            camera.ApplyRotationMatrix(graphics);
+
             graphics.TranslateTransform(offset.X, offset.Y);
-
             graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
-
             graphics.TranslateTransform(-offset.X, -offset.Y);
 
             graphics.DrawImage(_drawingBuffer, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
@@ -255,20 +255,20 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
             foreach (GridFin gridFin in _gridFins)
             {
-                gridFin.RenderGdi(graphics, cameraBounds);
+                gridFin.RenderGdi(graphics, camera);
             }
 
             foreach (LandingLeg landingLeg in _landingLegs)
             {
-                landingLeg.RenderGdi(graphics, cameraBounds);
+                landingLeg.RenderGdi(graphics, camera);
             }
         }
 
-        protected override void RenderAbove(Graphics graphics, RectangleD cameraBounds)
+        protected override void RenderAbove(Graphics graphics, Camera camera)
         {
-            base.RenderAbove(graphics, cameraBounds);
+            base.RenderAbove(graphics, camera);
 
-            _engineSmoke.Draw(graphics, cameraBounds);
+            _engineSmoke.Draw(graphics, camera);
         }
     }
 }

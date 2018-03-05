@@ -101,9 +101,9 @@ namespace SpaceSim.Physics
 
         public abstract void FixedUpdate(TimeStep timeStep);
 
-        public virtual void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public virtual void RenderGdi(Graphics graphics, Camera camera)
         {
-            OrbitTrace.Draw(graphics, cameraBounds, this);
+            OrbitTrace.Draw(graphics, camera, this);
         }
     }
 }

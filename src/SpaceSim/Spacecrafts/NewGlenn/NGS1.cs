@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using VectorMath;
 
@@ -115,11 +116,11 @@ namespace SpaceSim.Spacecrafts.NewGlenn
             }
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             foreach (NGLandingLeg landingLeg in _landingLegs)
             {
-                landingLeg.RenderGdi(graphics, cameraBounds);
+                landingLeg.RenderGdi(graphics, camera);
             }
 
             double drawingRotation = Pitch + Math.PI * 0.5;

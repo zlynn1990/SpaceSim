@@ -28,20 +28,20 @@ namespace SpaceSim.Particles
             _color = color;
         }
 
-        public void Draw(Graphics graphics, RectangleD cameraBounds)
+        public void Draw(Graphics graphics, Camera camera)
         {
             var particleBounds = new List<RectangleF>();
 
             float particleScale;
 
             // Scale particle size with viewport width
-            if (cameraBounds.Width > 1000)
+            if (camera.Bounds.Width > 1000)
             {
                 particleScale = 1.5f;
             }
             else
             {
-                particleScale = (float)(1.22e-6 * cameraBounds.Width * cameraBounds.Width - 4.8e-3 * cameraBounds.Width + 5.5);
+                particleScale = (float)(1.22e-6 * camera.Bounds.Width * camera.Bounds.Width - 4.8e-3 * camera.Bounds.Width + 5.5);
             }
 
             float halfParticleScale = particleScale * 0.5f;
@@ -50,9 +50,9 @@ namespace SpaceSim.Particles
             {
                 if (particle.IsActive)
                 {
-                    if (cameraBounds.Contains(particle.Position))
+                    if (camera.Contains(particle.Position))
                     {
-                        PointF localPoint = RenderUtils.WorldToScreen(particle.Position, cameraBounds);
+                        PointF localPoint = RenderUtils.WorldToScreen(particle.Position, camera.Bounds);
 
                         particleBounds.Add(new RectangleF(localPoint.X - halfParticleScale,
                                                           localPoint.Y - halfParticleScale,
@@ -61,7 +61,11 @@ namespace SpaceSim.Particles
                 }
             }
 
+            camera.ApplyRotationMatrix(graphics);
+
             RenderUtils.DrawRectangles(graphics, particleBounds, _color);
+
+            graphics.ResetTransform();
         }
     }
 }

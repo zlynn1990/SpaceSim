@@ -149,7 +149,7 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             double drawingRotation = Pitch + Math.PI * 0.5;
 
@@ -177,7 +177,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
             foreach (TiGridFin gridFin in _gridFins)
             {
-                gridFin.RenderGdi(graphics, cameraBounds);
+                gridFin.RenderGdi(graphics, camera);
             }
 
             //if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))

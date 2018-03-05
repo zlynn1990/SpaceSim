@@ -187,7 +187,13 @@ namespace SpaceSim.SolarSystem
                 RectangleF atmosphereBounds = RenderUtils.ComputeEllipseSize(Position, cameraBounds, BoundingRadius);
 
                 // Saftey
-                if (atmosphereBounds.Width > RenderUtils.ScreenWidth * 5000) return;
+                if (atmosphereBounds.Width > RenderUtils.ScreenWidth * 5000)
+                {
+                    // Just render the atmosphere color to simulate being in the air
+                    graphics.Clear(IconAtmopshereColor);
+
+                    return;
+                }
 
                 graphics.FillEllipse(new SolidBrush(IconAtmopshereColor), atmosphereBounds);
             }

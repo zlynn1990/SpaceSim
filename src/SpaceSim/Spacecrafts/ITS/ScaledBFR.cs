@@ -118,7 +118,7 @@ namespace SpaceSim.Spacecrafts.ITS
             this.Texture = new Bitmap(fullPath);
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             double drawingRotation = Pitch + Math.PI * 0.5;
 

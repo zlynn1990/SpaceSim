@@ -1056,33 +1056,35 @@ namespace SpaceSim.Spacecrafts
         /// Renders the space craft at it's correct scale and rotation according to the camera.
         /// The engines are rendered first and then the space craft body.
         /// </summary>
-        public override void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public override void RenderGdi(Graphics graphics, Camera camera)
         {
             // Only draws the ship if it's visible
-            if (Visibility(cameraBounds) > 0)
+            if (Visibility(camera.Bounds) > 0)
             {
                 RectangleD bounds = ComputeBoundingBox();
 
                 // In range for render
-                if (cameraBounds.IntersectsWith(bounds))
+                if (camera.Intersects(bounds))
                 {
-                    RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
+                    RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, camera.Bounds, Width, Height);
 
                     // Saftey
                     if (screenBounds.Width > RenderUtils.ScreenWidth * 500) return;
 
-                    RenderBelow(graphics, cameraBounds);
+                    RenderBelow(graphics, camera);
 
-                    RenderShip(graphics, cameraBounds, screenBounds);
+                    RenderShip(graphics, camera, screenBounds);
 
-                    RenderAbove(graphics, cameraBounds);
+                    RenderAbove(graphics, camera);
                 }
             }
 
             // Only draw orbit traces and launch trails for detatched ships
             if (Parent == null)
             {
-                if (cameraBounds.Width > 1000)
+                camera.ApplyRotationMatrix(graphics);
+
+                if (camera.Bounds.Width > 1000)
                 {
                     if (GravitationalParent != null)
                     {
@@ -1090,35 +1092,37 @@ namespace SpaceSim.Spacecrafts
 
                         if (_launchTrails.ContainsKey(parentName))
                         {
-                            _launchTrails[parentName].Draw(graphics, cameraBounds, GravitationalParent);
+                            _launchTrails[parentName].Draw(graphics, camera.Bounds, GravitationalParent);
                         }
                     }
                 }
 
                 // Don't draw orbit traces on the ground
-                base.RenderGdi(graphics, cameraBounds);
+                base.RenderGdi(graphics, camera);
+
+                graphics.ResetTransform();
             }
         }
 
-        protected virtual void RenderBelow(Graphics graphics, RectangleD cameraBounds)
+        protected virtual void RenderBelow(Graphics graphics, Camera camera)
         {
             foreach (IEngine engine in Engines)
             {
-                engine.Draw(graphics, cameraBounds);
+                engine.Draw(graphics, camera);
             }
         }
 
-        protected virtual void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected virtual void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             double drawingRotation = Pitch + Math.PI * 0.5;
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);
 
+            camera.ApplyRotationMatrix(graphics);
+
             graphics.TranslateTransform(offset.X, offset.Y);
-
             graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
-
             graphics.TranslateTransform(-offset.X, -offset.Y);
 
             graphics.DrawImage(Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
@@ -1126,20 +1130,20 @@ namespace SpaceSim.Spacecrafts
             graphics.ResetTransform();
         }
 
-        protected virtual void RenderAbove(Graphics graphics, RectangleD cameraBounds)
+        protected virtual void RenderAbove(Graphics graphics, Camera camera)
         {
             if (EntryFlame != null)
             {
-                EntryFlame.Draw(graphics, cameraBounds);
+                EntryFlame.Draw(graphics, camera);
             }
 
             // Only show the vectors when it's requested and the craft is not parented
             if (_showDisplayVectors && Parent == null)
             {
                 // The length of the vector is based on the width of the camera bounds
-                float lengthFactor = (float)(cameraBounds.Width * 0.1);
+                float lengthFactor = (float)(camera.Bounds.Width * 0.1);
 
-                PointF start = RenderUtils.WorldToScreen(Position, cameraBounds);
+                PointF start = RenderUtils.WorldToScreen(Position, camera.Bounds);
 
                 DVector2 relativeVelocity = GetRelativeVelocity();
 
@@ -1148,7 +1152,7 @@ namespace SpaceSim.Spacecrafts
                 {
                     relativeVelocity.Normalize();
 
-                    PointF velocityEnd = RenderUtils.WorldToScreen(Position + relativeVelocity * lengthFactor, cameraBounds);
+                    PointF velocityEnd = RenderUtils.WorldToScreen(Position + relativeVelocity * lengthFactor, camera.Bounds);
 
                     graphics.DrawLine(Pens.White, start, velocityEnd);
                 }
@@ -1156,7 +1160,7 @@ namespace SpaceSim.Spacecrafts
                 DVector2 pitchVector = DVector2.FromAngle(Pitch);
                 pitchVector.Normalize();
 
-                PointF pitchEnd = RenderUtils.WorldToScreen(Position + pitchVector * lengthFactor, cameraBounds);
+                PointF pitchEnd = RenderUtils.WorldToScreen(Position + pitchVector * lengthFactor, camera.Bounds);
 
                 graphics.DrawLine(Pens.Red, start, pitchEnd);
             }

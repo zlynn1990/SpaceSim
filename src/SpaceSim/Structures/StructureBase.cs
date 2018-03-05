@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using SpaceSim.Drawing;
+using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
 using VectorMath;
 
@@ -57,7 +58,7 @@ namespace SpaceSim.Structures
             throw new NotImplementedException();
         }
 
-        public void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public void RenderGdi(Graphics graphics, Camera camera)
         {
             // Update position and rotation given the parent's motion
             double currentRotation = (_parent.Pitch - _initialRotation) + _rotationOffset;
@@ -69,36 +70,36 @@ namespace SpaceSim.Structures
             var bounds = new RectangleD(Position.X - Width * 0.5, Position.Y - Height * 0.5, Width, Height);
 
             // Not in range easy return
-            if (!cameraBounds.IntersectsWith(bounds))
+            if (!camera.Intersects(bounds))
             {
                 return;
             }
 
-            RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
+            RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, camera.Bounds, Width, Height);
 
             // Saftey
             if (screenBounds.Width > RenderUtils.ScreenWidth * 500) return;
 
-            double drawingRotation = currentRotation + Math.PI * 0.5;
+            double drawingRotation = currentRotation + Constants.PiOverTwo;
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);
 
+            camera.ApplyRotationMatrix(graphics);
+
             graphics.TranslateTransform(offset.X, offset.Y);
-
             graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
-
             graphics.TranslateTransform(-offset.X, -offset.Y);
 
             graphics.DrawImage(_texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
             graphics.ResetTransform();
 
-            double visibility = Visibility(cameraBounds);
+            double visibility = Visibility(camera.Bounds);
 
             if (visibility < 1)
             {
-                PointF iconPoint = RenderUtils.WorldToScreen(Position, cameraBounds);
+                PointF iconPoint = RenderUtils.WorldToScreen(Position, camera.Bounds);
 
                 var iconBounds = new RectangleF(iconPoint.X - 5, iconPoint.Y - 5, 10, 10);
 
