@@ -49,7 +49,7 @@ namespace SpaceSim.Orbits
             _points.Add(point);
         }
 
-        public void Draw(Graphics graphics, RectangleD cameraBounds, IMapRenderable orbitingBody)
+        public void Draw(Graphics graphics, Camera camera, IMapRenderable orbitingBody)
         {
             var traceBounds = new List<RectangleF>();
 
@@ -57,9 +57,9 @@ namespace SpaceSim.Orbits
             {
                 DVector2 orbitPoint = _points[i];
 
-                if (cameraBounds.Contains(orbitPoint))
+                if (camera.Contains(orbitPoint))
                 {
-                    PointF localPoint = RenderUtils.WorldToScreen(orbitPoint, cameraBounds);
+                    PointF localPoint = RenderUtils.WorldToScreen(orbitPoint, camera.Bounds);
 
                     if (i == _apogeeIndex && i > 1)
                     {
@@ -76,9 +76,9 @@ namespace SpaceSim.Orbits
                 }
             }
 
-            if (_points.Count > 0 && cameraBounds.Contains(_points[0]))
+            if (_points.Count > 0 && camera.Contains(_points[0]))
             {
-                RenderStart(graphics, cameraBounds, orbitingBody, _points[0]);
+                RenderStart(graphics, camera.Bounds, orbitingBody, _points[0]);
             }
 
             RenderUtils.DrawRectangles(graphics, traceBounds, orbitingBody.IconColor);

@@ -149,17 +149,15 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             double drawingRotation = Pitch + Math.PI * 0.5;
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);
 
-            graphics.TranslateTransform(offset.X, offset.Y);
-
-            graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
-            graphics.TranslateTransform(-offset.X, -offset.Y);
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
             // Normalize the angle to [0,360]
             int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
@@ -177,7 +175,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
             foreach (TiGridFin gridFin in _gridFins)
             {
-                gridFin.RenderGdi(graphics, cameraBounds);
+                gridFin.RenderGdi(graphics, camera);
             }
 
             //if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
@@ -83,20 +84,20 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _isHidden = true;
         }
 
-        public Fairing(string craftDirectory, DVector2 position, DVector2 velocity, bool isLeft, double zOffset = -2.2)
+        public Fairing(string craftDirectory, DVector2 position, DVector2 velocity, bool isLeft)
             : base(craftDirectory, position, velocity, 0, 0, isLeft ? "Falcon/Common/fairingLeft.png" : "Falcon/Common/fairingRight.png", null)
         {
             _isLeft = isLeft;
 
             if (_isLeft)
             {
-                StageOffset = new DVector2(-1.26, zOffset);
+                StageOffset = new DVector2(-1.26, -2.2);
                 _drogueChute = new DrogueChute(this, new DVector2(-1.26, 6.5));
                 _parachute = new Parachute(this, new DVector2(-1.26, 0.0), _isLeft);
             }
             else
             {
-                StageOffset = new DVector2(1.26, zOffset);
+                StageOffset = new DVector2(1.26, -2.2);
                 _drogueChute = new DrogueChute(this, new DVector2(1.26, 6.5));
                 _parachute = new Parachute(this, new DVector2(1.26, 0.0), _isLeft);
             }
@@ -112,22 +113,22 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _parachute.Update(dt);
         }
 
-        public override void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public override void RenderGdi(Graphics graphics, Camera camera)
         {
             if (_isHidden) return;
 
-            base.RenderGdi(graphics, cameraBounds);
+            base.RenderGdi(graphics, camera);
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
-            base.RenderShip(graphics, cameraBounds, screenBounds);
+            base.RenderShip(graphics, camera, screenBounds);
 
             if(_drogueChute.IsDeploying() || _drogueChute.IsDeployed())
-                _drogueChute.RenderGdi(graphics, cameraBounds);
+                _drogueChute.RenderGdi(graphics, camera);
 
             if (_parachute.IsDeploying() || _parachute.IsDeployed())
-                _parachute.RenderGdi(graphics, cameraBounds);
+                _parachute.RenderGdi(graphics, camera);
         }
     }
 }

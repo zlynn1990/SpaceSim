@@ -123,7 +123,7 @@ namespace SpaceSim.Spacecrafts.ITS
             this.payloadMass = payloadMass;
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             double drawingRotation = Pitch + Math.PI * 0.5;
 

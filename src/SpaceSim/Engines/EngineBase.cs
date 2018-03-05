@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Drawing;
 using SpaceSim.Particles;
 using SpaceSim.Physics;
 using SpaceSim.Spacecrafts;
@@ -73,9 +74,9 @@ namespace SpaceSim.Engines
             _engineFlame.Update(timeStep, Parent.Position - offset, Parent.Velocity, Parent.Pitch, throttle, ispMultiplier, Cant * Offset.X);
         }
 
-        public void Draw(Graphics graphics, RectangleD cameraBounds)
+        public void Draw(Graphics graphics, Camera camera)
         {
-            _engineFlame.Draw(graphics, cameraBounds);
+            _engineFlame.Draw(graphics, camera);
         }
     }
 }

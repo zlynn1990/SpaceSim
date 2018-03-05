@@ -4,7 +4,7 @@ using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
 using System.IO;
-
+using SpaceSim.Drawing;
 using SpaceSim.Properties;
 
 namespace SpaceSim.Spacecrafts.ITS
@@ -130,7 +130,7 @@ namespace SpaceSim.Spacecrafts.ITS
             this.payloadMass = payloadMass;
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             double drawingRotation = Pitch + Math.PI * 0.5;
 

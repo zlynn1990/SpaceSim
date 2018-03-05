@@ -127,12 +127,12 @@ namespace SpaceSim.Spacecrafts.Falcon9
             }
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             foreach (Skid skid in _skids)
             {
                 if (skid.IsDeploying() || skid.IsDeployed())
-                    skid.RenderGdi(graphics, cameraBounds);
+                    skid.RenderGdi(graphics, camera);
             }
 
             double drawingRotation = Pitch + Math.PI * 0.5;
@@ -203,10 +203,10 @@ namespace SpaceSim.Spacecrafts.Falcon9
             graphics.ResetTransform();
 
             if (_drogueChute.IsDeploying() || _drogueChute.IsDeployed())
-                _drogueChute.RenderGdi(graphics, cameraBounds);
+                _drogueChute.RenderGdi(graphics, camera);
 
             if (_parachute.IsDeploying() || _parachute.IsDeployed())
-                _parachute.RenderGdi(graphics, cameraBounds);
+                _parachute.RenderGdi(graphics, camera);
 
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {

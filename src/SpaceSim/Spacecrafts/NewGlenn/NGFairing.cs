@@ -5,6 +5,7 @@ using SpaceSim.Physics;
 using VectorMath;
 
 using System.IO;
+using SpaceSim.Drawing;
 
 namespace SpaceSim.Spacecrafts.NewGlenn
 {
@@ -79,11 +80,11 @@ namespace SpaceSim.Spacecrafts.NewGlenn
             Engines = new IEngine[0];
         }
 
-        public override void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public override void RenderGdi(Graphics graphics, Camera camera)
         {
             if (_isHidden) return;
 
-            base.RenderGdi(graphics, cameraBounds);
+            base.RenderGdi(graphics, camera);
         }
     }
 }

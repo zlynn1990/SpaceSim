@@ -48,7 +48,7 @@ namespace SpaceSim
 
         public static int ClockDelayInSeconds;
 
-        private RenderingType _renderingType = RenderingType.OpenCLHardware;
+        private RenderingType _renderingType = RenderingType.GDIPlus;
 
         private bool _isActive;
         private Thread _updateThread;
@@ -101,7 +101,7 @@ namespace SpaceSim
             LoadKernels();
 
             _camera = new Camera(_gravitationalBodies[_targetIndex], 0.3);
-            //_camera = new Camera(_gravitationalBodies[_targetIndex], 500000000);
+            //_camera = new Camera(_gravitationalBodies[_targetIndex], 5000);
 
             _timeStepIndex = TimeStep.RealTimeIndex;
             _timeSteps = TimeStep.Defaults();
@@ -439,6 +439,23 @@ namespace SpaceSim
             }
         }
 
+        private void SetCameraRotation()
+        {
+            IGravitationalBody target = _gravitationalBodies[_targetIndex];
+
+            if (target is ISpaceCraft)
+            {
+                DVector2 craftOffset = target.GravitationalParent.Position - target.Position;
+                craftOffset.Normalize();
+
+                _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
+            }
+            else
+            {
+                _camera.SetRotation(0);
+            }
+        }
+
         /// <summary>
         /// Main game loop - update - draw - sleep
         /// </summary>
@@ -572,6 +589,8 @@ namespace SpaceSim
             {
                 _camera.ChangeZoom(_scrollRate);
             }
+
+            SetCameraRotation();
         }
 
         /// <summary>
@@ -581,7 +600,7 @@ namespace SpaceSim
         {
             _textDisplay.Clear();
 
-            RectangleD cameraBounds = _camera.GetBounds();
+            RectangleD cameraBounds = _camera.Bounds;
 
             IGravitationalBody target = _gravitationalBodies[_targetIndex];
             var targetSpaceCraft = target as SpaceCraftBase;
@@ -626,6 +645,8 @@ namespace SpaceSim
                 {
                     graphics.Clear(Color.Black);
 
+                    _camera.ApplyScreenRotation(graphics);
+
                     foreach (MassiveBodyBase renderable in _massiveBodies)
                     {
                         if (renderable.Visibility(cameraBounds) > 0)
@@ -639,27 +660,31 @@ namespace SpaceSim
             // Draw all orbit traces, spacecrafts, and GDI objects
             using (Graphics graphics = RenderUtils.GetContext(false, _imageBitmap))
             {
-                RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(0, -10e12), new DVector2(0, 10e12), Color.FromArgb(40, 255, 255, 255));
-                RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(-10e12, 0), new DVector2(10e12, 0), Color.FromArgb(40, 255, 255, 255));
+                _camera.ApplyScreenRotation(graphics);
+
+                //RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(0, -10e12), new DVector2(0, 10e12), Color.FromArgb(40, 255, 255, 255));
+                //RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(-10e12, 0), new DVector2(10e12, 0), Color.FromArgb(40, 255, 255, 255));
 
                 // Draw all massive body orbit traces
                 foreach (MassiveBodyBase massiveBody in _massiveBodies)
                 {
                     if (massiveBody is Sun) continue;
 
-                    massiveBody.RenderGdi(graphics, cameraBounds);
+                    massiveBody.RenderGdi(graphics, _camera);
                 }
+
+                graphics.ResetTransform();
 
                 // Draw structures
                 foreach (StructureBase structure in _structures)
                 {
-                    structure.RenderGdi(graphics, cameraBounds);
+                    structure.RenderGdi(graphics, _camera);
                 }
 
                 // Draw spacecraft
                 foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
                 {
-                    spaceCraft.RenderGdi(graphics, cameraBounds);
+                    spaceCraft.RenderGdi(graphics, _camera);
                 }
             }
 
@@ -677,7 +702,7 @@ namespace SpaceSim
                 {
                     if (targetSpaceCraft != null)
                     {
-                        gauge.Update(_gravitationalBodies[_targetIndex].Pitch, throttle / 100.0);
+                        gauge.Update(_gravitationalBodies[_targetIndex].GetRelativePitch(), throttle / 100.0);
                     }
 
                     gauge.Render(graphics, cameraBounds);

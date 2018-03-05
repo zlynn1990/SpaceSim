@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
@@ -110,15 +111,15 @@ namespace SpaceSim.Spacecrafts.NewGlenn
             _rightFairing.Stage();
         }
 
-        public override void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public override void RenderGdi(Graphics graphics, Camera camera)
         {
-            base.RenderGdi(graphics, cameraBounds);
+            base.RenderGdi(graphics, camera);
 
-            _leftFairing.RenderGdi(graphics, cameraBounds);
-            _rightFairing.RenderGdi(graphics, cameraBounds);
+            _leftFairing.RenderGdi(graphics, camera);
+            _rightFairing.RenderGdi(graphics, camera);
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {
@@ -139,7 +140,7 @@ namespace SpaceSim.Spacecrafts.NewGlenn
                 File.AppendAllText(filename, contents);
             }
 
-            base.RenderShip(graphics, cameraBounds, screenBounds);
+            base.RenderShip(graphics, camera, screenBounds);
         }
     }
 }

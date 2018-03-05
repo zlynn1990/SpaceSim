@@ -222,6 +222,7 @@
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
     <Compile Include="SolarSystem\Stars\Sun.cs" />
     <Compile Include="Physics\TimeStep.cs" />
+    <Compile Include="Spacecrafts\SpaceCraftPart.cs" />
     <Compile Include="Structures\ASDS.cs" />
     <Compile Include="Structures\Edwards.cs" />
     <Compile Include="Structures\ITSMount.cs" />

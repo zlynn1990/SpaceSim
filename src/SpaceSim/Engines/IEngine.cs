@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
+using SpaceSim.Drawing;
 using SpaceSim.Physics;
-using VectorMath;
 
 namespace SpaceSim.Engines
 {
@@ -23,6 +23,6 @@ namespace SpaceSim.Engines
         IEngine Clone();
 
         void Update(TimeStep timeStep, double ispMultiplier);
-        void Draw(Graphics graphics, RectangleD cameraBounds);
+        void Draw(Graphics graphics, Camera camera);
     }
 }

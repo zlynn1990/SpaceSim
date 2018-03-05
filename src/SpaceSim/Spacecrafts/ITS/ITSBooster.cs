@@ -113,7 +113,7 @@ namespace SpaceSim.Spacecrafts.ITS
             _spriteSheet = new SpriteSheet("Textures/Spacecraft/Its/booster.png", 4, 12);
         }
 
-        protected override void RenderShip(Graphics graphics, RectangleD cameraBounds, RectangleF screenBounds)
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
             double drawingRotation = Pitch + Math.PI * 0.5;
 

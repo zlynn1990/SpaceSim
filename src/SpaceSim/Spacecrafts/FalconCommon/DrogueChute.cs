@@ -76,13 +76,13 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             }
         }
 
-        public void RenderGdi(Graphics graphics, RectangleD cameraBounds)
+        public void RenderGdi(Graphics graphics, Camera camera)
         {
             double drawingRotation = _parent.Pitch + Pitch;
 
             DVector2 drawingOffset = new DVector2(Math.Cos(drawingRotation), Math.Sin(drawingRotation)) * 6.5;
 
-            RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position - drawingOffset, cameraBounds, Width, Height);
+            RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position - drawingOffset, camera.Bounds, Width, Height);
             //RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f, screenBounds.Y + screenBounds.Height * 0.5f);
