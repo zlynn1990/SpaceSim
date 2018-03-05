@@ -77,11 +77,11 @@ namespace SpaceSim.Drawing
                 double sigmoidY = (1.0 / (1 + Math.Exp(-3.0 * sigmoidX)));
 
                 // Lerp between the two targets
-                _position = _lastTarget.Position * (1 - sigmoidY) + _target.Position * sigmoidY;
+                _position = DVector2.Lerp(_lastTarget.Position, _target.Position, sigmoidY);
 
                 _interpolationTime += dt;
 
-                Rotation = MathHelper.LerpAngle(Rotation, _targetRotation, _interpolationTime);
+                Rotation = MathHelper.LerpAngle(Rotation, _targetRotation, sigmoidY);
             }
             else
             {
@@ -92,11 +92,21 @@ namespace SpaceSim.Drawing
             ComputeBounds();
         }
 
-        public void ApplyRotationMatrix(Graphics graphics)
+        public void ApplyScreenRotation(Graphics graphics)
         {
-            graphics.TranslateTransform(RenderUtils.ScreenWidth / 2.0f, RenderUtils.ScreenHeight / 2.0f);
-            graphics.RotateTransform((float)(Rotation * MathHelper.RadiansToDegrees));
-            graphics.TranslateTransform(-RenderUtils.ScreenWidth / 2.0f, -RenderUtils.ScreenHeight / 2.0f);
+            ApplyRotationMatrix(graphics, RenderUtils.ScreenWidth * 0.5f, RenderUtils.ScreenHeight * 0.5f, Rotation);
+        }
+
+        public void ApplyRotationMatrix(Graphics graphics, PointF offset, double angle)
+        {
+            ApplyRotationMatrix(graphics, offset.X, offset.Y, angle);
+        }
+
+        public void ApplyRotationMatrix(Graphics graphics, float x, float y, double angle)
+        {
+            graphics.TranslateTransform(x, y);
+            graphics.RotateTransform((float)(angle * MathHelper.RadiansToDegrees));
+            graphics.TranslateTransform(-x, -y);
         }
 
         public bool Contains(DVector2 point)

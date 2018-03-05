@@ -36,13 +36,8 @@ namespace SpaceSim.Spacecrafts
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f, screenBounds.Y + screenBounds.Height * 0.5f);
 
-            camera.ApplyRotationMatrix(graphics);
-
-            graphics.TranslateTransform(offset.X, offset.Y);
-
-            graphics.RotateTransform((float)((drawingRotation + Math.PI * 0.5) * 180 / Math.PI));
-
-            graphics.TranslateTransform(-offset.X, -offset.Y);
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation + Constants.PiOverTwo);
 
             graphics.DrawImage(_texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 

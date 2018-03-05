@@ -85,11 +85,8 @@ namespace SpaceSim.Structures
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);
 
-            camera.ApplyRotationMatrix(graphics);
-
-            graphics.TranslateTransform(offset.X, offset.Y);
-            graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
-            graphics.TranslateTransform(-offset.X, -offset.Y);
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
             graphics.DrawImage(_texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
@@ -105,7 +102,11 @@ namespace SpaceSim.Structures
 
                 var iconColor = Color.FromArgb((int)((1 - visibility) * 255), IconColor.R, IconColor.G, IconColor.B);
 
+                camera.ApplyScreenRotation(graphics);
+
                 graphics.FillEllipse(new SolidBrush(iconColor), iconBounds);
+
+                graphics.ResetTransform();
             }
         }
     }

@@ -156,10 +156,8 @@ namespace SpaceSim.Spacecrafts.ITS
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);
 
-            graphics.TranslateTransform(offset.X, offset.Y);
-
-            graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
-            graphics.TranslateTransform(-offset.X, -offset.Y);
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
             // Normalize the angle to [0,360]
             int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;

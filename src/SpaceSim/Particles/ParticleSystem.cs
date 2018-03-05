@@ -61,7 +61,7 @@ namespace SpaceSim.Particles
                 }
             }
 
-            camera.ApplyRotationMatrix(graphics);
+            camera.ApplyScreenRotation(graphics);
 
             RenderUtils.DrawRectangles(graphics, particleBounds, _color);
 

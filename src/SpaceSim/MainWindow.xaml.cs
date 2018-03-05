@@ -645,7 +645,7 @@ namespace SpaceSim
                 {
                     graphics.Clear(Color.Black);
 
-                    _camera.ApplyRotationMatrix(graphics);
+                    _camera.ApplyScreenRotation(graphics);
 
                     foreach (MassiveBodyBase renderable in _massiveBodies)
                     {
@@ -660,7 +660,7 @@ namespace SpaceSim
             // Draw all orbit traces, spacecrafts, and GDI objects
             using (Graphics graphics = RenderUtils.GetContext(false, _imageBitmap))
             {
-                _camera.ApplyRotationMatrix(graphics);
+                _camera.ApplyScreenRotation(graphics);
 
                 //RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(0, -10e12), new DVector2(0, 10e12), Color.FromArgb(40, 255, 255, 255));
                 //RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(-10e12, 0), new DVector2(10e12, 0), Color.FromArgb(40, 255, 255, 255));
@@ -702,7 +702,7 @@ namespace SpaceSim
                 {
                     if (targetSpaceCraft != null)
                     {
-                        gauge.Update(_gravitationalBodies[_targetIndex].Pitch, throttle / 100.0);
+                        gauge.Update(_gravitationalBodies[_targetIndex].GetRelativePitch(), throttle / 100.0);
                     }
 
                     gauge.Render(graphics, cameraBounds);

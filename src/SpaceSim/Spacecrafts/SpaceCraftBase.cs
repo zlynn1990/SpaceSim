@@ -1082,7 +1082,7 @@ namespace SpaceSim.Spacecrafts
             // Only draw orbit traces and launch trails for detatched ships
             if (Parent == null)
             {
-                camera.ApplyRotationMatrix(graphics);
+                camera.ApplyScreenRotation(graphics);
 
                 if (camera.Bounds.Width > 1000)
                 {
@@ -1119,11 +1119,8 @@ namespace SpaceSim.Spacecrafts
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);
 
-            camera.ApplyRotationMatrix(graphics);
-
-            graphics.TranslateTransform(offset.X, offset.Y);
-            graphics.RotateTransform((float)(drawingRotation * 180 / Math.PI));
-            graphics.TranslateTransform(-offset.X, -offset.Y);
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
             graphics.DrawImage(Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
