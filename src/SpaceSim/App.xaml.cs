@@ -21,7 +21,7 @@ namespace SpaceSim
             {
                 //Path.Combine(profileDirectory, "CRS-9"),
                 //Path.Combine(profileDirectory, "CRS-11"),
-                Path.Combine(profileDirectory, "CRS-12"),
+                //Path.Combine(profileDirectory, "CRS-12"),
                 //Path.Combine(profileDirectory, "Formosat-5"),
                 //Path.Combine(profileDirectory, "BulgariaSat-1"),
                 //Path.Combine(profileDirectory, "BulgariaSat-1b"),
@@ -50,7 +50,7 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "F9-B5-ASDS"),
                 //Path.Combine(profileDirectory, "F9-B5-Expendable"),
                 //Path.Combine(profileDirectory, "FH-ASDS"),
-                //Path.Combine(profileDirectory, "FH-DEMO"),
+                Path.Combine(profileDirectory, "FH-DEMO"),
                 //Path.Combine(profileDirectory, "FH-RTLS"),
                 //Path.Combine(profileDirectory, "FH-Expendable"),
                 //Path.Combine(profileDirectory, "F9S2 Earth LEO EDL"),

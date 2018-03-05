@@ -83,20 +83,20 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _isHidden = true;
         }
 
-        public Fairing(string craftDirectory, DVector2 position, DVector2 velocity, bool isLeft)
+        public Fairing(string craftDirectory, DVector2 position, DVector2 velocity, bool isLeft, double zOffset = -2.2)
             : base(craftDirectory, position, velocity, 0, 0, isLeft ? "Falcon/Common/fairingLeft.png" : "Falcon/Common/fairingRight.png", null)
         {
             _isLeft = isLeft;
 
             if (_isLeft)
             {
-                StageOffset = new DVector2(-1.26, -2.2);
+                StageOffset = new DVector2(-1.26, zOffset);
                 _drogueChute = new DrogueChute(this, new DVector2(-1.26, 6.5));
                 _parachute = new Parachute(this, new DVector2(-1.26, 0.0), _isLeft);
             }
             else
             {
-                StageOffset = new DVector2(1.26, -2.2);
+                StageOffset = new DVector2(1.26, zOffset);
                 _drogueChute = new DrogueChute(this, new DVector2(1.26, 6.5));
                 _parachute = new Parachute(this, new DVector2(1.26, 0.0), _isLeft);
             }

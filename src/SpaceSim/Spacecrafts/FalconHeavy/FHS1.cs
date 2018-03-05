@@ -14,8 +14,8 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
         public override double Width { get { return 4.11; } }
         public override double Height { get { return 47.812188; } }
 
-        public FHS1(string craftDirectory, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 409272, "Falcon/Heavy/S1.png")
+        public FHS1(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 409272)
+            : base(craftDirectory, position, velocity, propellantMass, "Falcon/Heavy/S1.png")
         {
             StageOffset = new DVector2(0, 25.5);
 

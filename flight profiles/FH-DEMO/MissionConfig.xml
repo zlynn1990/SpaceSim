@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<MissionConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VehicleType>FH-Demo</VehicleType>
+  <PayloadMass>2000</PayloadMass>
+  <ParentPlanet>Earth</ParentPlanet>
+  <LaunchDate>07/02/2018 3:45:00PM</LaunchDate>
+</MissionConfig>

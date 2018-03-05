@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>120</Duration>
+    <TargetOrientation>-115</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>11</StartTime>
+    <Duration>5</Duration>
+    <Message>The Falcon Heavy demo mission ASDS will be 342kms from LC-39A.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>17</StartTime>
+    <Duration>5</Duration>
+    <Message>That is much closer than most FH sims would have suggested.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>23</StartTime>
+    <Duration>5</Duration>
+    <Message>So, what is SpaceX up to?</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>36</StartTime>
+    <Duration>5</Duration>
+    <Message>To find out, I've taken a more conventional mission profile, and added loft ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>43</StartTime>
+    <Duration>5</Duration>
+    <Message>... not unlike the Formosat-5 profile, until the centre booster lands at the correct range.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>50</StartTime>
+    <Duration>5</Duration>
+    <Message>What this profile allows, with a single S2 burn ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>57</StartTime>
+    <Duration>5</Duration>
+    <Message>... is the accurate insertion of the second stage into an elliptical orbit with an extremly low perigee ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>64</StartTime>
+    <Duration>5</Duration>
+    <Message>... perfect for testing a 10km/s re-entry, about 5.5 hours after liftoff.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>70</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 4x.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>130</StartTime>
+    <Duration>5</Duration>
+    <Message>Decreasing update speed for staging.</Message>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>142</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>135</StartTime>
+    <Duration>45</Duration>
+    <TargetOrientation>-130</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>177</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>180</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-125</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>185</StartTime>
+    <Duration>175</Duration>
+    <TargetOrientation>-155</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>205</StartTime>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>211</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 8x.</Message>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>360</StartTime>
+    <Duration>180</Duration>
+    <TargetOrientation>-178</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>600</StartTime>
+    <Duration>30000</Duration>
+    <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+</ArrayOfCommand>
