@@ -267,8 +267,8 @@ namespace SpaceSim.Spacecrafts
             var roadster = new Roadster(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0) + config.PositionOffset,
                           planet.Velocity + new DVector2(0, -400) + config.VelocityOffset, config.PayloadMass);
 
-            var fairingLeft = new Fairing(craftDirectory, roadster.Position, DVector2.Zero, true, -5.0);
-            var fairingRight = new Fairing(craftDirectory, roadster.Position, DVector2.Zero, false, -5.0);
+            var fairingLeft = new Fairing(craftDirectory, roadster.Position, DVector2.Zero, true);
+            var fairingRight = new Fairing(craftDirectory, roadster.Position, DVector2.Zero, false);
 
             roadster.AttachFairings(fairingLeft, fairingRight);
 
