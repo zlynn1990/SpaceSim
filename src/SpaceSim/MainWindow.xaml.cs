@@ -445,10 +445,17 @@ namespace SpaceSim
 
             if (target is ISpaceCraft)
             {
-                DVector2 craftOffset = target.GravitationalParent.Position - target.Position;
-                craftOffset.Normalize();
+                if (target.InOrbit)
+                {
+                    _camera.SetRotation(0);
+                }
+                else
+                {
+                    DVector2 craftOffset = target.GravitationalParent.Position - target.Position;
+                    craftOffset.Normalize();
 
-                _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
+                    _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
+                }
             }
             else
             {
