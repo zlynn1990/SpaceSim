@@ -9,7 +9,7 @@ namespace SpaceSim.Kernels
         // 00000000 11111111 00000000 00000000 red >> 16
         // 00000000 00000000 11111111 00000000 green >> 8
         // 00000000 00000000 00000000 11111111 blue
-        public void Run(int[] image, int resX, int resY, double cameraLeft, double cameraTop, double cameraWidth, double cameraHeight, double sunNormalX, double sunNormalY, double rotation)
+        public void Run(int[] image, int resX, int resY, double cX, double cY, double cWidth, double cHeight, double cRot, double sunNormalX, double sunNormalY, double bodyX, double bodyY, double bodyRot)
         {
             int index = get_global_id(0);
 
@@ -22,8 +22,8 @@ namespace SpaceSim.Kernels
             float v = (float)y / resY;
 
             // world-space pixel location
-            double worldX = cameraLeft + cameraWidth * u;
-            double worldY = cameraTop + cameraHeight * v;
+            double worldX = cX + cWidth * u;
+            double worldY = cY + cHeight * v;
             double distance = sqrt(worldX * worldX + worldY * worldY);
 
             if (distance < JUPITER_RADIUS + JUPITER_ATMOSPHERE)
@@ -46,7 +46,7 @@ namespace SpaceSim.Kernels
                 {
                     double ratio = distance / JUPITER_RADIUS;
 
-                    double worldAngle = atan2(worldNormalX, worldNormalY) + atan2(ratio, 0.9) + rotation;
+                    double worldAngle = atan2(worldNormalX, worldNormalY) + atan2(ratio, 0.9) + bodyRot;
 
                     double textureFactor = 0.25 * sin(worldAngle * 60) + 0.75;
 
