@@ -28,7 +28,7 @@ namespace SpaceSim.Drawing
             _trailPowered.Add(isPowered);
         }
 
-        public void Draw(Graphics graphics, RectangleD cameraBounds, IMassiveBody parentBody)
+        public void Draw(Graphics graphics, Camera camera, IMassiveBody parentBody)
         {
             var poweredTrails = new List<RectangleF>();
             var coastTrails = new List<RectangleF>();
@@ -40,9 +40,9 @@ namespace SpaceSim.Drawing
 
                 DVector2 worldPoint = DVector2.FromAngle(angle) * distance + parentBody.Position;
 
-                if (cameraBounds.Contains(worldPoint))
+                if (camera.Contains(worldPoint))
                 {
-                    PointF localPoint = RenderUtils.WorldToScreen(worldPoint, cameraBounds);
+                    PointF localPoint = RenderUtils.WorldToScreen(worldPoint, camera.Bounds);
 
                     if (_trailPowered[i])
                     {

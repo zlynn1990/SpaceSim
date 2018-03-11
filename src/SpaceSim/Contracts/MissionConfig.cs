@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
 using SpaceSim.Physics;
@@ -25,7 +26,7 @@ namespace SpaceSim.Contracts
         {
             DateTime date;
 
-            if (DateTime.TryParse(LaunchDate, out date))
+            if (DateTime.TryParse(LaunchDate, new CultureInfo("en-us"), DateTimeStyles.None, out date))
             {
                 return date;
             }

@@ -21,10 +21,29 @@ namespace SpaceSim.Kernels
             float u = (float)x / resX;
             float v = (float)y / resY;
 
-            // world-space pixel location
+            // non-rotated world-space camera center
+            double camCenterX = cX + cWidth * 0.5;
+            double camCenterY = cY + cHeight * 0.5;
+
+            // non-rotated world-space camera position
             double worldX = cX + cWidth * u;
             double worldY = cY + cHeight * v;
-            double distance = sqrt(worldX * worldX + worldY * worldY);
+
+            // rotate the camera about the point
+            double pivotX = worldX - camCenterX;
+            double pivotY = worldY - camCenterY;
+
+            double rotatedX = pivotX * cos(cRot) - pivotY * sin(cRot);
+            double rotatedY = pivotX * sin(cRot) + pivotY * cos(cRot);
+
+            worldX = rotatedX + camCenterX;
+            worldY = rotatedY + camCenterY;
+
+            // find the distance between the rotated camera position and the given body position
+            double diffX = bodyX - worldX;
+            double diffY = bodyY - worldY;
+
+            double distance = sqrt(diffX * diffX + diffY * diffY);
 
             if (distance < SUN_RADIUS + SUN_ATMOSPHERE)
             {

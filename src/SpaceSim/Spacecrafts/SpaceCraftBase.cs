@@ -1092,7 +1092,7 @@ namespace SpaceSim.Spacecrafts
 
                         if (_launchTrails.ContainsKey(parentName))
                         {
-                            _launchTrails[parentName].Draw(graphics, camera.Bounds, GravitationalParent);
+                            _launchTrails[parentName].Draw(graphics, camera, GravitationalParent);
                         }
                     }
                 }
