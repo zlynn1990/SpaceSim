@@ -3,6 +3,10 @@ using SpaceSim.Physics;
 using SpaceSim.Spacecrafts.FalconCommon;
 using VectorMath;
 
+using System;
+using System.Drawing;
+using SpaceSim.Drawing;
+
 namespace SpaceSim.Spacecrafts.FalconHeavy
 {
     sealed class FHBooster : F9S1Base
@@ -24,7 +28,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
         public new AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsCrossSection; } }
 
         public FHBooster(string craftDirectory, int id, DVector2 position, DVector2 velocity, double propellantMass = 409272)
-            : base(craftDirectory, position, velocity, 409272, "Falcon/Heavy/booster" + id + ".png", -17.8)
+            : base(craftDirectory, position, velocity, propellantMass, "Falcon/Heavy/booster" + id + ".png", -17.8)
         {
             Id = id;
 
@@ -40,6 +44,15 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
                 Engines[i] = new Merlin1D(i, this, offset);
             }
+        }
+        
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
+        {
+            // set the booster offsets according to the roll
+            float rollFactor = (float)Math.Cos(Roll);
+            StageOffset = Id == 1 ? new DVector2(-4 * rollFactor, 1.5) : new DVector2(4 * rollFactor, 1.5);
+
+            base.RenderShip(graphics, camera, screenBounds);
         }
     }
 }
