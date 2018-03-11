@@ -19,22 +19,27 @@
     <Duration>0.5</Duration>
     <Throttle>100</Throttle>
   </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>800</StartTime>
+    <Duration>11</Duration>
+    <TargetThrottle>86</TargetThrottle>
+  </Command>
   <Command xsi:type="Shutdown">
     <StartTime>811</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>19200</StartTime>
+    <StartTime>20700</StartTime>
     <Duration>0.5</Duration>
     <Throttle>86</Throttle>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>19201</StartTime>
+    <StartTime>20701</StartTime>
     <Duration>56</Duration>
     <TargetThrottle>40</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>19257</StartTime>
+    <StartTime>20756</StartTime>
     <Duration>0.5</Duration>
   </Command>
 </ArrayOfCommand>

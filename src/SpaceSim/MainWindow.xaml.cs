@@ -48,7 +48,7 @@ namespace SpaceSim
 
         public static int ClockDelayInSeconds;
 
-        private RenderingType _renderingType = RenderingType.GDIPlus;
+        private RenderingType _renderingType = RenderingType.OpenCLHardware;
 
         private bool _isActive;
         private Thread _updateThread;
@@ -258,16 +258,20 @@ namespace SpaceSim
                 _clProxy.CreateIntArgument("resX", RenderUtils.ScreenWidth);
                 _clProxy.CreateIntArgument("resY", RenderUtils.ScreenHeight);
 
-                _clProxy.CreateDoubleArgument("cameraLeft", 0);
-                _clProxy.CreateDoubleArgument("cameraTop", 0);
+                _clProxy.CreateDoubleArgument("cX", 0);
+                _clProxy.CreateDoubleArgument("cY", 0);
 
-                _clProxy.CreateDoubleArgument("cameraWidth", 0);
-                _clProxy.CreateDoubleArgument("cameraHeight", 0);
+                _clProxy.CreateDoubleArgument("cWidth", 0);
+                _clProxy.CreateDoubleArgument("cHeight", 0);
+
+                _clProxy.CreateDoubleArgument("cRot", 0);
 
                 _clProxy.CreateDoubleArgument("sunNormalX", 0);
                 _clProxy.CreateDoubleArgument("sunNormalY", 0);
 
-                _clProxy.CreateDoubleArgument("rotation", 0);
+                _clProxy.CreateDoubleArgument("bodyX", 0);
+                _clProxy.CreateDoubleArgument("bodyY", 0);
+                _clProxy.CreateDoubleArgument("bodyRot", 0);
 
                 _clProxy.CreateIntBuffer("image", new int[RenderUtils.ScreenArea], ComputeMemoryFlags.UseHostPointer);
 
@@ -445,10 +449,17 @@ namespace SpaceSim
 
             if (target is ISpaceCraft)
             {
-                DVector2 craftOffset = target.GravitationalParent.Position - target.Position;
-                craftOffset.Normalize();
+                if (target.InOrbit)
+                {
+                    _camera.SetRotation(0);
+                }
+                else
+                {
+                    DVector2 craftOffset = target.GravitationalParent.Position - target.Position;
+                    craftOffset.Normalize();
 
-                _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
+                    _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
+                }
             }
             else
             {
@@ -615,7 +626,7 @@ namespace SpaceSim
                 {
                     if (renderable.Visibility(cameraBounds) > 0)
                     {
-                        renderable.RenderCl(_clProxy, cameraBounds, _sun);
+                        renderable.RenderCl(_clProxy, _camera, _sun);
                     }
                 }
 
@@ -651,7 +662,7 @@ namespace SpaceSim
                     {
                         if (renderable.Visibility(cameraBounds) > 0)
                         {
-                            renderable.RenderGdiFallback(graphics, cameraBounds, _sun);
+                            renderable.RenderGdiFallback(graphics, _camera, _sun);
                         }
                     }
                 }

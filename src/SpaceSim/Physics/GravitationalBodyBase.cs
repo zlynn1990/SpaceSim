@@ -21,7 +21,7 @@ namespace SpaceSim.Physics
         public double Apogee { get { return OrbitTrace.Apogee; } }
         public double Perigee { get { return OrbitTrace.Perigee; } }
 
-        public bool InOrbit { get { return Apogee > 0 && Perigee > 0; } }
+        public bool InOrbit { get { return Apogee > 0 && Perigee > 0 && GetRelativeVelocity().Length() > 1; } }
 
         public abstract Color IconColor { get; }
 

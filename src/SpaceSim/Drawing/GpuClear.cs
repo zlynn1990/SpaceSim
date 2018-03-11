@@ -29,7 +29,7 @@ namespace SpaceSim.Drawing
 
                 for (int i = 0; i < totalSize; i++)
                 {
-                    _kernel.Run(clProxy.ReadIntBuffer("image", totalSize), 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                    _kernel.Run(clProxy.ReadIntBuffer("image", totalSize), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 }
 
                 _kernel.Finish();

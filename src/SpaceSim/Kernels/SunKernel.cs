@@ -9,7 +9,7 @@ namespace SpaceSim.Kernels
         // 00000000 11111111 00000000 00000000 red >> 16
         // 00000000 00000000 11111111 00000000 green >> 8
         // 00000000 00000000 00000000 11111111 blue
-        public void Run(int[] image, int resX, int resY, double cameraLeft, double cameraTop, double cameraWidth, double cameraHeight, double sunNormalX, double sunNormalY, double rotation)
+        public void Run(int[] image, int resX, int resY, double cX, double cY, double cWidth, double cHeight, double cRot, double sunNormalX, double sunNormalY, double bodyX, double bodyY, double bodyRot)
         {
             int index = get_global_id(0);
 
@@ -21,10 +21,29 @@ namespace SpaceSim.Kernels
             float u = (float)x / resX;
             float v = (float)y / resY;
 
-            // world-space pixel location
-            double worldX = cameraLeft + cameraWidth * u;
-            double worldY = cameraTop + cameraHeight * v;
-            double distance = sqrt(worldX * worldX + worldY * worldY);
+            // non-rotated world-space camera center
+            double camCenterX = cX + cWidth * 0.5;
+            double camCenterY = cY + cHeight * 0.5;
+
+            // non-rotated world-space camera position
+            double worldX = cX + cWidth * u;
+            double worldY = cY + cHeight * v;
+
+            // rotate the camera about the point
+            double pivotX = worldX - camCenterX;
+            double pivotY = worldY - camCenterY;
+
+            double rotatedX = pivotX * cos(cRot) - pivotY * sin(cRot);
+            double rotatedY = pivotX * sin(cRot) + pivotY * cos(cRot);
+
+            worldX = rotatedX + camCenterX;
+            worldY = rotatedY + camCenterY;
+
+            // find the distance between the rotated camera position and the given body position
+            double diffX = bodyX - worldX;
+            double diffY = bodyY - worldY;
+
+            double distance = sqrt(diffX * diffX + diffY * diffY);
 
             if (distance < SUN_RADIUS + SUN_ATMOSPHERE)
             {

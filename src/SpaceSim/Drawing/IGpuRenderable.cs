@@ -2,7 +2,6 @@
 using OpenCLWrapper;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
-using VectorMath;
 
 namespace SpaceSim.Drawing
 {
@@ -14,13 +13,13 @@ namespace SpaceSim.Drawing
 
         void Load(OpenCLProxy clProxy);
 
-        void RenderCl(OpenCLProxy clProxy, RectangleD cameraBounds, IPhysicsBody sun);
+        void RenderCl(OpenCLProxy clProxy, Camera camera, IPhysicsBody sun);
 
         #endregion
 
         #region GdiPlus Fallback
 
-        void RenderGdiFallback(Graphics graphics, RectangleD cameraBounds, IPhysicsBody sun);
+        void RenderGdiFallback(Graphics graphics, Camera camera, IPhysicsBody sun);
 
         #endregion
     }

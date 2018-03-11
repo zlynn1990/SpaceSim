@@ -6,8 +6,15 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 {
     class LandingLeg : SpaceCraftPart
     {
-        protected override double Width { get { return 1.8; } }
-        protected override double Height { get { return 10.052819015; } }
+        protected override double Width
+        {
+            get { return 1.8; }
+        }
+
+        protected override double Height
+        {
+            get { return 10.052819015; }
+        }
 
         private double _offsetLength;
         private double _offsetRotation;
@@ -22,10 +29,11 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _isLeft = isLeft;
 
             _offsetLength = offset.Length();
-            _offsetRotation = _offsetRotation = offset.Angle() - Math.PI/2.0;
+            _offsetRotation = _offsetRotation = offset.Angle() - Math.PI / 2.0;
 
-            _texture = isLeft ? new Bitmap("Textures/Spacecrafts/Falcon/Common//landingLegLeft.png") :
-                                new Bitmap("Textures/Spacecrafts/Falcon/Common//landingLegRight.png");
+            _texture = isLeft
+                ? new Bitmap("Textures/Spacecrafts/Falcon/Common//landingLegLeft.png")
+                : new Bitmap("Textures/Spacecrafts/Falcon/Common//landingLegRight.png");
         }
 
         public void Deploy()
@@ -40,7 +48,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         {
             double rotation = _parent.Pitch - _offsetRotation;
 
-            DVector2 offset = new DVector2(Math.Cos(rotation), Math.Sin(rotation))*_offsetLength;
+            DVector2 offset = new DVector2(Math.Cos(rotation), Math.Sin(rotation)) * _offsetLength;
 
             Position = _parent.Position - offset;
 
@@ -50,11 +58,11 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
                 if (_isLeft)
                 {
-                    Pitch -= 0.5*dt;
+                    Pitch -= 0.5 * dt;
                 }
                 else
                 {
-                    Pitch += 0.5*dt;
+                    Pitch += 0.5 * dt;
                 }
 
                 if (_deployTimer > 4)
@@ -64,3 +72,4 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             }
         }
     }
+}

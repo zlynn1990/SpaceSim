@@ -121,12 +121,12 @@ namespace SpaceSim.SolarSystem
             OrbitHelper.TraceMassiveBody(this, OrbitTrace);
         }
 
-        public void RenderCl(OpenCLProxy clProxy, RectangleD cameraBounds, IPhysicsBody sun)
+        public void RenderCl(OpenCLProxy clProxy, Camera camera, IPhysicsBody sun)
         {
             RectangleD bounds = ComputeBoundingBox();
 
             // Not in range easy return
-            if (!cameraBounds.IntersectsWith(bounds))
+            if (!camera.Intersects(bounds))
             {
                 return;
             }
@@ -140,20 +140,22 @@ namespace SpaceSim.SolarSystem
                 sunNormal.Normalize();
             }
 
-            var normalizedPosition = new DVector2(cameraBounds.X - Position.X, cameraBounds.Y - Position.Y);
-
             if (clProxy.HardwareAccelerationEnabled)
             {
-                clProxy.UpdateDoubleArgument("cameraLeft", normalizedPosition.X);
-                clProxy.UpdateDoubleArgument("cameraTop", normalizedPosition.Y);
+                clProxy.UpdateDoubleArgument("cX", camera.Bounds.X);
+                clProxy.UpdateDoubleArgument("cY", camera.Bounds.Y);
 
-                clProxy.UpdateDoubleArgument("cameraWidth", cameraBounds.Width);
-                clProxy.UpdateDoubleArgument("cameraHeight", cameraBounds.Height);
+                clProxy.UpdateDoubleArgument("cWidth", camera.Bounds.Width);
+                clProxy.UpdateDoubleArgument("cHeight", camera.Bounds.Height);
+
+                clProxy.UpdateDoubleArgument("cRot", -camera.Rotation);
 
                 clProxy.UpdateDoubleArgument("sunNormalX", sunNormal.X);
                 clProxy.UpdateDoubleArgument("sunNormalY", sunNormal.Y);
 
-                clProxy.UpdateDoubleArgument("rotation", Pitch);
+                clProxy.UpdateDoubleArgument("bodyX", Position.X);
+                clProxy.UpdateDoubleArgument("bodyY", Position.Y);
+                clProxy.UpdateDoubleArgument("bodyRot", Pitch);
 
                 clProxy.RunKernel(_computeKernel, RenderUtils.ScreenArea);
             }
@@ -164,27 +166,27 @@ namespace SpaceSim.SolarSystem
                 for (int i = 0; i < totalSize; i++)
                 {
                     Kernel.Run(clProxy.ReadIntBuffer("image", totalSize), RenderUtils.ScreenWidth, RenderUtils.ScreenHeight,
-                                                    normalizedPosition.X, normalizedPosition.Y, cameraBounds.Width, cameraBounds.Height,
-                                                    sunNormal.X, sunNormal.Y, Pitch);
+                               camera.Bounds.X, camera.Bounds.Y, camera.Bounds.Width, camera.Bounds.Height, camera.Rotation,
+                               sunNormal.X, sunNormal.Y, Position.X, Position.Y, Pitch);
                 }
 
                 Kernel.Finish();
             }
         }
 
-        public void RenderGdiFallback(Graphics graphics, RectangleD cameraBounds, IPhysicsBody sun)
+        public void RenderGdiFallback(Graphics graphics, Camera camera, IPhysicsBody sun)
         {
             RectangleD bounds = ComputeBoundingBox();
 
             // Not in range easy return
-            if (!cameraBounds.IntersectsWith(bounds))
+            if (!camera.Intersects(bounds))
             {
                 return;
             }
 
             if (AtmosphereHeight > 0)
             {
-                RectangleF atmosphereBounds = RenderUtils.ComputeEllipseSize(Position, cameraBounds, BoundingRadius);
+                RectangleF atmosphereBounds = RenderUtils.ComputeEllipseSize(Position, camera.Bounds, BoundingRadius);
 
                 // Saftey
                 if (atmosphereBounds.Width > RenderUtils.ScreenWidth * 5000)
@@ -198,7 +200,7 @@ namespace SpaceSim.SolarSystem
                 graphics.FillEllipse(new SolidBrush(IconAtmopshereColor), atmosphereBounds);
             }
 
-            RectangleF surfaceBounds = RenderUtils.ComputeEllipseSize(Position, cameraBounds, SurfaceRadius);
+            RectangleF surfaceBounds = RenderUtils.ComputeEllipseSize(Position, camera.Bounds, SurfaceRadius);
 
             // Saftey
             if (surfaceBounds.Width > RenderUtils.ScreenWidth * 5000) return;
