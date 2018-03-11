@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Command xsi:type="Ignition">
-    <StartTime>0.00001</StartTime>
+    <StartTime>-3</StartTime>
     <Duration>0.5</Duration>
     <Throttle>72</Throttle>
   </Command>

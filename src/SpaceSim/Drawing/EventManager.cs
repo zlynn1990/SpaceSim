@@ -16,9 +16,8 @@ namespace SpaceSim.Drawing
 
     class EventManager
     {
-        public double DisplayTime { get; private set; }
-
-        public double FadeTime { get; private set; }
+        public double DisplayTime { get; }
+        public double FadeTime { get; }
 
         private Point _position;
         private double _elapsedTime;

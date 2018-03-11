@@ -44,9 +44,6 @@ namespace SpaceSim
     public partial class MainWindow : Window
     {
         public static List<string> ProfilePaths;
-        //public static bool FullScreen;
-
-        public static int ClockDelayInSeconds;
 
         private RenderingType _renderingType = RenderingType.OpenCLHardware;
 
@@ -84,6 +81,7 @@ namespace SpaceSim
         private DateTime _originTime;
 
         private bool _isPaused;
+        private double _clockDelay;
         private double _totalElapsedSeconds;
 
         private TextDisplay _textDisplay;
@@ -209,6 +207,11 @@ namespace SpaceSim
             {
                 MissionConfig missionConfig = MissionConfig.Load(ProfilePaths[i]);
 
+                if (missionConfig.ClockDelay > _clockDelay)
+                {
+                    _clockDelay = missionConfig.ClockDelay;
+                }
+
                 IMassiveBody targetPlanet = LocatePlanet(missionConfig.ParentPlanet);
 
                 double launchAngle = targetPlanet.GetSurfaceAngle(_originTime, _sun);
@@ -221,7 +224,7 @@ namespace SpaceSim
             // Initialize the spacecraft controllers
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
             {
-                spaceCraft.InitializeController(_eventManager);
+                spaceCraft.InitializeController(_eventManager, _clockDelay);
             }
 
             _gravitationalBodies = new List<IGravitationalBody>
@@ -721,7 +724,7 @@ namespace SpaceSim
 
                 _eventManager.Render(graphics);
 
-                var elapsedTime = TimeSpan.FromSeconds(_totalElapsedSeconds - ClockDelayInSeconds);
+                var elapsedTime = TimeSpan.FromSeconds(_totalElapsedSeconds - _clockDelay);
 
                 int elapsedYears = elapsedTime.Days / 365;
                 int elapsedDays = elapsedTime.Days % 365;

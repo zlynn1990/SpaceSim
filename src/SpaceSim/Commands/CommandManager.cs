@@ -13,10 +13,10 @@ namespace SpaceSim.Commands
         {
             Serializer = new XmlSerializer(typeof(List<Command>), new[]
             {
-                typeof (Ignition), typeof (Shutdown), typeof (Stage),
-                typeof (Throttle), typeof(Deploy),
+                typeof(Ignition), typeof (Shutdown), typeof(Stage),
+                typeof(Throttle), typeof(Deploy), typeof(Release),
                 typeof(Retrograde), typeof(Prograde), typeof(AutoLand),
-                typeof(Cant), typeof (Pitch), typeof (RelativePitch),
+                typeof(Cant), typeof (Pitch), typeof(RelativePitch),
                 typeof(Roll), typeof(Yaw), typeof(Post)
             });
         }
@@ -50,6 +50,10 @@ namespace SpaceSim.Commands
                     else if (contract is Stage)
                     {
                         commands.Add(new StageCommand(contract as Stage));
+                    }
+                    else if (contract is Release)
+                    {
+                        commands.Add(new ReleaseCommand(contract as Release));
                     }
                     else if (contract is Deploy)
                     {

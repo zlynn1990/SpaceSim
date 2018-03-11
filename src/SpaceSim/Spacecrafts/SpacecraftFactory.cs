@@ -272,11 +272,11 @@ namespace SpaceSim.Spacecrafts
 
             roadster.AttachFairings(fairingLeft, fairingRight);
 
-            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero, 404272);
+            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
             var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero, 8.4);
 
-            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero, 396772);
-            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero, 396772);
+            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
 
             roadster.AddChild(fhS2);
             fhS2.SetParent(roadster);
