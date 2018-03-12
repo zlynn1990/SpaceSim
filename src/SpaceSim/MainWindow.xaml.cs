@@ -44,7 +44,6 @@ namespace SpaceSim
     public partial class MainWindow : Window
     {
         public static List<string> ProfilePaths;
-        //public static bool FullScreen;
 
         public static int ClockDelayInSeconds;
 
@@ -291,6 +290,11 @@ namespace SpaceSim
         private void OnScroll(object sender, MouseWheelEventArgs e)
         {
             _targetScrollRate -= e.Delta * 0.0001f;
+        }
+
+        internal void SetZoom(float delta)
+        {
+            _targetScrollRate += delta;
         }
 
         private void OnKeyUp(object sender, KeyEventArgs e)
@@ -610,6 +614,9 @@ namespace SpaceSim
         private unsafe void DrawFrame(TimeStep timeStep, FpsManager frameTimer)
         {
             _textDisplay.Clear();
+
+            // check for global events
+            _eventManager.CheckForGlobalEvents(this);
 
             RectangleD cameraBounds = _camera.Bounds;
 

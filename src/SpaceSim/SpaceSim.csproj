@@ -93,6 +93,7 @@
     <Compile Include="Commands\RetrogradeCommand.cs" />
     <Compile Include="Commands\RollCommand.cs" />
     <Compile Include="Commands\YawCommand.cs" />
+    <Compile Include="Commands\ZoomCommand.cs" />
     <Compile Include="Contracts\Commands\AutoLand.cs" />
     <Compile Include="Contracts\Commands\Cant.cs" />
     <Compile Include="Contracts\Commands\Command.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Commands\StageCommand.cs" />
     <Compile Include="Commands\ThrottleCommand.cs" />
     <Compile Include="Contracts\Commands\Yaw.cs" />
+    <Compile Include="Contracts\Commands\Zoom.cs" />
     <Compile Include="Contracts\MissionConfig.cs" />
     <Compile Include="Contracts\StructureConfig.cs" />
     <Compile Include="Controllers\CommandController.cs" />

@@ -5,6 +5,23 @@
     <Duration>10</Duration>
     <TargetOrientation>-90</TargetOrientation>
   </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>2</StartTime>
+    <TargetScale>-15</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>5</StartTime>
+    <Duration>5</Duration>
+    <TargetScale>15</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>7</StartTime>
+    <TargetScale>1795</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>10</StartTime>
+    <TargetScale>-983.15</TargetScale>
+  </Command>
   <Command xsi:type="Roll">
     <StartTime>12</StartTime>
     <Duration>23</Duration>
@@ -63,27 +80,28 @@
   <Command xsi:type="Pitch">
     <StartTime>320</StartTime>
     <Duration>40</Duration>
-    <TargetOrientation>-188.8</TargetOrientation>
+    <!--<TargetOrientation>-95</TargetOrientation>-->
+    <TargetOrientation>-182.8</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>360</StartTime>
     <Duration>10</Duration>
-    <TargetOrientation>-173.8</TargetOrientation>
+    <TargetOrientation>-167.8</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>370</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-173.8</TargetOrientation>
+    <TargetOrientation>-167.8</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>420</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-193.8</TargetOrientation>
+    <TargetOrientation>-187.8</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>480</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-203.8</TargetOrientation>
+    <TargetOrientation>-197.8</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>540</StartTime>

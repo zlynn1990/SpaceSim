@@ -14,6 +14,15 @@ namespace SpaceSim.Drawing
         public ISpaceCraft SpaceCraft { get; set; }
     }
 
+    class EventZoom
+    {
+        public float Magnification { get; set; }
+
+        public double StartTime { get; set; }
+
+        public ISpaceCraft SpaceCraft { get; set; }
+    }
+
     class EventManager
     {
         public double DisplayTime { get; private set; }
@@ -23,6 +32,7 @@ namespace SpaceSim.Drawing
         private Point _position;
         private double _elapsedTime;
         private List<EventMessage> _eventMessages;
+        private List<EventZoom> _eventZooms;
 
         public EventManager(Point position, double displayTime, double fadeTime)
         {
@@ -32,6 +42,7 @@ namespace SpaceSim.Drawing
             FadeTime = fadeTime;
 
             _eventMessages = new List<EventMessage>();
+            _eventZooms = new List<EventZoom>();
         }
 
         public void AddMessage(string message, ISpaceCraft spaceCraft)
@@ -45,6 +56,19 @@ namespace SpaceSim.Drawing
 
             // "Enqueue" new messages
             _eventMessages.Insert(0, eventMessage);
+        }
+
+        public void AddZoom(float scale, ISpaceCraft spaceCraft)
+        {
+            var eventZoom = new EventZoom
+            {
+                Magnification = scale * 0.001f,
+                StartTime = _elapsedTime,
+                SpaceCraft = spaceCraft
+            };
+
+            // "Enqueue" new messages
+            _eventZooms.Insert(0, eventZoom);
         }
 
         public void Update(double dt)
@@ -65,6 +89,16 @@ namespace SpaceSim.Drawing
             }
 
             _elapsedTime += dt;
+        }
+
+        public void CheckForGlobalEvents(MainWindow main)
+        {
+            foreach(EventZoom zoom in _eventZooms)
+            {
+                main.SetZoom(zoom.Magnification);
+            }
+
+            _eventZooms.Clear();
         }
 
         public void Render(Graphics graphics)
