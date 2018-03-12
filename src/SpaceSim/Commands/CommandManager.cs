@@ -17,7 +17,8 @@ namespace SpaceSim.Commands
                 typeof (Throttle), typeof(Deploy),
                 typeof(Retrograde), typeof(Prograde), typeof(AutoLand),
                 typeof(Cant), typeof (Pitch), typeof (RelativePitch),
-                typeof(Roll), typeof(Yaw), typeof(Post), typeof(Zoom),
+                typeof(Roll), typeof(Yaw), typeof(Post),
+                typeof(Rate), typeof(Target), typeof(Zoom),
             });
         }
 
@@ -90,6 +91,14 @@ namespace SpaceSim.Commands
                     else if (contract is Post)
                     {
                         commands.Add(new PostCommand(contract as Post));
+                    }
+                    else if (contract is Rate)
+                    {
+                        commands.Add(new RateCommand(contract as Rate));
+                    }
+                    else if (contract is Target)
+                    {
+                        commands.Add(new TargetCommand(contract as Target));
                     }
                     else if (contract is Zoom)
                     {

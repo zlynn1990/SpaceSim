@@ -89,9 +89,11 @@
     <Compile Include="Commands\PitchCommand.cs" />
     <Compile Include="Commands\PostCommand.cs" />
     <Compile Include="Commands\ProgradeCommand.cs" />
+    <Compile Include="Commands\RateCommand.cs" />
     <Compile Include="Commands\RelativePitchCommand.cs" />
     <Compile Include="Commands\RetrogradeCommand.cs" />
     <Compile Include="Commands\RollCommand.cs" />
+    <Compile Include="Commands\TargetCommand.cs" />
     <Compile Include="Commands\YawCommand.cs" />
     <Compile Include="Commands\ZoomCommand.cs" />
     <Compile Include="Contracts\Commands\AutoLand.cs" />
@@ -102,11 +104,13 @@
     <Compile Include="Contracts\Commands\Pitch.cs" />
     <Compile Include="Contracts\Commands\Post.cs" />
     <Compile Include="Contracts\Commands\Prograde.cs" />
+    <Compile Include="Contracts\Commands\Rate.cs" />
     <Compile Include="Contracts\Commands\RelativePitch.cs" />
     <Compile Include="Contracts\Commands\Retrograde.cs" />
     <Compile Include="Contracts\Commands\Roll.cs" />
     <Compile Include="Contracts\Commands\Shutdown.cs" />
     <Compile Include="Contracts\Commands\Stage.cs" />
+    <Compile Include="Contracts\Commands\Target.cs" />
     <Compile Include="Contracts\Commands\Throttle.cs" />
     <Compile Include="Commands\IgnitionCommand.cs" />
     <Compile Include="Commands\ShutdownCommand.cs" />

@@ -32,6 +32,22 @@
     <Duration>38</Duration>
     <TargetOrientation>-106</TargetOrientation>
   </Command>
+  <Command xsi:type="Rate">
+    <StartTime>15</StartTime>
+    <TargetDelta>2</TargetDelta>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>21</StartTime>
+    <TargetDelta>-1</TargetDelta>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>27</StartTime>
+    <TargetNext>0</TargetNext>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>33</StartTime>
+    <TargetNext>1</TargetNext>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>50</StartTime>
     <Duration>50</Duration>

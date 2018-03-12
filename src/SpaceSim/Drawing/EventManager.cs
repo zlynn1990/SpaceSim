@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using SpaceSim.Spacecrafts;
+using SpaceSim.Physics;
 
 namespace SpaceSim.Drawing
 {
@@ -14,9 +15,27 @@ namespace SpaceSim.Drawing
         public ISpaceCraft SpaceCraft { get; set; }
     }
 
+    class EventRate
+    {
+        public int Delta { get; set; }
+
+        public double StartTime { get; set; }
+
+        public ISpaceCraft SpaceCraft { get; set; }
+    }
+
+    class EventTarget
+    {
+        public bool Next { get; set; }
+
+        public double StartTime { get; set; }
+
+        public ISpaceCraft SpaceCraft { get; set; }
+    }
+
     class EventZoom
     {
-        public float Magnification { get; set; }
+        public float Scale { get; set; }
 
         public double StartTime { get; set; }
 
@@ -32,6 +51,8 @@ namespace SpaceSim.Drawing
         private Point _position;
         private double _elapsedTime;
         private List<EventMessage> _eventMessages;
+        private List<EventRate> _eventRates;
+        private List<EventTarget> _eventTargets;
         private List<EventZoom> _eventZooms;
 
         public EventManager(Point position, double displayTime, double fadeTime)
@@ -42,6 +63,8 @@ namespace SpaceSim.Drawing
             FadeTime = fadeTime;
 
             _eventMessages = new List<EventMessage>();
+            _eventRates = new List<EventRate>();
+            _eventTargets = new List<EventTarget>();
             _eventZooms = new List<EventZoom>();
         }
 
@@ -58,11 +81,37 @@ namespace SpaceSim.Drawing
             _eventMessages.Insert(0, eventMessage);
         }
 
+        public void AddRate(int delta, ISpaceCraft spaceCraft)
+        {
+            var eventRate = new EventRate
+            {
+                Delta = delta,
+                StartTime = _elapsedTime,
+                SpaceCraft = spaceCraft
+            };
+
+            // "Enqueue" new messages
+            _eventRates.Insert(0, eventRate);
+        }
+
+        public void AddTarget(bool next, ISpaceCraft spaceCraft)
+        {
+            var eventTarget = new EventTarget
+            {
+                Next = next,
+                StartTime = _elapsedTime,
+                SpaceCraft = spaceCraft
+            };
+
+            // "Enqueue" new messages
+            _eventTargets.Insert(0, eventTarget);
+        }
+
         public void AddZoom(float scale, ISpaceCraft spaceCraft)
         {
             var eventZoom = new EventZoom
             {
-                Magnification = scale * 0.001f,
+                Scale = scale * 0.001f,
                 StartTime = _elapsedTime,
                 SpaceCraft = spaceCraft
             };
@@ -93,11 +142,27 @@ namespace SpaceSim.Drawing
 
         public void CheckForGlobalEvents(MainWindow main)
         {
-            foreach(EventZoom zoom in _eventZooms)
+            foreach (EventRate rate in _eventRates)
             {
-                main.SetZoom(zoom.Magnification);
+                TimeStep step = main.SetRate(rate.Delta);
+                if(rate.Delta > 0)
+                    AddMessage(string.Format("Update Speed increased to {0}x", step.Multiplier), null);
+                else
+                    AddMessage(string.Format("Update Speed decreased to {0}x", step.Multiplier), null);
             }
 
+            foreach (EventTarget target in _eventTargets)
+            {
+                main.SetTarget(target.Next);
+            }
+
+            foreach (EventZoom zoom in _eventZooms)
+            {
+                main.SetZoom(zoom.Scale);
+            }
+
+            _eventRates.Clear();
+            _eventTargets.Clear();
             _eventZooms.Clear();
         }
 

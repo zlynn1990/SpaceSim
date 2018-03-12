@@ -292,6 +292,23 @@ namespace SpaceSim
             _targetScrollRate -= e.Delta * 0.0001f;
         }
 
+        internal TimeStep SetRate(int delta)
+        {
+            _timeStepIndex += delta;
+            _userUpdatedTimesteps = true;
+            return _timeSteps[_timeStepIndex];
+        }
+
+        internal void SetTarget(bool bNext)
+        {
+            if(bNext)
+                _targetIndex = GravitationalBodyIterator.Next(_targetIndex, _gravitationalBodies);
+            else
+                _targetIndex = GravitationalBodyIterator.Prev(_targetIndex, _gravitationalBodies);
+
+            _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
+        }
+
         internal void SetZoom(float delta)
         {
             _targetScrollRate += delta;
