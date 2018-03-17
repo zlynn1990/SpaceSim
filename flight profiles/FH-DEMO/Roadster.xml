@@ -66,27 +66,27 @@
   <Command xsi:type="Pitch">
     <StartTime>320</StartTime>
     <Duration>40</Duration>
-    <TargetOrientation>-188.8</TargetOrientation>
+    <TargetOrientation>-190.5</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>360</StartTime>
     <Duration>10</Duration>
-    <TargetOrientation>-173.8</TargetOrientation>
+    <TargetOrientation>-175.5</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>370</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-173.8</TargetOrientation>
+    <TargetOrientation>-175.5</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>420</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-193.8</TargetOrientation>
+    <TargetOrientation>-195.5</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>480</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-203.8</TargetOrientation>
+    <TargetOrientation>-205.5</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>540</StartTime>

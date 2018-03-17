@@ -12,17 +12,17 @@
   </StructureConfig>
   <StructureConfig>
     <Type>ASDS</Type>
-    <DownrangeDistance>501700</DownrangeDistance>
+    <DownrangeDistance>500700</DownrangeDistance>
     <HeightOffset>0</HeightOffset>
   </StructureConfig>
   <StructureConfig>
     <Type>LandingPad</Type>
-    <DownrangeDistance>-21635</DownrangeDistance>
+    <DownrangeDistance>3368</DownrangeDistance>
     <HeightOffset>5</HeightOffset>
   </StructureConfig>
   <StructureConfig>
     <Type>LandingPad</Type>
-    <DownrangeDistance>-21885</DownrangeDistance>
+    <DownrangeDistance>3428</DownrangeDistance>
     <HeightOffset>5</HeightOffset>
   </StructureConfig>
 </ArrayOfStructureConfig>

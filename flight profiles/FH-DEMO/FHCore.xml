@@ -22,7 +22,7 @@
   <Command xsi:type="RelativePitch">
     <StartTime>187</StartTime>
     <Duration>27</Duration>
-    <TargetOrientation>2</TargetOrientation>
+    <TargetOrientation>2.5</TargetOrientation>
   </Command>
   <Command xsi:type="Ignition">
     <StartTime>206</StartTime>
@@ -132,11 +132,11 @@
       <int>0</int>
       <int>8</int>
     </EngineIds>
-  </Command>-->
+  </Command>
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
     <StartTime>494</StartTime>
-  </Command>
+  </Command>-->
   <Command xsi:type="Shutdown">
     <StartTime>500</StartTime>
     <Duration>0.5</Duration>

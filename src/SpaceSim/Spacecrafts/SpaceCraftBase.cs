@@ -950,7 +950,7 @@ namespace SpaceSim.Spacecrafts
 
                 if (Thrust > 0 && _isReleased)
                 {
-                    var thrustVector = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
+                    var thrustVector = new DVector2(Math.Cos(Pitch) * Math.Cos(Yaw), Math.Sin(Pitch));
 
                     AccelerationN += (thrustVector * Thrust) / Mass;
                 }
