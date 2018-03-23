@@ -15,6 +15,7 @@ namespace SpaceSim.Spacecrafts
 
         protected abstract double Width { get; }
         protected abstract double Height { get; }
+        protected abstract double DrawingOffset { get; }
 
         protected ISpaceCraft _parent;
         protected Bitmap _texture;
@@ -30,7 +31,7 @@ namespace SpaceSim.Spacecrafts
         {
             double drawingRotation = _parent.Pitch + Pitch;
 
-            DVector2 drawingOffset = new DVector2(Math.Cos(drawingRotation), Math.Sin(drawingRotation)) * -4.2;
+            DVector2 drawingOffset = new DVector2(Math.Cos(drawingRotation), Math.Sin(drawingRotation)) * DrawingOffset;
 
             RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position - drawingOffset, camera.Bounds, Width, Height);
 

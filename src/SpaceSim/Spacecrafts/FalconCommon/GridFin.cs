@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.FalconCommon
@@ -8,6 +9,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
     {
         protected override double Width { get { return 1.2192; } }
         protected override double Height { get { return 1.79806518; } }
+        protected override double DrawingOffset { get { return 0.6; } }
 
         private double _offsetLength;
         private double _offsetRotation;
@@ -22,7 +24,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _isLeft = isLeft;
 
             _offsetLength = offset.Length();
-            _offsetRotation = _offsetRotation = offset.Angle() - Math.PI / 2.0;
+            _offsetRotation = offset.Angle() - Constants.PiOverTwo;
 
             _texture = isLeft ? new Bitmap("Textures/Spacecrafts/Falcon/Common/gridFinLeft.png") :
                                 new Bitmap("Textures/Spacecrafts/Falcon/Common//gridFinRight.png");
@@ -51,11 +53,11 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
                 if (_isLeft)
                 {
-                    Pitch += 0.5*dt;
+                    Pitch += 0.5 * dt;
                 }
                 else
                 {
-                    Pitch -= 0.5*dt;
+                    Pitch -= 0.5 * dt;
                 }
 
                 if (_deployTimer > 3)

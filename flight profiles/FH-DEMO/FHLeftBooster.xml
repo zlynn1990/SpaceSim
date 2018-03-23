@@ -147,17 +147,15 @@
       <int>8</int>
     </EngineIds>
   </Command>
+  <Command xsi:type="AutoLand">
+    <StartTime>475</StartTime>
+    <Duration>20</Duration>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
+  </Command>
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
     <StartTime>477</StartTime>
-  </Command>
-  <!--<Command xsi:type="Throttle">
-    <StartTime>482</StartTime>
-    <Duration>0.5</Duration>
-    <TargetThrottle>55</TargetThrottle>
-  </Command>-->
-  <Command xsi:type="Shutdown">
-    <StartTime>484</StartTime>
-    <Duration>0.5</Duration>
   </Command>
 </ArrayOfCommand>

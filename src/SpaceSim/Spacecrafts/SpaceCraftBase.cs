@@ -960,7 +960,7 @@ namespace SpaceSim.Spacecrafts
                     // Simulate simple staging mechanism
                     double sAngle = StageOffset.Angle();
 
-                    DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
+                    DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Constants.PiOverTwo);
 
                     AccelerationN += stagingNormal * StagingForce;
 
