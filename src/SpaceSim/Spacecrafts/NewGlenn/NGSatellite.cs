@@ -89,6 +89,14 @@ namespace SpaceSim.Spacecrafts.NewGlenn
             _rightFairing.SetParent(this);
         }
 
+        public override void Release()
+        {
+            _rightFairing.Release();
+            _leftFairing.Release();
+
+            base.Release();
+        }
+
         public override void Update(double dt)
         {
             base.Update(dt);

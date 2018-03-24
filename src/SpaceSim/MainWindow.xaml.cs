@@ -337,14 +337,14 @@ namespace SpaceSim
 
             if (e.Key == Key.OemCloseBrackets && !_isPaused)
             {
-                _targetIndex = GravitationalBodyIterator.Next(_targetIndex, _gravitationalBodies);
+                _targetIndex = GravitationalBodyIterator.Next(_targetIndex, _gravitationalBodies, _camera);
 
                 _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
             }
 
             if (e.Key == Key.OemOpenBrackets && !_isPaused)
             {
-                _targetIndex = GravitationalBodyIterator.Prev(_targetIndex, _gravitationalBodies);
+                _targetIndex = GravitationalBodyIterator.Prev(_targetIndex, _gravitationalBodies, _camera);
 
                 _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
             }

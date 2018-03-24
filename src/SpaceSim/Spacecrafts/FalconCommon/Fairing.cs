@@ -25,10 +25,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             get { return AeroDynamicProperties.ExposedToAirFlow; }
         }
 
-        public override double StagingForce
-        {
-            get { return 1500; }
-        }
+        public override double StagingForce { get { return 1500; } }
 
         public override double FormDragCoefficient
         {

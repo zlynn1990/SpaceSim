@@ -301,7 +301,7 @@ namespace SpaceSim.Spacecrafts
             }
         }
 
-        public void Release()
+        public virtual void Release()
         {
             _isReleased = true;
 
