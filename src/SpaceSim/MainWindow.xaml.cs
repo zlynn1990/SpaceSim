@@ -65,6 +65,7 @@ namespace SpaceSim
 
         private Camera _camera;
         private int _targetIndex;
+        private bool _targetInOrbit;
 
         private Sun _sun;
 
@@ -443,7 +444,7 @@ namespace SpaceSim
             if (_timeStepIndex <= TimeStep.MaxRealTimeIndex && _userUpdatedTimesteps) return;
 
             // Future timestep accounting for 5 iterations + padding to be safe
-            double stepEnd = timeStep.Dt * timeStep.UpdateLoops * 5 + _totalElapsedSeconds + 2;
+            double stepEnd = timeStep.Dt * timeStep.UpdateLoops * 5 + _totalElapsedSeconds - _clockDelay + 2;
 
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
             {
@@ -473,14 +474,32 @@ namespace SpaceSim
             {
                 if (target.InOrbit)
                 {
-                    _camera.SetRotation(0);
+                    if (!_targetInOrbit)
+                    {
+                        _camera.SetRotation(0, true);
+
+                        _targetInOrbit = true;
+                    }
+                    else
+                    {
+                        _camera.SetRotation(0);
+                    }
                 }
                 else
                 {
                     DVector2 craftOffset = target.GravitationalParent.Position - target.Position;
                     craftOffset.Normalize();
 
-                    _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
+                    if (_targetInOrbit)
+                    {
+                        _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle(), true);
+
+                        _targetInOrbit = false;
+                    }
+                    else
+                    {
+                        _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
+                    }
                 }
             }
             else
@@ -519,7 +538,7 @@ namespace SpaceSim
             ResolveSpaceCraftParents();
             AdjustSpeedForBurns(timeStep);
 
-            double targetDt = (_isPaused) ? 0 : timeStep.Dt;
+            double targetDt = _isPaused ? 0 : timeStep.Dt;
 
             // Update all bodies according to the timestep
             for (int i = 0; i < timeStep.UpdateLoops; i++)

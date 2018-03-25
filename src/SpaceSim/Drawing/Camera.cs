@@ -47,8 +47,14 @@ namespace SpaceSim.Drawing
             Zoom = MathHelper.Clamp(Zoom + amount, _minimumZoom, _maximumZoom);
         }
 
-        public void SetRotation(double rotation)
+        public void SetRotation(double rotation, bool interpolate = false)
         {
+            if (interpolate)
+            {
+                _isInterpolating = true;
+                _interpolationTime = 0;
+            }
+
             _targetRotation = rotation;
         }
 

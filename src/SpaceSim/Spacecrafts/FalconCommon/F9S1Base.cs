@@ -132,7 +132,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _sootTexture = new Bitmap(fullSootPath);
             _drawingBuffer = new Bitmap(_sootTexture.Width, _sootTexture.Height);
 
-            _engineSmoke = new Smoke(1000, Color.FromArgb(100, 100, 100, 100));
+            _engineSmoke = new Smoke(1000, Color.FromArgb(90, 130, 130, 130));
         }
 
         public override void DeployGridFins()
