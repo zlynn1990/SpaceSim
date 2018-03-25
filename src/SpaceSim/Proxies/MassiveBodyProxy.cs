@@ -13,8 +13,10 @@ namespace SpaceSim.Proxies
     {
         public override double Mass { get { return _proxy.Mass; } }
 
-        public double SurfaceRadius { get { return _proxy.SurfaceRadius; } }
+        public string ApoapsisName { get; }
+        public string PeriapsisName { get; }
 
+        public double SurfaceRadius { get { return _proxy.SurfaceRadius; } }
         public double AtmosphereHeight { get {return _proxy.AtmosphereHeight; } }
 
         public double RotationRate { get { return _proxy.RotationRate; } }

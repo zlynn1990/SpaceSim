@@ -1,13 +1,14 @@
 ﻿using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
-using SpaceSim.Physics;
-using VectorMath;
 
 namespace SpaceSim.SolarSystem.Planets
 {
     class Mars : MassiveBodyBase
     {
+        public override string ApoapsisName { get { return "Apoareion"; } }
+        public override string PeriapsisName { get { return "Periareion"; } }
+
         public override double Mass
         {
             get { return 0.64174e24; }

@@ -18,10 +18,10 @@ namespace SpaceSim.Physics
 
         public DVector2 AccelerationG { get; protected set; }
 
-        public double Apogee { get { return OrbitTrace.Apogee; } }
-        public double Perigee { get { return OrbitTrace.Perigee; } }
+        public double Apoapsis { get { return OrbitTrace.Apogee; } }
+        public double Periapsis { get { return OrbitTrace.Perigee; } }
 
-        public bool InOrbit { get { return Apogee > 0 && Perigee > 0 && GetRelativeVelocity().Length() > 1; } }
+        public bool InOrbit { get { return Apoapsis > 0 && Periapsis > 0 && GetRelativeVelocity().Length() > 1; } }
 
         public abstract Color IconColor { get; }
 

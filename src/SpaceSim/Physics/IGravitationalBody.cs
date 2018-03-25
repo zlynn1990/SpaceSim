@@ -9,8 +9,8 @@ namespace SpaceSim.Physics
 
         DVector2 AccelerationG { get; }
 
-        double Apogee { get; }
-        double Perigee { get; }
+        double Apoapsis { get; }
+        double Periapsis { get; }
 
         bool InOrbit { get; }
 

@@ -814,13 +814,13 @@ namespace SpaceSim
 
                 _textDisplay.AddTextBlock(StringAlignment.Near, forceInfo);
 
-                // Don't show apogee/perigee info for the sun
+                // Don't show Apoapsis/Periapsis info for the sun
                 if (!(target is Sun))
                 {
                     _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
                     {
-                        "Apogee: " + UnitDisplay.Distance(target.Apogee),
-                        "Perigee: " + UnitDisplay.Distance(target.Perigee)
+                        $"{target.GravitationalParent.ApoapsisName}: {UnitDisplay.Distance(target.Apoapsis)}",
+                        $"{target.GravitationalParent.PeriapsisName}: {UnitDisplay.Distance(target.Periapsis)}",
                     });
                 }
 

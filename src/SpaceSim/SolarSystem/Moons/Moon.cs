@@ -1,13 +1,15 @@
 ﻿using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
-using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.SolarSystem.Moons
 {
     class Moon : MassiveBodyBase
     {
+        public override string ApoapsisName { get { return "Aposelene"; } }
+        public override string PeriapsisName { get { return "Periselene"; } }
+
         public override double Mass
         {
             get { return 7.3477e22; }

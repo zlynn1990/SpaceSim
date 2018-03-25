@@ -7,6 +7,9 @@ namespace SpaceSim.SolarSystem.Planets
 {
     class Earth : MassiveBodyBase
     {
+        public override string ApoapsisName { get { return "Apogee"; } }
+        public override string PeriapsisName { get { return "Perigée"; } }
+
         public override double Mass
         {
             get { return 5.97219e24; }

@@ -7,6 +7,9 @@ namespace SpaceSim.SolarSystem.Stars
 {
     class Sun : MassiveBodyBase
     {
+        public override string ApoapsisName { get { return "Aphelion"; } }
+        public override string PeriapsisName { get { return "Perihelion"; } }
+
         public override double Mass
         {
             get { return 1.9891e30; }

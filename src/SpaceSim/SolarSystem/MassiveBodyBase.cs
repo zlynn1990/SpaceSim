@@ -11,7 +11,10 @@ namespace SpaceSim.SolarSystem
 {
     abstract class MassiveBodyBase : GravitationalBodyBase, IMassiveBody, IGpuRenderable
     {
-        public IMassiveKernel Kernel { get; private set; }
+        public IMassiveKernel Kernel { get; }
+
+        public virtual string ApoapsisName { get { return "Apoapsis"; } }
+        public virtual string PeriapsisName { get { return "Periapsis"; } }
 
         public abstract double SurfaceRadius { get; }
         public abstract double AtmosphereHeight { get; } 

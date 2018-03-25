@@ -1,13 +1,14 @@
 ﻿using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
-using SpaceSim.Physics;
-using VectorMath;
 
 namespace SpaceSim.SolarSystem.Planets
 {
     class Jupiter : MassiveBodyBase
     {
+        public override string ApoapsisName { get { return "Apozene"; } }
+        public override string PeriapsisName { get { return "Perizene"; } }
+
         public override double Mass
         {
             get { return 1.8986e27; }

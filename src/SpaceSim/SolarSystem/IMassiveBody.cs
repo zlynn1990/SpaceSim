@@ -8,6 +8,9 @@ namespace SpaceSim.SolarSystem
     {
         Color IconAtmopshereColor { get; }
 
+        string ApoapsisName { get; }
+        string PeriapsisName { get; }
+
         double SurfaceRadius { get; }
         double AtmosphereHeight { get; }
 

@@ -970,10 +970,10 @@ namespace SpaceSim.Spacecrafts
                 if (_isReleased)
                 {
                     // Integrate acceleration
-                    Velocity += (AccelerationG * dt);
-                    Velocity += (AccelerationD * dt);
-                    Velocity += (AccelerationL * dt);
-                    Velocity += (AccelerationN * dt);
+                    Velocity += AccelerationG * dt;
+                    Velocity += AccelerationD * dt;
+                    Velocity += AccelerationL * dt;
+                    Velocity += AccelerationN * dt;
                 }
 
                 // Re-normalize FTL scenarios
@@ -984,8 +984,20 @@ namespace SpaceSim.Spacecrafts
                     Velocity *= Constants.SpeedOfLight;
                 }
 
-                // Integrate velocity
-                Position += (Velocity * dt);
+                // If the craft is on the ground with high time warpd don't update the position as normal.
+                // Instead just keep putting the ship at the correct spot on it's gravitational body based on rotation.
+                if (OnGround && dt > 5)
+                {
+                    DVector2 parentOffset = GravitationalParent.Position - Position;
+                    parentOffset.Normalize();
+
+                    Position = GravitationalParent.Position + parentOffset * GravitationalParent.SurfaceRadius;
+                }
+                else
+                {
+                    // Integrate velocity
+                    Position += Velocity * dt;
+                }
 
                 MachNumber = GetRelativeVelocity().Length() * 0.0029411764;
 
@@ -997,7 +1009,7 @@ namespace SpaceSim.Spacecrafts
                 _trailTimer += dt;
 
                 // Somewhat arbitrary conditions for launch trails
-                if (dt < 0.1666666666 && !InOrbit && _cachedAltitude > 50 && _cachedAltitude < GravitationalParent.AtmosphereHeight * 2 && _trailTimer > 1)
+                if (dt < 0.1666666666 && !InOrbit && !OnGround && _cachedAltitude > 50 && _cachedAltitude < GravitationalParent.AtmosphereHeight * 2 && _trailTimer > 1)
                 {
                     string parentName = GravitationalParent.ToString();
 
