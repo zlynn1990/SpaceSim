@@ -8,6 +8,38 @@
     <Duration>10</Duration>
     <TargetOrientation>-90</TargetOrientation>
   </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>2</StartTime>
+    <TargetScale>-400</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>5</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>2</StartTime>
+    <TargetScale>1795</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>5</StartTime>
+    <TargetScale>-983.15</TargetScale>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>7</StartTime>
+    <TargetIndex>0</TargetIndex>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>8</StartTime>
+    <TargetIndex>1</TargetIndex>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>9</StartTime>
+    <TargetIndex>1</TargetIndex>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>10</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>-->
   <Command xsi:type="Roll">
     <StartTime>12</StartTime>
     <Duration>23</Duration>
@@ -86,7 +118,7 @@
   <Command xsi:type="Pitch">
     <StartTime>480</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-205.5</TargetOrientation>
+    <TargetOrientation>-174.5</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>540</StartTime>

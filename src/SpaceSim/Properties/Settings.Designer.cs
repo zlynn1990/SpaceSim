@@ -67,5 +67,14 @@ namespace SpaceSim.Properties {
                 return ((bool)(this["FullScreen"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1600, 900")]
+        public global::System.Drawing.Size ScreenSize {
+            get {
+                return ((global::System.Drawing.Size)(this["ScreenSize"]));
+            }
+        }
     }
 }

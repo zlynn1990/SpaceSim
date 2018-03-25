@@ -22,7 +22,7 @@
   <Command xsi:type="RelativePitch">
     <StartTime>187</StartTime>
     <Duration>27</Duration>
-    <TargetOrientation>2.5</TargetOrientation>
+    <TargetOrientation>2.3</TargetOrientation>
   </Command>
   <Command xsi:type="Ignition">
     <StartTime>206</StartTime>
@@ -104,8 +104,8 @@
     <TargetOrientation>-43</TargetOrientation>
   </Command>
   <Command xsi:type="Retrograde">
-    <StartTime>473</StartTime>
-    <Duration>26</Duration>
+    <StartTime>461</StartTime>
+    <Duration>38</Duration>
     <InitialAdjustmentTime>5</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Ignition">
