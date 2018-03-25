@@ -50,9 +50,14 @@ namespace SpaceSim.Drawing
         public static string Distance(double distance)
         {
             // Can happen with orbit traced perigees
-            if (distance == double.MaxValue)
+            if (distance == double.MaxValue || double.IsNaN(distance))
             {
                 return "N/A";
+            }
+
+            if (Math.Abs(distance) < 0.25)
+            {
+                return "0.0 m";
             }
 
             if (distance > 10000000000)

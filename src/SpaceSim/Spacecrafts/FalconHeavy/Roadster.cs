@@ -4,12 +4,11 @@ using System.IO;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using SpaceSim.Physics;
+using SpaceSim.Properties;
 using SpaceSim.Spacecrafts.FalconCommon;
 using VectorMath;
 
-using SpaceSim.Properties;
-
-namespace SpaceSim.Spacecrafts
+namespace SpaceSim.Spacecrafts.FalconHeavy
 {
     class Roadster : SpaceCraftBase
     {
@@ -123,6 +122,14 @@ namespace SpaceSim.Spacecrafts
 
             _leftFairing.SetParent(this);
             _rightFairing.SetParent(this);
+        }
+
+        public override void Release()
+        {
+            _rightFairing.Release();
+            _leftFairing.Release();
+
+            base.Release();
         }
 
         public override void Update(double dt)

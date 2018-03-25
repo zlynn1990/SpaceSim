@@ -2,7 +2,7 @@
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Command xsi:type="Prograde">
     <StartTime>210</StartTime>
-    <Duration>270</Duration>
+    <Duration>600</Duration>
     <InitialAdjustmentTime>5</InitialAdjustmentTime>
   </Command>
   <!--<Command xsi:type="Deploy">

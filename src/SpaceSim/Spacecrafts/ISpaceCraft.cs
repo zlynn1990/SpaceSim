@@ -36,9 +36,10 @@ namespace SpaceSim.Spacecrafts
         bool OnGround { get; }
         double OriginSurfaceAngle { get; }
 
-        void InitializeController(EventManager eventManager);
+        void InitializeController(EventManager eventManager, double clockDelay);
 
         void Stage();
+        void Release();
         void DeployFairing();
 
         void ToggleDisplayVectors();

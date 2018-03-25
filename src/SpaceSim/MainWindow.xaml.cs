@@ -44,9 +44,6 @@ namespace SpaceSim
     public partial class MainWindow : Window
     {
         public static List<string> ProfilePaths;
-        //public static bool FullScreen;
-
-        public static int ClockDelayInSeconds;
 
         private RenderingType _renderingType = RenderingType.OpenCLHardware;
 
@@ -84,6 +81,7 @@ namespace SpaceSim
         private DateTime _originTime;
 
         private bool _isPaused;
+        private double _clockDelay;
         private double _totalElapsedSeconds;
 
         private TextDisplay _textDisplay;
@@ -126,10 +124,8 @@ namespace SpaceSim
             }
             else
             {
-                //RenderUtils.ScreenWidth = 1280;
-                //RenderUtils.ScreenHeight = 720;
-                RenderUtils.ScreenWidth = 1600;
-                RenderUtils.ScreenHeight = 900;
+                RenderUtils.ScreenWidth = Settings.Default.ScreenSize.Width;
+                RenderUtils.ScreenHeight = Settings.Default.ScreenSize.Height;
             }
 
             RenderUtils.ScreenArea = RenderUtils.ScreenWidth * RenderUtils.ScreenHeight;
@@ -209,6 +205,11 @@ namespace SpaceSim
             {
                 MissionConfig missionConfig = MissionConfig.Load(ProfilePaths[i]);
 
+                if (missionConfig.ClockDelay > _clockDelay)
+                {
+                    _clockDelay = missionConfig.ClockDelay;
+                }
+
                 IMassiveBody targetPlanet = LocatePlanet(missionConfig.ParentPlanet);
 
                 double launchAngle = targetPlanet.GetSurfaceAngle(_originTime, _sun);
@@ -221,7 +222,7 @@ namespace SpaceSim
             // Initialize the spacecraft controllers
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
             {
-                spaceCraft.InitializeController(_eventManager);
+                spaceCraft.InitializeController(_eventManager, _clockDelay);
             }
 
             _gravitationalBodies = new List<IGravitationalBody>
@@ -293,6 +294,27 @@ namespace SpaceSim
             _targetScrollRate -= e.Delta * 0.0001f;
         }
 
+        public void SetRate(int index)
+        {
+            _timeStepIndex = index;
+            _userUpdatedTimesteps = true;
+        }
+
+        public void SetTarget(bool next)
+        {
+            if (next)
+                _targetIndex = GravitationalBodyIterator.Next(_targetIndex, _gravitationalBodies, _camera);
+            else
+                _targetIndex = GravitationalBodyIterator.Prev(_targetIndex, _gravitationalBodies, _camera);
+
+            _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);           
+        }
+
+        public void SetZoom(float delta)
+        {
+            _targetScrollRate += delta;
+        }
+
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -334,14 +356,14 @@ namespace SpaceSim
 
             if (e.Key == Key.OemCloseBrackets && !_isPaused)
             {
-                _targetIndex = GravitationalBodyIterator.Next(_targetIndex, _gravitationalBodies);
+                _targetIndex = GravitationalBodyIterator.Next(_targetIndex, _gravitationalBodies, _camera);
 
                 _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
             }
 
             if (e.Key == Key.OemOpenBrackets && !_isPaused)
             {
-                _targetIndex = GravitationalBodyIterator.Prev(_targetIndex, _gravitationalBodies);
+                _targetIndex = GravitationalBodyIterator.Prev(_targetIndex, _gravitationalBodies, _camera);
 
                 _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
             }
@@ -611,6 +633,9 @@ namespace SpaceSim
         {
             _textDisplay.Clear();
 
+            // check for global events
+            _eventManager.CheckForGlobalEvents(this);
+
             RectangleD cameraBounds = _camera.Bounds;
 
             IGravitationalBody target = _gravitationalBodies[_targetIndex];
@@ -721,7 +746,7 @@ namespace SpaceSim
 
                 _eventManager.Render(graphics);
 
-                var elapsedTime = TimeSpan.FromSeconds(_totalElapsedSeconds - ClockDelayInSeconds);
+                var elapsedTime = TimeSpan.FromSeconds(_totalElapsedSeconds - _clockDelay);
 
                 int elapsedYears = elapsedTime.Days / 365;
                 int elapsedDays = elapsedTime.Days % 365;
@@ -732,7 +757,7 @@ namespace SpaceSim
                 _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
                 {
                     $"Origin Time: {localTime.ToShortDateString()} {localTime.ToShortTimeString()}",
-                    $"Elapsed Time: Y:{elapsedYears} D:{elapsedDays} H:{elapsedTime.Hours} M:{elapsedTime.Minutes} S:{elapsedTime.Seconds}",
+                    $"Elapsed Time: Y:{elapsedYears} D:{elapsedDays} H:{elapsedTime.Hours} M:{elapsedTime.Minutes} S:{Math.Round(elapsedTime.TotalSeconds % 60)}",
                     $"Update Speed: {timeStep.Multiplier}"
                 });
 
@@ -778,7 +803,9 @@ namespace SpaceSim
                 if (targetSpaceCraft != null)
                 {
                     DVector2 dragForce = targetSpaceCraft.AccelerationD * targetSpaceCraft.Mass;
-                    DVector2 liftForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass * Math.Cos(targetSpaceCraft.Roll);
+                    DVector2 liftForce = targetSpaceCraft.AccelerationL * targetSpaceCraft.Mass;
+                    if (Settings.Default.UseTheTurnForce)
+                        liftForce *= Math.Cos(targetSpaceCraft.Roll);
 
                     forceInfo.Add("Thrust: " + UnitDisplay.Force(targetSpaceCraft.Thrust));
                     forceInfo.Add("Drag: " + UnitDisplay.Force(dragForce.Length()));

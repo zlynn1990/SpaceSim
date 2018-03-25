@@ -7,11 +7,11 @@ namespace SpaceSim.Controllers
 {
     class CommandController : SimpleFlightController
     {
-        private List<CommandBase> _queuedCommands;
-        private List<CommandBase> _activeCommands;
+        private readonly List<CommandBase> _queuedCommands;
+        private readonly List<CommandBase> _activeCommands;
 
-        public CommandController(List<CommandBase> commands, SpaceCraftBase spaceCraft, EventManager eventManager)
-            : base(spaceCraft)
+        public CommandController(List<CommandBase> commands, SpaceCraftBase spaceCraft, EventManager eventManager, double clockDelay)
+            : base(spaceCraft, clockDelay)
         {
             _queuedCommands = new List<CommandBase>();
             _activeCommands = new List<CommandBase>();

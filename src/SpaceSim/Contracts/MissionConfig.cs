@@ -22,6 +22,8 @@ namespace SpaceSim.Contracts
 
         public string LaunchDate { get; set; }
 
+        public int ClockDelay { get; set; }
+
         public DateTime GetLaunchDate()
         {
             DateTime date;

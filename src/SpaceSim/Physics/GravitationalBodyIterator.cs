@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SpaceSim.Drawing;
 using SpaceSim.Spacecrafts;
 using VectorMath;
 
@@ -9,38 +8,25 @@ namespace SpaceSim.Physics
 {
     static class GravitationalBodyIterator
     {
-        public static int Next(int currentIndex, IList<IGravitationalBody> bodies)
+        public static int Next(int currentIndex, IList<IGravitationalBody> bodies, Camera camera)
         {
-            HashSet<int> connectedBodies = GetConnectedBodies(currentIndex, bodies);
+            DVector2 cameraNormal = camera.Rotation == 0 ? new DVector2(1, 0) : DVector2.FromAngle(-camera.Rotation);
 
-            List<Tuple<double, int>> bodiesByDistance = GetSortedBodyDistances(currentIndex, bodies);
-
-            foreach (Tuple<double, int> bodyDistancePair in bodiesByDistance)
-            {
-                int targetId = bodyDistancePair.Item2;
-
-                // The closest object is still part of the same craft
-                if (connectedBodies.Contains(targetId))
-                {
-                    continue;
-                }
-
-                IGravitationalBody body = bodies[targetId];
-
-                if (body.Position.X > bodies[currentIndex].Position.X)
-                {
-                    return GetParentIndex(targetId, bodies);
-                }
-            }
-
-            return currentIndex;
+            return Iterate(currentIndex, bodies, cameraNormal);
         }
 
-        public static int Prev(int currentIndex, IList<IGravitationalBody> bodies)
+        public static int Prev(int currentIndex, IList<IGravitationalBody> bodies, Camera camera)
+        {
+            DVector2 cameraNormal = camera.Rotation == 0 ? new DVector2(-1, 0) : DVector2.FromAngle(camera.Rotation);
+
+            return Iterate(currentIndex, bodies, cameraNormal);
+        }
+
+        private static int Iterate(int currentIndex, IList<IGravitationalBody> bodies, DVector2 iterateNormal)
         {
             HashSet<int> connectedBodies = GetConnectedBodies(currentIndex, bodies);
 
-            List<Tuple<double, int>> bodiesByDistance = GetSortedBodyDistances(currentIndex, bodies);
+            List<Tuple<double, int>> bodiesByDistance = GetSortedBodyDistances(currentIndex, bodies, iterateNormal);
 
             foreach (Tuple<double, int> bodyDistancePair in bodiesByDistance)
             {
@@ -52,12 +38,7 @@ namespace SpaceSim.Physics
                     continue;
                 }
 
-                IGravitationalBody body = bodies[targetId];
-
-                if (body.Position.X < bodies[currentIndex].Position.X)
-                {
-                    return GetParentIndex(targetId, bodies);
-                }
+                return GetParentIndex(targetId, bodies);
             }
 
             return currentIndex;
@@ -80,7 +61,8 @@ namespace SpaceSim.Physics
             return targetIndex;
         }
 
-        private static List<Tuple<double, int>> GetSortedBodyDistances(int currentIndex, IList<IGravitationalBody> bodies)
+        // Gets bodies sorted by distance that point the direction of the camera normal
+        private static List<Tuple<double, int>> GetSortedBodyDistances(int currentIndex, IList<IGravitationalBody> bodies, DVector2 cameraNormal)
         {
             DVector2 targetCenter = bodies[currentIndex].Position;
 
@@ -90,11 +72,17 @@ namespace SpaceSim.Physics
             {
                 if (i == currentIndex) continue;
 
-                DVector2 difference = targetCenter - bodies[i].Position;
+                DVector2 difference = bodies[i].Position - targetCenter;
 
                 double distance = difference.LengthSquared();
 
-                bodiesByDistance.Add(new Tuple<double, int>(distance, i));
+                difference.Normalize();
+
+                // Only add bodies in the same direction as the camera normal
+                if (difference.Dot(cameraNormal) > 0)
+                {
+                    bodiesByDistance.Add(new Tuple<double, int>(distance, i));
+                }
             }
 
             bodiesByDistance.Sort(Compare);

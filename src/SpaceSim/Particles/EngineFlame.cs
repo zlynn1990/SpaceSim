@@ -48,7 +48,7 @@ namespace SpaceSim.Particles
             {
                 if (_availableParticles.Count > 0)
                 {
-                    double velocityFactor = _random.Next(200, 300) * throttleMultiplier;
+                    double velocityFactor = _random.Next(200, 400) * throttleMultiplier;
                     double spread = _random.NextDouble() - 0.5;
 
                     DVector2 velocity = DVector2.FromAngle(retrograde + spread * spreadMultiplier);

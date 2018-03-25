@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Command xsi:type="Ignition">
-    <StartTime>0.00001</StartTime>
+    <StartTime>-3</StartTime>
     <Duration>0.5</Duration>
     <Throttle>72</Throttle>
   </Command>
@@ -22,7 +22,7 @@
   <Command xsi:type="RelativePitch">
     <StartTime>187</StartTime>
     <Duration>27</Duration>
-    <TargetOrientation>2</TargetOrientation>
+    <TargetOrientation>2.3</TargetOrientation>
   </Command>
   <Command xsi:type="Ignition">
     <StartTime>206</StartTime>
@@ -104,8 +104,8 @@
     <TargetOrientation>-43</TargetOrientation>
   </Command>
   <Command xsi:type="Retrograde">
-    <StartTime>473</StartTime>
-    <Duration>26</Duration>
+    <StartTime>461</StartTime>
+    <Duration>38</Duration>
     <InitialAdjustmentTime>5</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Ignition">
@@ -132,11 +132,11 @@
       <int>0</int>
       <int>8</int>
     </EngineIds>
-  </Command>-->
+  </Command>
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
     <StartTime>494</StartTime>
-  </Command>
+  </Command>-->
   <Command xsi:type="Shutdown">
     <StartTime>500</StartTime>
     <Duration>0.5</Duration>

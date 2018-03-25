@@ -172,6 +172,7 @@ namespace SpaceSim.Spacecrafts
         private double _trailTimer;
         private Dictionary<string, LaunchTrail> _launchTrails;
 
+        private bool _isReleased;
         private bool _requiresStaging;
 
         private int _onGroundIterations;
@@ -209,7 +210,7 @@ namespace SpaceSim.Spacecrafts
             _cachedRelativeVelocity = DVector2.Zero;
         }
 
-        public void InitializeController(EventManager eventManager)
+        public void InitializeController(EventManager eventManager, double clockDelay)
         {
             string commandPath = Path.Combine(CraftDirectory, CommandFileName);
 
@@ -217,11 +218,11 @@ namespace SpaceSim.Spacecrafts
             {
                 List<CommandBase> commands = CommandManager.Load(commandPath);
 
-                Controller = new CommandController(commands, this, eventManager);
+                Controller = new CommandController(commands, this, eventManager, clockDelay);
             }
             else
             {
-                Controller = new SimpleFlightController(this);
+                Controller = new SimpleFlightController(this, clockDelay);
             }
         }
 
@@ -260,6 +261,11 @@ namespace SpaceSim.Spacecrafts
             // Find angle between normal vectors
             double angle = Math.Acos(pofOffset.X*spaceCraftOffset.X + pofOffset.Y*spaceCraftOffset.Y);
 
+            if (double.IsNaN(angle))
+            {
+                angle = 0;
+            }
+
             // Fixing wrapping around a circle
             if (angle > Math.PI)
             {
@@ -292,6 +298,16 @@ namespace SpaceSim.Spacecrafts
                 Parent = null;
 
                 _requiresStaging = true;
+            }
+        }
+
+        public virtual void Release()
+        {
+            _isReleased = true;
+
+            foreach (ISpaceCraft child in Children)
+            {
+                child.Release();
             }
         }
 
@@ -932,9 +948,9 @@ namespace SpaceSim.Spacecrafts
             {
                 UpdateEngines(dt);
 
-                if (Thrust > 0)
+                if (Thrust > 0 && _isReleased)
                 {
-                    var thrustVector = new DVector2(Math.Cos(Pitch), Math.Sin(Pitch));
+                    var thrustVector = new DVector2(Math.Cos(Pitch) * Math.Cos(Yaw), Math.Sin(Pitch));
 
                     AccelerationN += (thrustVector * Thrust) / Mass;
                 }
@@ -944,18 +960,21 @@ namespace SpaceSim.Spacecrafts
                     // Simulate simple staging mechanism
                     double sAngle = StageOffset.Angle();
 
-                    DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Math.PI * 0.5);
+                    DVector2 stagingNormal = DVector2.FromAngle(Pitch + sAngle + Constants.PiOverTwo);
 
                     AccelerationN += stagingNormal * StagingForce;
 
                     _requiresStaging = false;
                 }
 
-                // Integrate acceleration
-                Velocity += (AccelerationG * dt);
-                Velocity += (AccelerationD * dt);
-                Velocity += (AccelerationN * dt);
-                Velocity += (AccelerationL * dt);
+                if (_isReleased)
+                {
+                    // Integrate acceleration
+                    Velocity += (AccelerationG * dt);
+                    Velocity += (AccelerationD * dt);
+                    Velocity += (AccelerationL * dt);
+                    Velocity += (AccelerationN * dt);
+                }
 
                 // Re-normalize FTL scenarios
                 if (Velocity.LengthSquared() > Constants.SpeedLightSquared)

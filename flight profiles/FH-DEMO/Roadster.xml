@@ -1,10 +1,45 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>0</StartTime>
     <Duration>10</Duration>
     <TargetOrientation>-90</TargetOrientation>
   </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>2</StartTime>
+    <TargetScale>-400</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>5</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>2</StartTime>
+    <TargetScale>1795</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>5</StartTime>
+    <TargetScale>-983.15</TargetScale>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>7</StartTime>
+    <TargetIndex>0</TargetIndex>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>8</StartTime>
+    <TargetIndex>1</TargetIndex>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>9</StartTime>
+    <TargetIndex>1</TargetIndex>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>10</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>-->
   <Command xsi:type="Roll">
     <StartTime>12</StartTime>
     <Duration>23</Duration>
@@ -63,27 +98,27 @@
   <Command xsi:type="Pitch">
     <StartTime>320</StartTime>
     <Duration>40</Duration>
-    <TargetOrientation>-188.8</TargetOrientation>
+    <TargetOrientation>-190.5</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>360</StartTime>
     <Duration>10</Duration>
-    <TargetOrientation>-173.8</TargetOrientation>
+    <TargetOrientation>-175.5</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>370</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-173.8</TargetOrientation>
+    <TargetOrientation>-175.5</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>420</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-193.8</TargetOrientation>
+    <TargetOrientation>-195.5</TargetOrientation>
   </Command>
   <Command xsi:type="Pitch">
     <StartTime>480</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-203.8</TargetOrientation>
+    <TargetOrientation>-174.5</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>540</StartTime>

@@ -15,11 +15,11 @@ namespace SpaceSim.Controllers
 
         protected SpaceCraftBase SpaceCraft;
 
-        public SimpleFlightController(SpaceCraftBase spaceCraft)
+        public SimpleFlightController(SpaceCraftBase spaceCraft, double clockDelay)
         {
-            ElapsedTime -= MainWindow.ClockDelayInSeconds;
-
             SpaceCraft = spaceCraft;
+
+            ElapsedTime -= clockDelay;
         }
 
         public void KeyUp(Key key)

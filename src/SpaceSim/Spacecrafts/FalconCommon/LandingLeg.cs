@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Physics;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.FalconCommon
 {
     class LandingLeg : SpaceCraftPart
     {
-        protected override double Width
-        {
-            get { return 1.8; }
-        }
-
-        protected override double Height
-        {
-            get { return 10.052819015; }
-        }
+        protected override double Width { get { return 1.8; } }
+        protected override double Height { get { return 10.052819015; } }
+        protected override double DrawingOffset { get { return -4.2; } }
 
         private double _offsetLength;
         private double _offsetRotation;
@@ -29,7 +24,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _isLeft = isLeft;
 
             _offsetLength = offset.Length();
-            _offsetRotation = _offsetRotation = offset.Angle() - Math.PI / 2.0;
+            _offsetRotation = offset.Angle() - Constants.PiOverTwo;
 
             _texture = isLeft
                 ? new Bitmap("Textures/Spacecrafts/Falcon/Common//landingLegLeft.png")

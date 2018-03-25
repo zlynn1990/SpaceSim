@@ -116,6 +116,14 @@ namespace SpaceSim.Spacecrafts
             Engines = new IEngine[0];
         }
 
+        public override void Release()
+        {
+            _rightFairing.Release();
+            _leftFairing.Release();
+
+            base.Release();
+        }
+
         public void AttachFairings(Fairing leftFairing, Fairing rightFairing)
         {
             _leftFairing = leftFairing;
