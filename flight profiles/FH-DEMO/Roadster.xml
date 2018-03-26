@@ -170,11 +170,11 @@
     <TargetIndex>17</TargetIndex>
   </Command>
   <Command xsi:type="Rate">
-    <StartTime>2329689600</StartTime>
+    <StartTime>2329862400</StartTime>
     <TargetIndex>4</TargetIndex>
   </Command>
   <Command xsi:type="Zoom">
-    <StartTime>2329689600</StartTime>
-    <TargetScale>-330</TargetScale>
+    <StartTime>2329862400</StartTime>
+    <TargetScale>-340</TargetScale>
   </Command>
 </ArrayOfCommand>
