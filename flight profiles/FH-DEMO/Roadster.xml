@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Rate">
+    <StartTime>-10</StartTime>
+    <TargetIndex>10</TargetIndex>
+  </Command>
   <Command xsi:type="Release">
     <StartTime>0</StartTime>
   </Command>
@@ -8,14 +12,14 @@
     <Duration>10</Duration>
     <TargetOrientation>-90</TargetOrientation>
   </Command>
-  <Command xsi:type="Zoom">
+  <!--<Command xsi:type="Zoom">
     <StartTime>2</StartTime>
     <TargetScale>-400</TargetScale>
   </Command>
   <Command xsi:type="Zoom">
     <StartTime>5</StartTime>
     <TargetScale>100</TargetScale>
-  </Command>
+  </Command>-->
   <!--<Command xsi:type="Zoom">
     <StartTime>2</StartTime>
     <TargetScale>1795</TargetScale>
@@ -49,6 +53,10 @@
     <StartTime>12</StartTime>
     <Duration>38</Duration>
     <TargetOrientation>-106</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>45</StartTime>
+    <TargetScale>800</TargetScale>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>50</StartTime>
@@ -124,5 +132,49 @@
     <StartTime>540</StartTime>
     <Duration>100000</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>700</StartTime>
+    <TargetScale>190</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>1000</StartTime>
+    <TargetIndex>12</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>20000</StartTime>
+    <TargetScale>190</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>20695</StartTime>
+    <TargetIndex>10</TargetIndex>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>20760</StartTime>
+    <TargetIndex>12</TargetIndex>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>30000</StartTime>
+    <TargetIndex>14</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>30000</StartTime>
+    <TargetScale>140</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>100000</StartTime>
+    <TargetScale>140</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>300000</StartTime>
+    <TargetIndex>17</TargetIndex>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>2329689600</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>2329689600</StartTime>
+    <TargetScale>-330</TargetScale>
   </Command>
 </ArrayOfCommand>
