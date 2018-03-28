@@ -118,6 +118,7 @@ namespace SpaceSim.Spacecrafts
         public IController Controller { get; protected set; }
 
         public bool OnGround { get; private set; }
+        public bool Terminated { get; private set; }
         public double OriginSurfaceAngle { get; private set; }
 
         public abstract AeroDynamicProperties GetAeroDynamicProperties { get; }
@@ -165,6 +166,7 @@ namespace SpaceSim.Spacecrafts
         protected ReEntryFlame EntryFlame;
 
         protected string MissionName;
+        protected SpaceCraftManager _spaceCraftManager;
 
         private double _cachedAltitude;
         private DVector2 _cachedRelativeVelocity;
@@ -210,7 +212,7 @@ namespace SpaceSim.Spacecrafts
             _cachedRelativeVelocity = DVector2.Zero;
         }
 
-        public void InitializeController(EventManager eventManager, double clockDelay)
+        public void Initialize(SpaceCraftManager spaceCraftManager, EventManager eventManager, double clockDelay)
         {
             string commandPath = Path.Combine(CraftDirectory, CommandFileName);
 
@@ -224,6 +226,8 @@ namespace SpaceSim.Spacecrafts
             {
                 Controller = new SimpleFlightController(this, clockDelay);
             }
+
+            _spaceCraftManager = spaceCraftManager;
         }
 
         public void ToggleDisplayVectors()
@@ -309,6 +313,13 @@ namespace SpaceSim.Spacecrafts
             {
                 child.Release();
             }
+        }
+
+        public virtual void Terminate()
+        {
+            Terminated = true;
+
+            _spaceCraftManager.Remove(this);
         }
 
         /// <summary>

@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Xml.Serialization;
 using Cloo;
 using OpenCLWrapper;
 using SpaceSim.Contracts;
@@ -74,7 +73,7 @@ namespace SpaceSim
         private RetrogradeButton _retrogradeButton;
         private EventManager _eventManager;
 
-        private List<ISpaceCraft> _spaceCrafts; 
+        private SpaceCraftManager _spaceCraftManager;
         private List<IMassiveBody> _massiveBodies;
         private List<StructureBase> _structures; 
         private List<IGravitationalBody> _gravitationalBodies;
@@ -192,7 +191,12 @@ namespace SpaceSim
 
             ResolveMassiveBodyParents();
 
-            _spaceCrafts = new List<ISpaceCraft>();
+            _gravitationalBodies = new List<IGravitationalBody>
+            {
+                _sun, mercury, venus, earth, moon, mars, jupiter, europa, saturn
+            };
+
+            _spaceCraftManager = new SpaceCraftManager(_gravitationalBodies);
             _structures = new List<StructureBase>();
 
             MissionConfig primaryMission = MissionConfig.Load(ProfilePaths[0]);
@@ -215,31 +219,17 @@ namespace SpaceSim
 
                 double launchAngle = targetPlanet.GetSurfaceAngle(_originTime, _sun);
 
-                _spaceCrafts.AddRange(SpacecraftFactory.BuildSpaceCraft(targetPlanet, launchAngle, missionConfig, ProfilePaths[i]));
+                _spaceCraftManager.Add(SpacecraftFactory.BuildSpaceCraft(targetPlanet, launchAngle, missionConfig, ProfilePaths[i]));
 
                 _structures.AddRange(StructureFactory.Load(targetPlanet, launchAngle, ProfilePaths[i]));
             }
 
-            // Initialize the spacecraft controllers
-            foreach (ISpaceCraft spaceCraft in _spaceCrafts)
-            {
-                spaceCraft.InitializeController(_eventManager, _clockDelay);
-            }
-
-            _gravitationalBodies = new List<IGravitationalBody>
-            {
-                _sun, mercury, venus, earth, moon, mars, jupiter, europa, saturn
-            };
-
-            foreach (ISpaceCraft spaceCraft in _spaceCrafts)
-            {
-                _gravitationalBodies.Add(spaceCraft);
-            }
+            _spaceCraftManager.Initialize(_eventManager, _clockDelay);
 
             // Target the spacecraft
-            _targetIndex = _gravitationalBodies.IndexOf(_spaceCrafts.FirstOrDefault());
+            _targetIndex = _gravitationalBodies.IndexOf(_spaceCraftManager.First);
 
-            ResolveSpaceCraftParents();
+            _spaceCraftManager.ResolveGravitionalParents(_massiveBodies);
         }
 
         /// <summary>
@@ -337,10 +327,7 @@ namespace SpaceSim
 
             if (e.Key == Key.X)
             {
-                foreach (ISpaceCraft craft in _spaceCrafts)
-                {
-                    craft.ToggleDisplayVectors();
-                }
+                _spaceCraftManager.ToggleDisplayVectors();
             }
 
             if (e.Key == Key.OemComma && _timeStepIndex > 0)
@@ -408,32 +395,6 @@ namespace SpaceSim
             }
         }
 
-        // Find the parent for each space craft
-        private void ResolveSpaceCraftParents()
-        {
-            foreach (ISpaceCraft spaceCraft in _spaceCrafts)
-            {
-                double bestMassDistanceRatio = double.MaxValue;
-
-                foreach (IMassiveBody bodyB in _massiveBodies)
-                {
-                    double massRatio = Math.Pow(spaceCraft.Mass / bodyB.Mass, 0.4);
-
-                    DVector2 difference = spaceCraft.Position - bodyB.Position;
-
-                    double massDistanceRatio = massRatio * difference.Length();
-
-                    // New parent
-                    if (massDistanceRatio < bestMassDistanceRatio)
-                    {
-                        spaceCraft.SetGravitationalParent(bodyB);
-
-                        bestMassDistanceRatio = massDistanceRatio;
-                    }
-                }
-            }
-        }
-
         // Adjusts the timestep to ensure burns aren't missed at normal speed
         private void AdjustSpeedForBurns(TimeStep timeStep)
         {
@@ -446,23 +407,12 @@ namespace SpaceSim
             // Future timestep accounting for 5 iterations + padding to be safe
             double stepEnd = timeStep.Dt * timeStep.UpdateLoops * 5 + _totalElapsedSeconds - _clockDelay + 2;
 
-            foreach (ISpaceCraft spaceCraft in _spaceCrafts)
+            double nextBurn = _spaceCraftManager.GetNextBurnTime();
+
+            if (nextBurn > 0 && nextBurn < stepEnd)
             {
-                var controller = spaceCraft.Controller as CommandController;
-
-                // Spacecraft uses command controller
-                if (controller != null)
-                {
-                    double nextBurn = controller.NextBurnTime();
-
-                    if (nextBurn > 0 && nextBurn < stepEnd)
-                    {
-                        _timeStepIndex--;
-                        _userUpdatedTimesteps = false;
-
-                        break;
-                    }
-                }
+                _timeStepIndex--;
+                _userUpdatedTimesteps = false;
             }
         }
 
@@ -535,7 +485,7 @@ namespace SpaceSim
         private void Update(TimeStep timeStep)
         {
             ResolveMassiveBodyParents();
-            ResolveSpaceCraftParents();
+            _spaceCraftManager.ResolveGravitionalParents(_massiveBodies);
             AdjustSpeedForBurns(timeStep);
 
             double targetDt = _isPaused ? 0 : timeStep.Dt;
@@ -556,40 +506,13 @@ namespace SpaceSim
                     }
                 }
 
-                // Reslove spacecraft forces
-                foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
-                {
-                    spaceCraft.ResetAccelerations();
+                _spaceCraftManager.ResolveForces(_massiveBodies);
+                _spaceCraftManager.Update(timeStep, targetDt);
 
-                    foreach (MassiveBodyBase massiveBody in _massiveBodies)
-                    {
-                        spaceCraft.ResolveGravitation(massiveBody);
-
-                        if (spaceCraft.GravitationalParent == massiveBody)
-                        {
-                            spaceCraft.ResolveAtmopsherics(massiveBody);
-                        }
-                    }
-                }
-
-                // Don't update the animations every frame
-                if (timeStep.UpdateLoops < 16)
-                {
-                    foreach (ISpaceCraft spaceCraft in _spaceCrafts)
-                    {
-                        spaceCraft.UpdateAnimations(timeStep);
-                    }
-                }
-
-                // Update oribitng bodies
+                // Update bodies
                 foreach (IGravitationalBody gravitationalBody in _gravitationalBodies)
                 {
                     gravitationalBody.Update(targetDt);
-                }
-
-                foreach (ISpaceCraft spaceCraft in _spaceCrafts)
-                {
-                    spaceCraft.UpdateController(targetDt);
                 }
 
                 _totalElapsedSeconds += targetDt;
@@ -736,11 +659,7 @@ namespace SpaceSim
                     structure.RenderGdi(graphics, _camera);
                 }
 
-                // Draw spacecraft
-                foreach (SpaceCraftBase spaceCraft in _spaceCrafts)
-                {
-                    spaceCraft.RenderGdi(graphics, _camera);
-                }
+                _spaceCraftManager.Render(graphics, _camera);
             }
 
             // Draw all GUI elements (higher quality)

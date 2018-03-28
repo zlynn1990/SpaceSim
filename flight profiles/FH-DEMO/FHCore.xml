@@ -141,4 +141,7 @@
     <StartTime>518</StartTime>
     <Duration>0.5</Duration>
   </Command>
+  <Command xsi:type="Terminate">
+    <StartTime>300000</StartTime>
+  </Command>
 </ArrayOfCommand>

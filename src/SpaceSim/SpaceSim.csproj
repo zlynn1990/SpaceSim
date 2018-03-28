@@ -95,6 +95,7 @@
     <Compile Include="Commands\RetrogradeCommand.cs" />
     <Compile Include="Commands\RollCommand.cs" />
     <Compile Include="Commands\TargetCommand.cs" />
+    <Compile Include="Commands\TerminateCommand.cs" />
     <Compile Include="Commands\YawCommand.cs" />
     <Compile Include="Commands\ZoomCommand.cs" />
     <Compile Include="Contracts\Commands\AutoLand.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Contracts\Commands\Shutdown.cs" />
     <Compile Include="Contracts\Commands\Stage.cs" />
     <Compile Include="Contracts\Commands\Target.cs" />
+    <Compile Include="Contracts\Commands\Terminate.cs" />
     <Compile Include="Contracts\Commands\Throttle.cs" />
     <Compile Include="Commands\IgnitionCommand.cs" />
     <Compile Include="Commands\ShutdownCommand.cs" />
@@ -230,6 +232,7 @@
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
     <Compile Include="SolarSystem\Stars\Sun.cs" />
     <Compile Include="Physics\TimeStep.cs" />
+    <Compile Include="Spacecrafts\SpaceCraftManager.cs" />
     <Compile Include="Spacecrafts\SpaceCraftPart.cs" />
     <Compile Include="Structures\ASDS.cs" />
     <Compile Include="Structures\Edwards.cs" />
