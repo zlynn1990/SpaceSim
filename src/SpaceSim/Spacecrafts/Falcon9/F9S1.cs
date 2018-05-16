@@ -17,7 +17,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
         public F9S1(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 406698)
             : base(craftDirectory, position, velocity, propellantMass, "Falcon/9/S1.png")
         {
-            StageOffset = new DVector2(0, 25.55);
+            StageOffset = new DVector2(0, 25.5);
 
             Engines = new IEngine[9];
 

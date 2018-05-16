@@ -5,7 +5,7 @@
     <Duration>250</Duration>
     <InitialAdjustmentTime>5</InitialAdjustmentTime>
   </Command>
-  <Command xsi:type="Deploy">
+  <!--<Command xsi:type="Deploy">
     <Part>Drogues</Part>
     <StartTime>480</StartTime>
   </Command>
@@ -42,5 +42,5 @@
     <StartTime>1240</StartTime>
     <Duration>5</Duration>
     <TargetOrientation>185</TargetOrientation>
-  </Command>
+  </Command>-->
 </ArrayOfCommand>

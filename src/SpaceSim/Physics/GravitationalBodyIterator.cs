@@ -17,7 +17,7 @@ namespace SpaceSim.Physics
 
         public static int Prev(int currentIndex, IList<IGravitationalBody> bodies, Camera camera)
         {
-            DVector2 cameraNormal = camera.Rotation == 0 ? new DVector2(-1, 0) : DVector2.FromAngle(camera.Rotation);
+            DVector2 cameraNormal = camera.Rotation == 0 ? new DVector2(-1, 0) : DVector2.FromAngle(Math.PI - camera.Rotation);
 
             return Iterate(currentIndex, bodies, cameraNormal);
         }

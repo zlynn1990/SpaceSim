@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Command xsi:type="Rate">
+  <!--<Command xsi:type="Rate">
     <StartTime>-10</StartTime>
     <TargetIndex>10</TargetIndex>
-  </Command>
+  </Command>-->
   <Command xsi:type="Release">
     <StartTime>0</StartTime>
   </Command>
@@ -167,7 +167,7 @@
   </Command>
   <Command xsi:type="Rate">
     <StartTime>300000</StartTime>
-    <TargetIndex>17</TargetIndex>
+    <TargetIndex>18</TargetIndex>
   </Command>
   <Command xsi:type="Rate">
     <StartTime>2329862400</StartTime>

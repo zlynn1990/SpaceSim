@@ -24,7 +24,7 @@ namespace SpaceSim.Commands
             _currentOrientation = spaceCraft.Pitch;
             _targetOrientation += spaceCraft.OriginSurfaceAngle;
 
-            EventManager.AddMessage($"Pitching to {_displayOrientation.ToString("0.0")} degrees", spaceCraft);
+            // EventManager.AddMessage($"Pitching to {_displayOrientation.ToString("0.0")} degrees", spaceCraft);
         }
 
         public override void Finalize(SpaceCraftBase spaceCraft)

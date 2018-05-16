@@ -8,10 +8,10 @@
   <Command xsi:type="Throttle">
     <StartTime>4</StartTime>
     <Duration>0.5</Duration>
-    <TargetThrottle>90</TargetThrottle>
+    <TargetThrottle>91</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>50</StartTime>
+    <StartTime>49</StartTime>
     <Duration>0.5</Duration>
     <TargetThrottle>80</TargetThrottle>
   </Command>
@@ -21,9 +21,9 @@
     <TargetThrottle>90</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>147</StartTime>
-    <Duration>12</Duration>
-    <TargetThrottle>77</TargetThrottle>
+    <StartTime>145</StartTime>
+    <Duration>14</Duration>
+    <TargetThrottle>74</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>159</StartTime>

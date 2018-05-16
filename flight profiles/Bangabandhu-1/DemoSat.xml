@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>0</StartTime>
+    <TargetScale>-20</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-108</TargetOrientation>
+  </Command>
+  <!--<Command xsi:type="Post">
+    <StartTime>10</StartTime>
+    <Duration>5</Duration>
+    <Message>The BulgariaSat profile is in many ways like SES-10 ...</Message>
+  </Command>-->
+  <Command xsi:type="Zoom">
+    <StartTime>13</StartTime>
+    <TargetScale>40</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>19</StartTime>
+    <TargetScale>80</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>24</StartTime>
+    <TargetScale>150</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>29</StartTime>
+    <TargetScale>40</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>39</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>20</StartTime>
+    <Duration>5</Duration>
+    <Message>The Falcon 9 B5 booster can produce 774mT of thrust at sea level, and 837mT in a vacuum.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>26</StartTime>
+    <Duration>5</Duration>
+    <Message>Perhaps 837mT is more thrust than the CCP safety margins will allow?</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>32</StartTime>
+    <Duration>5</Duration>
+    <Message>In order to limit stress on the rocket, ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>38</StartTime>
+    <Duration>5</Duration>
+    <Message>... the Falcon 9 B5 launch profile maintains periods of constant thrust, ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>44</StartTime>
+    <Duration>5</Duration>
+    <Message>... which are acheived by gradually reducing the throttle.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>50</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>50</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 4x.</Message>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-145</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>50</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>70</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>100</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing AoA</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>100</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>100</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-140</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>110</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-159</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>147</StartTime>
+    <TargetScale>-490</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>147</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>153</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>154</StartTime>
+    <Duration>6</Duration>
+    <TargetOrientation>-145</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>158</StartTime>
+    <TargetScale>400</TargetScale>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>158</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>158.5</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>159</StartTime>
+    <TargetScale>-360</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>160</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-155</TargetOrientation>
+  </Command>
+    <Command xsi:type="Post">
+    <StartTime>165</StartTime>
+    <Duration>5</Duration>
+    <Message>Note the much longer gap between BulgariaSat's S1 shutdown and S2 startup.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>173</StartTime>
+    <TargetScale>400</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>173</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>173</StartTime>
+    <Next>false</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>173.5</StartTime>
+    <Next>false</Next>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>200</StartTime>
+    <Duration>100</Duration>
+    <TargetOrientation>-160</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>213</StartTime>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>260</StartTime>
+    <Next>false</Next>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>255</StartTime>
+    <Duration>16</Duration>
+    <Message>At staging, Bangabandhu is ahead of BulgariaSat ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>275</StartTime>
+    <Duration>16</Duration>
+    <Message>... but BulgariaSat's S2 initially runs at a phenomenal 107% thrust ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>295</StartTime>
+    <Duration>16</Duration>
+    <Message>... and soon passes Bangabandhu.</Message>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>300</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-166</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>350</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-171</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>360</StartTime>
+    <TargetScale>360</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>360</StartTime>
+    <TargetIndex>8</TargetIndex>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>400</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-173</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>450</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-176</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>420</StartTime>
+    <TargetScale>-360</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>420</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>442</StartTime>
+    <Duration>16</Duration>
+    <Message>At 7 minutes, BulgariaSat throttles back to 90% ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>460</StartTime>
+    <Duration>16</Duration>
+    <Message>... whilst Bangabandhu maintains 96% throttle and regains the lead.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>500</StartTime>
+    <TargetScale>600</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>500</StartTime>
+    <TargetIndex>8</TargetIndex>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>510</StartTime>
+    <Duration>10000</Duration>
+    <InitialAdjustmentTime>25</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>520</StartTime>
+    <TargetIndex>11</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>1650</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>1650</StartTime>
+    <TargetIndex>7</TargetIndex>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>2020</StartTime>
+  </Command>
+</ArrayOfCommand>

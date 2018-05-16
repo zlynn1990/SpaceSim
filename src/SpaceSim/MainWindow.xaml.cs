@@ -695,7 +695,8 @@ namespace SpaceSim
                 _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
                 {
                     $"Origin Time: {localTime.ToShortDateString()} {localTime.ToShortTimeString()}",
-                    $"Elapsed Time: Y:{elapsedYears} D:{elapsedDays} H:{elapsedTime.Hours} M:{elapsedTime.Minutes} S:{Math.Round(elapsedTime.TotalSeconds % 60)}",
+                    //$"Elapsed Time: Y:{elapsedYears} D:{elapsedDays} H:{elapsedTime.Hours} M:{elapsedTime.Minutes} S:{Math.Round(elapsedTime.TotalSeconds % 60)}",
+                    $"Elapsed Time: Y:{elapsedYears} D:{elapsedDays} H:{elapsedTime.Hours} M:{elapsedTime.Minutes} S:{elapsedTime.Seconds}",
                     $"Update Speed: {timeStep.Multiplier}"
                 });
 

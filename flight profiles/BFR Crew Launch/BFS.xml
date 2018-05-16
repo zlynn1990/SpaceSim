@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>10</StartTime>
     <Duration>140</Duration>
@@ -15,11 +18,10 @@
     <Duration>5</Duration>
     <Message>It assumes a 150mT payload and 250 bar 'Block 1' engines.</Message>
   </Command>
-  <Command xsi:type="Post">
+  <!--<Command xsi:type="Rate">
     <StartTime>23</StartTime>
-    <Duration>5</Duration>
-    <Message>Increasing update speed to 2X.</Message>
-  </Command>
+    <TargetIndex>5</TargetIndex>
+  </Command>-->
   <Command xsi:type="Post">
     <StartTime>69</StartTime>
     <Duration>5</Duration>
@@ -30,16 +32,10 @@
     <Duration>5</Duration>
     <Message>Maximum aerodynamic pressure</Message>
   </Command>
-  <Command xsi:type="Post">
-    <StartTime>90</StartTime>
-    <Duration>5</Duration>
-    <Message>Increasing update speed to 4X.</Message>
-  </Command>
-  <Command xsi:type="Post">
+  <!--<Command xsi:type="Rate">
     <StartTime>160</StartTime>
-    <Duration>5</Duration>
-    <Message>Reducing update speed to 1X for staging</Message>
-  </Command>
+    <TargetIndex>4</TargetIndex>
+  </Command>-->
   <Command xsi:type="Stage">
     <StartTime>175</StartTime>
   </Command>
@@ -56,32 +52,43 @@
   <Command xsi:type="RelativePitch">
     <StartTime>181</StartTime>
     <Duration>29</Duration>
-    <TargetOrientation>-146</TargetOrientation>
+    <TargetOrientation>-140</TargetOrientation>
   </Command>
-  <Command xsi:type="Pitch">
+  <Command xsi:type="RelativePitch">
     <StartTime>210</StartTime>
     <Duration>70</Duration>
-    <TargetOrientation>-155</TargetOrientation>
+    <TargetOrientation>-165</TargetOrientation>
   </Command>
-  <Command xsi:type="Pitch">
+  <Command xsi:type="RelativePitch">
     <StartTime>280</StartTime>
-    <Duration>320</Duration>
-    <TargetOrientation>-193</TargetOrientation>
+    <Duration>70</Duration>
+    <TargetOrientation>-175</TargetOrientation>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>360</StartTime>
+    <StartTime>350</StartTime>
     <Duration>0.5</Duration>
     <EngineIds>
       <int>4</int>
       <int>5</int>
+      <int>6</int>
     </EngineIds>
   </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>350</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-155</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>360</StartTime>
+    <Duration>200</Duration>
+    <TargetOrientation>-181</TargetOrientation>
+  </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>597.4</StartTime>
+    <StartTime>558</StartTime>
     <Duration>0.5</Duration>
   </Command>
   <Command xsi:type="Prograde">
-    <StartTime>610</StartTime>
+    <StartTime>570</StartTime>
     <Duration>8000</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
   </Command>
@@ -91,9 +98,9 @@
     <Message>Increasing update speed to 500X for cruise to circularisation burn</Message>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>2600</StartTime>
+    <StartTime>3120</StartTime>
     <Duration>0.1</Duration>
-    <Throttle>53</Throttle>
+    <Throttle>50</Throttle>
     <EngineIds>
       <int>0</int>
       <int>1</int>
@@ -102,13 +109,12 @@
     </EngineIds>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>2603</StartTime>
+    <StartTime>3123</StartTime>
     <Duration>0.1</Duration>
   </Command>
   <Command xsi:type="Post">
-    <StartTime>2610</StartTime>
+    <StartTime>3130</StartTime>
     <Duration>5</Duration>
-    <Message>Circularised orbit to roughly 300 x 300 kms, with 34.1mT of fuel remaining for landing.</Message>
+    <Message>Circularised orbit to roughly 300 x 300 kms, with 38.7mT of fuel remaining for de-orbit and landing.</Message>
   </Command>
-
 </ArrayOfCommand>

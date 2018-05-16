@@ -112,7 +112,7 @@ namespace SpaceSim.Drawing
 
             if (mass > 100000)
             {
-                mass *= 0.0001;
+                mass *= 0.001;
 
                 return mass.ToString("#,##0.0") + " mT";
             }
