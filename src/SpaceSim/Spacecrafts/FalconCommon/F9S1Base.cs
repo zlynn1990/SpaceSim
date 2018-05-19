@@ -115,8 +115,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
             _landingLegs = new[]
             {
-                new LandingLeg(this, new DVector2(0.94, 21), true),
-                new LandingLeg(this, new DVector2(-0.94, 21), false)
+                new LandingLeg(this, new DVector2(1.0, 21), true),
+                new LandingLeg(this, new DVector2(-1.0, 21), false)
             };
 
             string sootTexturePath = texturePath.Replace(".png", "Soot.png");
