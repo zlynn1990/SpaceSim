@@ -94,8 +94,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             }
         }
 
-        private GridFin[] _gridFins;
-        private LandingLeg[] _landingLegs;
+        private GridFinB5[] _gridFins;
+        private LandingLegB5[] _landingLegs;
 
         private Bitmap _drawingBuffer;
         private Bitmap _sootTexture;
@@ -109,14 +109,14 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         {
             _gridFins = new[]
             {
-                new GridFin(this, new DVector2(1.3, finOffset), true),
-                new GridFin(this, new DVector2(-1.3, finOffset), false)
+                new GridFinB5(this, new DVector2(1.3, finOffset), true),
+                new GridFinB5(this, new DVector2(-1.3, finOffset), false)
             };
 
             _landingLegs = new[]
             {
-                new LandingLeg(this, new DVector2(1.0, 21), true),
-                new LandingLeg(this, new DVector2(-1.0, 21), false)
+                new LandingLegB5(this, new DVector2(1.0, 21), true),
+                new LandingLegB5(this, new DVector2(-1.0, 21), false)
             };
 
             string sootTexturePath = texturePath.Replace(".png", "Soot.png");
@@ -137,7 +137,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         public override void DeployGridFins()
         {
-            foreach (GridFin gridFin in _gridFins)
+            foreach (GridFinB5 gridFin in _gridFins)
             {
                 gridFin.Deploy();
             }
@@ -145,7 +145,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         public override void DeployLandingLegs()
         {
-            foreach (LandingLeg landingLeg in _landingLegs)
+            foreach (LandingLegB5 landingLeg in _landingLegs)
             {
                 landingLeg.Deploy();
             }
@@ -171,12 +171,12 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         {
             base.Update(dt);
 
-            foreach (GridFin gridFin in _gridFins)
+            foreach (GridFinB5 gridFin in _gridFins)
             {
                 gridFin.Update(dt);
             }
 
-            foreach (LandingLeg landingLeg in _landingLegs)
+            foreach (LandingLegB5 landingLeg in _landingLegs)
             {
                 landingLeg.Update(dt);
             }
@@ -250,12 +250,12 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
             graphics.ResetTransform();
 
-            foreach (GridFin gridFin in _gridFins)
+            foreach (GridFinB5 gridFin in _gridFins)
             {
                 gridFin.RenderGdi(graphics, camera);
             }
 
-            foreach (LandingLeg landingLeg in _landingLegs)
+            foreach (LandingLegB5 landingLeg in _landingLegs)
             {
                 landingLeg.RenderGdi(graphics, camera);
             }
