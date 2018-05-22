@@ -25,7 +25,7 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "Formosat-5"),
                 
                 Path.Combine(profileDirectory, "Bangabandhu-1"),
-                Path.Combine(profileDirectory, "BulgariaSat-1"),
+                //Path.Combine(profileDirectory, "BulgariaSat-1"),
 
                 //Path.Combine(profileDirectory, "BulgariaSat-1b"),
                 //Path.Combine(profileDirectory, "Hwasong-14"),
