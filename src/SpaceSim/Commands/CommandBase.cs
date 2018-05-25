@@ -5,8 +5,8 @@ namespace SpaceSim.Commands
 {
     abstract class CommandBase
     {
-        public double StartTime { get; }
-        public double Duration { get; }
+        public double StartTime { get; set; }
+        public double Duration { get; set; }
 
         protected EventManager EventManager;
 

@@ -167,6 +167,7 @@ namespace SpaceSim.Spacecrafts
 
         protected string MissionName;
         protected SpaceCraftManager _spaceCraftManager;
+        private double _timeSkew;
 
         private double _cachedAltitude;
         private DVector2 _cachedRelativeVelocity;
@@ -212,6 +213,11 @@ namespace SpaceSim.Spacecrafts
             _cachedRelativeVelocity = DVector2.Zero;
         }
 
+        public void SkewEventTimes(double delay)
+        {
+            _timeSkew = delay;
+        }
+
         public void Initialize(SpaceCraftManager spaceCraftManager, EventManager eventManager, double clockDelay)
         {
             string commandPath = Path.Combine(CraftDirectory, CommandFileName);
@@ -219,6 +225,11 @@ namespace SpaceSim.Spacecrafts
             if (File.Exists(commandPath))
             {
                 List<CommandBase> commands = CommandManager.Load(commandPath);
+
+                foreach (CommandBase command in commands)
+                {
+                    command.StartTime += _timeSkew;
+                }
 
                 Controller = new CommandController(commands, this, eventManager, clockDelay);
             }

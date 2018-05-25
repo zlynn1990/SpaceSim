@@ -3,4 +3,5 @@
   <VehicleType>GenericF9</VehicleType>
   <PayloadMass>3700</PayloadMass>
   <ParentPlanet>Earth</ParentPlanet>
+  <TimeSkew>2</TimeSkew>
 </MissionConfig>
