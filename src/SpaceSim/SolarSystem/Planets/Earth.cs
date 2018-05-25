@@ -3,6 +3,8 @@ using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
 
+using SpaceSim.Properties;
+
 namespace SpaceSim.SolarSystem.Planets
 {
     class Earth : MassiveBodyBase
@@ -27,12 +29,22 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double RotationRate
         {
-            get { return -7.2722052166e-5; }
+            get {
+                if(Settings.Default.PolarOrbit)
+                    return -7.2722052166e-5;
+                else
+                    return -7.2722052166e-7;
+            }
         }
 
         public override double RotationPeriod
         {
-            get { return 86400; }
+            get {
+                if (Settings.Default.PolarOrbit)
+                    return 86400;
+                else
+                    return 8640000;
+            }
         }
 
         public override Color IconColor { get { return Color.Green; } }

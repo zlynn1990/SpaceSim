@@ -68,6 +68,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildBfsEarthEdl(planet, config, craftDirectory);
                 case "GenericF9":
                     return BuildGenericF9(planet, config, craftDirectory);
+                case "PolarF9":
+                    return BuildPolarF9(planet, config, craftDirectory);
                 case "GenericF9B5":
                     return BuildGenericF9B5(planet, config, craftDirectory);
                 case "DragonF9":
@@ -131,6 +133,29 @@ namespace SpaceSim.Spacecrafts
             var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
             var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 11.2);
             
+            demoSat.AddChild(f9S2);
+            f9S2.SetParent(demoSat);
+            f9S2.AddChild(f9S1);
+            f9S1.SetParent(f9S2);
+
+            return new List<ISpaceCraft>
+            {
+                demoSat, f9S2, f9S1, fairingLeft, fairingRight
+            };
+        }
+
+        private static List<ISpaceCraft> BuildPolarF9(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(0, 200000 - planet.SurfaceRadius) + config.PositionOffset, planet.Velocity, config.PayloadMass);
+
+            var fairingLeft = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, true);
+            var fairingRight = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, false);
+
+            demoSat.AttachFairings(fairingLeft, fairingRight);
+
+            var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 11.2);
+
             demoSat.AddChild(f9S2);
             f9S2.SetParent(demoSat);
             f9S2.AddChild(f9S1);

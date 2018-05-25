@@ -61,12 +61,12 @@
   <Command xsi:type="RelativePitch">
     <StartTime>110</StartTime>
     <Duration>40</Duration>
-    <TargetOrientation>-156</TargetOrientation>
+    <TargetOrientation>-157.5</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>150</StartTime>
     <Duration>10</Duration>
-    <TargetOrientation>-156</TargetOrientation>
+    <TargetOrientation>-155</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
     <StartTime>160</StartTime>
