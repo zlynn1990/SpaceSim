@@ -217,7 +217,9 @@ namespace SpaceSim
 
                 IMassiveBody targetPlanet = LocatePlanet(missionConfig.ParentPlanet);
 
-                double launchAngle = targetPlanet.GetSurfaceAngle(_originTime, _sun);
+                // Get the launch angle relative to the sun for the given time at the origin
+                // and offset each vehicle by a certain amount on the surface
+                double launchAngle = targetPlanet.GetSurfaceAngle(_originTime, _sun) + i * 0.00002;
 
                 _spaceCraftManager.Add(SpacecraftFactory.BuildSpaceCraft(targetPlanet, launchAngle, missionConfig, ProfilePaths[i]));
 

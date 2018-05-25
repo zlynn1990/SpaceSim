@@ -33,6 +33,11 @@ namespace SpaceSim.Spacecrafts
 
             List<ISpaceCraft> spaceCrafts = GenerateSpaceCraft(planet, config, craftDirectory);
 
+            foreach (ISpaceCraft craft in spaceCrafts)
+            {
+                craft.SkewEventTimes(config.TimeSkew);
+            }
+
             if (spaceCrafts.Count == 0)
             {
                 throw new Exception("No spacecrafts produced!");

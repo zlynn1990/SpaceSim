@@ -36,6 +36,7 @@ namespace SpaceSim.Spacecrafts
         bool OnGround { get; }
         double OriginSurfaceAngle { get; }
 
+        void SkewEventTimes(double delay);
         void Initialize(SpaceCraftManager spaceCraftManager, EventManager eventManager, double clockDelay);
 
         void Stage();
