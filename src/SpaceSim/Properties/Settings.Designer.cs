@@ -43,7 +43,7 @@ namespace SpaceSim.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool WriteCsv {
             get {
                 return ((bool)(this["WriteCsv"]));
@@ -70,7 +70,7 @@ namespace SpaceSim.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1600, 900")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1280, 720")]
         public global::System.Drawing.Size ScreenSize {
             get {
                 return ((global::System.Drawing.Size)(this["ScreenSize"]));

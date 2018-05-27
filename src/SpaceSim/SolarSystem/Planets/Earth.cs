@@ -31,9 +31,9 @@ namespace SpaceSim.SolarSystem.Planets
         {
             get {
                 if(Settings.Default.PolarOrbit)
-                    return -7.2722052166e-5;
-                else
                     return -7.2722052166e-7;
+                else
+                    return -7.2722052166e-5;
             }
         }
 
@@ -41,9 +41,9 @@ namespace SpaceSim.SolarSystem.Planets
         {
             get {
                 if (Settings.Default.PolarOrbit)
-                    return 86400;
-                else
                     return 8640000;
+                else
+                    return 86400;
             }
         }
 
