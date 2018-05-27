@@ -86,7 +86,7 @@
   <Command xsi:type="RelativePitch">
     <StartTime>410</StartTime>
     <Duration>90</Duration>
-    <TargetOrientation>-41.5</TargetOrientation>
+    <TargetOrientation>-41.55</TargetOrientation>
   </Command>
   <Command xsi:type="Retrograde">
     <StartTime>500</StartTime>
@@ -128,7 +128,7 @@
   </Command>
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
-    <StartTime>510</StartTime>
+    <StartTime>512</StartTime>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>514</StartTime>
