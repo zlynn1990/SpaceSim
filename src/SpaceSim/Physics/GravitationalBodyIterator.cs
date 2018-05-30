@@ -72,6 +72,14 @@ namespace SpaceSim.Physics
             {
                 if (i == currentIndex) continue;
 
+                var spaceCraft = bodies[i] as ISpaceCraft;
+
+                // Skip terminated bodies
+                if (spaceCraft != null && spaceCraft.Terminated)
+                {
+                    continue;
+                }
+
                 DVector2 difference = bodies[i].Position - targetCenter;
 
                 double distance = difference.LengthSquared();

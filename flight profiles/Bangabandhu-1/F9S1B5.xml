@@ -128,7 +128,7 @@
   </Command>
   <Command xsi:type="Deploy">
     <Part>Landing Legs</Part>
-    <StartTime>495</StartTime>
+    <StartTime>493</StartTime>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>494.2</StartTime>
@@ -138,8 +138,11 @@
       <int>8</int>
     </EngineIds>
   </Command>
-  <Command xsi:type="Shutdown">
-    <StartTime>499</StartTime>
-    <Duration>0.5</Duration>
+    <Command xsi:type="AutoLand">
+    <StartTime>495.2</StartTime>
+    <Duration>20</Duration>
+    <EngineIds>
+      <int>4</int>
+    </EngineIds>
   </Command>
 </ArrayOfCommand>

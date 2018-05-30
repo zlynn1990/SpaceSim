@@ -329,8 +329,6 @@ namespace SpaceSim.Spacecrafts
         public virtual void Terminate()
         {
             Terminated = true;
-
-            _spaceCraftManager.Remove(this);
         }
 
         /// <summary>
@@ -1111,6 +1109,8 @@ namespace SpaceSim.Spacecrafts
         /// </summary>
         public override void RenderGdi(Graphics graphics, Camera camera)
         {
+            if (Terminated) return;
+
             // Only draws the ship if it's visible
             if (Visibility(camera.Bounds) > 0)
             {
@@ -1218,9 +1218,9 @@ namespace SpaceSim.Spacecrafts
 
         public override string ToString()
         {
-            if (MainWindow.ProfilePaths.Count > 1)
+            if (MainWindow.ProfilePaths.Count > 1 && CraftName != MissionName)
             {
-                return string.Format("{0} [{1}]", CraftName, MissionName);
+                return $"{CraftName} [{MissionName}]";
             }
 
             return CraftName;

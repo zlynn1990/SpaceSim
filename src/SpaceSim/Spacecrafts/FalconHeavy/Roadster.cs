@@ -158,11 +158,8 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
         {
             base.RenderGdi(graphics, camera);
 
-            if (!_leftFairing.Terminated && !_rightFairing.Terminated)
-            {
-                _leftFairing.RenderGdi(graphics, camera);
-                _rightFairing.RenderGdi(graphics, camera);
-            }
+            _leftFairing.RenderGdi(graphics, camera);
+            _rightFairing.RenderGdi(graphics, camera);
 
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {

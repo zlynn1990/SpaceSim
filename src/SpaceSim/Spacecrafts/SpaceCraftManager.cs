@@ -16,25 +16,16 @@ namespace SpaceSim.Spacecrafts
         private List<ISpaceCraft> _spaceCrafts;
         private List<IGravitationalBody> _gravitationalBodies;
 
-        private Queue<ISpaceCraft> _removalQueue;
-
         public SpaceCraftManager(List<IGravitationalBody> gravitationalBodies)
         {
             _spaceCrafts = new List<ISpaceCraft>();
             _gravitationalBodies = gravitationalBodies;
-
-            _removalQueue = new Queue<ISpaceCraft>();
         }
 
         public void Add(List<ISpaceCraft> crafts)
         {
             _spaceCrafts.AddRange(crafts);
             _gravitationalBodies.AddRange(crafts);
-        }
-
-        public void Remove(ISpaceCraft craft)
-        {
-            _removalQueue.Enqueue(craft);
         }
 
         public void Initialize(EventManager eventManager, double clockDelay)
@@ -109,7 +100,7 @@ namespace SpaceSim.Spacecrafts
                 {
                     spaceCraft.ResolveGravitation(massiveBody);
 
-                    if (spaceCraft.GravitationalParent == massiveBody)
+                    if (spaceCraft.GravitationalParent == massiveBody && !spaceCraft.Terminated)
                     {
                         spaceCraft.ResolveAtmopsherics(massiveBody);
                     }
@@ -124,20 +115,19 @@ namespace SpaceSim.Spacecrafts
             {
                 foreach (ISpaceCraft spaceCraft in _spaceCrafts)
                 {
-                    spaceCraft.UpdateAnimations(timeStep);
+                    if (!spaceCraft.Terminated)
+                    {
+                        spaceCraft.UpdateAnimations(timeStep);
+                    }
                 }
             }
 
             foreach (ISpaceCraft spaceCraft in _spaceCrafts)
             {
-                spaceCraft.UpdateController(targetDt);
-            }
-
-            while (_removalQueue.Count > 0)
-            {
-                ISpaceCraft craft = _removalQueue.Dequeue();
-
-                RemoveHelper(craft);
+                if (!spaceCraft.Terminated)
+                {
+                    spaceCraft.UpdateController(targetDt);
+                }
             }
         }
 
@@ -148,17 +138,6 @@ namespace SpaceSim.Spacecrafts
             {
                 spaceCraft.RenderGdi(graphics, camera);
             }
-        }
-
-        private void RemoveHelper(ISpaceCraft craft)
-        {
-            foreach (ISpaceCraft child in craft.Children)
-            {
-                Remove(child);
-            }
-
-            _spaceCrafts.Remove(craft);
-            _gravitationalBodies.Remove(craft);
         }
     }
 }
