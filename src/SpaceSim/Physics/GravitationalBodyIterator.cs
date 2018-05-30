@@ -10,14 +10,17 @@ namespace SpaceSim.Physics
     {
         public static int Next(int currentIndex, IList<IGravitationalBody> bodies, Camera camera)
         {
-            DVector2 cameraNormal = camera.Rotation == 0 ? new DVector2(1, 0) : DVector2.FromAngle(-camera.Rotation);
+            DVector2 diff = bodies[9].Position - bodies[14].Position;
+
+            Console.WriteLine(diff);
+            DVector2 cameraNormal = DVector2.FromAngle(-camera.Rotation);
 
             return Iterate(currentIndex, bodies, cameraNormal);
         }
 
         public static int Prev(int currentIndex, IList<IGravitationalBody> bodies, Camera camera)
         {
-            DVector2 cameraNormal = camera.Rotation == 0 ? new DVector2(-1, 0) : DVector2.FromAngle(Math.PI - camera.Rotation);
+            DVector2 cameraNormal = DVector2.FromAngle(Math.PI - camera.Rotation);
 
             return Iterate(currentIndex, bodies, cameraNormal);
         }
@@ -46,6 +49,7 @@ namespace SpaceSim.Physics
 
         private static int GetParentIndex(int targetIndex, IList<IGravitationalBody> bodies)
         {
+            // Keep iterating until the parent index is found so that the focus becomes the parent
             while (bodies[targetIndex] is ISpaceCraft)
             {
                 var targetBody = bodies[targetIndex] as ISpaceCraft;
@@ -55,7 +59,14 @@ namespace SpaceSim.Physics
                     break;
                 }
 
-                targetIndex--;
+                // If the target has a parent try that parent and continue to go up the chain
+                for (int i = 0; i < bodies.Count; i++)
+                {
+                    if (targetBody.Parent == bodies[i])
+                    {
+                        targetIndex = i;
+                    }
+                }
             }
 
             return targetIndex;
@@ -100,32 +111,46 @@ namespace SpaceSim.Physics
 
         private static HashSet<int> GetConnectedBodies(int currentIndex, IList<IGravitationalBody> bodies)
         {
-            var connectedBodies = new HashSet<int>();
+            var bodyHash = new HashSet<int>();
+
+            var targetCraft = bodies[currentIndex] as ISpaceCraft;
 
             // Only bother checking for connected bodies if the target is a spacecraft
-            if (bodies[currentIndex] is ISpaceCraft)
+            if (targetCraft != null)
             {
-                for (int i = currentIndex + 1; i < bodies.Count; i++)
+                List<int> connectedBodies = ConnectedBodyHelper(targetCraft, bodies);
+
+                foreach (int bodyIndex in connectedBodies)
                 {
-                    var craft = bodies[i] as ISpaceCraft;
-
-                    // Next object not a craft, exit early
-                    if (craft == null)
-                    {
-                        break;
-                    }
-
-                    // Next object is craft without a parent, exit early
-                    if (craft.Parent == null)
-                    {
-                        break;
-                    }
-
-                    connectedBodies.Add(i);
+                    bodyHash.Add(bodyIndex);
                 }
             }
 
-            return connectedBodies;
+            return bodyHash;
+        }
+
+        private static List<int> ConnectedBodyHelper(IGravitationalBody target, IList<IGravitationalBody> bodies)
+        {
+            var connections = new List<int>();
+
+            // Find all bodies connected to the target
+            for (int i = 0; i < bodies.Count; i++)
+            {
+                var craft = bodies[i] as ISpaceCraft;
+
+                if (craft != null && craft.Parent != null)
+                {
+                    if (craft.Parent == target)
+                    {
+                        connections.Add(i);
+
+                        // Recursively add all the bodies connected to this one
+                        connections.AddRange(ConnectedBodyHelper(craft, bodies));
+                    }
+                }
+            }
+
+            return connections;
         }
 
         private static int Compare(Tuple<double, int> one,
