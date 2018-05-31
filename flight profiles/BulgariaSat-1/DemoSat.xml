@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>10</StartTime>
     <Duration>40</Duration>
     <TargetOrientation>-105</TargetOrientation>
   </Command>
-  <Command xsi:type="Post">
+  <!--<Command xsi:type="Post">
     <StartTime>10</StartTime>
     <Duration>5</Duration>
     <Message>The BulgariaSat profile is in many ways like SES-10 ...</Message>
@@ -39,21 +42,21 @@
     <StartTime>46</StartTime>
     <Duration>5</Duration>
     <Message>Increasing update speed to 4x ...</Message>
-  </Command>
+  </Command>-->
   <Command xsi:type="RelativePitch">
     <StartTime>50</StartTime>
     <Duration>50</Duration>
     <TargetOrientation>-142</TargetOrientation>
   </Command>
-  <Command xsi:type="Post">
+  <!--<Command xsi:type="Post">
     <StartTime>100</StartTime>
     <Duration>5</Duration>
     <Message>Increasing AoA</Message>
-  </Command>
+  </Command>-->
   <Command xsi:type="RelativePitch">
     <StartTime>100</StartTime>
     <Duration>10</Duration>
-    <TargetOrientation>-138</TargetOrientation>
+    <TargetOrientation>-140</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>110</StartTime>
@@ -63,29 +66,29 @@
   <Command xsi:type="RelativePitch">
     <StartTime>150</StartTime>
     <Duration>10</Duration>
-    <TargetOrientation>-157</TargetOrientation>
+    <TargetOrientation>-154</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>160</StartTime>
+    <StartTime>161</StartTime>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>160</StartTime>
-    <Duration>10</Duration>
+    <StartTime>161</StartTime>
+    <Duration>9</Duration>
     <TargetOrientation>-135</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>170</StartTime>
+    <Duration>30</Duration>
+    <TargetOrientation>-158</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>200</StartTime>
     <Duration>35</Duration>
-    <TargetOrientation>-154</TargetOrientation>
+    <TargetOrientation>-163</TargetOrientation>
   </Command>
   <Command xsi:type="Deploy">
     <Part>Fairing</Part>
-    <StartTime>224</StartTime>
-  </Command>
-  <Command xsi:type="RelativePitch">
-    <StartTime>225</StartTime>
-    <Duration>10</Duration>
-    <TargetOrientation>-162</TargetOrientation>
+    <StartTime>218</StartTime>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>235</StartTime>
@@ -95,22 +98,22 @@
   <Command xsi:type="RelativePitch">
     <StartTime>300</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-170</TargetOrientation>
+    <TargetOrientation>-167</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>350</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-178</TargetOrientation>
+    <TargetOrientation>-169</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>400</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-185</TargetOrientation>
+    <TargetOrientation>-170</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>450</StartTime>
     <Duration>70</Duration>
-    <TargetOrientation>-190</TargetOrientation>
+    <TargetOrientation>-172</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>555</StartTime>

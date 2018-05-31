@@ -76,5 +76,14 @@ namespace SpaceSim.Properties {
                 return ((global::System.Drawing.Size)(this["ScreenSize"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PolarOrbit {
+            get {
+                return ((bool)(this["PolarOrbit"]));
+            }
+        }
     }
 }

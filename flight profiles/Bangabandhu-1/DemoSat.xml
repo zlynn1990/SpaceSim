@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>2</StartTime>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>2</StartTime>
+    <TargetScale>-20</TargetScale>
+  </Command>-->
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-108</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-145</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>100</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-140</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>110</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-159</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>156</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>157</StartTime>
+    <Duration>3</Duration>
+    <TargetOrientation>-142</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>160</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-155</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>200</StartTime>
+    <Duration>100</Duration>
+    <TargetOrientation>-160</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>213</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>300</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-165</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>350</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-171</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>400</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-174</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>450</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-178</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>510</StartTime>
+    <Duration>10000</Duration>
+    <InitialAdjustmentTime>25</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>2020</StartTime>
+  </Command>
+</ArrayOfCommand>

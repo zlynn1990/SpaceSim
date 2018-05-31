@@ -47,7 +47,7 @@ namespace SpaceSim.Physics
                 new TimeStep {Multiplier = 100000, UpdateLoops = 400, Dt = 4.16666666666666666666666666667},
                 new TimeStep {Multiplier = 500000, UpdateLoops = 400, Dt = 20.83333333333333333333333333335},
                 new TimeStep {Multiplier = 2000000, UpdateLoops = 400, Dt = 83.3333333333333333333333333334},
-                new TimeStep {Multiplier = 10000000, UpdateLoops = 400, Dt = 416.666666666666666666666666667},
+                new TimeStep {Multiplier = 10000000, UpdateLoops = 2000, Dt = 83.3333333333333333333333333334},
                 new TimeStep {Multiplier = 50000000, UpdateLoops = 400, Dt = 2083.333333333333333333333333335},
                 new TimeStep {Multiplier = 200000000, UpdateLoops = 400, Dt = 8333.33333333333333333333333334},
             };

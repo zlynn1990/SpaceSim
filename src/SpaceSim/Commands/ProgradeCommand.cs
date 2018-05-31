@@ -19,7 +19,7 @@ namespace SpaceSim.Commands
 
         public override void Initialize(SpaceCraftBase spaceCraft)
         {
-            EventManager.AddMessage("Maneuvering to prograde", spaceCraft);
+            // EventManager.AddMessage("Maneuvering to prograde", spaceCraft);
 
             _curentOrientation = spaceCraft.Pitch;
         }

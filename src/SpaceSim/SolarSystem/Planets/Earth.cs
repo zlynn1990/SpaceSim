@@ -3,10 +3,15 @@ using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
 
+using SpaceSim.Properties;
+
 namespace SpaceSim.SolarSystem.Planets
 {
     class Earth : MassiveBodyBase
     {
+        public override string ApoapsisName { get { return "Apogee"; } }
+        public override string PeriapsisName { get { return "Perigée"; } }
+
         public override double Mass
         {
             get { return 5.97219e24; }
@@ -24,12 +29,22 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double RotationRate
         {
-            get { return -7.2722052166e-5; }
+            get {
+                if(Settings.Default.PolarOrbit)
+                    return -7.2722052166e-7;
+                else
+                    return -7.2722052166e-5;
+            }
         }
 
         public override double RotationPeriod
         {
-            get { return 86400; }
+            get {
+                if (Settings.Default.PolarOrbit)
+                    return 8640000;
+                else
+                    return 86400;
+            }
         }
 
         public override Color IconColor { get { return Color.Green; } }

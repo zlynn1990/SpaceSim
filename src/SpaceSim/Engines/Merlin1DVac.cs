@@ -8,7 +8,7 @@ namespace SpaceSim.Engines
     class Merlin1DVac : EngineBase
     {
         public Merlin1DVac(ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(0, Color.FromArgb(63, 255, 255, 191), 500, 3, 0.5, 0.5, 0.1))
+            : base(parent, offset, new EngineFlame(0, Color.FromArgb(63, 255, 255, 191), 600, 3, 0.5, 0.5, 0.1))
         {
         }
 

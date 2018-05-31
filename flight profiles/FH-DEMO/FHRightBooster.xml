@@ -158,4 +158,7 @@
     <Part>Landing Legs</Part>
     <StartTime>476</StartTime>
   </Command>
+  <Command xsi:type="Terminate">
+    <StartTime>300000</StartTime>
+  </Command>
 </ArrayOfCommand>

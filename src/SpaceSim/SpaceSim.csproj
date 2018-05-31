@@ -95,6 +95,7 @@
     <Compile Include="Commands\RetrogradeCommand.cs" />
     <Compile Include="Commands\RollCommand.cs" />
     <Compile Include="Commands\TargetCommand.cs" />
+    <Compile Include="Commands\TerminateCommand.cs" />
     <Compile Include="Commands\YawCommand.cs" />
     <Compile Include="Commands\ZoomCommand.cs" />
     <Compile Include="Contracts\Commands\AutoLand.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Contracts\Commands\Shutdown.cs" />
     <Compile Include="Contracts\Commands\Stage.cs" />
     <Compile Include="Contracts\Commands\Target.cs" />
+    <Compile Include="Contracts\Commands\Terminate.cs" />
     <Compile Include="Contracts\Commands\Throttle.cs" />
     <Compile Include="Commands\IgnitionCommand.cs" />
     <Compile Include="Commands\ShutdownCommand.cs" />
@@ -133,8 +135,10 @@
     <Compile Include="Engines\Raptor40.cs" />
     <Compile Include="Engines\Raptor50.cs" />
     <Compile Include="Engines\RaptorSL.cs" />
+    <Compile Include="Engines\RaptorSL300.cs" />
     <Compile Include="Engines\RaptorVac.cs" />
     <Compile Include="Engines\RaptorVac2016.cs" />
+    <Compile Include="Engines\RaptorVac300.cs" />
     <Compile Include="Particles\EngineFlame.cs" />
     <Compile Include="Drawing\EventManager.cs" />
     <Compile Include="Drawing\GpuClear.cs" />
@@ -195,14 +199,20 @@
     <Compile Include="Spacecrafts\DragonV2\DragonV2Trunk.cs" />
     <Compile Include="Spacecrafts\Falcon9SSTO\F9SSTO.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
+    <Compile Include="Spacecrafts\Falcon9\F9S1B5.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S2.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S2B.cs" />
+    <Compile Include="Spacecrafts\Falcon9\F9S2B5.cs" />
+    <Compile Include="Spacecrafts\Falcon9\F9S2C.cs" />
     <Compile Include="Spacecrafts\FalconCommon\DrogueChute.cs" />
     <Compile Include="Spacecrafts\FalconCommon\F9S1Base.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Fairing.cs" />
     <Compile Include="Spacecrafts\FalconCommon\GridFin.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\GridFinB5.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\LandingLegB5.cs" />
     <Compile Include="Spacecrafts\FalconCommon\LandingLeg.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Parachute.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\PartyBalloon.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Skid.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
@@ -212,6 +222,7 @@
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
     <Compile Include="Spacecrafts\ITS\BFR.cs" />
     <Compile Include="Spacecrafts\ITS\BFS.cs" />
+    <Compile Include="Spacecrafts\ITS\BFS300.cs" />
     <Compile Include="Spacecrafts\ITS\Carousel.cs" />
     <Compile Include="Spacecrafts\ITS\ITSBooster.cs" />
     <Compile Include="Spacecrafts\ITS\ITSShip.cs" />
@@ -230,6 +241,7 @@
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
     <Compile Include="SolarSystem\Stars\Sun.cs" />
     <Compile Include="Physics\TimeStep.cs" />
+    <Compile Include="Spacecrafts\SpaceCraftManager.cs" />
     <Compile Include="Spacecrafts\SpaceCraftPart.cs" />
     <Compile Include="Structures\ASDS.cs" />
     <Compile Include="Structures\Edwards.cs" />
@@ -297,6 +309,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Rocket.ico" />
+    <Content Include="Textures\Spacecrafts\Falcon\9\S1B5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\9\S1B5Soot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Falcon\9\S2B.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -312,6 +330,18 @@
     <Content Include="Textures\Spacecrafts\Falcon\Common\fairingRight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinLeftB5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinRightB5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegLeftB5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegRightB5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Falcon\Common\parachuteLeft.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -325,6 +355,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\BFS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Its\BFS360.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\scaledBFR.png">

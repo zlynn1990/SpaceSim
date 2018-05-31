@@ -105,7 +105,7 @@ namespace SpaceSim.Spacecrafts.ITS
         public BFR(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 2949500)
             : base(craftDirectory, position, velocity, 0, propellantMass, "Its/BFR.png")
         {
-            StageOffset = new DVector2(0, 54);
+            StageOffset = new DVector2(0, 53.9);
 
             _gridFins = new[]
             {

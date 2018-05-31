@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
-using SpaceSim.Physics;
-using VectorMath;
 
 namespace SpaceSim.SolarSystem.Planets
 {

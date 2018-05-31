@@ -14,11 +14,10 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         public override double Width { get { return 2.59; } }
         public override double Height { get { return 13.0; } }
-
         public override double DryMass { get { return 875; } }
 
-        DrogueChute _drogueChute;
-        Parachute _parachute;
+        private readonly DrogueChute _drogueChute;
+        private readonly Parachute _parachute;
 
         public override AeroDynamicProperties GetAeroDynamicProperties
         {
@@ -64,7 +63,6 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public override Color IconColor { get { return Color.White; } }
 
         private bool _isLeft;
-        private bool _isHidden;
 
         public override void DeployDrogues()
         {
@@ -74,11 +72,6 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public override void DeployParachutes()
         {
             _parachute.Deploy();
-        }
-
-        public void Hide()
-        {
-            _isHidden = true;
         }
 
         public Fairing(string craftDirectory, DVector2 position, DVector2 velocity, bool isLeft)
@@ -108,13 +101,6 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
             _drogueChute.Update(dt);
             _parachute.Update(dt);
-        }
-
-        public override void RenderGdi(Graphics graphics, Camera camera)
-        {
-            if (_isHidden) return;
-
-            base.RenderGdi(graphics, camera);
         }
 
         protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)

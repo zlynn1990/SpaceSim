@@ -42,7 +42,7 @@ namespace SpaceSim.Particles
                     particle.MaxAge = _random.NextDouble() + 1;
 
                     particle.Position = enginePosition.Clone() + randomUnitVector * 2;
-                    particle.Velocity = velocity + retrogradeVelocity * 0.5 + randomUnitVector * 2;
+                    particle.Velocity = velocity + retrogradeVelocity * 0.85 + randomUnitVector * 2;
                 }
             }
 

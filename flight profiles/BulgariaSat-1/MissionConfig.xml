@@ -3,4 +3,7 @@
   <VehicleType>GenericF9</VehicleType>
   <PayloadMass>3700</PayloadMass>
   <ParentPlanet>Earth</ParentPlanet>
+  <LaunchDate>19/6/2017 2:10:00PM</LaunchDate>
+  <ClockDelay>2</ClockDelay>
+  <TimeSkew>2</TimeSkew>
 </MissionConfig>

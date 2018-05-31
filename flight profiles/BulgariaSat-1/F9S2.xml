@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Command xsi:type="Ignition">
-    <StartTime>171</StartTime>
+    <StartTime>167</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>107</Throttle>
+    <Throttle>105</Throttle>
     <EngineIds>
       <int>0</int>
     </EngineIds>
@@ -19,9 +19,9 @@
     <TargetThrottle>90</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
-    <StartTime>480</StartTime>
-    <Duration>38</Duration>
-    <TargetThrottle>64</TargetThrottle>
+    <StartTime>470</StartTime>
+    <Duration>48</Duration>
+    <TargetThrottle>60</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>518</StartTime>
@@ -30,7 +30,7 @@
   <Command xsi:type="Ignition">
     <StartTime>1630</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>96</Throttle>
+    <Throttle>97</Throttle>
     <EngineIds>
       <int>0</int>
     </EngineIds>
@@ -38,7 +38,7 @@
   <Command xsi:type="Throttle">
     <StartTime>1631</StartTime>
     <Duration>66</Duration>
-    <TargetThrottle>41</TargetThrottle>
+    <TargetThrottle>43</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>1697</StartTime>

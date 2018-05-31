@@ -36,7 +36,8 @@ namespace SpaceSim.Spacecrafts
         bool OnGround { get; }
         double OriginSurfaceAngle { get; }
 
-        void InitializeController(EventManager eventManager, double clockDelay);
+        void SkewEventTimes(double delay);
+        void Initialize(SpaceCraftManager spaceCraftManager, EventManager eventManager, double clockDelay);
 
         void Stage();
         void Release();
@@ -68,5 +69,8 @@ namespace SpaceSim.Spacecrafts
         void UpdateController(double dt);
         void UpdateAnimations(TimeStep timeStep);
         void UpdateChildren(DVector2 position, DVector2 velocity);
+
+        bool Terminated { get; }
+        void Terminate();
     }
 }

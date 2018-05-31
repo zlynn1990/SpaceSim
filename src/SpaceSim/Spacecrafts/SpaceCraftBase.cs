@@ -118,6 +118,7 @@ namespace SpaceSim.Spacecrafts
         public IController Controller { get; protected set; }
 
         public bool OnGround { get; private set; }
+        public bool Terminated { get; private set; }
         public double OriginSurfaceAngle { get; private set; }
 
         public abstract AeroDynamicProperties GetAeroDynamicProperties { get; }
@@ -165,6 +166,8 @@ namespace SpaceSim.Spacecrafts
         protected ReEntryFlame EntryFlame;
 
         protected string MissionName;
+        protected SpaceCraftManager _spaceCraftManager;
+        private double _timeSkew;
 
         private double _cachedAltitude;
         private DVector2 _cachedRelativeVelocity;
@@ -210,7 +213,12 @@ namespace SpaceSim.Spacecrafts
             _cachedRelativeVelocity = DVector2.Zero;
         }
 
-        public void InitializeController(EventManager eventManager, double clockDelay)
+        public void SkewEventTimes(double delay)
+        {
+            _timeSkew = delay;
+        }
+
+        public void Initialize(SpaceCraftManager spaceCraftManager, EventManager eventManager, double clockDelay)
         {
             string commandPath = Path.Combine(CraftDirectory, CommandFileName);
 
@@ -218,12 +226,19 @@ namespace SpaceSim.Spacecrafts
             {
                 List<CommandBase> commands = CommandManager.Load(commandPath);
 
+                foreach (CommandBase command in commands)
+                {
+                    command.StartTime += _timeSkew;
+                }
+
                 Controller = new CommandController(commands, this, eventManager, clockDelay);
             }
             else
             {
                 Controller = new SimpleFlightController(this, clockDelay);
             }
+
+            _spaceCraftManager = spaceCraftManager;
         }
 
         public void ToggleDisplayVectors()
@@ -309,6 +324,11 @@ namespace SpaceSim.Spacecrafts
             {
                 child.Release();
             }
+        }
+
+        public virtual void Terminate()
+        {
+            Terminated = true;
         }
 
         /// <summary>
@@ -970,10 +990,10 @@ namespace SpaceSim.Spacecrafts
                 if (_isReleased)
                 {
                     // Integrate acceleration
-                    Velocity += (AccelerationG * dt);
-                    Velocity += (AccelerationD * dt);
-                    Velocity += (AccelerationL * dt);
-                    Velocity += (AccelerationN * dt);
+                    Velocity += AccelerationG * dt;
+                    Velocity += AccelerationD * dt;
+                    Velocity += AccelerationL * dt;
+                    Velocity += AccelerationN * dt;
                 }
 
                 // Re-normalize FTL scenarios
@@ -984,8 +1004,20 @@ namespace SpaceSim.Spacecrafts
                     Velocity *= Constants.SpeedOfLight;
                 }
 
-                // Integrate velocity
-                Position += (Velocity * dt);
+                // If the craft is on the ground with high time warpd don't update the position as normal.
+                // Instead just keep putting the ship at the correct spot on it's gravitational body based on rotation.
+                if (OnGround && dt > 5)
+                {
+                    DVector2 parentOffset = GravitationalParent.Position - Position;
+                    parentOffset.Normalize();
+
+                    Position = GravitationalParent.Position + parentOffset * GravitationalParent.SurfaceRadius;
+                }
+                else
+                {
+                    // Integrate velocity
+                    Position += Velocity * dt;
+                }
 
                 MachNumber = GetRelativeVelocity().Length() * 0.0029411764;
 
@@ -997,7 +1029,7 @@ namespace SpaceSim.Spacecrafts
                 _trailTimer += dt;
 
                 // Somewhat arbitrary conditions for launch trails
-                if (dt < 0.1666666666 && !InOrbit && _cachedAltitude > 50 && _cachedAltitude < GravitationalParent.AtmosphereHeight * 2 && _trailTimer > 1)
+                if (dt < 0.1666666666 && !InOrbit && !OnGround && _cachedAltitude > 50 && _cachedAltitude < GravitationalParent.AtmosphereHeight * 2 && _trailTimer > 1)
                 {
                     string parentName = GravitationalParent.ToString();
 
@@ -1077,6 +1109,8 @@ namespace SpaceSim.Spacecrafts
         /// </summary>
         public override void RenderGdi(Graphics graphics, Camera camera)
         {
+            if (Terminated) return;
+
             // Only draws the ship if it's visible
             if (Visibility(camera.Bounds) > 0)
             {
@@ -1184,9 +1218,9 @@ namespace SpaceSim.Spacecrafts
 
         public override string ToString()
         {
-            if (MainWindow.ProfilePaths.Count > 1)
+            if (MainWindow.ProfilePaths.Count > 1 && CraftName != MissionName)
             {
-                return string.Format("{0} [{1}]", CraftName, MissionName);
+                return $"{CraftName} [{MissionName}]";
             }
 
             return CraftName;

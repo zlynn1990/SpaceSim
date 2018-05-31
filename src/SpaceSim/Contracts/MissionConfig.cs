@@ -11,18 +11,17 @@ namespace SpaceSim.Contracts
     public class MissionConfig
     {
         public string VehicleType { get; set; }
-
         public double PayloadMass { get; set; }
 
         public string ParentPlanet { get; set; }
 
         public DVector2 PositionOffset { get; set; }
-
         public DVector2 VelocityOffset { get; set; }
 
         public string LaunchDate { get; set; }
 
         public int ClockDelay { get; set; }
+        public int TimeSkew { get; set; }
 
         public DateTime GetLaunchDate()
         {

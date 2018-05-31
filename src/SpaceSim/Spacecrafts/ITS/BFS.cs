@@ -14,9 +14,11 @@ namespace SpaceSim.Spacecrafts.ITS
         public override string CraftName { get { return "BFS"; } }
         public override string CommandFileName { get { return "BFS.xml"; } }
 
-        public override double DryMass { get { return 85000; } }
         //public override double DryMass { get { return 65000; } }
+        public override double DryMass { get { return 85000; } }
+
         public override double Width { get { return 9; } }
+        //public override double Width { get { return 16; } }
         public override double Height { get { return 48; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
@@ -96,14 +98,14 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
-        //private SpriteSheet _spriteSheet;
+        // private SpriteSheet _spriteSheet;
 
         public BFS(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 0, double propellantMass = 1100000)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, null)
         {
             StageOffset = new DVector2(0, 0);
 
-            Engines = new IEngine[6];
+            Engines = new IEngine[7];
 
             // Raptor Vac engines
             for (int i = 0; i < 4; i++)
@@ -114,16 +116,17 @@ namespace SpaceSim.Spacecrafts.ITS
             }
 
             // Raptor SL engines
-            for (int i = 4; i < 6; i++)
+            for (int i = 4; i < 7; i++)
             {
                 double engineOffsetX = (i - 4.0) / 2.0;
                 var offset = new DVector2(engineOffsetX * Width * 0.1, Height * 0.475);
                 Engines[i] = new RaptorSL(i, this, offset);
             }
 
-            //_spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/scaledShip.png", 12, 12);
+            //_spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/BFS360.png", 9, 40);
 
             string texturePath = "Its/BFS.png";
+            //string texturePath = "Its/BFT.png";
             string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
             this.Texture = new Bitmap(fullPath);
 
@@ -137,19 +140,8 @@ namespace SpaceSim.Spacecrafts.ITS
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
                                     screenBounds.Y + screenBounds.Height * 0.5f);
 
-            graphics.TranslateTransform(offset.X, offset.Y);
-
-            float pitchAngle = (float)(drawingRotation * 180 / Math.PI);
-            float rollFactor = (float)Math.Cos(Roll);
-            float alphaAngle = (float)(GetAlpha() * 180 / Math.PI);
-            float rotateAngle = (pitchAngle - alphaAngle) + alphaAngle * rollFactor;
-
-            if (this.MissionName.Contains("EDL") || this.MissionName.Contains("Aerocapture") || this.MissionName.Contains("Direct"))
-                graphics.RotateTransform(rotateAngle);
-            else
-                graphics.RotateTransform(pitchAngle);
-
-            graphics.TranslateTransform(-offset.X, -offset.Y);
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
             // Normalize the angle to [0,360]
             int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
@@ -189,6 +181,8 @@ namespace SpaceSim.Spacecrafts.ITS
                 graphics.DrawArc(glowPen, plasmaRect, 160, 220);
             }
 
+            graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+
             // Index into the sprite
             //int ships = _spriteSheet.Cols * _spriteSheet.Rows;
             //int spriteIndex = (rollAngle * ships) / 360;
@@ -197,7 +191,6 @@ namespace SpaceSim.Spacecrafts.ITS
 
             //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
-            graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
             graphics.ResetTransform();
 
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
