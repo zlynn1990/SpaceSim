@@ -116,11 +116,6 @@ namespace SpaceSim.Orbits
 
             DVector2 initialPosition = satellite.Position - parent.Position;
 
-            var shipOffset = new DVector2(Math.Cos(satellite.Pitch) * (satellite.TotalWidth - satellite.Width),
-                                          Math.Sin(satellite.Pitch) * (satellite.TotalHeight - satellite.Height)) * 0.5;
-
-            initialPosition -= shipOffset;
-
             var proxyParent = new MassiveBodyProxy(DVector2.Zero, DVector2.Zero, parent);
             var proxySatellite = new SpaceCraftProxy(initialPosition, satellite.Velocity - parent.Velocity, satellite);
 
@@ -162,7 +157,7 @@ namespace SpaceSim.Orbits
             double previousAngle = proxySatellite.Position.Angle();
             double totalAngularDisplacement = 0;
 
-            trace.Reset(satellite.Position - shipOffset);
+            trace.Reset(satellite.Position);
 
             // Update steps based on orbit vs atmosphere
             for (int step = 0; step < stepCount; step++)

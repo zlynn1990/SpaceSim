@@ -10,9 +10,6 @@ namespace SpaceSim.Physics
     {
         public static int Next(int currentIndex, IList<IGravitationalBody> bodies, Camera camera)
         {
-            DVector2 diff = bodies[9].Position - bodies[14].Position;
-
-            Console.WriteLine(diff);
             DVector2 cameraNormal = DVector2.FromAngle(-camera.Rotation);
 
             return Iterate(currentIndex, bodies, cameraNormal);
