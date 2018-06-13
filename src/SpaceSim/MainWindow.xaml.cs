@@ -642,9 +642,6 @@ namespace SpaceSim
             {
                 _camera.ApplyScreenRotation(graphics);
 
-                //RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(0, -10e12), new DVector2(0, 10e12), Color.FromArgb(40, 255, 255, 255));
-                //RenderUtils.DrawLine(graphics, cameraBounds, new DVector2(-10e12, 0), new DVector2(10e12, 0), Color.FromArgb(40, 255, 255, 255));
-
                 // Draw all massive body orbit traces
                 foreach (MassiveBodyBase massiveBody in _massiveBodies)
                 {

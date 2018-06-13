@@ -28,7 +28,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
         public new AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsCrossSection; } }
 
         public FHBooster(string craftDirectory, int id, DVector2 position, DVector2 velocity, double propellantMass = 409272)
-            : base(craftDirectory, position, velocity, propellantMass, "Falcon/Heavy/booster" + id + ".png", -17.8)
+            : base(craftDirectory, position, velocity, 4, propellantMass, "Falcon/Heavy/booster" + id + ".png", -17.8)
         {
             Id = id;
 

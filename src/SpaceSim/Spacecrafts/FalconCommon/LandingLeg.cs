@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using SpaceSim.Physics;
 using VectorMath;
 
@@ -18,17 +17,25 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         private bool _isDeploying;
         private double _deployTimer;
 
-        public LandingLeg(ISpaceCraft parent, DVector2 offset, bool isLeft)
-            : base(parent)
+        public LandingLeg(ISpaceCraft parent, DVector2 offset, int block, bool isLeft)
+            : base(parent, GenerateTexturePath(block, isLeft))
         {
             _isLeft = isLeft;
 
             _offsetLength = offset.Length();
             _offsetRotation = offset.Angle() - Constants.PiOverTwo;
+        }
 
-            _texture = isLeft
-                ? new Bitmap("Textures/Spacecrafts/Falcon/Common//landingLegLeftB5.png")
-                : new Bitmap("Textures/Spacecrafts/Falcon/Common//landingLegRightB5.png");
+        private static string GenerateTexturePath(int block, bool isLeft)
+        {
+            if (block == 5)
+            {
+                return isLeft ? "Textures/Spacecrafts/Falcon/Common//landingLegLeftB5.png"
+                              : "Textures/Spacecrafts/Falcon/Common//landingLegRightB5.png";
+            }
+
+            return isLeft ? "Textures/Spacecrafts/Falcon/Common//landingLegLeft.png"
+                          : "Textures/Spacecrafts/Falcon/Common//landingLegRight.png";
         }
 
         public void Deploy()

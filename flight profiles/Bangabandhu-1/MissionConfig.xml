@@ -4,5 +4,5 @@
   <PayloadMass>3500</PayloadMass>
   <ParentPlanet>Earth</ParentPlanet>
   <LaunchDate>5/11/2018 4:14:00PM</LaunchDate>
-  <ClockDelay>1</ClockDelay>
+  <ClockDelay>10</ClockDelay>
 </MissionConfig>

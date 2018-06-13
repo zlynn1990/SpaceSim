@@ -7,9 +7,9 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 {
     class GridFin : SpaceCraftPart
     {
-        protected override double Width { get { return 1.2192; } }
-        protected override double Height { get { return 1.79806518; } }
-        protected override double DrawingOffset { get { return 0.6; } }
+        protected override double Width { get; }
+        protected override double Height { get; }
+        protected override double DrawingOffset { get; }
 
         private double _offsetLength;
         private double _offsetRotation;
@@ -18,17 +18,38 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         private bool _isDeploying;
         private double _deployTimer;
 
-        public GridFin(ISpaceCraft parent, DVector2 offset, bool isLeft)
-            : base(parent)
+        public GridFin(ISpaceCraft parent, DVector2 offset, int block, bool isLeft)
+            : base(parent, GenerateTexturePath(block, isLeft))
         {
+            if (block == 5)
+            {
+                Width = 1.3;
+                Height = 2.0;
+            }
+            else
+            {
+                Width = 1.2192;
+                Height = 1.79806518;
+            }
+
+            DrawingOffset = 0.6;
+
             _isLeft = isLeft;
 
             _offsetLength = offset.Length();
             _offsetRotation = offset.Angle() - Constants.PiOverTwo;
+        }
 
-            _texture = isLeft ? new Bitmap("Textures/Spacecrafts/Falcon/Common/gridFinLeft.png") :
-                                new Bitmap("Textures/Spacecrafts/Falcon/Common//gridFinRight.png");
+        private static string GenerateTexturePath(int block, bool isLeft)
+        {
+            if (block == 5)
+            {
+                return isLeft ? "Textures/Spacecrafts/Falcon/Common/gridFinLeftB5.png"
+                              : "Textures/Spacecrafts/Falcon/Common/gridFinRightB5.png";
+            }
 
+            return isLeft ? "Textures/Spacecrafts/Falcon/Common/gridFinLeft.png"
+                          : "Textures/Spacecrafts/Falcon/Common/gridFinRight.png";
         }
 
         public void Deploy()

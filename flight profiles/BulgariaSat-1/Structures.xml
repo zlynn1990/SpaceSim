@@ -12,7 +12,7 @@
   </StructureConfig>
   <StructureConfig>
     <Type>ASDS</Type>
-	  <DownrangeDistance>687900.0</DownrangeDistance>
+	  <DownrangeDistance>687900</DownrangeDistance>
 	  <HeightOffset>0</HeightOffset>
   </StructureConfig>
 </ArrayOfStructureConfig>
