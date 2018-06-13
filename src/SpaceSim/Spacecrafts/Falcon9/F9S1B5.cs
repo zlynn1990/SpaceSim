@@ -6,7 +6,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 {
     sealed class F9S1B5 : F9S1Base
     {
-        public override string CraftName { get { return "F9 S1 B5"; } }
+        public override string CraftName { get { return "F9 S1"; } }
         public override string CommandFileName { get { return "F9S1B5.xml"; } }
 
         public override double DryMass { get { return 25600; } }
@@ -16,7 +16,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
 
         public F9S1B5(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 406698)
-            : base(craftDirectory, position, velocity, propellantMass, "Falcon/9/S1B5.png", -17.6)
+            : base(craftDirectory, position, velocity, 5, propellantMass, "Falcon/9/S1B5.png")
         {
             StageOffset = new DVector2(0, 25.5);
 

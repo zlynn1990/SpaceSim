@@ -21,7 +21,10 @@ namespace SpaceSim.Physics
         public double Apoapsis { get { return OrbitTrace.Apogee; } }
         public double Periapsis { get { return OrbitTrace.Perigee; } }
 
-        public bool InOrbit { get { return Apoapsis > GravitationalParent.AtmosphereHeight && Periapsis > GravitationalParent.AtmosphereHeight && GetRelativeVelocity().Length() > 1; } }
+        public bool InOrbit
+        {
+            get { return Apoapsis > GravitationalParent.AtmosphereHeight * 0.5 && Periapsis > GravitationalParent.AtmosphereHeight * 0.5 && GetRelativeVelocity().Length() > 1; }
+        }
 
         public abstract Color IconColor { get; }
 

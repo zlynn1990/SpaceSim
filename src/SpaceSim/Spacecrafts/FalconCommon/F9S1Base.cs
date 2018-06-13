@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
@@ -94,50 +93,38 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             }
         }
 
-        private GridFinB5[] _gridFins;
-        private LandingLegB5[] _landingLegs;
-
-        private Bitmap _drawingBuffer;
-        private Bitmap _sootTexture;
+        private GridFin[] _gridFins;
+        private LandingLeg[] _landingLegs;
 
         private Smoke _engineSmoke;
 
+	    private SootRenderer _bodyRenderer;
+
         private double _sootRatio;
 
-        protected F9S1Base(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass, string texturePath, double finOffset = -17.6)
+        protected F9S1Base(string craftDirectory, DVector2 position, DVector2 velocity, int block, double propellantMass, string texturePath, double finOffset = -17.6)
             : base(craftDirectory, position, velocity, 0, propellantMass, texturePath)
         {
             _gridFins = new[]
             {
-                new GridFinB5(this, new DVector2(1.3, finOffset), true),
-                new GridFinB5(this, new DVector2(-1.3, finOffset), false)
+                new GridFin(this, new DVector2(1.3, finOffset), block, true),
+                new GridFin(this, new DVector2(-1.3, finOffset), block, false)
             };
 
             _landingLegs = new[]
             {
-                new LandingLegB5(this, new DVector2(1.0, 21), true),
-                new LandingLegB5(this, new DVector2(-1.0, 21), false)
+                new LandingLeg(this, new DVector2(1.0, 21), block, true),
+                new LandingLeg(this, new DVector2(-1.0, 21), block, false)
             };
 
-            string sootTexturePath = texturePath.Replace(".png", "Soot.png");
+	        _bodyRenderer = new SootRenderer(Texture, Path.Combine("Textures/Spacecrafts", texturePath));
 
-            string fullSootPath = Path.Combine("Textures/Spacecrafts", sootTexturePath);
-
-            if (!File.Exists(fullSootPath))
-            {
-                throw new FileNotFoundException("Could not find texture!", fullSootPath);
-            }
-
-            // Initialized 'soot' texture and allocate the drawing buffer
-            _sootTexture = new Bitmap(fullSootPath);
-            _drawingBuffer = new Bitmap(_sootTexture.Width, _sootTexture.Height);
-
-            _engineSmoke = new Smoke(1000, Color.FromArgb(90, 130, 130, 130));
+			_engineSmoke = new Smoke(1000, Color.FromArgb(90, 130, 130, 130));
         }
 
         public override void DeployGridFins()
         {
-            foreach (GridFinB5 gridFin in _gridFins)
+            foreach (GridFin gridFin in _gridFins)
             {
                 gridFin.Deploy();
             }
@@ -145,7 +132,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         public override void DeployLandingLegs()
         {
-            foreach (LandingLegB5 landingLeg in _landingLegs)
+            foreach (LandingLeg landingLeg in _landingLegs)
             {
                 landingLeg.Deploy();
             }
@@ -171,14 +158,16 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         {
             base.Update(dt);
 
-            foreach (GridFinB5 gridFin in _gridFins)
+            foreach (GridFin gridFin in _gridFins)
             {
                 gridFin.Update(dt);
+                gridFin.UpdateSootRatio(_sootRatio);
             }
 
-            foreach (LandingLegB5 landingLeg in _landingLegs)
+            foreach (LandingLeg landingLeg in _landingLegs)
             {
                 landingLeg.Update(dt);
+                landingLeg.UpdateSootRatio(_sootRatio);
             }
 
             DVector2 velocity = GetRelativeVelocity();
@@ -196,7 +185,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
                 {
                     if (engine.IsActive && engine.Throttle > 0)
                     {
-                        _sootRatio = Math.Min(_sootRatio + 0.015 * dt, 1.0);
+                        _sootRatio = Math.Min(_sootRatio + 0.02 * dt, 1.0);
                     }
                 }
             }
@@ -204,39 +193,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
-            // Build the main texture (a combination of base and soot)
-            using (Graphics graphics2 = RenderUtils.GetContext(false, _drawingBuffer))
-            {
-                if (_sootRatio > 0.99)
-                {
-                    graphics2.DrawImage(_sootTexture, new Rectangle(0, 0, _drawingBuffer.Width, _drawingBuffer.Height));
-                }
-                else if (_sootRatio < 0.05)
-                {
-                    graphics2.DrawImage(Texture, new Rectangle(0, 0, _drawingBuffer.Width, _drawingBuffer.Height));
-                }
-                else
-                {
-                    graphics2.DrawImage(Texture, new Rectangle(0, 0, _drawingBuffer.Width, _drawingBuffer.Height));
-
-                    float[][] matrixAlpha =
-                    {
-                        new float[] {1, 0, 0, 0, 0},
-                        new float[] {0, 1, 0, 0, 0},
-                        new float[] {0, 0, 1, 0, 0},
-                        new float[] {0, 0, 0, (float)_sootRatio, 0}, 
-                        new float[] {0, 0, 0, 0, 1}
-                    };
-
-                    ColorMatrix colorMatrix = new ColorMatrix(matrixAlpha);
-
-                    ImageAttributes iaAlphaBlend = new ImageAttributes();
-                    iaAlphaBlend.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-
-                    graphics2.DrawImage(_sootTexture, new Rectangle(0, 0, _drawingBuffer.Width, _drawingBuffer.Height), 0, 0,
-                                        _drawingBuffer.Width, _drawingBuffer.Height, GraphicsUnit.Pixel, iaAlphaBlend);
-                }
-            }
+			// Doesn't need to be disposed because it's re-used internally
+			Bitmap sootBody = _bodyRenderer.GenerateTexture(_sootRatio);
 
             double drawingRotation = Pitch + Math.PI * 0.5;
 
@@ -246,16 +204,16 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             camera.ApplyScreenRotation(graphics);
             camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
-            graphics.DrawImage(_drawingBuffer, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+            graphics.DrawImage(sootBody, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
             graphics.ResetTransform();
 
-            foreach (GridFinB5 gridFin in _gridFins)
+            foreach (GridFin gridFin in _gridFins)
             {
                 gridFin.RenderGdi(graphics, camera);
             }
 
-            foreach (LandingLegB5 landingLeg in _landingLegs)
+            foreach (LandingLeg landingLeg in _landingLegs)
             {
                 landingLeg.RenderGdi(graphics, camera);
             }

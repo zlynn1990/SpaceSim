@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using SpaceSim.Engines;
-using SpaceSim.Physics;
+﻿using SpaceSim.Engines;
 using SpaceSim.Spacecrafts.FalconCommon;
 using VectorMath;
 
@@ -18,7 +15,7 @@ namespace SpaceSim.Spacecrafts.Falcon9SSTO
         public override double Height { get { return 47.812188; } }
 
         public F9SSTO(string craftDirectory, DVector2 position, DVector2 velocity)
-            : base(craftDirectory, position, velocity, 409500, "Falcon/9/ssto.png")
+            : base(craftDirectory, position, velocity, 4, 409500, "Falcon/9/ssto.png")
         {
             StageOffset = new DVector2(0, 25.5);
 

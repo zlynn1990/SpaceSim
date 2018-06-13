@@ -127,6 +127,7 @@
     <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
+    <Compile Include="Drawing\SootRenderer.cs" />
     <Compile Include="Drawing\SpriteSheet.cs" />
     <Compile Include="Drawing\TextDisplay.cs" />
     <Compile Include="Engines\BE4.cs" />
@@ -208,8 +209,6 @@
     <Compile Include="Spacecrafts\FalconCommon\F9S1Base.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Fairing.cs" />
     <Compile Include="Spacecrafts\FalconCommon\GridFin.cs" />
-    <Compile Include="Spacecrafts\FalconCommon\GridFinB5.cs" />
-    <Compile Include="Spacecrafts\FalconCommon\LandingLegB5.cs" />
     <Compile Include="Spacecrafts\FalconCommon\LandingLeg.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Parachute.cs" />
     <Compile Include="Spacecrafts\FalconCommon\PartyBalloon.cs" />
@@ -333,13 +332,37 @@
     <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinLeftB5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinLeftB5Soot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinLeftSoot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinRightB5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinRightB5Soot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\gridFinRightSoot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegLeftB5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegLeftB5Soot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegLeftSoot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegRightB5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegRightB5Soot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\landingLegRightSoot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Falcon\Common\parachuteLeft.png">

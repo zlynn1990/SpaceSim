@@ -18,17 +18,29 @@ namespace SpaceSim.Spacecrafts
         protected abstract double DrawingOffset { get; }
 
         protected ISpaceCraft _parent;
-        protected Bitmap _texture;
 
-        protected SpaceCraftPart(ISpaceCraft parent)
+        private double _sootRatio;
+        private SootRenderer _sootRenderer;
+
+        protected SpaceCraftPart(ISpaceCraft parent, string baseTexturePath)
         {
+            var baseTexture = new Bitmap(baseTexturePath);
+            _sootRenderer = new SootRenderer(baseTexture, baseTexturePath);
+
             _parent = parent;
         }
 
         public abstract void Update(double dt);
 
+        public void UpdateSootRatio(double ratio)
+        {
+            _sootRatio = ratio;
+        }
+
         public virtual void RenderGdi(Graphics graphics, Camera camera)
         {
+            Bitmap sootedTexture = _sootRenderer.GenerateTexture(_sootRatio);
+
             double drawingRotation = _parent.Pitch + Pitch;
 
             DVector2 drawingOffset = new DVector2(Math.Cos(drawingRotation), Math.Sin(drawingRotation)) * DrawingOffset;
@@ -40,7 +52,7 @@ namespace SpaceSim.Spacecrafts
             camera.ApplyScreenRotation(graphics);
             camera.ApplyRotationMatrix(graphics, offset, drawingRotation + Constants.PiOverTwo);
 
-            graphics.DrawImage(_texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+            graphics.DrawImage(sootedTexture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
             graphics.ResetTransform();
         }

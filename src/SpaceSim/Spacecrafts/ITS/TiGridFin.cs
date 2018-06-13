@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using SpaceSim.Drawing;
 using SpaceSim.Physics;
 using VectorMath;
 
@@ -20,15 +18,18 @@ namespace SpaceSim.Spacecrafts.ITS
         private double _deployTimer;
 
         public TiGridFin(ISpaceCraft parent, DVector2 offset, bool isLeft)
-            : base(parent)
+            : base(parent, GenerateTexturePath(isLeft))
         {
             _isLeft = isLeft;
 
             _offsetLength = offset.Length();
             _offsetRotation = offset.Angle() - Constants.PiOverTwo;
+        }
 
-            _texture = isLeft ? new Bitmap("Textures/Spacecrafts/ITS/TiGridFinLeft.png") :
-                                new Bitmap("Textures/Spacecrafts/ITS/TiGridFinRight.png");
+        private static string GenerateTexturePath(bool isLeft)
+        {
+            return isLeft ? "Textures/Spacecrafts/ITS/TiGridFinLeft.png"
+                          : "Textures/Spacecrafts/ITS/TiGridFinRight.png";
         }
 
         public void Deploy()
