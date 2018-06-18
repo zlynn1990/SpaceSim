@@ -7,6 +7,7 @@ using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
 using System.IO;
+using SpaceSim.Spacecrafts.FalconCommon;
 
 namespace SpaceSim.Spacecrafts.ITS
 {
@@ -98,19 +99,20 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
-        private TiGridFin[] _gridFins;
+        private GridFin[] _gridFins;
 
         //private SpriteSheet _spriteSheet;
 
         public BFR(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 2949500)
             : base(craftDirectory, position, velocity, 0, propellantMass, "Its/BFR.png")
         {
-            StageOffset = new DVector2(0, 53.9);
+            //StageOffset = new DVector2(0, 53.9);
+            StageOffset = new DVector2(0, 49.2);
 
             _gridFins = new[]
             {
-                new TiGridFin(this, new DVector2(2.75, -28.8), true),
-                new TiGridFin(this, new DVector2(-2.75, -28.8), false)
+                new GridFin(this, new DVector2(2.75, -28.6), 6, true),
+                new GridFin(this, new DVector2(-2.75, -28.6), 6, false)
             };
 
             Engines = new IEngine[31];
@@ -133,7 +135,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
         public override void DeployGridFins()
         {
-            foreach (TiGridFin gridFin in _gridFins)
+            foreach (GridFin gridFin in _gridFins)
             {
                 gridFin.Deploy();
             }
@@ -143,7 +145,7 @@ namespace SpaceSim.Spacecrafts.ITS
         {
             base.Update(dt);
 
-            foreach (TiGridFin gridFin in _gridFins)
+            foreach (GridFin gridFin in _gridFins)
             {
                 gridFin.Update(dt);
             }
@@ -173,7 +175,7 @@ namespace SpaceSim.Spacecrafts.ITS
             graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
             graphics.ResetTransform();
 
-            foreach (TiGridFin gridFin in _gridFins)
+            foreach (GridFin gridFin in _gridFins)
             {
                 gridFin.RenderGdi(graphics, camera);
             }

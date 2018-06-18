@@ -14,11 +14,11 @@ namespace SpaceSim.Spacecrafts.ITS
         public override string CraftName { get { return "BFS"; } }
         public override string CommandFileName { get { return "BFS.xml"; } }
 
-        //public override double DryMass { get { return 65000; } }
+        //public override double DryMass { get { return 75000; } }
         public override double DryMass { get { return 85000; } }
 
-        public override double Width { get { return 9; } }
-        //public override double Width { get { return 16; } }
+        //public override double Width { get { return 9; } }
+        public override double Width { get { return 15; } }
         public override double Height { get { return 48; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
@@ -98,7 +98,7 @@ namespace SpaceSim.Spacecrafts.ITS
             }
         }
 
-        // private SpriteSheet _spriteSheet;
+        private SpriteSheet _spriteSheet;
 
         public BFS(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 0, double propellantMass = 1100000)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, null)
@@ -111,24 +111,24 @@ namespace SpaceSim.Spacecrafts.ITS
             for (int i = 0; i < 4; i++)
             {
                 double engineOffsetX = (i - 1.5) / 1.5;
-                var offset = new DVector2(engineOffsetX * Width * 0.25, Height * 0.45);
+                var offset = new DVector2(engineOffsetX * Width * 0.2, Height * 0.38);
                 Engines[i] = new RaptorVac(i, this, offset);
             }
 
             // Raptor SL engines
             for (int i = 4; i < 7; i++)
             {
-                double engineOffsetX = (i - 4.0) / 2.0;
-                var offset = new DVector2(engineOffsetX * Width * 0.1, Height * 0.475);
+                double engineOffsetX = (i - 5.0) / 2.0;
+                var offset = new DVector2(engineOffsetX * Width * 0.1, Height * 0.38);
                 Engines[i] = new RaptorSL(i, this, offset);
             }
 
-            //_spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/BFS360.png", 9, 40);
+            _spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/BFS360.png", 9, 40);
 
-            string texturePath = "Its/BFS.png";
+            //string texturePath = "Its/BFS.png";
             //string texturePath = "Its/BFT.png";
-            string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
-            this.Texture = new Bitmap(fullPath);
+            //string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
+            //this.Texture = new Bitmap(fullPath);
 
             this.payloadMass = payloadMass;
         }
@@ -146,8 +146,8 @@ namespace SpaceSim.Spacecrafts.ITS
             // Normalize the angle to [0,360]
             int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
 
-            int heatingRate = Math.Min((int)this.HeatingRate, 2000000);
-            if (heatingRate > 100000)
+            int heatingRate = Math.Min((int)this.HeatingRate, 600000);
+            if (heatingRate > 10000)
             {
                 Random rnd = new Random();
                 float noise = (float)rnd.NextDouble();
@@ -156,10 +156,17 @@ namespace SpaceSim.Spacecrafts.ITS
                 RectangleF plasmaRect = screenBounds;
                 plasmaRect.Inflate(new SizeF(width, height));
 
-                int alpha = Math.Min(heatingRate / 7800, 255);
-                int red = alpha;
-                int green = Math.Max(red - 128, 0) * 2;
-                int blue = 0;
+                if (Roll != 0)
+                {
+                    float foreshortening = (float)Math.Pow(Math.Cos(Roll), 0.4);
+                    plasmaRect.Y += plasmaRect.Height * (1 - foreshortening);
+                    plasmaRect.Height *= foreshortening;
+                }
+
+                int alpha = 255;
+                int blue = Math.Min(heatingRate / 2000, 255);
+                int green = 0;
+                int red = Math.Max(blue - 64, 0);
                 Color glow = Color.FromArgb(alpha, red, green, blue);
 
                 float penWidth = width / 12;
@@ -181,15 +188,15 @@ namespace SpaceSim.Spacecrafts.ITS
                 graphics.DrawArc(glowPen, plasmaRect, 160, 220);
             }
 
-            graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+            //graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
             // Index into the sprite
-            //int ships = _spriteSheet.Cols * _spriteSheet.Rows;
-            //int spriteIndex = (rollAngle * ships) / 360;
-            //while (spriteIndex < 0)
-            //    spriteIndex += ships;
+            int ships = _spriteSheet.Cols * _spriteSheet.Rows;
+            int spriteIndex = (rollAngle * ships) / 360;
+            while (spriteIndex < 0)
+                spriteIndex += ships;
 
-            //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
+            _spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
             graphics.ResetTransform();
 

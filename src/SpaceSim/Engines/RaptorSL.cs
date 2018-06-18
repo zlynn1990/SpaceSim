@@ -8,7 +8,7 @@ namespace SpaceSim.Engines
     class RaptorSL : EngineBase
     {
         public RaptorSL(int id, ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(id, Color.FromArgb(15, 209, 173, 199), 50, 2, 0.2, 0.6, 0.1))
+            : base(parent, offset, new EngineFlame(id, Color.FromArgb(30, 209, 173, 199), 50, 2, 0.2, 0.6, 0.1))
         {
         }
 

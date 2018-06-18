@@ -21,7 +21,12 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public GridFin(ISpaceCraft parent, DVector2 offset, int block, bool isLeft)
             : base(parent, GenerateTexturePath(block, isLeft))
         {
-            if (block == 5)
+            if (block == 6)
+            {
+                Width = 2.4;
+                Height = 4.0;
+            }
+            else if (block == 5)
             {
                 Width = 1.3;
                 Height = 2.0;
@@ -42,7 +47,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
         private static string GenerateTexturePath(int block, bool isLeft)
         {
-            if (block == 5)
+            if (block >= 5)
             {
                 return isLeft ? "Textures/Spacecrafts/Falcon/Common/gridFinLeftB5.png"
                               : "Textures/Spacecrafts/Falcon/Common/gridFinRightB5.png";

@@ -24,8 +24,8 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "CRS-14"),
                 //Path.Combine(profileDirectory, "Formosat-5"),
                 
-                Path.Combine(profileDirectory, "Bangabandhu-1"),
-                Path.Combine(profileDirectory, "BulgariaSat-1"),
+                //Path.Combine(profileDirectory, "Bangabandhu-1"),
+                //Path.Combine(profileDirectory, "BulgariaSat-1"),
 
                 //Path.Combine(profileDirectory, "BulgariaSat-1b"),
                 //Path.Combine(profileDirectory, "Hwasong-14"),
@@ -36,6 +36,7 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "Inmarsat-5"),
                 //Path.Combine(profileDirectory, "Intelsat-35e"),
                 //Path.Combine(profileDirectory, "BFR Crew Launch"),
+                Path.Combine(profileDirectory, "BFR P2P Launch"),
                 //Path.Combine(profileDirectory, "BFS to GEO"),
                 //Path.Combine(profileDirectory, "BFS300 to LEO"),
                 //Path.Combine(profileDirectory, "BFS250 to LEO"),
