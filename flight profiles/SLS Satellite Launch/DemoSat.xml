@@ -14,41 +14,36 @@
     <TargetOrientation>90</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>170</StartTime>
+    <StartTime>126</StartTime>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>135</StartTime>
-    <Duration>75</Duration>
-    <TargetOrientation>-178</TargetOrientation>
+    <StartTime>127</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-155</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>132</StartTime>
+    <Duration>228</Duration>
+    <TargetOrientation>-170</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>360</StartTime>
+    <Duration>140</Duration>
+    <TargetOrientation>-182</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>225</StartTime>
-  </Command>
-  <Command xsi:type="RelativePitch">
-    <StartTime>230</StartTime>
-    <Duration>5</Duration>
-    <TargetOrientation>-180</TargetOrientation>
-  </Command>
-  <Command xsi:type="RelativePitch">
-    <StartTime>235</StartTime>
-    <Duration>145</Duration>
-    <TargetOrientation>-181</TargetOrientation>
+    <StartTime>500</StartTime>
   </Command>
   <Command xsi:type="Deploy">
     <Part>Fairing</Part>
-    <StartTime>240</StartTime>
-  </Command>
-  <Command xsi:type="RelativePitch">
-    <StartTime>380</StartTime>
-    <Duration>180</Duration>
-    <TargetOrientation>-178</TargetOrientation>
+    <StartTime>510</StartTime>
   </Command>
   <Command xsi:type="Prograde">
-    <StartTime>600</StartTime>
-    <Duration>8000</Duration>
+    <StartTime>520</StartTime>
+    <Duration>1000000</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>3380</StartTime>
+    <StartTime>1680</StartTime>
   </Command>
 </ArrayOfCommand>

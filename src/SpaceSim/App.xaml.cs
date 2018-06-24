@@ -23,7 +23,7 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "CRS-12"),
                 //Path.Combine(profileDirectory, "CRS-14"),
                 //Path.Combine(profileDirectory, "Formosat-5"),
-                
+
                 //Path.Combine(profileDirectory, "Bangabandhu-1"),
                 //Path.Combine(profileDirectory, "BulgariaSat-1"),
 
@@ -36,7 +36,7 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "Inmarsat-5"),
                 //Path.Combine(profileDirectory, "Intelsat-35e"),
                 //Path.Combine(profileDirectory, "BFR Crew Launch"),
-                Path.Combine(profileDirectory, "BFR P2P Launch"),
+                //Path.Combine(profileDirectory, "BFR P2P Launch"),
                 //Path.Combine(profileDirectory, "BFS to GEO"),
                 //Path.Combine(profileDirectory, "BFS300 to LEO"),
                 //Path.Combine(profileDirectory, "BFS250 to LEO"),
@@ -62,7 +62,7 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "FH-Europa-Clipper"),
                 //Path.Combine(profileDirectory, "FH-Europa-Clipper-TMI"),
                 //Path.Combine(profileDirectory, "FH-RTLS"),
-                //Path.Combine(profileDirectory, "FH-Expendable"),
+                Path.Combine(profileDirectory, "FH-Expendable"),
                 //Path.Combine(profileDirectory, "F9S2 Earth LEO EDL"),
                 //Path.Combine(profileDirectory, "F9S2 Earth EDL"),
                 //Path.Combine(profileDirectory, "F9S2 Earth EDL2"),
@@ -77,6 +77,7 @@ namespace SpaceSim
                 //Path.Combine(profileDirectory, "Scaled BFS LL"),
                 //Path.Combine(profileDirectory, "Scaled BFS TEI"),
                 //Path.Combine(profileDirectory, "Scaled BFS EDL"),
+                Path.Combine(profileDirectory, "SLS Satellite Launch"),
             };
 
             if (SpaceSim.MainWindow.ProfilePaths == null ||

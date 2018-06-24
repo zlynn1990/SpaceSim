@@ -121,6 +121,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildScaledBfsTEI(planet, config, craftDirectory);
                 case "Scaled BFS EDL":
                     return BuildScaledBfsEDL(planet, config, craftDirectory);
+                case "SLS Satellite":
+                    return BuildSLS(planet, config, craftDirectory);
                 default:
                     throw new Exception("Unknown vehicle type: " + config.VehicleType);
             }
@@ -369,6 +371,37 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 roadster, fhS2, fhLeftBooster, fhS1, fhRightBooster, fairingLeft, fairingRight
+            };
+        }
+
+        private static List<ISpaceCraft> BuildSLS(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var demoSat = new EuropaClipper(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset,
+                                      planet.Velocity + new DVector2(-400, 0) + config.VelocityOffset, config.PayloadMass);
+
+            var fairingLeft = new SLS5mFairing(craftDirectory, demoSat.Position, DVector2.Zero, true);
+            var fairingRight = new SLS5mFairing(craftDirectory, demoSat.Position, DVector2.Zero, false);
+
+            demoSat.AttachFairings(fairingLeft, fairingRight);
+
+            var slsS1 = new SLSS1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var slsS2 = new SLSS2(craftDirectory, DVector2.Zero, DVector2.Zero, 9.9);
+
+            var slsLeftBooster = new SLSBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var slsRightBooster = new SLSBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            demoSat.AddChild(slsS2);
+            slsS2.SetParent(demoSat);
+            slsS2.AddChild(slsS1);
+            slsS1.SetParent(slsS2);
+            slsS1.AddChild(slsLeftBooster);
+            slsS1.AddChild(slsRightBooster);
+            slsLeftBooster.SetParent(slsS1);
+            slsRightBooster.SetParent(slsS1);
+
+            return new List<ISpaceCraft>
+            {
+                demoSat, slsS2, slsLeftBooster, slsS1, slsRightBooster, fairingLeft, fairingRight
             };
         }
 

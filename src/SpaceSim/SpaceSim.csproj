@@ -140,6 +140,9 @@
     <Compile Include="Engines\RaptorVac.cs" />
     <Compile Include="Engines\RaptorVac2016.cs" />
     <Compile Include="Engines\RaptorVac300.cs" />
+    <Compile Include="Engines\RL10.cs" />
+    <Compile Include="Engines\RS25.cs" />
+    <Compile Include="Engines\SRB.cs" />
     <Compile Include="Particles\EngineFlame.cs" />
     <Compile Include="Drawing\EventManager.cs" />
     <Compile Include="Drawing\GpuClear.cs" />
@@ -236,6 +239,11 @@
     <Compile Include="Spacecrafts\NewGlenn\NGSatellite.cs" />
     <Compile Include="Spacecrafts\Payloads\X37B.cs" />
     <Compile Include="Spacecrafts\RedDragon\RedDragon.cs" />
+    <Compile Include="Spacecrafts\SLS\EuropaClipper.cs" />
+    <Compile Include="Spacecrafts\SLS\SLS5mFairing.cs" />
+    <Compile Include="Spacecrafts\SLS\SLSBooster.cs" />
+    <Compile Include="Spacecrafts\SLS\SLSS1.cs" />
+    <Compile Include="Spacecrafts\SLS\SLSS2.cs" />
     <Compile Include="Spacecrafts\SpaceCraftBase.cs" />
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
     <Compile Include="SolarSystem\Stars\Sun.cs" />
@@ -420,6 +428,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Satellites\X37B.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\booster1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\booster2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\fairingLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\fairingRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\ICPS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\S1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Structures\asds.png">
