@@ -6,6 +6,7 @@ using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
 using System.IO;
+using SpaceSim.Common;
 
 namespace SpaceSim.Spacecrafts.ITS
 {

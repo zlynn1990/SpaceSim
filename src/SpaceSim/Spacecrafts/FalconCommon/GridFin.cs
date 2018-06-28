@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Drawing;
-using SpaceSim.Physics;
+using SpaceSim.Common;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.FalconCommon

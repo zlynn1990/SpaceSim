@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpaceSim.Contracts;
+using SpaceSim.Common.Contracts;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
 using SpaceSim.Spacecrafts.DragonV1;

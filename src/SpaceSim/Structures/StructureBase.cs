@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Common;
 using SpaceSim.Drawing;
-using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
 using VectorMath;
 

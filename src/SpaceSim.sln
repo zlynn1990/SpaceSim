@@ -1,11 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceSim", "SpaceSim\SpaceSim.csproj", "{1C529C56-1B3E-4C1C-A6DD-7E898218D299}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCLWrapper", "OpenCLWrapper\OpenCLWrapper.csproj", "{FEEF5BEC-FD10-4FB5-B0BA-15F566B0A56E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorMath", "VectorMath\VectorMath.csproj", "{FB0F7B62-34F7-469F-9096-F857473DE4E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{601E98ED-448A-489B-9113-631A68414796}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceSim.Common", "SpaceSim.Common\SpaceSim.Common.csproj", "{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,8 +53,35 @@ Global
 		{FB0F7B62-34F7-469F-9096-F857473DE4E9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FB0F7B62-34F7-469F-9096-F857473DE4E9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FB0F7B62-34F7-469F-9096-F857473DE4E9}.Release|x86.ActiveCfg = Release|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Debug|x86.Build.0 = Debug|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Release|x86.ActiveCfg = Release|Any CPU
+		{601E98ED-448A-489B-9113-631A68414796}.Release|x86.Build.0 = Release|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Debug|x86.Build.0 = Debug|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Release|x86.ActiveCfg = Release|Any CPU
+		{8FE13F60-45A4-42D4-B27D-E4E0DBCB14D9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEDFD3EF-112B-421E-982D-3BD6325362E7}
 	EndGlobalSection
 EndGlobal

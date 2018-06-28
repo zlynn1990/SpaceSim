@@ -15,6 +15,7 @@ using SpaceSim.SolarSystem;
 using VectorMath;
 
 using System.Reflection;
+using SpaceSim.Common;
 
 namespace SpaceSim.Spacecrafts
 {

@@ -2,6 +2,7 @@
 using System.Drawing;
 using Cloo;
 using OpenCLWrapper;
+using SpaceSim.Common;
 using SpaceSim.Drawing;
 using SpaceSim.Orbits;
 using SpaceSim.Physics;

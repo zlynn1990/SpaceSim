@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpaceSim.Physics;
+using SpaceSim.Common;
 using SpaceSim.Proxies;
 using SpaceSim.SolarSystem;
 using SpaceSim.Spacecrafts;

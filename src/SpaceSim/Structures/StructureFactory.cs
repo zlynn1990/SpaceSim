@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using SpaceSim.Contracts;
+using SpaceSim.Common.Contracts;
 using SpaceSim.SolarSystem;
 
 namespace SpaceSim.Structures

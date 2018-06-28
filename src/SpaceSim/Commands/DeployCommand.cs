@@ -1,5 +1,5 @@
 ﻿using System;
-using SpaceSim.Contracts.Commands;
+using SpaceSim.Common.Contracts.Commands;
 using SpaceSim.Spacecrafts;
 
 namespace SpaceSim.Commands

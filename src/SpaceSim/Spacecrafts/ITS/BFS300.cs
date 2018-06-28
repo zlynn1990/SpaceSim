@@ -4,6 +4,7 @@ using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
 using System.IO;
+using SpaceSim.Common;
 using SpaceSim.Drawing;
 using SpaceSim.Properties;
 

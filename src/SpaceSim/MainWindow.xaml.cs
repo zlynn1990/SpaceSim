@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
@@ -15,8 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Cloo;
 using OpenCLWrapper;
-using SpaceSim.Contracts;
-using SpaceSim.Controllers;
+using SpaceSim.Common;
+using SpaceSim.Common.Contracts;
 using SpaceSim.Drawing;
 using SpaceSim.Gauges;
 using SpaceSim.Orbits;
@@ -43,6 +41,7 @@ namespace SpaceSim
     public partial class MainWindow : Window
     {
         public static List<string> ProfilePaths;
+        public static bool FullScreen;
 
         private RenderingType _renderingType = RenderingType.OpenCLHardware;
 
@@ -114,7 +113,7 @@ namespace SpaceSim
         {
             Mouse.OverrideCursor = Cursors.None;
 
-            if (Settings.Default.FullScreen)
+            if (FullScreen)
             {
                 WindowState = WindowState.Maximized;
                 WindowStyle = WindowStyle.None;
