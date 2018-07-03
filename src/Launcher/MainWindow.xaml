@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Launcher"
         mc:Ignorable="d"
-        Title="Launcher" Height="450" Width="683" ResizeMode="NoResize">
-    <Grid HorizontalAlignment="Left" Width="792">
+        Title="Launcher" Height="450" Width="860.699" ResizeMode="NoResize">
+    <Grid HorizontalAlignment="Left" Width="851">
         <ListBox Name="ProfileBox" HorizontalAlignment="Left" Height="384" Margin="10,18,0,0" VerticalAlignment="Top" Width="223" SelectionChanged="OnSelectProfile" SelectionMode="Extended"/>
         <ListBox Name="CraftBox" HorizontalAlignment="Left" Height="288" Margin="262,114,0,0" VerticalAlignment="Top" Width="199" SelectionChanged="OnSelectCraft"/>
-        <ListBox Name="CommandBox" HorizontalAlignment="Left" Height="348" Margin="491,18,0,0" VerticalAlignment="Top" Width="163"/>
+        <ListBox Name="CommandBox" HorizontalAlignment="Left" Height="348" Margin="491,18,0,0" VerticalAlignment="Top" Width="163" SelectionChanged="OnSelectCommand"/>
 
         <Label Content="Vehicle:" HorizontalAlignment="Left" Margin="257,10,0,0" VerticalAlignment="Top"/>
         <Label Name="VehicleName" Content="" HorizontalAlignment="Left" Margin="301,10,0,0" VerticalAlignment="Top" Width="158"/>
@@ -25,6 +25,7 @@
 
         <CheckBox Name="FullScreenBox" Content="Full Screen" HorizontalAlignment="Left" Margin="491,383,0,0" VerticalAlignment="Top" IsChecked="True"/>
         <Button Content="Launch!" HorizontalAlignment="Left" Margin="583,377,0,0" VerticalAlignment="Top" Width="71" Click="OnLaunch" FontSize="16"/>
+        <ListBox x:Name="PropertyBox" HorizontalAlignment="Left" Height="348" Margin="678,18,0,0" VerticalAlignment="Top" Width="163"/>
 
     </Grid>
 </Window>
