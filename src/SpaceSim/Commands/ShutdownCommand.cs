@@ -54,7 +54,7 @@ namespace SpaceSim.Commands
 
         public override void Update(double elapsedTime, SpaceCraftBase spaceCraft)
         {
-            double shutdownRatio = (elapsedTime - StartTime) / Duration * 2;
+            double shutdownRatio = (elapsedTime - StartTime) / Duration;
 
             spaceCraft.SetThrottle(_currentThrottle * (1 - shutdownRatio), _engineIds);
         }

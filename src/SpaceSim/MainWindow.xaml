@@ -4,5 +4,8 @@
         Title="Space Sim" Width="1700" Height="800" ResizeMode="NoResize" Closing="OnClosing" KeyUp="OnKeyUp" KeyDown="OnKeyDown" WindowState="Normal" WindowStyle="SingleBorderWindow" SizeToContent="Manual">
     <Grid>
         <Image HorizontalAlignment="Left" Name="BackBuffer" Stretch="Fill" VerticalAlignment="Top" MouseWheel="OnScroll" Grid.ColumnSpan="2" />
+
+        <Label Name="LoadingLabel" Content="Loading Simulation..." HorizontalAlignment="Left" Margin="699,337,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <ProgressBar Name="LoadingBar" HorizontalAlignment="Left" Height="46" Margin="299,384,0,0" VerticalAlignment="Top" Width="1003"/>
     </Grid>
 </Window>

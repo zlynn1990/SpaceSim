@@ -93,16 +93,6 @@ namespace SpaceSim
             InitializeComponent();
             InitializeScreen();
 
-            LoadGui();
-            LoadSolarSystem();
-            LoadKernels();
-
-            _camera = new Camera(_gravitationalBodies[_targetIndex], 0.3);
-            //_camera = new Camera(_gravitationalBodies[_targetIndex], 5000);
-
-            _timeStepIndex = TimeStep.RealTimeIndex;
-            _timeSteps = TimeStep.Defaults();
-
             _isPaused = true;
             _isActive = true;
             _updateThread = new Thread(GameLoop);
@@ -135,7 +125,13 @@ namespace SpaceSim
             _imageBitmap = new Bitmap(RenderUtils.ScreenWidth, RenderUtils.ScreenHeight, PixelFormat.Format32bppArgb);
             _backBuffer = new WriteableBitmap(RenderUtils.ScreenWidth, RenderUtils.ScreenHeight, 96, 96, PixelFormats.Bgra32, null);
 
+            BackBuffer.Opacity = 0;
             BackBuffer.Source = _backBuffer;
+
+            // Set the loading bar centered
+            LoadingLabel.Margin = new Thickness(RenderUtils.ScreenWidth / 2.0 - 100, RenderUtils.ScreenHeight / 2.0 - 65, 0, 0);
+            LoadingBar.Width = RenderUtils.ScreenWidth * 0.8;
+            LoadingBar.Margin = new Thickness(RenderUtils.ScreenWidth * 0.1, RenderUtils.ScreenHeight / 2.0, 0, 0);
         }
 
         private IMassiveBody LocatePlanet(string planetName)
@@ -168,6 +164,8 @@ namespace SpaceSim
             };
 
             _textDisplay = new TextDisplay();
+
+            UpdateLoadingPercentage(10);
         }
 
         private void LoadSolarSystem()
@@ -202,7 +200,11 @@ namespace SpaceSim
 
             _originTime = primaryMission.GetLaunchDate();
 
-            OrbitHelper.SimulateToTime(_massiveBodies, _originTime, 300);
+            UpdateLoadingPercentage(20);
+
+            OrbitHelper.SimulateToTime(_massiveBodies, _originTime, 300, UpdateLoadingPercentage);
+
+            UpdateLoadingPercentage(80);
 
             // Load missions
             for (int i = 0; i < ProfilePaths.Count; i++)
@@ -231,6 +233,8 @@ namespace SpaceSim
             _targetIndex = _gravitationalBodies.IndexOf(_spaceCraftManager.First);
 
             _spaceCraftManager.ResolveGravitionalParents(_massiveBodies);
+
+            UpdateLoadingPercentage(90);
         }
 
         /// <summary>
@@ -240,7 +244,7 @@ namespace SpaceSim
         {
             try
             {
-                bool useSoftware = (_renderingType == RenderingType.OpenCLSoftware);
+                bool useSoftware = _renderingType == RenderingType.OpenCLSoftware;
 
                 _gpuClear = new GpuClear();
 
@@ -279,6 +283,29 @@ namespace SpaceSim
             {
                 _renderingType = RenderingType.GDIPlus;
             }
+
+            UpdateLoadingPercentage(100);
+        }
+
+        private void UpdateLoadingPercentage(double percentage)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                LoadingBar.Value = percentage;
+
+            }), DispatcherPriority.Render, null);
+        }
+
+        private void OnFinishLoading()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                BackBuffer.Opacity = 1;
+
+                LoadingBar.Opacity = 0;
+                LoadingLabel.Opacity = 0;
+
+            }), DispatcherPriority.Render, null);
         }
 
         private void OnScroll(object sender, MouseWheelEventArgs e)
@@ -464,6 +491,18 @@ namespace SpaceSim
         /// </summary>
         private void GameLoop()
         {
+            LoadGui();
+            LoadSolarSystem();
+            LoadKernels();
+
+            Dispatcher.BeginInvoke(new Action(OnFinishLoading), DispatcherPriority.Render, null);
+
+            _camera = new Camera(_gravitationalBodies[_targetIndex], 0.3);
+            //_camera = new Camera(_gravitationalBodies[_targetIndex], 5000);
+
+            _timeStepIndex = TimeStep.RealTimeIndex;
+            _timeSteps = TimeStep.Defaults();
+
             var frameTimer = new FpsManager(60);
 
             while (_isActive)

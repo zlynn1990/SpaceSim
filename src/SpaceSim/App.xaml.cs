@@ -93,7 +93,7 @@ namespace SpaceSim
                     //flightProfileManager.BuildFullPath("FH-Europa-Clipper"),
                     //flightProfileManager.BuildFullPath("FH-Europa-Clipper-TMI"),
                     //flightProfileManager.BuildFullPath("FH-RTLS"),
-                    flightProfileManager.BuildFullPath("FH-Expendable"),
+                    //flightProfileManager.BuildFullPath("FH-Expendable"),
                     //flightProfileManager.BuildFullPath("F9S2 Earth LEO EDL"),
                     //flightProfileManager.BuildFullPath("F9S2 Earth EDL"),
                     //flightProfileManager.BuildFullPath("F9S2 Earth EDL2"),

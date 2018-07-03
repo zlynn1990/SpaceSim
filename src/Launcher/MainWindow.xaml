@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Launcher" Height="450" Width="683" ResizeMode="NoResize">
     <Grid HorizontalAlignment="Left" Width="792">
-        <ListBox Name="ProfileBox" HorizontalAlignment="Left" Height="384" Margin="10,18,0,0" VerticalAlignment="Top" Width="223" SelectionChanged="OnSelectProfile"/>
+        <ListBox Name="ProfileBox" HorizontalAlignment="Left" Height="384" Margin="10,18,0,0" VerticalAlignment="Top" Width="223" SelectionChanged="OnSelectProfile" SelectionMode="Extended"/>
         <ListBox Name="CraftBox" HorizontalAlignment="Left" Height="288" Margin="262,114,0,0" VerticalAlignment="Top" Width="199" SelectionChanged="OnSelectCraft"/>
         <ListBox Name="CommandBox" HorizontalAlignment="Left" Height="348" Margin="491,18,0,0" VerticalAlignment="Top" Width="163"/>
 
