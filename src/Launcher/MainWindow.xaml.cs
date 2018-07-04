@@ -76,6 +76,7 @@ namespace Launcher
 
             CraftBox.Items.Clear();
             CommandBox.Items.Clear();
+            PropertyBox.Items.Clear();
 
             foreach (string craftName in selectProfile.Commands.Keys)
             {
@@ -100,10 +101,40 @@ namespace Launcher
             List<Command> commands = selectProfile.Commands[(string) CraftBox.SelectedItem];
 
             CommandBox.Items.Clear();
+            PropertyBox.Items.Clear();
 
             foreach (Command command in commands)
             {
                 CommandBox.Items.Add(command);
+            }
+        }
+
+        private void OnSelectCommand(object sender, SelectionChangedEventArgs e)
+        {
+            if (CommandBox.SelectedItem == null) return;
+
+            PropertyBox.Items.Clear();
+            Command command = CommandBox.SelectedItem as Command;
+            if (command != null)
+            {
+                Type type = command.GetType();
+                PropertyInfo[] props = type.GetProperties();
+                foreach (PropertyInfo info in props)
+                {
+                    string name = info.Name;
+                    string format = string.Empty;
+                    switch (info.PropertyType.Name)
+                    {
+                        case "Double":
+                            format = "{0} {1:F}";
+                            break;
+                        default:
+                            format = "{0} {1}";
+                            break;
+                    }
+
+                    PropertyBox.Items.Add(string.Format(format, name, info.GetValue(command)));
+                }
             }
         }
 
@@ -159,35 +190,6 @@ namespace Launcher
             }
 
             throw new Exception("Could not locate SpaceSim.exe!");
-        }
-
-        private void OnSelectCommand(object sender, SelectionChangedEventArgs e)
-        {
-            if (CommandBox.SelectedItem == null) return;
-
-            PropertyBox.Items.Clear();
-            Command command = CommandBox.SelectedItem as Command;
-            if (command != null)
-            {
-                Type type = command.GetType();
-                PropertyInfo[] props = type.GetProperties();
-                foreach (PropertyInfo info in props)
-                {
-                    string name = info.Name;
-                    string format = string.Empty;
-                    switch (info.PropertyType.Name)
-                    {
-                        case "Double":
-                            format = "{0} {1:F}";
-                            break;
-                        default:
-                            format = "{0} {1}";
-                            break;
-                    }
-
-                    PropertyBox.Items.Add(string.Format(format, name, info.GetValue(command)));
-                }
-            }
         }
     }
 }

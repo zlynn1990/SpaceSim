@@ -62,7 +62,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
             Engines = new IEngine[]
             {
-                new Merlin1DVac(this, new DVector2(0, Height * 0.3))
+                new Merlin1DVac(this, new DVector2(0, Height * 0.38))
             };
         }
     }
