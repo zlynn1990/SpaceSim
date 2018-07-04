@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
+using SpaceSim.Common;
 using SpaceSim.Drawing;
-using SpaceSim.Kernels;
 using VectorMath;
 
 namespace SpaceSim.Gauges

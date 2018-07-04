@@ -26,6 +26,9 @@ namespace VectorMath
 
         public void Normalize()
         {
+            // Do not try to normalize zero vectors
+            if (X ==0 && Y == 0) return;
+
             double length = Length();
 
             X /= length;

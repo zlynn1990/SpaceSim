@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpaceSim.Contracts;
+using SpaceSim.Common.Contracts;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
 using SpaceSim.Spacecrafts.DragonV1;
@@ -51,6 +51,10 @@ namespace SpaceSim.Spacecrafts
             if (distanceFromSurface.Length() * 0.999 < planet.SurfaceRadius)
             {
                 primaryCraft.SetSurfacePosition(planet.Position + planetOffset, surfaceAngle);
+            }
+            else
+            {
+                primaryCraft.SetPitch(0);
             }
 
             return spaceCrafts;
@@ -467,7 +471,7 @@ namespace SpaceSim.Spacecrafts
         public static List<ISpaceCraft> BuildAutoLandingTest(IMassiveBody planet, MissionConfig payload, string craftDirectory)
         {
             var f9 = new F9S1(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 7000),
-                planet.Velocity + new DVector2(-400, 400), 3500);
+                planet.Velocity + new DVector2(-400, 400), 4500);
 
             return new List<ISpaceCraft>
             {

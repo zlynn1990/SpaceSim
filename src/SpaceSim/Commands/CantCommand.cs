@@ -1,4 +1,4 @@
-﻿using SpaceSim.Contracts.Commands;
+﻿using SpaceSim.Common.Contracts.Commands;
 using SpaceSim.Engines;
 using SpaceSim.Spacecrafts;
 using VectorMath;

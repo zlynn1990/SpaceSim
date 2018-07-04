@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Common;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using VectorMath;

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using SpaceSim.Drawing;
 using SpaceSim.Engines;
-using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
 using System.IO;
+using SpaceSim.Common;
 using SpaceSim.Spacecrafts.FalconCommon;
 
 namespace SpaceSim.Spacecrafts.ITS
@@ -161,17 +160,6 @@ namespace SpaceSim.Spacecrafts.ITS
             camera.ApplyScreenRotation(graphics);
             camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
-            // Normalize the angle to [0,360]
-            int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
-
-            // Index into the sprite
-            //int ships = _spriteSheet.Cols * _spriteSheet.Rows;
-            //int spriteIndex = (rollAngle * ships) / 120;
-            //while (spriteIndex >= ships)
-            //    spriteIndex -= ships;
-
-            //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
-
             graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
             graphics.ResetTransform();
 
@@ -179,21 +167,6 @@ namespace SpaceSim.Spacecrafts.ITS
             {
                 gridFin.RenderGdi(graphics, camera);
             }
-
-            //if (DateTime.Now - timestamp > TimeSpan.FromSeconds(1))
-            //{
-            //    string filename = MissionName + ".csv";
-
-            //    if (!File.Exists(filename))
-            //    {
-            //        File.AppendAllText(filename, "Ma, FormDragCoefficient, SkinFrictionCoefficient, LiftCoefficient, rollAngle\r\n");
-            //    }
-
-            //    timestamp = DateTime.Now;
-            //    string contents = string.Format("{0:N3}, {1:N3}, {2:N3}, {3:N3},  {4:N3}\r\n",
-            //        MachNumber, FormDragCoefficient, SkinFrictionCoefficient, LiftCoefficient, rollAngle);
-            //    File.AppendAllText(filename, contents);
-            //}
         }
     }
 }

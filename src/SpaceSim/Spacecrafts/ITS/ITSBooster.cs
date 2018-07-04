@@ -7,6 +7,7 @@ using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
 using System.IO;
+using SpaceSim.Common;
 
 namespace SpaceSim.Spacecrafts.ITS
 {

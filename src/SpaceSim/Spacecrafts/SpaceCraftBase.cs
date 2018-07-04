@@ -15,6 +15,7 @@ using SpaceSim.SolarSystem;
 using VectorMath;
 
 using System.Reflection;
+using SpaceSim.Common;
 
 namespace SpaceSim.Spacecrafts
 {
@@ -77,28 +78,18 @@ namespace SpaceSim.Spacecrafts
         }
 
         /// <summary>
-        /// Throttle is the maximum of all engines on the spacecraft.
+        /// Throttle is the maximum of all operating engines on the spacecraft.
         /// </summary>
         public double Throttle
         {
             get
             {
-                double throttle = 0;
-
-                foreach (IEngine engine in Engines)
-                {
-                    if (engine.Throttle > throttle)
-                    {
-                        throttle = engine.Throttle;
-                    }
-                }
+                double throttle = Engines != null && Engines.Length > 0 ?
+                                  Engines.Max(engine => engine.Throttle) : 0;
 
                 foreach (ISpaceCraft child in Children)
                 {
-                    if (child.Throttle > throttle)
-                    {
-                        throttle = child.Throttle;
-                    }
+                    throttle = Math.Max(child.Throttle, throttle);
                 }
 
                 return throttle;

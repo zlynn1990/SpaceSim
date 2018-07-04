@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Controls.Primitives;
-using SpaceSim.Contracts.Commands;
+using SpaceSim.Common.Contracts.Commands;
 using SpaceSim.Engines;
 using SpaceSim.Proxies;
 using SpaceSim.SolarSystem;

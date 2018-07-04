@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
   <Command xsi:type="Retrograde">
     <StartTime>0</StartTime>
-    <Duration>40</Duration>
+    <Duration>25</Duration>
     <InitialAdjustmentTime>0.1</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Deploy">
@@ -10,7 +13,7 @@
     <StartTime>1</StartTime>
   </Command>
   <Command xsi:type="AutoLand">
-    <StartTime>2</StartTime>
+    <StartTime>15</StartTime>
     <Duration>100</Duration>
     <EngineIds>
       <int>4</int>
@@ -18,6 +21,6 @@
   </Command>
   <Command xsi:type="Deploy">
 	<Part>Landing Legs</Part>
-    <StartTime>15</StartTime>
+    <StartTime>24</StartTime>
   </Command>
 </ArrayOfCommand>

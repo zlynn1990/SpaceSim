@@ -1,5 +1,5 @@
 ﻿using System;
-using SpaceSim.Physics;
+using SpaceSim.Common;
 using VectorMath;
 
 namespace SpaceSim.Spacecrafts.ITS

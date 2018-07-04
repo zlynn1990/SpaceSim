@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpaceSim.Physics;
+using SpaceSim.Common;
 using SpaceSim.Proxies;
 using SpaceSim.SolarSystem;
 using SpaceSim.Spacecrafts;
@@ -8,6 +8,8 @@ using VectorMath;
 
 namespace SpaceSim.Orbits
 {
+    public delegate void SimulateProgressCallback(double progress);
+
     static class OrbitHelper
     {
         private static double AngularCutoff = Constants.TwoPi - 0.01;
@@ -20,7 +22,7 @@ namespace SpaceSim.Orbits
             return new DVector2(x, -y) * 1000;
         }
 
-        public static void SimulateToTime(List<IMassiveBody> bodies, DateTime targetDate, double timeStep)
+        public static void SimulateToTime(List<IMassiveBody> bodies, DateTime targetDate, double timeStep, SimulateProgressCallback callback)
         {
             if (targetDate < Constants.Epoch)
             {
@@ -31,8 +33,18 @@ namespace SpaceSim.Orbits
 
             int iterations = (int)(timeToSimulate.TotalSeconds / timeStep);
 
+            int progressCounter = 0;
+            int progressIterationStep = iterations / 100;
+
             for (int i = 0; i < iterations; i++)
             {
+                // Update the progress ever unit of iterations
+                if (i % progressIterationStep == 0)
+                {
+                    progressCounter++;
+                    callback(progressCounter * 0.6 + 20);
+                }
+
                 // Resolve n body massive body forces
                 foreach (IMassiveBody bodyA in bodies)
                 {

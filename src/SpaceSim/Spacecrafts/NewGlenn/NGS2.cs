@@ -2,10 +2,8 @@
 using System.Drawing;
 using SpaceSim.Engines;
 using VectorMath;
-
-using System.IO;
+using SpaceSim.Common;
 using SpaceSim.Physics;
-using SpaceSim.Properties;
 
 namespace SpaceSim.Spacecrafts.NewGlenn
 {

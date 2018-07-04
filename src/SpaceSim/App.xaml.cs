@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows;
+using SpaceSim.Common;
+using SpaceSim.Properties;
 
 namespace SpaceSim
 {
@@ -12,94 +13,109 @@ namespace SpaceSim
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            string profileDirectory = DetectProfileDirectory();
+            SpaceSim.MainWindow.ProfilePaths = new List<string>();
 
-            //SpaceSim.MainWindow.FullScreen = false;
+            var flightProfileManager = new FlightProfileManager();
 
-            SpaceSim.MainWindow.ProfilePaths = new List<string>
+            if (e.Args.Length > 0)
             {
-                //Path.Combine(profileDirectory, "CRS-9"),
-                //Path.Combine(profileDirectory, "CRS-11"),
-                //Path.Combine(profileDirectory, "CRS-12"),
-                //Path.Combine(profileDirectory, "CRS-14"),
-                //Path.Combine(profileDirectory, "Formosat-5"),
+                bool loadProfiles = false;
+                SpaceSim.MainWindow.FullScreen = true;
 
-                //Path.Combine(profileDirectory, "Bangabandhu-1"),
-                //Path.Combine(profileDirectory, "BulgariaSat-1"),
+                for (var i = 0; i < e.Args.Length; i++)
+                {
+                    string argument = e.Args[i];
 
-                //Path.Combine(profileDirectory, "BulgariaSat-1b"),
-                //Path.Combine(profileDirectory, "Hwasong-14"),
-                //Path.Combine(profileDirectory, "NROL-76"),
-                //Path.Combine(profileDirectory, "SES-10"),
-                //Path.Combine(profileDirectory, "Iridium NEXT"),
-                //Path.Combine(profileDirectory, "Iridium-GRACE-FO"),
-                //Path.Combine(profileDirectory, "Inmarsat-5"),
-                //Path.Combine(profileDirectory, "Intelsat-35e"),
-                //Path.Combine(profileDirectory, "BFR Crew Launch"),
-                //Path.Combine(profileDirectory, "BFR P2P Launch"),
-                //Path.Combine(profileDirectory, "BFS to GEO"),
-                //Path.Combine(profileDirectory, "BFS300 to LEO"),
-                //Path.Combine(profileDirectory, "BFS250 to LEO"),
-                //Path.Combine(profileDirectory, "BFR Direct GTO"),
-                //Path.Combine(profileDirectory, "BFS Earth EDL"),
-                //Path.Combine(profileDirectory, "ITS Crew Launch"),
-                //Path.Combine(profileDirectory, "ITS Tanker SSTO"),
-                //Path.Combine(profileDirectory, "ITS Earth Aerocapture"),
-                //Path.Combine(profileDirectory, "ITS Earth EDL"),
-                //Path.Combine(profileDirectory, "ITS Earth Direct"),
-                //Path.Combine(profileDirectory, "ITS Mars Aerocapture"),
-                //Path.Combine(profileDirectory, "ITS Mars EDL"),
-                //Path.Combine(profileDirectory, "ITS Mars Direct"),
-                //Path.Combine(profileDirectory, "AutoLanding Test"),
-                //Path.Combine(profileDirectory, "RedDragon Launch"),
-                //Path.Combine(profileDirectory, "Dragon Abort"),
-                //Path.Combine(profileDirectory, "Dragon Entry"),
-                //Path.Combine(profileDirectory, "F9 SSTO"),
-                //Path.Combine(profileDirectory, "F9-B5-ASDS"),
-                //Path.Combine(profileDirectory, "F9-B5-Expendable"),
-                //Path.Combine(profileDirectory, "FH-ASDS"),
-                //Path.Combine(profileDirectory, "FH-DEMO"),
-                //Path.Combine(profileDirectory, "FH-Europa-Clipper"),
-                //Path.Combine(profileDirectory, "FH-Europa-Clipper-TMI"),
-                //Path.Combine(profileDirectory, "FH-RTLS"),
-                Path.Combine(profileDirectory, "FH-Expendable"),
-                //Path.Combine(profileDirectory, "F9S2 Earth LEO EDL"),
-                //Path.Combine(profileDirectory, "F9S2 Earth EDL"),
-                //Path.Combine(profileDirectory, "F9S2 Earth EDL2"),
-                //Path.Combine(profileDirectory, "Orbcomm-OG2"),
-                //Path.Combine(profileDirectory, "OTV-5"),
-                //Path.Combine(profileDirectory, "SES9"),
-                //Path.Combine(profileDirectory, "Thaicom-8"),
-                //Path.Combine(profileDirectory, "Grey Dragon Flyby"),
-                //Path.Combine(profileDirectory, "Scaled BFR Launch"),
-                //Path.Combine(profileDirectory, "Scaled BFR GTO"),
-                //Path.Combine(profileDirectory, "Scaled BFS TLI"),
-                //Path.Combine(profileDirectory, "Scaled BFS LL"),
-                //Path.Combine(profileDirectory, "Scaled BFS TEI"),
-                //Path.Combine(profileDirectory, "Scaled BFS EDL"),
-                Path.Combine(profileDirectory, "SLS Satellite Launch"),
-            };
+                    if (argument.Equals("-profiles", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        loadProfiles = true;
+                    }
+                    else if (argument.Equals("-w", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        SpaceSim.MainWindow.FullScreen = false;
+                        loadProfiles = false;
+                    }
+                    else if (loadProfiles)
+                    {
+                        SpaceSim.MainWindow.ProfilePaths.Add(flightProfileManager.BuildFullPath(argument));
+                    }
+                }
+            }
+            else
+            {
+                SpaceSim.MainWindow.FullScreen = Settings.Default.FullScreen;
+            }
+
+            if (SpaceSim.MainWindow.ProfilePaths.Count == 0)
+            {
+                SpaceSim.MainWindow.ProfilePaths = new List<string>
+                {
+                    //flightProfileManager.BuildFullPath("CRS-9"),
+                    //flightProfileManager.BuildFullPath("CRS-11"),
+                    //flightProfileManager.BuildFullPath("CRS-12"),
+                    //flightProfileManager.BuildFullPath("CRS-14"),
+                    //flightProfileManager.BuildFullPath("Formosat-5"),
+                    flightProfileManager.BuildFullPath("Bangabandhu-1"),
+                    //flightProfileManager.BuildFullPath("BulgariaSat-1"),
+                    //flightProfileManager.BuildFullPath("BulgariaSat-1b"),
+                    //flightProfileManager.BuildFullPath("Hwasong-14"),
+                    //flightProfileManager.BuildFullPath("NROL-76"),
+                    //flightProfileManager.BuildFullPath("SES-10"),
+                    //flightProfileManager.BuildFullPath("Iridium NEXT"),
+                    //flightProfileManager.BuildFullPath("Iridium-GRACE-FO"),
+                    //flightProfileManager.BuildFullPath("Inmarsat-5"),
+                    //flightProfileManager.BuildFullPath("Intelsat-35e"),
+                    //flightProfileManager.BuildFullPath("BFR Crew Launch"),
+                    //flightProfileManager.BuildFullPath("BFR P2P Launch"),
+                    //flightProfileManager.BuildFullPath("BFS to GEO"),
+                    //flightProfileManager.BuildFullPath("BFS300 to LEO"),
+                    //flightProfileManager.BuildFullPath("BFS250 to LEO"),
+                    //flightProfileManager.BuildFullPath("BFR Direct GTO"),
+                    //flightProfileManager.BuildFullPath("BFS Earth EDL"),
+                    //flightProfileManager.BuildFullPath("ITS Crew Launch"),
+                    //flightProfileManager.BuildFullPath("ITS Tanker SSTO"),
+                    //flightProfileManager.BuildFullPath("ITS Earth Aerocapture"),
+                    //flightProfileManager.BuildFullPath("ITS Earth EDL"),
+                    //flightProfileManager.BuildFullPath("ITS Earth Direct"),
+                    //flightProfileManager.BuildFullPath("ITS Mars Aerocapture"),
+                    //flightProfileManager.BuildFullPath("ITS Mars EDL"),
+                    //flightProfileManager.BuildFullPath("ITS Mars Direct"),
+                    //flightProfileManager.BuildFullPath("AutoLanding Test"),
+                    //flightProfileManager.BuildFullPath("RedDragon Launch"),
+                    //flightProfileManager.BuildFullPath("Dragon Abort"),
+                    //flightProfileManager.BuildFullPath("Dragon Entry"),
+                    //flightProfileManager.BuildFullPath("F9 SSTO"),
+                    //flightProfileManager.BuildFullPath("F9-B5-ASDS"),
+                    //flightProfileManager.BuildFullPath("F9-B5-Expendable"),
+                    //flightProfileManager.BuildFullPath("FH-ASDS"),
+                    //flightProfileManager.BuildFullPath("FH-DEMO"),
+                    //flightProfileManager.BuildFullPath("FH-Europa-Clipper"),
+                    //flightProfileManager.BuildFullPath("FH-Europa-Clipper-TMI"),
+                    //flightProfileManager.BuildFullPath("FH-RTLS"),
+                    //flightProfileManager.BuildFullPath("FH-Expendable"),
+                    //flightProfileManager.BuildFullPath("F9S2 Earth LEO EDL"),
+                    //flightProfileManager.BuildFullPath("F9S2 Earth EDL"),
+                    //flightProfileManager.BuildFullPath("F9S2 Earth EDL2"),
+                    //flightProfileManager.BuildFullPath("Orbcomm-OG2"),
+                    //flightProfileManager.BuildFullPath("OTV-5"),
+                    //flightProfileManager.BuildFullPath("SES9"),
+                    //flightProfileManager.BuildFullPath("Thaicom-8"),
+                    //flightProfileManager.BuildFullPath("Grey Dragon Flyby"),
+                    //flightProfileManager.BuildFullPath("Scaled BFR Launch"),
+                    //flightProfileManager.BuildFullPath("Scaled BFR GTO"),
+                    //flightProfileManager.BuildFullPath("Scaled BFS TLI"),
+                    //flightProfileManager.BuildFullPath("Scaled BFS LL"),
+                    //flightProfileManager.BuildFullPath("Scaled BFS TEI"),
+                    //flightProfileManager.BuildFullPath("Scaled BFS EDL"),
+                    //flightProfileManager.BuildFullPath("SLS Satellite Launch"),
+                };
+            }
 
             if (SpaceSim.MainWindow.ProfilePaths == null ||
                 SpaceSim.MainWindow.ProfilePaths.Count == 0)
             {
                 throw new Exception("Must specify at least one mission profile!");
             }
-        }
-
-        private string DetectProfileDirectory()
-        {
-            if (Directory.Exists("flight profiles"))
-            {
-                return "flight profiles";
-            }
-
-            if (Directory.Exists("../../../../flight profiles"))
-            {
-                return "../../../../flight profiles";
-            }
-
-            throw new Exception("Profile directory was not detected!");
         }
     }
 }

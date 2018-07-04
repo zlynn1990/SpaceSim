@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using SpaceSim.Common;
 using SpaceSim.Drawing;
 using SpaceSim.Orbits;
 using SpaceSim.SolarSystem;

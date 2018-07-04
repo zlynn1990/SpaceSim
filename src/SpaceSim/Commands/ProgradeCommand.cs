@@ -1,8 +1,8 @@
-﻿using SpaceSim.Contracts.Commands;
-using SpaceSim.Spacecrafts;
+﻿using SpaceSim.Spacecrafts;
 using VectorMath;
 
 using System;
+using SpaceSim.Common.Contracts.Commands;
 
 namespace SpaceSim.Commands
 {

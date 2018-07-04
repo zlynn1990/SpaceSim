@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using SpaceSim.Common;
 using SpaceSim.Engines;
 using SpaceSim.Particles;
 using SpaceSim.Physics;

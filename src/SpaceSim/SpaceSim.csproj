@@ -98,32 +98,10 @@
     <Compile Include="Commands\TerminateCommand.cs" />
     <Compile Include="Commands\YawCommand.cs" />
     <Compile Include="Commands\ZoomCommand.cs" />
-    <Compile Include="Contracts\Commands\AutoLand.cs" />
-    <Compile Include="Contracts\Commands\Cant.cs" />
-    <Compile Include="Contracts\Commands\Command.cs" />
-    <Compile Include="Contracts\Commands\Deploy.cs" />
-    <Compile Include="Contracts\Commands\Ignition.cs" />
-    <Compile Include="Contracts\Commands\Pitch.cs" />
-    <Compile Include="Contracts\Commands\Post.cs" />
-    <Compile Include="Contracts\Commands\Prograde.cs" />
-    <Compile Include="Contracts\Commands\Rate.cs" />
-    <Compile Include="Contracts\Commands\RelativePitch.cs" />
-    <Compile Include="Contracts\Commands\Release.cs" />
-    <Compile Include="Contracts\Commands\Retrograde.cs" />
-    <Compile Include="Contracts\Commands\Roll.cs" />
-    <Compile Include="Contracts\Commands\Shutdown.cs" />
-    <Compile Include="Contracts\Commands\Stage.cs" />
-    <Compile Include="Contracts\Commands\Target.cs" />
-    <Compile Include="Contracts\Commands\Terminate.cs" />
-    <Compile Include="Contracts\Commands\Throttle.cs" />
     <Compile Include="Commands\IgnitionCommand.cs" />
     <Compile Include="Commands\ShutdownCommand.cs" />
     <Compile Include="Commands\StageCommand.cs" />
     <Compile Include="Commands\ThrottleCommand.cs" />
-    <Compile Include="Contracts\Commands\Yaw.cs" />
-    <Compile Include="Contracts\Commands\Zoom.cs" />
-    <Compile Include="Contracts\MissionConfig.cs" />
-    <Compile Include="Contracts\StructureConfig.cs" />
     <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\SimpleFlightController.cs" />
@@ -160,7 +138,6 @@
     <Compile Include="Engines\Merlin1DVac.cs" />
     <Compile Include="Engines\SuperDraco.cs" />
     <Compile Include="Particles\Smoke.cs" />
-    <Compile Include="Physics\Constants.cs" />
     <Compile Include="Drawing\FpsManager.cs" />
     <Compile Include="Gauges\RetrogradeButton.cs" />
     <Compile Include="Gauges\ProgradeButton.cs" />
@@ -258,7 +235,6 @@
     <Compile Include="Structures\Strongback.cs" />
     <Compile Include="Structures\StructureBase.cs" />
     <Compile Include="Orbits\OrbitTrace.cs" />
-    <Compile Include="Drawing\UnitDisplay.cs" />
     <Compile Include="Structures\StructureFactory.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -308,6 +284,10 @@
     <ProjectReference Include="..\OpenCLWrapper\OpenCLWrapper.csproj">
       <Project>{FEEF5BEC-FD10-4FB5-B0BA-15F566B0A56E}</Project>
       <Name>OpenCLWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpaceSim.Common\SpaceSim.Common.csproj">
+      <Project>{8fe13f60-45a4-42d4-b27d-e4e0dbcb14d9}</Project>
+      <Name>SpaceSim.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\VectorMath\VectorMath.csproj">
       <Project>{FB0F7B62-34F7-469F-9096-F857473DE4E9}</Project>

@@ -1,0 +1,31 @@
+﻿<Window x:Class="Launcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Launcher"
+        mc:Ignorable="d"
+        Title="Launcher" Height="450" Width="681.699" ResizeMode="NoResize">
+    <Grid HorizontalAlignment="Left" Width="671" Margin="0,0,-6,0">
+        <ListBox Name="ProfileBox" HorizontalAlignment="Left" Height="384" Margin="10,18,0,0" VerticalAlignment="Top" Width="223" SelectionChanged="OnSelectProfile" SelectionMode="Extended"/>
+        <ListBox Name="CraftBox" HorizontalAlignment="Left" Height="288" Margin="262,114,0,0" VerticalAlignment="Top" Width="199" SelectionChanged="OnSelectCraft"/>
+        <ListBox Name="CommandBox" HorizontalAlignment="Left" Height="263" Margin="491,18,0,0" VerticalAlignment="Top" Width="163" SelectionChanged="OnSelectCommand"/>
+
+        <Label Content="Vehicle:" HorizontalAlignment="Left" Margin="257,10,0,0" VerticalAlignment="Top"/>
+        <Label Name="VehicleName" Content="" HorizontalAlignment="Left" Margin="301,10,0,0" VerticalAlignment="Top" Width="158"/>
+
+        <Label Content="Planet:" HorizontalAlignment="Left" Margin="258,34,0,0" VerticalAlignment="Top"/>
+        <Label Name="PlanetName" Content="" HorizontalAlignment="Left" Margin="298,34,0,0" VerticalAlignment="Top" Width="161"/>
+
+        <Label Content="Payload:" HorizontalAlignment="Left" Margin="258,58,0,0" VerticalAlignment="Top"/>
+        <Label Name="PayloadName" Content="" HorizontalAlignment="Left" Margin="306,58,0,0" VerticalAlignment="Top" Width="153"/>
+
+        <Label Content="Local Time:" HorizontalAlignment="Left" Margin="258,82,0,0" VerticalAlignment="Top"/>
+        <Label Name="LocalTimeName" Content="" HorizontalAlignment="Left" Margin="321,82,0,0" VerticalAlignment="Top" Width="138"/>
+
+        <CheckBox Name="FullScreenBox" Content="Full Screen" HorizontalAlignment="Left" Margin="491,383,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <Button Content="Launch!" HorizontalAlignment="Left" Margin="583,377,0,0" VerticalAlignment="Top" Width="71" Click="OnLaunch" FontSize="16"/>
+        <ListBox x:Name="PropertyBox" HorizontalAlignment="Left" Height="86" Margin="491,286,0,0" VerticalAlignment="Top" Width="163"/>
+
+    </Grid>
+</Window>

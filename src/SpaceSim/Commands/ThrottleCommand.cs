@@ -1,29 +1,47 @@
-﻿using SpaceSim.Contracts.Commands;
+﻿using System.Collections.Generic;
+using System.Linq;
+using SpaceSim.Common.Contracts.Commands;
 using SpaceSim.Spacecrafts;
 
 namespace SpaceSim.Commands
 {
     class ThrottleCommand : CommandBase
     {
-        private double _targetThrottle;
-        private double _currentThrottle;
+        private int[] _engineIds;
+        private readonly double _targetThrottle;
+        private readonly Dictionary<int, double> _initialThrottles;
 
         public ThrottleCommand(Throttle throttle)
             : base(throttle.StartTime, throttle.Duration)
         {
             _targetThrottle = throttle.TargetThrottle;
+            _engineIds = throttle.EngineIds;
+
+            _initialThrottles = new Dictionary<int, double>();
         }
 
         public override void Initialize(SpaceCraftBase spaceCraft)
         {
-            EventManager.AddMessage(string.Format("Throttling to {0}%", _targetThrottle.ToString("0.0")), spaceCraft);
+            if (_engineIds == null)
+            {
+                EventManager.AddMessage($"Throttling to {_targetThrottle:0.0}%", spaceCraft);
 
-            _currentThrottle = spaceCraft.Throttle;
+                _engineIds = Enumerable.Range(0, spaceCraft.Engines.Length).ToArray();
+            }
+            else
+            {
+                EventManager.AddMessage($"Throttling engines [{string.Join(",", _engineIds)}] to {_targetThrottle:0.0}%", spaceCraft);
+            }
+
+            foreach (int engineId in _engineIds)
+            {
+                _initialThrottles.Add(engineId, spaceCraft.Engines[engineId].Throttle);
+            }
         }
 
         public override void Finalize(SpaceCraftBase spaceCraft)
         {
-            spaceCraft.SetThrottle(_targetThrottle);
+            spaceCraft.SetThrottle(_targetThrottle, _engineIds);
         }
 
         // Interpolate between current and target throttle over the duration
@@ -31,7 +49,12 @@ namespace SpaceSim.Commands
         {
             double ratio = (elapsedTime - StartTime) / Duration;
 
-            spaceCraft.SetThrottle(_currentThrottle * (1 - ratio) + _targetThrottle * ratio);
+            foreach (int engineId in _engineIds)
+            {
+                double targetThrottle = _initialThrottles[engineId] * (1 - ratio) + _targetThrottle * ratio;
+
+                spaceCraft.SetThrottle(targetThrottle, new []{ engineId });
+            }
         }
     }
 }
