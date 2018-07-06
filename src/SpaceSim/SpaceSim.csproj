@@ -121,6 +121,7 @@
     <Compile Include="Engines\RL10.cs" />
     <Compile Include="Engines\RS25.cs" />
     <Compile Include="Engines\SRB.cs" />
+    <Compile Include="Kernels\BaseKernel.cs" />
     <Compile Include="Particles\EngineFlame.cs" />
     <Compile Include="Drawing\EventManager.cs" />
     <Compile Include="Drawing\GpuClear.cs" />
@@ -246,7 +247,6 @@
     </Compile>
     <Compile Include="Drawing\Camera.cs" />
     <Compile Include="Kernels\EarthKernel.cs" />
-    <Compile Include="Kernels\SymbolKernel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

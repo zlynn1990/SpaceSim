@@ -13,7 +13,7 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double SurfaceRadius
         {
-            get { return SymbolKernel.MERCURY_RADIUS; }
+            get { return BaseKernel.MERCURY_RADIUS; }
         }
 
         public override double AtmosphereHeight

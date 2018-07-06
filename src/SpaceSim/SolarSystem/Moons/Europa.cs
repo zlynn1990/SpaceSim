@@ -14,7 +14,7 @@ namespace SpaceSim.SolarSystem.Moons
 
         public override double SurfaceRadius
         {
-            get { return SymbolKernel.EUROPA_RADIUS; }
+            get { return BaseKernel.EUROPA_RADIUS; }
         }
 
         public override double AtmosphereHeight

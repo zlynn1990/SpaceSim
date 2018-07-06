@@ -17,12 +17,12 @@ namespace SpaceSim.SolarSystem.Stars
 
         public override double SurfaceRadius
         {
-            get { return SymbolKernel.SUN_RADIUS; }
+            get { return BaseKernel.SUN_RADIUS; }
         }
 
         public override double AtmosphereHeight
         {
-            get { return SymbolKernel.SUN_ATMOSPHERE; }
+            get { return BaseKernel.SUN_ATMOSPHERE; }
         }
 
         public override double RotationRate

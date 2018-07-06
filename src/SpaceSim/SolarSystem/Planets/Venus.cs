@@ -16,12 +16,12 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double SurfaceRadius
         {
-            get { return SymbolKernel.VENUS_RADIUS; }
+            get { return BaseKernel.VENUS_RADIUS; }
         }
 
         public override double AtmosphereHeight
         {
-            get { return SymbolKernel.VENUS_ATMOSPHERE; }
+            get { return BaseKernel.VENUS_ATMOSPHERE; }
         }
 
         public override double RotationRate

@@ -19,12 +19,12 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double SurfaceRadius
         {
-            get { return SymbolKernel.EARTH_RADIUS; }
+            get { return BaseKernel.EARTH_RADIUS; }
         }
 
         public override double AtmosphereHeight
         {
-            get { return SymbolKernel.EARTH_ATMOSPHERE; }
+            get { return BaseKernel.EARTH_ATMOSPHERE; }
         }
 
         public override double RotationRate

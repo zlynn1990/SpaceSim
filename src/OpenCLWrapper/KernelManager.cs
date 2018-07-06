@@ -4,9 +4,9 @@ using System.IO;
 
 namespace OpenCLWrapper
 {
-    public class KernelManager
+    public static class KernelManager
     {
-        private static Dictionary<string, KernelFile> KernelCache;
+        private static readonly Dictionary<string, KernelFile> KernelCache;
 
         static KernelManager()
         {
@@ -22,7 +22,7 @@ namespace OpenCLWrapper
             }
 
             // Look for it on disk
-            string kernelFile = string.Format("Kernels/{0}.kernel", kernelName);
+            string kernelFile = $"Kernels/{kernelName}.kernel";
 
             if (File.Exists(kernelFile))
             {
@@ -38,14 +38,17 @@ namespace OpenCLWrapper
 
         public static void GenerateKernels(string kernelDirectory)
         {
-            string symbolPath = string.Format("{0}/SymbolKernel.cs", kernelDirectory);
+            string baseKernelPath = $"{kernelDirectory}/BaseKernel.cs";
 
-            if (!File.Exists(symbolPath))
+            if (!File.Exists(baseKernelPath))
             {
-                throw new Exception("No symbol kernel detected!");
+                throw new Exception("No base kernel detected!");
             }
 
-            SymbolMapping symbolMapping = CreateSymbolMapping(symbolPath);
+            string[] code = File.ReadAllLines(baseKernelPath);
+
+            var constantMapping = new ConstantMapping(code);
+            var functionMappings = new FunctionMapping(code);
 
             string[] kerenelFiles = Directory.GetFiles(kernelDirectory);
 
@@ -53,105 +56,58 @@ namespace OpenCLWrapper
             {
                 string kernelName = Path.GetFileNameWithoutExtension(kernelPath);
 
-                if (kernelName == "SymbolKernel") continue;
+                if (kernelName == "BaseKernel") continue;
 
-                KernelFile kernelFile = CreateKernel(kernelPath, symbolMapping);
+                KernelFile kernelFile = CreateKernel(kernelPath, constantMapping, functionMappings);
 
                 KernelCache.Add(kernelName, kernelFile);
             }
         }
 
-        private static SymbolMapping CreateSymbolMapping(string symbolKernelPath)
-        {
-            var symbolMapping = new SymbolMapping();
-
-            string[] lines = File.ReadAllLines(symbolKernelPath);
-
-            int symbolStart = ParseDown(lines, "#region", 0) + 1;
-            int symbolEnd = ParseDown(lines, "#endregion", symbolStart);
-
-            for (int i=symbolStart; i < symbolEnd; i++)
-            {
-                if (string.IsNullOrEmpty(lines[i])) continue;
-
-                string cleanedLine = lines[i].Trim();
-
-                string[] lineSplit = cleanedLine.Split(' ');
-
-                string value = lineSplit[5].Substring(0, lineSplit[5].Length - 1);
-
-                symbolMapping.AddSymbol(lineSplit[3], value);
-            }
-
-            return symbolMapping;
-        }
-
-        private static KernelFile CreateKernel(string codePath, SymbolMapping symbols)
+        private static KernelFile CreateKernel(string codePath, ConstantMapping constants, FunctionMapping functions)
         {
             string[] lines = File.ReadAllLines(codePath);
 
-            int kernelIndex = ParseDown(lines, "public void Run", 0);
+            int kernelIndex = SourceHelper.ParseDown(lines, "public void Run", 0);
 
-            string kernelHeader = lines[kernelIndex];
+            string kernelFunction = lines[kernelIndex];
 
-            int parameterStart = kernelHeader.IndexOf('(');
-            int parameterEnd = kernelHeader.LastIndexOf(')');
-
-            string kernelParameters = kernelHeader.Substring(parameterStart, parameterEnd - parameterStart + 1);
+            string kernelParameters = SourceHelper.ExtractFunctionHeader(kernelFunction);
 
             kernelParameters = kernelParameters.Replace("int[]", "global int*");
             kernelParameters = kernelParameters.Replace("float[]", "global float*");
 
-            string clCode = string.Empty;
+            var clCode = new List<string>();
 
-            if (IsFP64(kernelHeader))
+            if (IsFP64(kernelFunction))
             {
-                clCode += "#pragma OPENCL EXTENSION cl_khr_fp64 : enable\n";
+                clCode.Add("#pragma OPENCL EXTENSION cl_khr_fp64 : enable");
             }
 
-            clCode += "kernel void Run " + kernelParameters + "\n";
+            clCode.Add("kernel void Run " + kernelParameters);
 
             int codeEnd = lines.Length;
 
             for (int i=0; i < 3; i++)
             {
-                codeEnd = ParseUp(lines, "}", codeEnd - 1);
+                codeEnd = SourceHelper.ParseUp(lines, "}", codeEnd - 1);
             }
 
             for (int i=kernelIndex + 1; i < codeEnd + 1; i++)
             {
-                clCode += (lines[i].Trim() + "\n");
+                clCode.Add(lines[i].Trim());
             }
 
-            // Remove symbols
-            clCode = symbols.ReplaceSymbols(clCode);
+            // Replace constants and inline functions
+            functions.Inline(clCode);
+            constants.Replace(clCode);
 
-            return new KernelFile { Code = clCode};
+            return new KernelFile { Code = string.Join("\n", clCode)};
         }
 
         private static bool IsFP64(string kernelHeader)
         {
             return kernelHeader.Contains("double");
-        }
-
-        private static int ParseDown(string[] lines, string target, int start)
-        {
-            for (int i = start; i < lines.Length; i++)
-            {
-                if (lines[i].Contains(target)) return i;
-            }
-
-            return -1;
-        }
-
-        private static int ParseUp(string[] lines, string target, int start)
-        {
-            for (int i = start; i > 0; i--)
-            {
-                if (lines[i].Contains(target)) return i;
-            }
-
-            return -1;
         }
     }
 }
