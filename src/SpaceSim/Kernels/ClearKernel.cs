@@ -2,7 +2,7 @@
 
 namespace SpaceSim.Kernels
 {
-    class ClearKernel : SymbolKernel, IMassiveKernel
+    class ClearKernel : BaseKernel, IMassiveKernel
     {
         // -------- ------ Image ----- --------
         // 01111111 00000000 00000000 00000000 alpha >> 24

@@ -13,12 +13,12 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double SurfaceRadius
         {
-            get { return SymbolKernel.SATURN_RADIUS; }
+            get { return BaseKernel.SATURN_RADIUS; }
         }
 
         public override double AtmosphereHeight
         {
-            get { return SymbolKernel.SATURN_ATMOSPHERE; }
+            get { return BaseKernel.SATURN_ATMOSPHERE; }
         }
 
         public override double RotationRate
@@ -36,7 +36,7 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double BoundingRadius
         {
-            get { return SurfaceRadius + SymbolKernel.SATURN_RING_END; }
+            get { return SurfaceRadius + BaseKernel.SATURN_RING_END; }
         }
 
         public Saturn()

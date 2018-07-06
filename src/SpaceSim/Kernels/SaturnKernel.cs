@@ -2,7 +2,7 @@
 
 namespace SpaceSim.Kernels
 {
-    class SaturnKernel : SymbolKernel, IMassiveKernel
+    class SaturnKernel : BaseKernel, IMassiveKernel
     {
         // -------- ------ Image ----- --------
         // 01111111 00000000 00000000 00000000 alpha >> 24
@@ -13,34 +13,15 @@ namespace SpaceSim.Kernels
         {
             int index = get_global_id(0);
 
-            // screen-space coords
-            int y = index / resX;
-            int x = index - (y * resX);
+            double diffX, diffY;
+            ComputeCameraRotation(index, resX, resY, cX, cY, cWidth, cHeight, cRot, bodyX, bodyY, out diffX, out diffY);
 
-            // screen-space uvmap
-            float u = (float)x / resX;
-            float v = (float)y / resY;
-
-            // world-space pixel location
-            double worldX = cX + cWidth * u;
-            double worldY = cY + cHeight * v;
-            double distance = sqrt(worldX * worldX + worldY * worldY);
+            double distance = sqrt(diffX * diffX + diffY * diffY);
 
             if (distance < SATURN_RADIUS + SATURN_RING_END)
             {
-                double worldNormalX = worldX / distance;
-                double worldNormalY = worldY / distance;
-
-                double sunDotProduct = sunNormalX * worldNormalX + sunNormalY * worldNormalY;
-
-                if (sunDotProduct < 0)
-                {
-                    sunDotProduct = 0.05f;
-                }
-                else
-                {
-                    sunDotProduct = 0.05f + sunDotProduct * 0.95f;
-                }
+                double worldNormalX, worldNormalY, sunDotProduct;
+                ComputeSunShading(diffX, diffY, distance, sunNormalX, sunNormalY, out worldNormalX, out worldNormalY, out sunDotProduct);
 
                 // In the ring
                 if (distance > SATURN_RADIUS + SATURN_RING_START)
