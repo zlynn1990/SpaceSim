@@ -55,7 +55,7 @@ namespace SpaceSim
                     //flightProfileManager.BuildFullPath("CRS-12"),
                     //flightProfileManager.BuildFullPath("CRS-14"),
                     //flightProfileManager.BuildFullPath("Formosat-5"),
-                    flightProfileManager.BuildFullPath("Bangabandhu-1"),
+                    //flightProfileManager.BuildFullPath("Bangabandhu-1"),
                     //flightProfileManager.BuildFullPath("BulgariaSat-1"),
                     //flightProfileManager.BuildFullPath("BulgariaSat-1b"),
                     //flightProfileManager.BuildFullPath("Hwasong-14"),
@@ -89,10 +89,8 @@ namespace SpaceSim
                     //flightProfileManager.BuildFullPath("F9-B5-Expendable"),
                     //flightProfileManager.BuildFullPath("FH-ASDS"),
                     //flightProfileManager.BuildFullPath("FH-DEMO"),
-                    //flightProfileManager.BuildFullPath("FH-Europa-Clipper"),
-                    //flightProfileManager.BuildFullPath("FH-Europa-Clipper-TMI"),
                     //flightProfileManager.BuildFullPath("FH-RTLS"),
-                    //flightProfileManager.BuildFullPath("FH-Expendable"),
+                    flightProfileManager.BuildFullPath("FH-Expendable"),
                     //flightProfileManager.BuildFullPath("F9S2 Earth LEO EDL"),
                     //flightProfileManager.BuildFullPath("F9S2 Earth EDL"),
                     //flightProfileManager.BuildFullPath("F9S2 Earth EDL2"),
@@ -107,7 +105,7 @@ namespace SpaceSim
                     //flightProfileManager.BuildFullPath("Scaled BFS LL"),
                     //flightProfileManager.BuildFullPath("Scaled BFS TEI"),
                     //flightProfileManager.BuildFullPath("Scaled BFS EDL"),
-                    //flightProfileManager.BuildFullPath("SLS Satellite Launch"),
+                    flightProfileManager.BuildFullPath("SLS Satellite Launch"),
                 };
             }
 

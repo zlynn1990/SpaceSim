@@ -8,7 +8,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 {
     sealed class SLSS2 : SpaceCraftBase
     {
-        public override string CraftName { get { return "SLS S2 "; } }
+        public override string CraftName { get { return "SLS ICPS "; } }
         public override string CommandFileName { get { return "SLSS2.xml"; } }
 
         public override double DryMass { get { return 3490; } }
@@ -61,7 +61,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
             Engines = new IEngine[]
             {
-                new RL10(0, this, new DVector2(0, Height * 0.3))
+                new RL10(0, this, new DVector2(0, Height * 0.33))
             };
         }
     }

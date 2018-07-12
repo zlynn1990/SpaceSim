@@ -8,7 +8,7 @@ namespace SpaceSim.Engines
     class SRB : EngineBase
     {
         public SRB(int id, ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(id, Color.FromArgb(255, 255, 255, 255), 100, 2, 0.2, 0.6, 0.1))
+            : base(parent, offset, new EngineFlame(id, Color.FromArgb(255, 255, 255, 255), 250, 2, 0.3, 0.8, 0.2))
         {
         }
 

@@ -2,6 +2,7 @@
 using SpaceSim.Common;
 using SpaceSim.Drawing;
 using VectorMath;
+using SpaceSim.Properties;
 
 namespace SpaceSim.Gauges
 {
@@ -14,12 +15,14 @@ namespace SpaceSim.Gauges
         private Point _center;
         private Font _font;
         private double _widthPercentage;
+        private float _size;
 
         public Scale(Point center)
         {
             _center = center;
 
-            _font = new Font("Verdana Bold", 12);
+            _font = Settings.Default.Font;
+            _size = _font.Size;
 
             _widthPercentage = (double)ScaleWidth / RenderUtils.ScreenWidth;
         }
@@ -31,11 +34,10 @@ namespace SpaceSim.Gauges
             double scale = cameraBounds.Width * _widthPercentage;
 
             graphics.FillRectangle(new SolidBrush(Color.White), _center.X - 50, _center.Y - 2, 100, 4);
+            graphics.FillRectangle(new SolidBrush(Color.White), _center.X - 51, _center.Y - _size, 4, 20);
+            graphics.FillRectangle(new SolidBrush(Color.White), _center.X + 51, _center.Y - _size, 4, 20);
 
-            graphics.FillRectangle(new SolidBrush(Color.White), _center.X - 51, _center.Y - 10, 4, 20);
-            graphics.FillRectangle(new SolidBrush(Color.White), _center.X + 51, _center.Y - 10, 4, 20);
-
-            graphics.DrawString(UnitDisplay.Distance(scale), _font, new SolidBrush(Color.White), _center.X + 65, _center.Y - 10);
+            graphics.DrawString(UnitDisplay.Distance(scale), _font, new SolidBrush(Color.White), _center.X + 65, _center.Y - _size);
         }
     }
 }

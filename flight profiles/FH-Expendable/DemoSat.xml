@@ -13,13 +13,117 @@
     <Duration>23</Duration>
     <TargetOrientation>90</TargetOrientation>
   </Command>
-  <Command xsi:type="Stage">
-    <StartTime>170</StartTime>
+  <Command xsi:type="Post">
+    <StartTime>18</StartTime>
+    <Duration>5</Duration>
+    <Message>This is a 'comparisim' between SLS Block 1 and FH expendable attempting NASA's Europa Clipper mission.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>24</StartTime>
+    <Duration>5</Duration>
+    <Message>Acceleration off the pad is very similar, after which I'm assuming an STS 'bucket' throttle profile for SLS.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>24</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>32</StartTime>
+    <TargetScale>80</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>33</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>33</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 2x.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>38</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>48</StartTime>
+    <TargetScale>200</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>50</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>50</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 4x.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>64</StartTime>
+    <TargetScale>40</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>84</StartTime>
+    <TargetScale>40</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>104</StartTime>
+    <TargetScale>40</TargetScale>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>115</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>120</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>120</StartTime>
+    <TargetScale>-500</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>130</StartTime>
+   <TargetScale>500</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>130</StartTime>
+    <TargetIndex>6</TargetIndex>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>135</StartTime>
     <Duration>75</Duration>
     <TargetOrientation>-178</TargetOrientation>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>160</StartTime>
+    <Next>false</Next>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>167</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>167</StartTime>
+    <TargetScale>-450</TargetScale>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>170</StartTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>172</StartTime>
+    <TargetScale>650</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>175</StartTime>
+    <TargetIndex>7</TargetIndex>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>222</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>222</StartTime>
+    <TargetScale>-550</TargetScale>
   </Command>
   <Command xsi:type="Stage">
     <StartTime>225</StartTime>
@@ -36,19 +140,167 @@
   </Command>
   <Command xsi:type="Deploy">
     <Part>Fairing</Part>
+    <StartTime>235</StartTime>
+  </Command>
+  <Command xsi:type="Zoom">
     <StartTime>240</StartTime>
+    <TargetScale>700</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>240</StartTime>
+    <TargetIndex>8</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>240</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 16x.</Message>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>300</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>310</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>320</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>330</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>340</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>350</StartTime>
+    <Next>true</Next>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>380</StartTime>
     <Duration>180</Duration>
     <TargetOrientation>-178</TargetOrientation>
   </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>420</StartTime>
+    <TargetScale>300</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>420</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>440</StartTime>
+    <Duration>5</Duration>
+    <Message>Once SLS reaches orbital velocity, the remaining booster ΔV increases the orbital eccentricity ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>460</StartTime>
+    <Duration>5</Duration>
+    <Message>... to an apogee of 11,000 kms, then stages to the ICPS at about 9.6 km/s.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>495</StartTime>
+    <TargetScale>-770</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>495</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>515</StartTime>
+    <TargetScale>1160</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>515</StartTime>
+    <TargetIndex>8</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>540</StartTime>
+    <Duration>5</Duration>
+    <Message>The ICPS RL-10 has low thrust, but extremely good Isp, and will burn for around 19 minutes.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>600</StartTime>
+    <Duration>5</Duration>
+    <Message>Meanwhile, the Falcon S2 commences its higher thrust, but much shorter and less efficient TJI burn.</Message>
+  </Command>
   <Command xsi:type="Prograde">
     <StartTime>600</StartTime>
-    <Duration>8000</Duration>
+    <Duration>40000000</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>720</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>720</StartTime>
+    <TargetIndex>10</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>1500</StartTime>
+    <Duration>5</Duration>
+    <Message>Note the greater magnitude of the ICPS IIP trace, indicating significantly more velocity.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>1800</StartTime>
+    <TargetScale>350</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>1800</StartTime>
+    <TargetIndex>14</TargetIndex>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>2000</StartTime>
+    <TargetIndex>17</TargetIndex>
   </Command>
   <Command xsi:type="Stage">
     <StartTime>3380</StartTime>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>10000000</StartTime>
+    <Duration>5</Duration>
+    <Message>The FH launched satellite doesn't quite make Jupiter's orbit, but the SLS satellite makes it to Saturn's.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>38500000</StartTime>
+    <TargetIndex>16</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>38500000</StartTime>
+    <TargetScale>-110</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>41700000</StartTime>
+    <TargetIndex>15</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>41700000</StartTime>
+    <TargetScale>-120</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>42300000</StartTime>
+    <TargetIndex>16</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>42300000</StartTime>
+    <TargetScale>150</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>43000000</StartTime>
+    <Duration>5</Duration>
+    <Message>Even a moderately close Jovian flyby is enough for the satellite to exit the solar system.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>44000000</StartTime>
+    <TargetIndex>17</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>44000000</StartTime>
+    <TargetScale>120</TargetScale>
   </Command>
 </ArrayOfCommand>

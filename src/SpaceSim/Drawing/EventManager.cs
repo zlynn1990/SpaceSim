@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using SpaceSim.Spacecrafts;
+using SpaceSim.Properties;
 
 namespace SpaceSim.Drawing
 {
@@ -158,7 +159,8 @@ namespace SpaceSim.Drawing
 
         public void Render(Graphics graphics)
         {
-            var font = new Font("Verdana Bold", 14);
+            var font = Settings.Default.Font;
+            float size = font.Size;
 
             int messageY = _position.Y;
 
@@ -190,7 +192,7 @@ namespace SpaceSim.Drawing
 
                 graphics.DrawString(messageOutput, font, new SolidBrush(Color.FromArgb(alpha, 255, 255, 255)), _position.X, messageY, new StringFormat {Alignment = StringAlignment.Center});
 
-                messageY += 30;
+                messageY += (int)size * 2;
             }
         }
     }

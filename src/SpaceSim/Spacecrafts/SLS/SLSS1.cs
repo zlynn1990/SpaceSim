@@ -4,6 +4,9 @@ using SpaceSim.Engines;
 using SpaceSim.Physics;
 using SpaceSim.Spacecrafts.FalconCommon;
 using VectorMath;
+using SpaceSim.Drawing;
+using SpaceSim.Properties;
+using System.IO;
 
 namespace SpaceSim.Spacecrafts.FalconHeavy
 {
@@ -81,6 +84,8 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
             }
         }
 
+        DateTime timestamp = DateTime.Now;
+
         public SLSS1(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 894182)
             : base(craftDirectory, position, velocity, 4, propellantMass, "SLS/S1.png")
         {
@@ -97,5 +102,29 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
                 Engines[i] = new RS25(i, this, offset);
             }
         }
+
+        //public override void RenderGdi(Graphics graphics, Camera camera)
+        //{
+        //    base.RenderGdi(graphics, camera);
+
+        //    if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
+        //    {
+        //        string filename = MissionName + ".csv";
+
+        //        if (!File.Exists(filename))
+        //        {
+        //            File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+        //        }
+
+        //        timestamp = DateTime.Now;
+
+        //        string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
+        //            this.GetRelativeVelocity().Length() / 10,
+        //            this.GetRelativeAcceleration().Length() * 100,
+        //            this.GetRelativeAltitude() / 100,
+        //            this.Throttle * 10);
+        //        File.AppendAllText(filename, contents);
+        //    }
+        //}
     }
 }

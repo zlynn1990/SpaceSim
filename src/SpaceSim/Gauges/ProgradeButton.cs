@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using SpaceSim.Properties;
+using System.Drawing;
 using VectorMath;
 
 namespace SpaceSim.Gauges
@@ -11,13 +12,14 @@ namespace SpaceSim.Gauges
 
         private Point _center;
         private Font _font;
+        private float _size;
 
         public ProgradeButton(Point center)
         {
             _center = center;
-            Bounds = new RectangleF(_center.X - 15, _center.Y - 15, 30, 30);
-
-            _font = new Font("Verdana Bold", 12);
+            _font = Settings.Default.Font;
+            _size = _font.Size;
+            Bounds = new RectangleF(_center.X - _size, _center.Y - _size, _size * 2, _size * 2);
         }
 
         public void Enable()
@@ -39,8 +41,7 @@ namespace SpaceSim.Gauges
                 graphics.FillEllipse(new SolidBrush(Color.Red), Bounds);
             }
 
-            graphics.DrawString("P", _font, new SolidBrush(Color.White), _center.X - 8, _center.Y - 8);
-
+            graphics.DrawString("P", _font, new SolidBrush(Color.White), _center.X - _size * 0.6f, _center.Y - _size * 0.8f);
             graphics.DrawEllipse(new Pen(Color.White, 2), Bounds);
         }
     }

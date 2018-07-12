@@ -25,6 +25,10 @@
     <Duration>50</Duration>
     <TargetThrottle>42</TargetThrottle>
   </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>175</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
   <Command xsi:type="Retrograde">
     <StartTime>175</StartTime>
     <Duration>425</Duration>

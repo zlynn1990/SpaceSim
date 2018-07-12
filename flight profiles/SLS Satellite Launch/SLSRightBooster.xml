@@ -5,6 +5,16 @@
     <Duration>0.5</Duration>
     <Throttle>100</Throttle>
   </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>123</StartTime>
+    <Duration>0.5</Duration>
+    <TargetThrottle>15</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>123.5</StartTime>
+    <Duration>5</Duration>
+    <TargetThrottle>5</TargetThrottle>
+  </Command>
   <Command xsi:type="Retrograde">
     <StartTime>130</StartTime>
     <Duration>140</Duration>

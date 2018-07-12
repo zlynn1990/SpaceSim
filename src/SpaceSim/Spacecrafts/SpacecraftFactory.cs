@@ -343,7 +343,7 @@ namespace SpaceSim.Spacecrafts
 
             return new List<ISpaceCraft>
             {
-                demoSat, fhS2, fhLeftBooster, fhS1, fhRightBooster
+                demoSat, fhS2, fhLeftBooster, fhS1, fhRightBooster, fairingLeft, fairingRight
             };
         }
 

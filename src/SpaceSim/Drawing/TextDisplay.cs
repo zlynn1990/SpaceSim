@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using SpaceSim.Properties;
 
 namespace SpaceSim.Drawing
 {
@@ -7,13 +8,15 @@ namespace SpaceSim.Drawing
     {
         private Font _font;
         private SolidBrush _brush;
+        private float _size;
 
         private List<TextBlock> _textBlocks;
 
         public TextDisplay()
         {
-            _font = new Font("Verdana Bold", 14);
+            _font = Settings.Default.Font;
             _brush = new SolidBrush(Color.White);
+            _size = _font.Size;
 
             _textBlocks = new List<TextBlock>();
         }
@@ -46,7 +49,7 @@ namespace SpaceSim.Drawing
             {
                 if (!blockOffsets.ContainsKey(textBlock.Alignment))
                 {
-                    blockOffsets.Add(textBlock.Alignment, 5);
+                    blockOffsets.Add(textBlock.Alignment, (int)_size);
                 }
 
                 var format = new StringFormat
@@ -70,10 +73,10 @@ namespace SpaceSim.Drawing
                             break;
                     }
 
-                    blockOffsets[textBlock.Alignment] += 30;
+                    blockOffsets[textBlock.Alignment] += (int)_size * 2;
                 }
 
-                blockOffsets[textBlock.Alignment] += 20;
+                blockOffsets[textBlock.Alignment] += (int)_size;
             }
         }
     }

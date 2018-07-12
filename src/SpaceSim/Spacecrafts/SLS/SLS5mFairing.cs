@@ -62,11 +62,11 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
             if (_isLeft)
             {
-                StageOffset = new DVector2(-1.25, -5.8);
+                StageOffset = new DVector2(-1.24, -5.8);
             }
             else
             {
-                StageOffset = new DVector2(1.25, -5.8);
+                StageOffset = new DVector2(1.24, -5.8);
             }
 
             Engines = new IEngine[0];

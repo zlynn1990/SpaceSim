@@ -3,6 +3,6 @@
   <VehicleType>SLS Satellite</VehicleType>
   <PayloadMass>6001</PayloadMass>
   <ParentPlanet>Earth</ParentPlanet>
-  <LaunchDate>2022-06-08T20:00:00</LaunchDate>
+  <LaunchDate>2022-06-07T20:00:00</LaunchDate>
   <ClockDelay>5</ClockDelay>
 </MissionConfig>

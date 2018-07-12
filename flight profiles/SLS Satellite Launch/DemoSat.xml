@@ -6,7 +6,7 @@
   <Command xsi:type="RelativePitch">
     <StartTime>10</StartTime>
     <Duration>120</Duration>
-    <TargetOrientation>-165</TargetOrientation>
+    <TargetOrientation>-157</TargetOrientation>
   </Command>
   <Command xsi:type="Roll">
     <StartTime>12</StartTime>
@@ -19,12 +19,12 @@
   <Command xsi:type="RelativePitch">
     <StartTime>127</StartTime>
     <Duration>5</Duration>
-    <TargetOrientation>-155</TargetOrientation>
+    <TargetOrientation>-150</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>132</StartTime>
     <Duration>228</Duration>
-    <TargetOrientation>-170</TargetOrientation>
+    <TargetOrientation>-172</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>360</StartTime>

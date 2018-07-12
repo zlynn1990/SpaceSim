@@ -9,4 +9,7 @@
     <StartTime>1000</StartTime>
     <Duration>0.5</Duration>
   </Command>-->
+  <Command xsi:type="Terminate">
+    <StartTime>1800</StartTime>
+  </Command>
 </ArrayOfCommand>

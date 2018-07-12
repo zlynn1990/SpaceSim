@@ -153,6 +153,7 @@
     <Compile Include="Physics\GravitationalBodyBase.cs" />
     <Compile Include="Proxies\MassiveBodyProxy.cs" />
     <Compile Include="Proxies\SpaceCraftProxy.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="SolarSystem\IMassiveBody.cs" />
     <Compile Include="SolarSystem\IMassiveKernel.cs" />
     <Compile Include="Kernels\EuropaKernel.cs" />
