@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SpaceSim.Common.Contracts;
 using SpaceSim.Physics;
 using SpaceSim.SolarSystem;
+using SpaceSim.Spacecrafts.DeltaIV;
 using SpaceSim.Spacecrafts.DragonV1;
 using SpaceSim.Spacecrafts.DragonV2;
 using SpaceSim.Spacecrafts.Falcon9;
@@ -75,6 +76,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildBfs300(planet, config, craftDirectory);
                 case "BFS Earth EDL":
                     return BuildBfsEarthEdl(planet, config, craftDirectory);
+                case "GenericDH":
+                    return BuildDeltaHeavy(planet, config, craftDirectory);
                 case "GenericF9":
                     return BuildGenericF9(planet, config, craftDirectory);
                 case "PolarF9":
@@ -103,8 +106,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildFalconHeavy(planet, config, craftDirectory);
                 case "FH-Demo":
                     return BuildFalconHeavyDemo(planet, config, craftDirectory);
-                case "FH-Europa-Clipper":
-                    return BuildF9S2TJI(planet, config, craftDirectory);
+                case "FH-PSP":
+                    return BuildFalconHeavyPSP(planet, config, craftDirectory);
                 case "AutoLandingTest":
                     return BuildAutoLandingTest(planet, config, craftDirectory);
                 case "ITS Crew Launch":
@@ -314,6 +317,74 @@ namespace SpaceSim.Spacecrafts
             dragon.SetPitch(Math.PI * 1.24);
 
             return new List<ISpaceCraft> { dragon, dragonTrunk };
+        }
+
+        private static List<ISpaceCraft> BuildDeltaHeavy(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var demoSat = new ParkerSolarProbe(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset,
+                                      planet.Velocity + new DVector2(-400, 0) + config.VelocityOffset, config.PayloadMass);
+
+            var fairingLeft = new DIVH5mFairing(craftDirectory, demoSat.Position, DVector2.Zero, true);
+            var fairingRight = new DIVH5mFairing(craftDirectory, demoSat.Position, DVector2.Zero, false);
+
+            demoSat.AttachFairings(fairingLeft, fairingRight);
+
+            var dhS1 = new CommonBoosterCore(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var dhS2 = new DIVHS2(craftDirectory, DVector2.Zero, DVector2.Zero, 7.2);
+            var dhS3 = new Star48PAM(craftDirectory, DVector2.Zero, DVector2.Zero, 3);
+
+            var dhLeftBooster = new SideBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var dhRightBooster = new SideBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            demoSat.AddChild(dhS3);
+            dhS3.SetParent(demoSat);
+            dhS3.AddChild(dhS2);
+            dhS2.SetParent(dhS3);
+            dhS2.AddChild(dhS1);
+            dhS1.SetParent(dhS2);
+            dhS1.AddChild(dhLeftBooster);
+            dhS1.AddChild(dhRightBooster);
+            dhLeftBooster.SetParent(dhS1);
+            dhRightBooster.SetParent(dhS1);
+
+            return new List<ISpaceCraft>
+            {
+                demoSat, dhS3, dhS2, dhLeftBooster, dhS1, dhRightBooster, fairingLeft, fairingRight
+            };
+        }
+
+        private static List<ISpaceCraft> BuildFalconHeavyPSP(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset,
+                                      planet.Velocity + new DVector2(-400, 0) + config.VelocityOffset, config.PayloadMass);
+
+            var fairingLeft = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, true);
+            var fairingRight = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, false);
+
+            demoSat.AttachFairings(fairingLeft, fairingRight);
+
+            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero, 11.3);
+            var fhS3 = new Star48PAM(craftDirectory, DVector2.Zero, DVector2.Zero, 3);
+
+            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            demoSat.AddChild(fhS3);
+            fhS3.SetParent(demoSat);
+            fhS3.AddChild(fhS2);
+            fhS2.SetParent(fhS3);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                demoSat, fhS3, fhS2, fhLeftBooster, fhS1, fhRightBooster, fairingLeft, fairingRight
+            };
         }
 
         private static List<ISpaceCraft> BuildFalconHeavy(IMassiveBody planet, MissionConfig config, string craftDirectory)

@@ -120,7 +120,9 @@
     <Compile Include="Engines\RaptorVac300.cs" />
     <Compile Include="Engines\RL10.cs" />
     <Compile Include="Engines\RS25.cs" />
+    <Compile Include="Engines\RS68A.cs" />
     <Compile Include="Engines\SRB.cs" />
+    <Compile Include="Engines\Star48.cs" />
     <Compile Include="Kernels\BaseKernel.cs" />
     <Compile Include="Particles\EngineFlame.cs" />
     <Compile Include="Drawing\EventManager.cs" />
@@ -175,6 +177,12 @@
     <Compile Include="SolarSystem\Planets\Mercury.cs" />
     <Compile Include="SolarSystem\Planets\Saturn.cs" />
     <Compile Include="SolarSystem\Planets\Venus.cs" />
+    <Compile Include="Spacecrafts\DeltaIV\CommonBoosterCore.cs" />
+    <Compile Include="Spacecrafts\DeltaIV\DIVH5mFairing.cs" />
+    <Compile Include="Spacecrafts\DeltaIV\DIVHS2.cs" />
+    <Compile Include="Spacecrafts\DeltaIV\ParkerSolarProbe.cs" />
+    <Compile Include="Spacecrafts\DeltaIV\SideBooster.cs" />
+    <Compile Include="Spacecrafts\DeltaIV\Star48PAM.cs" />
     <Compile Include="Spacecrafts\DemoSat.cs" />
     <Compile Include="Spacecrafts\DragonV1\Dragon.cs" />
     <Compile Include="Spacecrafts\DragonV1\DragonTrunk.cs" />
@@ -297,6 +305,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Rocket.ico" />
+    <Content Include="Textures\Spacecrafts\DeltaIV\booster1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\DeltaIV\booster2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\DeltaIV\core.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\DeltaIV\psp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\DeltaIV\s2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\DeltaIV\star48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Falcon\9\S1B5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

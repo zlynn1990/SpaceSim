@@ -383,6 +383,16 @@ namespace SpaceSim
 
                 _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
             }
+
+            if (e.Key == Key.PageUp)
+            {
+                SetZoom(-0.02f);
+            }
+
+            if (e.Key == Key.PageDown)
+            {
+                SetZoom(0.04f);
+            }
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
