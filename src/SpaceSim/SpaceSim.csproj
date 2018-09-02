@@ -111,6 +111,7 @@
     <Compile Include="Engines\BE4.cs" />
     <Compile Include="Engines\BE4Vac.cs" />
     <Compile Include="Engines\MiniRaptor50.cs" />
+    <Compile Include="Engines\NEXT.cs" />
     <Compile Include="Engines\Raptor40.cs" />
     <Compile Include="Engines\Raptor50.cs" />
     <Compile Include="Engines\RaptorSL.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\Roadster.cs" />
     <Compile Include="Spacecrafts\GreyDragon\GreyDragon.cs" />
+    <Compile Include="Spacecrafts\IonDriveSat.cs" />
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
     <Compile Include="Spacecrafts\ITS\BFR.cs" />
     <Compile Include="Spacecrafts\ITS\BFS.cs" />

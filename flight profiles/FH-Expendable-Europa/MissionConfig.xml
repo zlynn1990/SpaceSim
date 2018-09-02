@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<MissionConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VehicleType>FH-Europa</VehicleType>
+  <PayloadMass>6001</PayloadMass>
+  <ParentPlanet>Earth</ParentPlanet>
+  <LaunchDate>2022-06-07T20:00:00</LaunchDate>
+</MissionConfig>

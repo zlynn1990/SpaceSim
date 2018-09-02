@@ -11,7 +11,7 @@ namespace SpaceSim.Spacecrafts.DragonV2
         public override string CraftName { get { return "DragonV2 Trunk"; } }
         public override string CommandFileName { get { return "dragonTrunk.xml"; } }
 
-        public override double Width { get { return 4.72; } }
+        public override double Width { get { return 4.9; } }
         public override double Height { get { return 4.1; } }
 
         public override double DryMass { get { return 1000; } }

@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Drawing;
-using SpaceSim.Common;
-using SpaceSim.Drawing;
 using SpaceSim.Engines;
-using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
+using System.IO;
+using SpaceSim.Common;
+using SpaceSim.Drawing;
+using SpaceSim.Properties;
+using SpaceSim.Particles;
 
 namespace SpaceSim.Spacecrafts.DragonV2
 {
     class DragonV2 : SpaceCraftBase
     {
-        public override string CraftName { get { return "DragonV2"; } }
+        public override string CraftName { get { return "Crew Dragon"; } }
         public override string CommandFileName { get { return "dragon.xml"; } }
 
         public override double Width { get { return 3.7; } }
         public override double Height { get { return 4.15; } }
 
-        public override double DryMass { get { return 4200; } }
+        public override double DryMass { get { return 6350; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties
         {
@@ -110,6 +112,7 @@ namespace SpaceSim.Spacecrafts.DragonV2
         private bool _drogueDeployed;
         private bool _parachuteDeployed;
         private double _parachuteRatio;
+        private DateTime timestamp = DateTime.Now;
 
         public DragonV2(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass, double propellantMass)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, "Dragon/V2/capsule.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
@@ -176,16 +179,15 @@ namespace SpaceSim.Spacecrafts.DragonV2
             double drawingRotation = Pitch + Math.PI * 0.5;
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
-                screenBounds.Y + screenBounds.Height * 0.5f);
+                                    screenBounds.Y + screenBounds.Height * 0.5f);
 
-            graphics.TranslateTransform(offset.X, offset.Y);
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
-            float pitchAngle = (float)(drawingRotation * 180 / Math.PI);
+            // Normalize the angle to [0,360]
+            int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
 
-            graphics.RotateTransform(pitchAngle);
-            graphics.TranslateTransform(-offset.X, -offset.Y);
-
-            int heatingRate = Math.Min((int)this.HeatingRate, 2000000);
+            int heatingRate = Math.Min((int)this.HeatingRate, 600000);
             if (heatingRate > 100000)
             {
                 Random rnd = new Random();
@@ -193,37 +195,71 @@ namespace SpaceSim.Spacecrafts.DragonV2
                 float width = screenBounds.Width / (3 + noise);
                 float height = screenBounds.Height / (18 + noise);
                 RectangleF plasmaRect = screenBounds;
-                plasmaRect.Inflate(screenBounds.Width / 2, screenBounds.Height / 4);
                 plasmaRect.Inflate(new SizeF(width, height));
 
-                int alpha = Math.Min(heatingRate / 7800, 255);
-                int red = alpha;
-                int green = Math.Max(red - 128, 0) * 2;
-                int blue = 0;
+                if (Roll != 0)
+                {
+                    float foreshortening = (float)Math.Pow(Math.Cos(Roll), 0.4);
+                    plasmaRect.Y += plasmaRect.Height * (1 - foreshortening);
+                    plasmaRect.Height *= foreshortening;
+                }
+
+                int alpha = 255;
+                int blue = Math.Min(heatingRate / 2000, 255);
+                int green = 0;
+                int red = Math.Max(blue - 64, 0);
                 Color glow = Color.FromArgb(alpha, red, green, blue);
 
                 float penWidth = width / 12;
                 Pen glowPen = new Pen(glow, penWidth);
                 glowPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                 glowPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
-                graphics.DrawArc(glowPen, plasmaRect, 40, 100);
+                graphics.DrawArc(glowPen, plasmaRect, 220, 100);
 
                 glowPen.Color = Color.FromArgb((int)(alpha * 0.75), glow);
                 plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, 20, 140);
+                graphics.DrawArc(glowPen, plasmaRect, 200, 140);
 
                 glowPen.Color = Color.FromArgb((int)(alpha * 0.5), glow);
                 plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, 0, 180);
+                graphics.DrawArc(glowPen, plasmaRect, 180, 180);
 
                 glowPen.Color = Color.FromArgb((int)(alpha * 0.25), glow);
                 plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, -20, 220);
+                graphics.DrawArc(glowPen, plasmaRect, 160, 220);
             }
 
-            graphics.DrawImage(Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+            graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+
+            // Index into the sprite
+            //int ships = _spriteSheet.Cols * _spriteSheet.Rows;
+            //int spriteIndex = (rollAngle * ships) / 360;
+            //while (spriteIndex < 0)
+            //    spriteIndex += ships;
+
+            //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
             graphics.ResetTransform();
+
+            if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
+            {
+                string filename = MissionName + ".csv";
+
+                if (!File.Exists(filename))
+                {
+                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                }
+
+                timestamp = DateTime.Now;
+
+                string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
+                    this.GetRelativeVelocity().Length(),
+                    this.GetRelativeAcceleration().Length() * 100,
+                    this.GetRelativeAltitude() / 100,
+                    this.Throttle * 10);
+                File.AppendAllText(filename, contents);
+            }
         }
+
     }
 }

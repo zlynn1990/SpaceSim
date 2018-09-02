@@ -86,6 +86,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildGenericF9B5(planet, config, craftDirectory);
                 case "DragonF9":
                     return BuildF9Dragon(planet, config, craftDirectory);
+                case "Dragon2F9":
+                    return BuildF9Dragon2(planet, config, craftDirectory);
                 case "X37B":
                     return BuildX37B(planet, config, craftDirectory);
                 case "F9S2 Earth EDL":
@@ -106,6 +108,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildFalconHeavy(planet, config, craftDirectory);
                 case "FH-Demo":
                     return BuildFalconHeavyDemo(planet, config, craftDirectory);
+                case "FH-Europa":
+                    return BuildFalconHeavyEuropa(planet, config, craftDirectory);
                 case "FH-PSP":
                     return BuildFalconHeavyPSP(planet, config, craftDirectory);
                 case "AutoLandingTest":
@@ -234,6 +238,27 @@ namespace SpaceSim.Spacecrafts
 
             var f9S1 = new F9S1(craftDirectory, DVector2.Zero, DVector2.Zero);
             var f9S2 = new F9S2(craftDirectory, DVector2.Zero, DVector2.Zero, 8.3);
+
+            dragon.AddChild(dragonTrunk);
+            dragonTrunk.SetParent(dragon);
+            dragonTrunk.AddChild(f9S2);
+            f9S2.SetParent(dragonTrunk);
+            f9S2.AddChild(f9S1);
+            f9S1.SetParent(f9S2);
+
+            return new List<ISpaceCraft>
+            {
+                dragon, dragonTrunk, f9S2, f9S1
+            };
+        }
+
+        private static List<ISpaceCraft> BuildF9Dragon2(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset, planet.Velocity, config.PayloadMass, 1250);
+            var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            var f9S1 = new F9S1B5(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var f9S2 = new F9S2B5(craftDirectory, DVector2.Zero, DVector2.Zero, 9.0);
 
             dragon.AddChild(dragonTrunk);
             dragonTrunk.SetParent(dragon);
@@ -415,6 +440,37 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 demoSat, fhS2, fhLeftBooster, fhS1, fhRightBooster, fairingLeft, fairingRight
+            };
+        }
+
+        private static List<ISpaceCraft> BuildFalconHeavyEuropa(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ionSat = new IonDriveSat(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset,
+                                      planet.Velocity + new DVector2(-400, 0) + config.VelocityOffset, config.PayloadMass, 900);
+
+            var fairingLeft = new Fairing(craftDirectory, ionSat.Position, DVector2.Zero, true);
+            var fairingRight = new Fairing(craftDirectory, ionSat.Position, DVector2.Zero, false);
+
+            ionSat.AttachFairings(fairingLeft, fairingRight);
+
+            var fhS1 = new FHS1(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2(craftDirectory, DVector2.Zero, DVector2.Zero, 11.3);
+
+            var fhLeftBooster = new FHBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            ionSat.AddChild(fhS2);
+            fhS2.SetParent(ionSat);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                ionSat, fhS2, fhLeftBooster, fhS1, fhRightBooster, fairingLeft, fairingRight
             };
         }
 

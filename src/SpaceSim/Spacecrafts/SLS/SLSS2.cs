@@ -55,7 +55,7 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
         public override Color IconColor { get { return Color.White; } }
 
         public SLSS2(string craftDirectory, DVector2 position, DVector2 velocity, double zOffset = 9)
-            : base(craftDirectory, position, velocity, 0, 27220, "DIVH/S2.png")
+            : base(craftDirectory, position, velocity, 0, 27220, "DeltaIV/S2.png")
         {
             StageOffset = new DVector2(0, zOffset);
 
