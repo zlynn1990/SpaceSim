@@ -125,6 +125,9 @@
     <Compile Include="Engines\SRB.cs" />
     <Compile Include="Engines\Star48.cs" />
     <Compile Include="Kernels\BaseKernel.cs" />
+    <Compile Include="Kernels\CallistoKernel.cs" />
+    <Compile Include="Kernels\GanymedeKernel.cs" />
+    <Compile Include="Kernels\IoKernel.cs" />
     <Compile Include="Particles\EngineFlame.cs" />
     <Compile Include="Drawing\EventManager.cs" />
     <Compile Include="Drawing\GpuClear.cs" />
@@ -170,7 +173,10 @@
     <Compile Include="Orbits\OrbitHelper.cs" />
     <Compile Include="Drawing\RenderingType.cs" />
     <Compile Include="Physics\IPhysicsBody.cs" />
+    <Compile Include="SolarSystem\Moons\Callisto.cs" />
     <Compile Include="SolarSystem\Moons\Europa.cs" />
+    <Compile Include="SolarSystem\Moons\Ganymede.cs" />
+    <Compile Include="SolarSystem\Moons\Io.cs" />
     <Compile Include="SolarSystem\Moons\Moon.cs" />
     <Compile Include="SolarSystem\MassiveBodyBase.cs" />
     <Compile Include="SolarSystem\Planets\Jupiter.cs" />
