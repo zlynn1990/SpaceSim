@@ -174,23 +174,30 @@ namespace SpaceSim
 
             var mercury = new Mercury();
             var venus = new Venus();
+
             var earth = new Earth();
             var moon = new Moon(earth.Position, earth.Velocity);
+
             var mars = new Mars();
+
             var jupiter = new Jupiter();
+            var callisto = new Callisto(jupiter.Position, jupiter.Velocity);
             var europa = new Europa(jupiter.Position, jupiter.Velocity);
+            var ganymede = new Ganymede(jupiter.Position, jupiter.Velocity);
+            var io = new Io(jupiter.Position, jupiter.Velocity);
+
             var saturn = new Saturn();
 
             _massiveBodies = new List<IMassiveBody>
             {
-                _sun, mercury, venus, earth, moon, mars, jupiter, europa, saturn
+                _sun, mercury, venus, earth, moon, mars, jupiter, callisto, europa, ganymede, io, saturn
             };
 
             ResolveMassiveBodyParents();
 
             _gravitationalBodies = new List<IGravitationalBody>
             {
-                _sun, mercury, venus, earth, moon, mars, jupiter, europa, saturn
+                _sun, mercury, venus, earth, moon, mars, jupiter, callisto, europa, ganymede, io, saturn
             };
 
             _spaceCraftManager = new SpaceCraftManager(_gravitationalBodies);

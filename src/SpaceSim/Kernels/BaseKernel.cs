@@ -30,7 +30,10 @@ namespace SpaceSim.Kernels
         public const double JUPITER_RADIUS = 7.1492e7;
         public const double JUPITER_ATMOSPHERE = 3.970588e5;
 
+        public const double CALLISTO_RADIUS = 2.4103e6;
         public const double EUROPA_RADIUS = 1.5608e6;
+        public const double GANYMEDE_RADIUS = 2.6341e6;
+        public const double IO_RADIUS = 1.8213e6;
 
         public const double SATURN_RADIUS = 6.0268e7;
         public const double SATURN_ATMOSPHERE = 5.95e5;
