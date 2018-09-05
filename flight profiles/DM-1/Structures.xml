@@ -12,7 +12,7 @@
   </StructureConfig>
   <StructureConfig>
     <Type>LandingPad</Type>
-	<DownrangeDistance>-10755</DownrangeDistance>
+	<DownrangeDistance>-10220</DownrangeDistance>
 	<HeightOffset>5</HeightOffset>
   </StructureConfig>
 </ArrayOfStructureConfig>

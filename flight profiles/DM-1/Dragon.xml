@@ -24,7 +24,7 @@
     <TargetOrientation>-140</TargetOrientation>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>146</StartTime>
+    <StartTime>148</StartTime>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>150</StartTime>
@@ -34,22 +34,22 @@
   <Command xsi:type="RelativePitch">
     <StartTime>160</StartTime>
     <Duration>100</Duration>
-    <TargetOrientation>-157</TargetOrientation>
+    <TargetOrientation>-158</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>260</StartTime>
     <Duration>100</Duration>
-    <TargetOrientation>-161</TargetOrientation>
+    <TargetOrientation>-163</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>360</StartTime>
     <Duration>100</Duration>
-    <TargetOrientation>-167</TargetOrientation>
+    <TargetOrientation>-169</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>460</StartTime>
     <Duration>70</Duration>
-    <TargetOrientation>-183</TargetOrientation>
+    <TargetOrientation>-181</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>590</StartTime>

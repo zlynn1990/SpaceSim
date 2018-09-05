@@ -125,7 +125,7 @@
   <Command xsi:type="Ignition">
     <StartTime>820</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>100</Throttle>
+    <Throttle>99</Throttle>
   </Command>
   <Command xsi:type="Rate">
     <StartTime>830</StartTime>
@@ -147,9 +147,14 @@
     <StartTime>100000</StartTime>
     <TargetIndex>17</TargetIndex>
   </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>94672800</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
   <Command xsi:type="Retrograde">
     <StartTime>94672800</StartTime>
     <Duration>40000000</Duration>
     <InitialAdjustmentTime>20</InitialAdjustmentTime>
   </Command>
+  <!-- TODO: circularise -->
 </ArrayOfCommand>
