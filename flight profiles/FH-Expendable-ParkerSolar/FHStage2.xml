@@ -9,6 +9,12 @@
     <StartTime>434</StartTime>
     <Duration>0.5</Duration>
   </Command>
+  <!-- test Oberth effect -->
+  <!--<Command xsi:type="Ignition">
+    <StartTime>1350</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>30</Throttle>
+  </Command>-->
   <Command xsi:type="Ignition">
     <StartTime>1700</StartTime>
     <Duration>0.5</Duration>

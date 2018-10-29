@@ -48,6 +48,17 @@ namespace SpaceSim.SolarSystem.Planets
             return base.GetAtmosphericDensity(altitude) * 0.02;
         }
 
+        public override double GetSpeedOfSound(double altitude)
+        {
+            double speed = 244.2;
+            if (altitude > 0 && altitude < 30000)
+                speed -= altitude * 0.00104;
+            else if (altitude > 30000)
+                speed = 212.9;
+
+            return speed;
+        }
+
         public override string ToString()
         {
             return "Mars";

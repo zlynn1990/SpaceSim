@@ -68,6 +68,8 @@ namespace SpaceSim.Spacecrafts
                 case "BFR Crew Launch":
                 case "BFR Direct GTO":
                     return BuildBFRCrew(planet, config, craftDirectory);
+                case "BFR300 Crew Launch":
+                    return BuildBFR300Crew(planet, config, craftDirectory);
                 case "BFS to GEO":
                     return BuildBfsLeo(planet, config, craftDirectory);
                 case "BFS250 to LEO":
@@ -76,6 +78,10 @@ namespace SpaceSim.Spacecrafts
                     return BuildBfs300(planet, config, craftDirectory);
                 case "BFS Earth EDL":
                     return BuildBfsEarthEdl(planet, config, craftDirectory);
+                case "BFS Mars Return EDL":
+                    return BuildBfsMarsReturnEdl(planet, config, craftDirectory);
+                case "BFS Mars TEI":
+                    return BuildBfsMarsTEI(planet, config, craftDirectory);
                 case "GenericDH":
                     return BuildDeltaHeavy(planet, config, craftDirectory);
                 case "GenericF9":
@@ -622,6 +628,22 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
+        private static List<ISpaceCraft> BuildBFR300Crew(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius),
+                planet.Velocity + new DVector2(-400, 0), config.PayloadMass);
+
+            var booster = new BFR300(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            ship.AddChild(booster);
+            booster.SetParent(ship);
+
+            return new List<ISpaceCraft>
+            {
+                ship, booster
+            };
+        }
+
         private static List<ISpaceCraft> BuildBfs(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
             // inclination 53°
@@ -662,10 +684,30 @@ namespace SpaceSim.Spacecrafts
 
         private static List<ISpaceCraft> BuildBfsEarthEdl(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
-            //var ship = new BFS(craftDirectory, planet.Position + new DVector2(0, planet.SurfaceRadius + 300000.0),
-            //    planet.Velocity + new DVector2(7730, 20), config.PayloadMass, 50000);
-            var ship = new BFS(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 300000.0),
-                planet.Velocity + new DVector2(-7730, -20), config.PayloadMass, 30000);
+            var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 166000.0),
+                planet.Velocity + new DVector2(-7809, 0), config.PayloadMass, 30000);
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildBfsMarsReturnEdl(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius - 166000.0),
+                planet.Velocity + new DVector2(-12500, 1640), config.PayloadMass, 30000);
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildBfsMarsTEI(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new BFS300(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0),
+                planet.Velocity + new DVector2(0, 0), config.PayloadMass);
 
             return new List<ISpaceCraft>
             {

@@ -6,8 +6,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 {
     class LandingLeg : SpaceCraftPart
     {
-        protected override double Width { get { return 1.8; } }
-        protected override double Height { get { return 10.052819015; } }
+        public override double Width { get { return 1.8; } protected set { value = 1.8; } }
+        public override double Height { get { return 10.052819015; } protected set { value = 10.052819015; } }
         protected override double DrawingOffset { get { return -4.2; } }
 
         private double _offsetLength;

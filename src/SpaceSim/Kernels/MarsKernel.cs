@@ -31,18 +31,21 @@ namespace SpaceSim.Kernels
 
                     double textureFactor = 0.25 * sin(worldAngle * 30) + 0.75;
 
-                    int rComponent = (int)(sunDotProduct * 255 * ratio * textureFactor);
-                    int gComponent = (int)(sunDotProduct * 150 * ratio * textureFactor);
+                    int red = (int)(sunDotProduct * 213 * ratio * textureFactor);
+                    int green = (int)(sunDotProduct * 158 * ratio * textureFactor);
+                    int blue = (int)(sunDotProduct * 104 * ratio * textureFactor);
 
-                    image[index] = ALPHA | (gComponent << 8) | (rComponent << 16);
+                    image[index] = ALPHA | (green << 8) | (red << 16);
                 }
                 else
                 {
                     double ratio = (distance - MARS_RADIUS) / MARS_ATMOSPHERE;
 
-                    int rgComponents = (int)((255 - ratio * 255) * sunDotProduct);
+                    int red = (int)((233 - ratio * 233) * sunDotProduct);
+                    int green = (int)((208 - ratio * 208) * sunDotProduct);
+                    int blue = (int)((178 - ratio * 178) * sunDotProduct);
 
-                    image[index] = ALPHA | (rgComponents << 8) | (rgComponents << 16);
+                    image[index] = ALPHA | blue | (green << 8) | (red << 16);
                 }
             }
         }

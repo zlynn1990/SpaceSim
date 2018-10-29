@@ -62,6 +62,10 @@ namespace SpaceSim.Commands
                 {
                     commands.Add(new CantCommand(contract as Cant));
                 }
+                else if (contract is Dihedral)
+                {
+                    commands.Add(new DihedralCommand(contract as Dihedral));
+                }
                 else if (contract is Pitch)
                 {
                     commands.Add(new PitchCommand(contract as Pitch));

@@ -83,6 +83,44 @@ namespace SpaceSim.SolarSystem
             return noonAngle + noonOffset.TotalSeconds * RotationRate;
         }
 
+        public virtual double GetSpeedOfSound(double altitude)
+        {
+            if (altitude > AtmosphereHeight) return 0;
+
+            if (altitude < -3000)
+            {
+                return 355.3;
+            }
+            else if (altitude < 11000)
+            {
+                return 355.3 - 60.2 * (altitude + 3000) / 14000;
+            }
+            else if (altitude < 21000)
+            {
+                return 295.1;
+            }
+            else if (altitude < 47000)
+            {
+                return 295.1 + 34.7 * (altitude - 21000) / 26000;
+            }
+            else if (altitude < 51000)
+            {
+                return 329.8;
+            }
+            else if (altitude < 85000)
+            {
+                return 329.8 - 55.8 * (altitude - 51000) / 34000;
+            }
+            else if (altitude < 121000)
+            {
+                return 274.0 + 34.0 * (altitude - 85000) / 36000;
+            }
+            else
+            {
+                return 308.0;
+            }
+        }
+
         public virtual double BoundingRadius
         {
             get { return SurfaceRadius + AtmosphereHeight; }

@@ -106,6 +106,7 @@ namespace SpaceSim.Spacecrafts
         public double HeatingRate { get; protected set; }
 
         public IEngine[] Engines { get; protected set; }
+        public IFin[] Fins { get; protected set; }
         public IController Controller { get; protected set; }
 
         public bool OnGround { get; private set; }
@@ -346,6 +347,37 @@ namespace SpaceSim.Spacecrafts
         /// Deploys the landing legs.
         /// </summary>
         public virtual void DeployLandingLegs() { }
+
+        public void SetDihedral(double dihedral, int[] finIds = null)
+        {
+            if (Fins.Length > 0)
+            {
+                // Adjust all fins if ids are specified
+                if (finIds == null)
+                {
+                    foreach (IFin fin in Fins)
+                    {
+                        fin.SetDihedral(dihedral);
+                    }
+                }
+                else
+                {
+                    // Throttle only specified engine ids
+                    foreach (int finId in finIds)
+                    {
+                        Fins[finId].SetDihedral(dihedral);
+                    }
+                }
+            }
+        }
+
+        public double GetDihedral(int finId)
+        {
+            if (Fins.Count() > finId)
+                return Fins[finId].Dihedral;
+            else
+                return 0.0;
+        }
 
         public void SetThrottle(double throttle, int[] engineIds = null)
         {
@@ -616,7 +648,8 @@ namespace SpaceSim.Spacecrafts
                     double speed = relativeVelocity.Length();
 
                     // Heating
-                    HeatingRate = 1.83e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
+                    //HeatingRate = 1.83e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
+                    HeatingRate = 0.8e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
 
                     relativeVelocity.Normalize();
 
@@ -936,6 +969,8 @@ namespace SpaceSim.Spacecrafts
             Velocity.X = velocity.X;
             Velocity.Y = velocity.Y;
 
+            // TODO: get the mach number from the planet and altitude
+            double speedOfSound = GravitationalParent.GetSpeedOfSound(GetRelativeAltitude());
             MachNumber = velocity.Length() * 0.0029411764;
 
             foreach (ISpaceCraft child in Children)

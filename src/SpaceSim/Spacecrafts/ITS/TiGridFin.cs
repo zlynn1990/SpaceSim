@@ -6,8 +6,8 @@ namespace SpaceSim.Spacecrafts.ITS
 {
     class TiGridFin : SpaceCraftPart
     {
-        protected override double Width { get { return 1.9; } }
-        protected override double Height { get { return 3.7; } }
+        public override double Width { get { return 1.9; } protected set { value = 1.9; } }
+        public override double Height { get { return 3.7; } protected set { value = 3.7; } }
         protected override double DrawingOffset { get { return 0.6; } }
 
         private double _offsetLength;

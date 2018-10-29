@@ -16,7 +16,7 @@ namespace SpaceSim.Common
                 typeof(Ignition), typeof(Shutdown), typeof(Stage),
                 typeof(Throttle), typeof(Deploy), typeof(Release), typeof(Terminate),
                 typeof(Retrograde), typeof(Prograde), typeof(AutoLand),
-                typeof(Cant), typeof(Pitch), typeof(RelativePitch),
+                typeof(Cant), typeof(Dihedral), typeof(Pitch), typeof(RelativePitch),
                 typeof(Roll), typeof(Yaw), typeof(Post), typeof(Rate), typeof(Target), typeof(Zoom),
             });
         }

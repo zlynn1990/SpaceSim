@@ -14,13 +14,14 @@ namespace SpaceSim.Engines
 
         public override double Thrust(double ispMultiplier)
         {
-            return (2040000.0 + 220000.0 * ispMultiplier) * Throttle * 0.01;
+            return (2100000.0 + 145000.0 * ispMultiplier) * Throttle * 0.01;
         }
 
-        // Based off of ISP = F/m*g0
+        // Based off of Isp = F / ṁ * g0
+        // ṁ = F / Isp * g0
         public override double MassFlowRate(double ispMultiplier)
         {
-            return 631 * Throttle * 0.01;
+            return 643.5 * Throttle * 0.01;
         }
 
         public override IEngine Clone()

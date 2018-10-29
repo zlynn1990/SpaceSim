@@ -371,7 +371,7 @@ namespace SpaceSim
                 _userUpdatedTimesteps = true;
             }
 
-            if (e.Key == Key.OemPeriod && _timeStepIndex < _timeSteps.Count - 1)
+            if (e.Key == Key.OemPeriod && !_isPaused && _timeStepIndex < _timeSteps.Count - 1)
             {
                 _timeStepIndex++;
                 _userUpdatedTimesteps = true;

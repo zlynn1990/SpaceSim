@@ -68,6 +68,11 @@ namespace SpaceSim.Proxies
             return _proxy.GetSurfaceAngle(localTime, sun);
         }
 
+        public double GetSpeedOfSound(double altitude)
+        {
+            return _proxy.GetSpeedOfSound(altitude);
+        }
+
         public override void Update(double dt)
         {
             // Integrate for position

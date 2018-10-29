@@ -14,8 +14,8 @@ namespace SpaceSim.Spacecrafts
         public double Mass { get; protected set; }
         public double Pitch { get; protected set; }
 
-        protected abstract double Width { get; }
-        protected abstract double Height { get; }
+        public abstract double Width { get; protected set; }
+        public abstract double Height { get; protected set; }
         protected abstract double DrawingOffset { get; }
 
         protected ISpaceCraft _parent;
@@ -53,7 +53,15 @@ namespace SpaceSim.Spacecrafts
             camera.ApplyScreenRotation(graphics);
             camera.ApplyRotationMatrix(graphics, offset, drawingRotation + Constants.PiOverTwo);
 
-            graphics.DrawImage(sootedTexture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+            int rollAngle = (int)(_parent.Roll * MathHelper.RadiansToDegrees) % 360;
+            if (rollAngle <= 90)
+            {
+                graphics.DrawImage(sootedTexture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+            }
+            else
+            {
+                graphics.DrawImage(sootedTexture, screenBounds.X + screenBounds.Width * 2.0f, screenBounds.Y, -screenBounds.Width, screenBounds.Height);
+            }
 
             graphics.ResetTransform();
         }

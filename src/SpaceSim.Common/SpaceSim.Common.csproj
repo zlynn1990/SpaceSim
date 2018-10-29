@@ -47,6 +47,7 @@
     <Compile Include="Contracts\Commands\Cant.cs" />
     <Compile Include="Contracts\Commands\Command.cs" />
     <Compile Include="Contracts\Commands\Deploy.cs" />
+    <Compile Include="Contracts\Commands\Dihedral.cs" />
     <Compile Include="Contracts\Commands\Ignition.cs" />
     <Compile Include="Contracts\Commands\Pitch.cs" />
     <Compile Include="Contracts\Commands\Post.cs" />

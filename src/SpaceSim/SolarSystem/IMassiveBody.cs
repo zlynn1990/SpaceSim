@@ -24,5 +24,6 @@ namespace SpaceSim.SolarSystem
         double GetAtmosphericViscosity(double altitude);
 
         double GetSurfaceAngle(DateTime localTime, IMassiveBody sun);
+        double GetSpeedOfSound(double altitude);
     }
 }

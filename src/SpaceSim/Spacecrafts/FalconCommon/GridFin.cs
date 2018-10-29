@@ -6,8 +6,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 {
     class GridFin : SpaceCraftPart
     {
-        protected override double Width { get; }
-        protected override double Height { get; }
+        public override double Width { get; protected set; }
+        public override double Height { get; protected set; }
         protected override double DrawingOffset { get; }
 
         private double _offsetLength;

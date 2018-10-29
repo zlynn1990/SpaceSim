@@ -48,11 +48,14 @@ namespace SpaceSim.Spacecrafts
         void SetSurfacePosition(DVector2 positon, double surfaceAngle);
         double GetDownrangeDistance(DVector2 pointOfReference);
 
+        void SetDihedral(double dihedral, int[] finIds = null);
+        double GetDihedral(int finId);
         void SetThrottle(double throttle, int[] engineIds = null);
 
         void SetPitch(double pitch);
         void OffsetPitch(double offset);
 
+        double Roll { get; }
         void OffsetRoll(double offset);
         void SetRoll(double roll);
 

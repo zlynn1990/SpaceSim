@@ -15,10 +15,9 @@ namespace SpaceSim.Spacecrafts.ITS
         public override string CraftName { get { return "BFS"; } }
         public override string CommandFileName { get { return "BFS.xml"; } }
 
-        public override double DryMass { get { return 85000; } }
-        //public override double DryMass { get { return 65000; } }
+        public override double DryMass { get { return 100000; } }
         public override double Width { get { return 9; } }
-        public override double Height { get { return 48; } }
+        public override double Height { get { return 55; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
 
@@ -74,11 +73,28 @@ namespace SpaceSim.Spacecrafts.ITS
 
                 if (alpha > Constants.PiOverTwo || alpha < -Constants.PiOverTwo)
                 {
-                    baseCd = GetBaseCd(0.8);
+                    baseCd = GetBaseCd(0.7);
                     isRetrograde = true;
                 }
 
                 double dragCoefficient = Math.Abs(baseCd * Math.Sin(alpha));
+
+                // account for dihedral of the fins
+                int finCount = Fins.GetLength(0);
+                for(int i = 0; i < finCount; i++)
+                {
+                    double finDragCoefficient = Math.Abs(Math.Cos(Fins[i].Dihedral));
+                    switch(i)
+                    {
+                        case 0:
+                            dragCoefficient *= 1 + finDragCoefficient * 0.075;
+                            break;
+                        default:
+                            dragCoefficient *= 1 + finDragCoefficient * 0.34;
+                            break;
+                    }
+                }
+                
                 double dragPreservation = 1.0;
 
                 if (isRetrograde)
@@ -99,36 +115,40 @@ namespace SpaceSim.Spacecrafts.ITS
 
         //private SpriteSheet _spriteSheet;
 
-        public BFS300(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 0, double propellantMass = 1100000)
+        public BFS300(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 0, double propellantMass = 1000000)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, null)
         {
             StageOffset = new DVector2(0, 0);
 
+            Fins = new Fin[2];
+            Fins[0] = new Fin(this, new DVector2(0.2, -22), new DVector2(-2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard.png");
+            Fins[1] = new Fin(this, new DVector2(2.2, 20.2), new DVector2(5.86, 14.5), -Math.PI / 6);
+
             Engines = new IEngine[7];
-
-            // Raptor Vac engines
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 7; i++)
             {
-                double engineOffsetX = (i - 1.5) / 1.5;
-                var offset = new DVector2(engineOffsetX * Width * 0.25, Height * 0.45);
-                Engines[i] = new RaptorVac300(i, this, offset);
-            }
-
-            // Raptor SL engines
-            for (int i = 4; i < 7; i++)
-            {
-                double engineOffsetX = (i - 4.0) / 2.0;
-                var offset = new DVector2(engineOffsetX * Width * 0.1, Height * 0.475);
+                double engineOffsetX = (i - 3.5) / 3.5;
+                var offset = new DVector2(engineOffsetX * Width * 0.2, Height * 0.45);
                 Engines[i] = new RaptorSL300(i, this, offset);
             }
 
             //_spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/scaledShip.png", 12, 12);
 
-            string texturePath = "Its/BFS.png";
+            string texturePath = "Its/BFS2.png";
             string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
             this.Texture = new Bitmap(fullPath);
 
             this.payloadMass = payloadMass;
+        }
+
+        public override void Update(double dt)
+        {
+            base.Update(dt);
+
+            foreach (Fin fin in Fins)
+            {
+                fin.Update(dt);
+            }
         }
 
         protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
@@ -164,22 +184,25 @@ namespace SpaceSim.Spacecrafts.ITS
                 Pen glowPen = new Pen(glow, penWidth);
                 glowPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                 glowPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
-                graphics.DrawArc(glowPen, plasmaRect, 220, 100);
+                graphics.DrawArc(glowPen, plasmaRect, 130, 100);
 
                 glowPen.Color = Color.FromArgb((int)(alpha * 0.75), glow);
                 plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, 200, 140);
+                graphics.DrawArc(glowPen, plasmaRect, 110, 140);
 
                 glowPen.Color = Color.FromArgb((int)(alpha * 0.5), glow);
                 plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, 180, 180);
+                graphics.DrawArc(glowPen, plasmaRect, 90, 180);
 
                 glowPen.Color = Color.FromArgb((int)(alpha * 0.25), glow);
                 plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, 160, 220);
+                graphics.DrawArc(glowPen, plasmaRect, 70, 220);
             }
 
-            graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+            if(rollAngle <= 90)
+                graphics.DrawImage(this.Texture, screenBounds.X - screenBounds.Width * 0.43f, screenBounds.Y, screenBounds.Width * 1.8f, screenBounds.Height);
+            else
+                graphics.DrawImage(this.Texture, screenBounds.X + screenBounds.Width * 0.9f, screenBounds.Y, -screenBounds.Width * 1.8f, screenBounds.Height);
 
             // Index into the sprite
             //int ships = _spriteSheet.Cols * _spriteSheet.Rows;
@@ -190,6 +213,11 @@ namespace SpaceSim.Spacecrafts.ITS
             //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
             graphics.ResetTransform();
+
+            foreach (Fin fin in Fins)
+            {
+                fin.RenderGdi(graphics, camera);
+            }
 
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {
@@ -204,9 +232,9 @@ namespace SpaceSim.Spacecrafts.ITS
 
                 string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
                     this.GetRelativeVelocity().Length(),
-                    this.GetRelativeAcceleration().Length() * 100,
-                    this.GetRelativeAltitude() / 100,
-                    this.Throttle * 10);
+                    this.GetRelativeAcceleration().Length() * 1000,
+                    this.GetRelativeAltitude() / 10,
+                    this.Throttle * 100);
                 File.AppendAllText(filename, contents);
             }
         }
