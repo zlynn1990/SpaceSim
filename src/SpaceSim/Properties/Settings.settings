@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="WriteBitmaps" Type="System.Boolean" Scope="Application">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="UseTheTurnForce" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>
@@ -18,10 +18,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ScreenSize" Type="System.Drawing.Size" Scope="Application">
-      <Value Profile="(Default)">1280, 720</Value>
+      <Value Profile="(Default)">1600, 900</Value>
     </Setting>
     <Setting Name="PolarOrbit" Type="System.Boolean" Scope="Application">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Font" Type="System.Drawing.Font" Scope="Application">
       <Value Profile="(Default)">Verdana, 11pt</Value>
