@@ -3,42 +3,32 @@
   <Command xsi:type="Ignition">
     <StartTime>0</StartTime>
     <Duration>0.2</Duration>
-    <Throttle>91</Throttle>
+    <Throttle>94</Throttle>
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>4.5</StartTime>
     <Duration>0.5</Duration>
-    <TargetThrottle>98</TargetThrottle>
-  </Command>
-  <Command xsi:type="Throttle">
-    <StartTime>5</StartTime>
-    <Duration>20</Duration>
-    <TargetThrottle>97</TargetThrottle>
-  </Command>
-  <Command xsi:type="Throttle">
-    <StartTime>25</StartTime>
-    <Duration>23</Duration>
-    <TargetThrottle>96</TargetThrottle>
+    <TargetThrottle>100</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>48</StartTime>
-    <Duration>0.5</Duration>
-    <TargetThrottle>81</TargetThrottle>
+    <Duration>5</Duration>
+    <TargetThrottle>82</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>68</StartTime>
-    <Duration>0.5</Duration>
-    <TargetThrottle>93</TargetThrottle>
+    <Duration>5</Duration>
+    <TargetThrottle>95</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>88</StartTime>
     <Duration>56</Duration>
-    <TargetThrottle>91</TargetThrottle>
+    <TargetThrottle>92</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>142</StartTime>
     <Duration>5</Duration>
-    <TargetThrottle>85</TargetThrottle>
+    <TargetThrottle>86</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>147</StartTime>

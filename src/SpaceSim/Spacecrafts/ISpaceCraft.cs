@@ -41,6 +41,7 @@ namespace SpaceSim.Spacecrafts
 
         void Stage();
         void Release();
+        void DeployBattery();
         void DeployFairing();
 
         void ToggleDisplayVectors();

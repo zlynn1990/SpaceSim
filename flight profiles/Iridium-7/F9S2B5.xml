@@ -3,18 +3,13 @@
   <Command xsi:type="Ignition">
     <StartTime>157</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>102</Throttle>
-  </Command>
-  <!--<Command xsi:type="Throttle">
-    <StartTime>300</StartTime>
-    <Duration>20</Duration>
-    <TargetThrottle>95</TargetThrottle>
+    <Throttle>103</Throttle>
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>500</StartTime>
-    <Duration>50</Duration>
-    <TargetThrottle>93.5</TargetThrottle>
-  </Command>-->
+    <Duration>17</Duration>
+    <TargetThrottle>99</TargetThrottle>
+  </Command>
   <Command xsi:type="Shutdown">
     <StartTime>517</StartTime>
     <Duration>0.5</Duration>

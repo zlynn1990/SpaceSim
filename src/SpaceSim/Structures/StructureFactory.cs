@@ -30,11 +30,17 @@ namespace SpaceSim.Structures
 
                     switch (structureConfig.Type)
                     {
+                        case "AircraftCarrier":
+                            structures.Add(new AircraftCarrier(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
                         case "ASDS":
                             structures.Add(new ASDS(surfaceAngle, structureConfig.HeightOffset, planet));
                             break;
                         case "Edwards":
                             structures.Add(new Edwards(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
+                        case "ElectronStrongback":
+                            structures.Add(new ElectronStrongback(surfaceAngle, structureConfig.HeightOffset, planet));
                             break;
                         case "ITSMount":
                             structures.Add(new ITSMount(surfaceAngle, structureConfig.HeightOffset, planet));

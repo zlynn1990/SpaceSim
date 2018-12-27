@@ -14,10 +14,10 @@ namespace SpaceSim.Spacecrafts.NewGlenn
 
         public override Color IconColor { get { return Color.White; } }
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
-        public override double DryMass { get { return 11000; } }
+        public override double DryMass { get { return 13000; } }
 
-        public override double Width { get { return 7.1; } }
-        public override double Height { get { return 22.0; } }
+        public override double Width { get { return 7.0; } }
+        public override double Height { get { return 24.6; } }
 
         public override double LiftingSurfaceArea { get { return Width * Height; } }
 
@@ -96,18 +96,19 @@ namespace SpaceSim.Spacecrafts.NewGlenn
         //private LandingLeg[] _landingLegs;
         DateTime timestamp = DateTime.Now;
 
-        public NGS2(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 180000)
+        //public NGS2(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 208000)
+        public NGS2(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 175000)
             : base(craftDirectory, position, velocity, 0, propellantMass, "NewGlenn/ngS2.png")
         {
-            StageOffset = new DVector2(0, 17.4);
+            StageOffset = new DVector2(0, 18.4);
 
-            Engines = new IEngine[1];
+            Engines = new IEngine[2];
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
-                var offset = new DVector2(0, Height * 0.3);
+                var offset = new DVector2((i - 0.5) * 2.0, Height * 0.4);
 
-                Engines[i] = new BE4Vac(i, this, offset);
+                Engines[i] = new BE3U(i, this, offset);
             }
         }
 

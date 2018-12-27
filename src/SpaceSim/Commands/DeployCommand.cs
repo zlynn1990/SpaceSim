@@ -25,6 +25,9 @@ namespace SpaceSim.Commands
 
             switch (_part)
             {
+                case "Battery":
+                    spaceCraft.DeployBattery();
+                    break;
                 case "Fairing":
                     spaceCraft.DeployFairing();
                     break;

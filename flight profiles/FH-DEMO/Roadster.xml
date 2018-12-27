@@ -54,10 +54,10 @@
     <Duration>38</Duration>
     <TargetOrientation>-106</TargetOrientation>
   </Command>
-  <Command xsi:type="Zoom">
+  <!--<Command xsi:type="Zoom">
     <StartTime>45</StartTime>
     <TargetScale>800</TargetScale>
-  </Command>
+  </Command>-->
   <Command xsi:type="RelativePitch">
     <StartTime>50</StartTime>
     <Duration>50</Duration>

@@ -12,12 +12,12 @@ namespace SpaceSim.Spacecrafts.ITS
 {
     class BFS300 : SpaceCraftBase
     {
-        public override string CraftName { get { return "BFS"; } }
+        public override string CraftName { get { return "Starship"; } }
         public override string CommandFileName { get { return "BFS.xml"; } }
 
-        public override double DryMass { get { return 100000; } }
+        public override double DryMass { get { return 90000; } }
         public override double Width { get { return 9; } }
-        public override double Height { get { return 55; } }
+        public override double Height { get { return 50; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
 
@@ -134,7 +134,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
             //_spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/scaledShip.png", 12, 12);
 
-            string texturePath = "Its/BFS2.png";
+            string texturePath = "Its/BFS3.png";
             string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
             this.Texture = new Bitmap(fullPath);
 
@@ -214,10 +214,10 @@ namespace SpaceSim.Spacecrafts.ITS
 
             graphics.ResetTransform();
 
-            foreach (Fin fin in Fins)
-            {
-                fin.RenderGdi(graphics, camera);
-            }
+            //foreach (Fin fin in Fins)
+            //{
+            //    fin.RenderGdi(graphics, camera);
+            //}
 
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {

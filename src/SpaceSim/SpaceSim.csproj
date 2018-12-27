@@ -109,6 +109,7 @@
     <Compile Include="Drawing\SootRenderer.cs" />
     <Compile Include="Drawing\SpriteSheet.cs" />
     <Compile Include="Drawing\TextDisplay.cs" />
+    <Compile Include="Engines\BE3U.cs" />
     <Compile Include="Engines\BE4.cs" />
     <Compile Include="Engines\BE4Vac.cs" />
     <Compile Include="Engines\MiniRaptor50.cs" />
@@ -123,6 +124,9 @@
     <Compile Include="Engines\RL10.cs" />
     <Compile Include="Engines\RS25.cs" />
     <Compile Include="Engines\RS68A.cs" />
+    <Compile Include="Engines\Curie.cs" />
+    <Compile Include="Engines\Rutherford.cs" />
+    <Compile Include="Engines\RutherfordVac.cs" />
     <Compile Include="Engines\SRB.cs" />
     <Compile Include="Engines\Star48.cs" />
     <Compile Include="Kernels\BaseKernel.cs" />
@@ -196,6 +200,11 @@
     <Compile Include="Spacecrafts\DragonV1\DragonTrunk.cs" />
     <Compile Include="Spacecrafts\DragonV2\DragonV2.cs" />
     <Compile Include="Spacecrafts\DragonV2\DragonV2Trunk.cs" />
+    <Compile Include="Spacecrafts\Electron\ElectronBattery.cs" />
+    <Compile Include="Spacecrafts\Electron\ElectronFairing.cs" />
+    <Compile Include="Spacecrafts\Electron\ElectronS1.cs" />
+    <Compile Include="Spacecrafts\Electron\ElectronKickStage.cs" />
+    <Compile Include="Spacecrafts\Electron\ElectronS2.cs" />
     <Compile Include="Spacecrafts\Falcon9SSTO\F9SSTO.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S1.cs" />
     <Compile Include="Spacecrafts\Falcon9\F9S1B5.cs" />
@@ -219,6 +228,7 @@
     <Compile Include="Spacecrafts\IonDriveSat.cs" />
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
     <Compile Include="Spacecrafts\ITS\BFR.cs" />
+    <Compile Include="Spacecrafts\ITS\BFR19.cs" />
     <Compile Include="Spacecrafts\ITS\BFR300.cs" />
     <Compile Include="Spacecrafts\ITS\BFS.cs" />
     <Compile Include="Spacecrafts\ITS\BFS300.cs" />
@@ -228,6 +238,7 @@
     <Compile Include="Spacecrafts\ITS\ITSBooster.cs" />
     <Compile Include="Spacecrafts\ITS\ITSShip.cs" />
     <Compile Include="Spacecrafts\ITS\ITSTanker.cs" />
+    <Compile Include="Spacecrafts\ITS\MiniBFS.cs" />
     <Compile Include="Spacecrafts\ITS\ScaledBFR.cs" />
     <Compile Include="Spacecrafts\ITS\ScaledBFS.cs" />
     <Compile Include="Spacecrafts\ITS\TiGridFin.cs" />
@@ -250,10 +261,12 @@
     <Compile Include="Spacecrafts\SpaceCraftManager.cs" />
     <Compile Include="Spacecrafts\SpaceCraftPart.cs" />
     <Compile Include="Structures\ASDS.cs" />
+    <Compile Include="Structures\AircraftCarrier.cs" />
     <Compile Include="Structures\Edwards.cs" />
     <Compile Include="Structures\ITSMount.cs" />
     <Compile Include="Structures\LandingPad.cs" />
     <Compile Include="Structures\ServiceTower.cs" />
+    <Compile Include="Structures\ElectronStrongback.cs" />
     <Compile Include="Structures\Strongback.cs" />
     <Compile Include="Structures\StructureBase.cs" />
     <Compile Include="Orbits\OrbitTrace.cs" />
@@ -335,6 +348,24 @@
     <Content Include="Textures\Spacecrafts\DeltaIV\star48.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\Electron\batteryLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Electron\batteryRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Electron\electronS1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Electron\electronS2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Electron\electronLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Electron\electronRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Falcon\9\S1B5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -401,6 +432,9 @@
     <Content Include="Textures\Spacecrafts\Falcon\Heavy\roadster.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\Its\BFB19.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Its\BFB2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -408,6 +442,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\BFS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Its\BFS3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\BFS2.png">
@@ -428,6 +465,9 @@
     <Content Include="Textures\Spacecrafts\Its\Fin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\Its\miniBFS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Its\scaledBFR.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -446,7 +486,13 @@
     <Content Include="Textures\Spacecrafts\NewGlenn\fairingRight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\NewGlenn\landingLegLeftSoot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\NewGlenn\landingLegLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\NewGlenn\landingLegRightSoot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\NewGlenn\landingLegRight.png">
@@ -462,6 +508,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Satellites\default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Satellites\DualManifest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Satellites\X37B.png">
@@ -483,6 +532,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\SLS\S1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Structures\aircraftCarrier.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Structures\asds.png">
@@ -540,6 +592,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Structures\edwards.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Structures\electronStrongback.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Structures\itsMount.png">

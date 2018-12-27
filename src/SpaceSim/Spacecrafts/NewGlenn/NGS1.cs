@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using SpaceSim.Common;
-using SpaceSim.Drawing;
 using SpaceSim.Engines;
 using VectorMath;
 
+using SpaceSim.Common;
+using SpaceSim.Drawing;
 using SpaceSim.Physics;
 using SpaceSim.Properties;
 
@@ -17,7 +17,7 @@ namespace SpaceSim.Spacecrafts.NewGlenn
 
         public override Color IconColor { get { return Color.White; } }
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
-        public override double DryMass { get { return 70000; } }
+        public override double DryMass { get { return 130000; } }
 
         public override double Width { get { return 12; } }
         public override double Height { get { return 53.0; } }
@@ -75,16 +75,18 @@ namespace SpaceSim.Spacecrafts.NewGlenn
 
         private NGLandingLeg[] _landingLegs;
         DateTime timestamp = DateTime.Now;
+        // private SpriteSheet _spriteSheet;
 
-        public NGS1(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 1050000)
+        //public NGS1(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 1297000)
+        public NGS1(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 1150000)
             : base(craftDirectory, position, velocity, 0, propellantMass, "NewGlenn/ngS1.png")
         {
-            StageOffset = new DVector2(0, 28.4);
+            StageOffset = new DVector2(0, 31.8);
 
             _landingLegs = new[]
             {
-                new NGLandingLeg(this, new DVector2(3.3, 19.8), true),
-                new NGLandingLeg(this, new DVector2(-3.3, 19.8), false)
+                new NGLandingLeg(this, new DVector2(4.0, 23.6), true),
+                new NGLandingLeg(this, new DVector2(-4.0, 23.6), false)
             };
 
             Engines = new IEngine[7];
@@ -93,10 +95,15 @@ namespace SpaceSim.Spacecrafts.NewGlenn
             {
                 double engineOffsetX = (i - 3.0) / 3.0;
 
-                var offset = new DVector2(engineOffsetX * Width * 0.3, Height * 0.45);
+                var offset = new DVector2(engineOffsetX * Width * 0.25, Height * 0.45);
 
                 Engines[i] = new BE4(i, this, offset);
             }
+
+            // _spriteSheet = new SpriteSheet("Textures/Spacecrafts/NewGlenn/ngS1.png", 9, 40);
+
+            string fullPath = "Textures/Spacecrafts/NewGlenn/ngS1.png";
+            this.Texture = new Bitmap(fullPath);
         }
 
         public override void DeployLandingLegs()
@@ -119,22 +126,16 @@ namespace SpaceSim.Spacecrafts.NewGlenn
 
         protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
         {
-            foreach (NGLandingLeg landingLeg in _landingLegs)
-            {
-                landingLeg.RenderGdi(graphics, camera);
-            }
-
             double drawingRotation = Pitch + Math.PI * 0.5;
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
-                screenBounds.Y + screenBounds.Height * 0.5f);
+                                    screenBounds.Y + screenBounds.Height * 0.5f);
 
-            graphics.TranslateTransform(offset.X, offset.Y);
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
-            float pitchAngle = (float)(drawingRotation * 180 / Math.PI);
-
-            graphics.RotateTransform(pitchAngle);
-            graphics.TranslateTransform(-offset.X, -offset.Y);
+            // Normalize the angle to [0,360]
+            int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
 
             int heatingRate = Math.Min((int)this.HeatingRate, 1000000);
             if (heatingRate > 50000)
@@ -172,7 +173,21 @@ namespace SpaceSim.Spacecrafts.NewGlenn
             }
 
             graphics.DrawImage(Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+
+            // Index into the sprite
+            //int ships = _spriteSheet.Cols * _spriteSheet.Rows;
+            //int spriteIndex = (rollAngle * ships) / 360;
+            //while (spriteIndex < 0)
+            //    spriteIndex += ships;
+
+            //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
+
             graphics.ResetTransform();
+
+            foreach (NGLandingLeg landingLeg in _landingLegs)
+            {
+                landingLeg.RenderGdi(graphics, camera);
+            }
 
             //    if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             //    {

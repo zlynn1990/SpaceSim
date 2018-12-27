@@ -32,7 +32,7 @@ namespace SpaceSim.Drawing
             _target = target;
             _lastTarget = target;
 
-            _minimumZoom = 0.05;
+            _minimumZoom = 0.01;
             _maximumZoom = 1000000000000;
 
             _position = _target.Position.Clone();

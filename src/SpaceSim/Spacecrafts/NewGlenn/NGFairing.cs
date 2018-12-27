@@ -15,9 +15,9 @@ namespace SpaceSim.Spacecrafts.NewGlenn
         public override string CommandFileName { get { return _isLeft ? "fairingLeft.xml" : "fairingRight.xml"; } }
 
         public override double Width { get { return 3.55; } }
-        public override double Height { get { return 18.0; } }
+        public override double Height { get { return 21.7; } }
 
-        public override double DryMass { get { return 875; } }
+        public override double DryMass { get { return 3000; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties
         {
@@ -70,11 +70,11 @@ namespace SpaceSim.Spacecrafts.NewGlenn
 
             if (_isLeft)
             {
-                StageOffset = new DVector2(-1.75, 0);
+                StageOffset = new DVector2(-1.75, -1.75);
             }
             else
             {
-                StageOffset = new DVector2(1.75, 0);
+                StageOffset = new DVector2(1.75, -1.75);
             }
 
             Engines = new IEngine[0];

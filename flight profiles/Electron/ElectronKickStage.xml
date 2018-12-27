@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>130</Duration>
+    <TargetOrientation>-142</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>155</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>158</StartTime>
+    <Duration>8</Duration>
+    <TargetOrientation>-158</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>166</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>-162</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>186</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>186</StartTime>
+    <Duration>4</Duration>
+    <TargetOrientation>-164</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>190</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-172</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>240</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>300</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>360</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-172</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>420</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-164</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Battery</Part>
+    <StartTime>427</StartTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>548</StartTime>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>600</StartTime>
+    <Duration>8000</Duration>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>2939</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>3076</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+</ArrayOfCommand>

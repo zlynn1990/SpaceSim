@@ -11,7 +11,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
         public override string CraftName { get { return "F9 S2"; } }
         public override string CommandFileName { get { return "F9S2B5.xml"; } }
 
-        public override double DryMass { get { return 5000; } }
+        public override double DryMass { get { return 4500; } }
 
         public override double Width { get { return 3.706; } }
         public override double Height { get { return 14.0018; } }
@@ -55,7 +55,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
         public override Color IconColor { get { return Color.White; } }
 
-        public F9S2B5(string craftDirectory, DVector2 position, DVector2 velocity, double stageOffset, double propellantMass = 103500)
+        public F9S2B5(string craftDirectory, DVector2 position, DVector2 velocity, double stageOffset, double propellantMass = 105750)
             : base(craftDirectory, position, velocity, 0, propellantMass, "Falcon/9/S2.png")
         {
             StageOffset = new DVector2(0, stageOffset);

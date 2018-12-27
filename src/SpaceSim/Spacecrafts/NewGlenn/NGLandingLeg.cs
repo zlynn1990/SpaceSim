@@ -6,18 +6,11 @@ using VectorMath;
 
 namespace SpaceSim.Spacecrafts.NewGlenn
 {
-    class NGLandingLeg : IPhysicsBody, IGdiRenderable
+    class NGLandingLeg : SpaceCraftPart
     {
-        public DVector2 Position { get; private set; }
-        public DVector2 Velocity { get; private set; }
-        public double Mass { get; private set; }
-        public double Pitch { get; private set; }
-
-        private const double Width = 1;
-        private const double Height = 5;
-
-        private Bitmap _texture;
-        private ISpaceCraft _parent;
+        public override double Width { get { return 1.0; } protected set { value = 1.0; } }
+        public override double Height { get { return 5.0; } protected set { value = 5.0; } }
+        protected override double DrawingOffset { get { return 0.6; } }
 
         private double _offsetLength;
         private double _offsetRotation;
@@ -27,15 +20,19 @@ namespace SpaceSim.Spacecrafts.NewGlenn
         private double _deployTimer;
 
         public NGLandingLeg(ISpaceCraft parent, DVector2 offset, bool isLeft)
+            : base(parent, GenerateTexturePath(isLeft))
         {
             _parent = parent;
             _isLeft = isLeft;
 
             _offsetLength = -offset.Length();
             _offsetRotation = offset.Angle() + Math.PI / 2.0;
+        }
 
-            _texture = isLeft ? new Bitmap("Textures/Spacecrafts/NewGlenn/landingLegLeft.png") :
-                                new Bitmap("Textures/Spacecrafts/NewGlenn/landingLegRight.png");
+        private static string GenerateTexturePath(bool isLeft)
+        {
+            return isLeft ? "Textures/Spacecrafts/NewGlenn/landingLegLeft.png"
+                : "Textures/Spacecrafts/NewGlenn/landingLegRight.png";
         }
 
         public void Deploy()
@@ -46,7 +43,7 @@ namespace SpaceSim.Spacecrafts.NewGlenn
             _isDeploying = true;
         }
 
-        public void Update(double dt)
+        public override void Update(double dt)
         {
             double rotation = _parent.Pitch - _offsetRotation;
 
@@ -72,27 +69,6 @@ namespace SpaceSim.Spacecrafts.NewGlenn
                     _isDeploying = false;
                 }
             }
-        }
-
-        public void RenderGdi(Graphics graphics, Camera camera)
-        {
-            double drawingRotation = _parent.Pitch + Pitch;
-
-            DVector2 drawingOffset = new DVector2(Math.Cos(drawingRotation), Math.Sin(drawingRotation)) * -4.2;
-
-            RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position + drawingOffset, camera.Bounds, Width, Height);
-
-            var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f, screenBounds.Y + screenBounds.Height * 0.5f);
-
-            graphics.TranslateTransform(offset.X, offset.Y);
-
-            graphics.RotateTransform((float)((drawingRotation + Math.PI * 0.5) * 180 / Math.PI));
-
-            graphics.TranslateTransform(-offset.X, -offset.Y);
-
-            graphics.DrawImage(_texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
-
-            graphics.ResetTransform();
         }
     }
 }

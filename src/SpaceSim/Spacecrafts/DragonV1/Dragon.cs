@@ -6,6 +6,9 @@ using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
 
+using SpaceSim.Properties;
+using System.IO;
+
 namespace SpaceSim.Spacecrafts.DragonV1
 {
     sealed class Dragon : SpaceCraftBase
@@ -127,6 +130,8 @@ namespace SpaceSim.Spacecrafts.DragonV1
             }
         }
 
+        DateTime timestamp = DateTime.Now;
+
         public override void Update(double dt)
         {
             if (_drogueDeployed)
@@ -136,6 +141,25 @@ namespace SpaceSim.Spacecrafts.DragonV1
             else if (_parachuteDeployed)
             {
                 _parachuteRatio = Math.Min(_parachuteRatio + dt * 0.03, 1);
+            }
+
+            if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
+            {
+                string filename = MissionName + ".csv";
+
+                if (!File.Exists(filename))
+                {
+                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                }
+
+                timestamp = DateTime.Now;
+
+                string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
+                    this.GetRelativeVelocity().Length(),
+                    this.GetRelativeAcceleration().Length() * 1000,
+                    this.GetRelativeAltitude() / 10,
+                    this.Throttle * 100);
+                File.AppendAllText(filename, contents);
             }
 
             base.Update(dt);

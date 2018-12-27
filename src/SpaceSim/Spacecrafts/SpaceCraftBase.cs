@@ -322,6 +322,10 @@ namespace SpaceSim.Spacecrafts
         {
             Terminated = true;
         }
+        /// <summary>
+        /// Deploys the battery.
+        /// </summary>
+        public virtual void DeployBattery() { }
 
         /// <summary>
         /// Deploys the fairing.
@@ -547,10 +551,10 @@ namespace SpaceSim.Spacecrafts
                 return 0.0;
 
             double altitude = GetRelativeAltitude();
-            if (altitude > GravitationalParent.AtmosphereHeight)
-            {
-                return Pitch - GravitationalParent.Pitch;
-            }
+            //if (altitude > GravitationalParent.AtmosphereHeight)
+            //{
+            //    return Pitch - GravitationalParent.Pitch;
+            //}
 
             var alpha = 0.0;
             if (altitude > 0.1)
@@ -648,8 +652,8 @@ namespace SpaceSim.Spacecrafts
                     double speed = relativeVelocity.Length();
 
                     // Heating
-                    //HeatingRate = 1.83e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
-                    HeatingRate = 0.8e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
+                    HeatingRate = 1.83e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
+                    //HeatingRate = 0.8e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
 
                     relativeVelocity.Normalize();
 
@@ -969,13 +973,16 @@ namespace SpaceSim.Spacecrafts
             Velocity.X = velocity.X;
             Velocity.Y = velocity.Y;
 
-            // TODO: get the mach number from the planet and altitude
-            double speedOfSound = GravitationalParent.GetSpeedOfSound(GetRelativeAltitude());
-            MachNumber = velocity.Length() * 0.0029411764;
-
-            foreach (ISpaceCraft child in Children)
+            // get the mach number from the planet and altitude
+            if (GravitationalParent != null)
             {
-                child.UpdateChildren(Position, Velocity);
+                double speedOfSound = GravitationalParent.GetSpeedOfSound(GetRelativeAltitude());
+                MachNumber = velocity.Length() * 0.0029411764;
+
+                foreach (ISpaceCraft child in Children)
+                {
+                    child.UpdateChildren(Position, Velocity);
+                }
             }
         }
 

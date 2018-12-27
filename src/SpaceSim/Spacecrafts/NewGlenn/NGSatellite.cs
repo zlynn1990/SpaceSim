@@ -15,8 +15,8 @@ namespace SpaceSim.Spacecrafts.NewGlenn
         public override string CraftName { get { return _craftName; } }
         public override string CommandFileName { get { return "Satellite.xml"; } }
 
-        public override double Width { get { return 4.5; } }
-        public override double Height { get { return 13.0; } }
+        public override double Width { get { return 7.0; } }
+        public override double Height { get { return 18.0; } }
 
         public override double DryMass
         {
@@ -73,7 +73,7 @@ namespace SpaceSim.Spacecrafts.NewGlenn
         private string _craftName;
 
         public NGSatellite(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
-            : base(craftDirectory, position, velocity, payloadMass, 0, "Satellites/default.png")
+            : base(craftDirectory, position, velocity, payloadMass, 0, "Satellites/DualManifest.png")
         {
             _craftName = new DirectoryInfo(craftDirectory).Name;
 

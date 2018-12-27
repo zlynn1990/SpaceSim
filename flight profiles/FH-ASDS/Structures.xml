@@ -2,13 +2,13 @@
 <ArrayOfStructureConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <StructureConfig>
     <Type>ServiceTower</Type>
-    <DownrangeDistance>-100</DownrangeDistance>
-    <HeightOffset>-42</HeightOffset>
+    <DownrangeDistance>-30</DownrangeDistance>
+    <HeightOffset>-45</HeightOffset>
   </StructureConfig>
   <StructureConfig>
     <Type>Strongback</Type>
-    <DownrangeDistance>-75</DownrangeDistance>
-    <HeightOffset>-28</HeightOffset>
+    <DownrangeDistance>0</DownrangeDistance>
+    <HeightOffset>-25</HeightOffset>
   </StructureConfig>
   <StructureConfig>
     <Type>ASDS</Type>

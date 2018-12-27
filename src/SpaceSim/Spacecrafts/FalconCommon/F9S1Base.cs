@@ -12,8 +12,6 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 {
     abstract class F9S1Base : SpaceCraftBase
     {
-        public override double LiftingSurfaceArea { get { return Width * Height; } }
-
         public override Color IconColor { get { return Color.White; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
@@ -73,6 +71,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
                 return baseCd * Math.Sin(alpha * 2);
             }
         }
+
+        public override double LiftingSurfaceArea { get { return Width * Height; } }
 
         public override double FrontalArea
         {

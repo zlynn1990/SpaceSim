@@ -19,12 +19,12 @@
   <Command xsi:type="RelativePitch">
     <StartTime>150</StartTime>
     <Duration>5</Duration>
-    <TargetOrientation>-156</TargetOrientation>
+    <TargetOrientation>-155</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>155</StartTime>
     <Duration>50</Duration>
-    <TargetOrientation>-158</TargetOrientation>
+    <TargetOrientation>-156</TargetOrientation>
   </Command>
   <Command xsi:type="Deploy">
     <Part>Fairing</Part>
@@ -33,22 +33,22 @@
   <Command xsi:type="RelativePitch">
     <StartTime>215</StartTime>
     <Duration>85</Duration>
-    <TargetOrientation>-155</TargetOrientation>
+    <TargetOrientation>-156</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>300</StartTime>
     <Duration>100</Duration>
-    <TargetOrientation>-164</TargetOrientation>
+    <TargetOrientation>-162</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>400</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-172</TargetOrientation>
+    <TargetOrientation>-173</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>460</StartTime>
     <Duration>90</Duration>
-    <TargetOrientation>-180</TargetOrientation>
+    <TargetOrientation>-184</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>555</StartTime>
