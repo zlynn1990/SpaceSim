@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
   <Command xsi:type="Pitch">
     <StartTime>10</StartTime>
     <Duration>60</Duration>
