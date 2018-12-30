@@ -16,6 +16,9 @@
       <int>8</int>
     </EngineIds>
   </Command>
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
   <Command xsi:type="Pitch">
     <StartTime>10</StartTime>
     <Duration>60</Duration>
