@@ -6,12 +6,94 @@
   <Command xsi:type="RelativePitch">
     <StartTime>10</StartTime>
     <Duration>40</Duration>
-    <TargetOrientation>-98</TargetOrientation>
+    <TargetOrientation>-97</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>12</StartTime>
+    <Duration>5</Duration>
+    <Message>This is a compari-sim between the Iridium 7 and 8 launches.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>12</StartTime>
+    <TargetScale>10</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>18</StartTime>
+    <Duration>5</Duration>
+    <Message>Iridium 7 on the right gets off the pad a little more sharply ...</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>18</StartTime>
+    <TargetScale>10</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>24</StartTime>
+    <Duration>5</Duration>
+    <Message>... but they maintain formation during the initial ascent.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>32</StartTime>
+    <Duration>5</Duration>
+    <Message>As the rockets approach Max-Q ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>38</StartTime>
+    <Duration>5</Duration>
+    <Message>... Iridium 7 throttles back further than Iridium 8 ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>44</StartTime>
+    <Duration>5</Duration>
+    <Message>... and drops behind.</Message>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>50</StartTime>
     <Duration>70</Duration>
-    <TargetOrientation>-143</TargetOrientation>
+    <TargetOrientation>-142</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>54</StartTime>
+    <TargetScale>65</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>63</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 2x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>63</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>63</StartTime>
+    <TargetScale>65</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>69</StartTime>
+    <Duration>5</Duration>
+    <Message>Iridium 7 throttles back up now, and eventually claws back the lead.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>100</StartTime>
+    <Duration>5</Duration>
+    <Message>Because Iridium 7 has a higher velocity, its heating rate is also slightly higher.</Message>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>120</StartTime>
+    <Duration>30</Duration>
+    <TargetOrientation>-146</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>120</StartTime>
+    <TargetScale>400</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>147</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>147</StartTime>
+    <TargetScale>-490</TargetScale>
   </Command>
   <Command xsi:type="Stage">
     <StartTime>150</StartTime>
@@ -26,9 +108,40 @@
     <Duration>50</Duration>
     <TargetOrientation>-156</TargetOrientation>
   </Command>
+  <Command xsi:type="Target">
+    <StartTime>155</StartTime>
+    <Next>1</Next>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>176</StartTime>
+    <Duration>5</Duration>
+    <Message>Iridium 8 pitches 5° further than Iridium 7 to 20° ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>182</StartTime>
+    <Duration>5</Duration>
+    <Message>... producing a longer, flatter and faster trajectory back to 'Just Read the Instructions'.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>182</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>182</StartTime>
+    <TargetScale>640</TargetScale>
+  </Command>
   <Command xsi:type="Deploy">
     <Part>Fairing</Part>
     <StartTime>198</StartTime>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>198</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 16x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>198</StartTime>
+    <TargetIndex>8</TargetIndex>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>215</StartTime>
@@ -40,15 +153,79 @@
     <Duration>100</Duration>
     <TargetOrientation>-162</TargetOrientation>
   </Command>
+  <Command xsi:type="Rate">
+    <StartTime>335</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>335</StartTime>
+    <TargetScale>-540</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>355</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>355</StartTime>
+    <TargetScale>500</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>390</StartTime>
+    <TargetScale>-65</TargetScale>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>400</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-173</TargetOrientation>
+    <TargetOrientation>-174</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>410</StartTime>
+    <TargetScale>-140</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>420</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>420</StartTime>
+    <TargetScale>-100</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>425</StartTime>
+    <TargetScale>-80</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>431</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>431</StartTime>
+    <TargetScale>-80</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>437</StartTime>
+    <TargetScale>700</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>438</StartTime>
+    <TargetIndex>7</TargetIndex>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>439</StartTime>
+    <Next>0</Next>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>460</StartTime>
     <Duration>90</Duration>
     <TargetOrientation>-184</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>480</StartTime>
+    <TargetScale>260</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>535</StartTime>
+    <TargetIndex>11</TargetIndex>
   </Command>
   <Command xsi:type="Prograde">
     <StartTime>555</StartTime>

@@ -176,8 +176,8 @@ namespace SpaceSim.Spacecrafts
                 string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
                     this.GetRelativeVelocity().Length(),
                     this.GetRelativeAcceleration().Length() * 100,
-                    //this.GetRelativeAltitude() / 100,
-                    this.GetRelativeAltitude() / 1000,
+                    this.GetRelativeAltitude() / 100,
+                    //this.GetRelativeAltitude() / 1000,
                     this.Throttle * 10);
                 File.AppendAllText(filename, contents);
             }

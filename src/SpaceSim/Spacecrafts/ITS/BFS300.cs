@@ -121,8 +121,8 @@ namespace SpaceSim.Spacecrafts.ITS
             StageOffset = new DVector2(0, 0);
 
             Fins = new Fin[2];
-            Fins[0] = new Fin(this, new DVector2(0.2, -22), new DVector2(-2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard.png");
-            Fins[1] = new Fin(this, new DVector2(2.2, 20.2), new DVector2(5.86, 14.5), -Math.PI / 6);
+            Fins[0] = new Fin(this, new DVector2(0.2, -19.8), new DVector2(-2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard.png");
+            Fins[1] = new Fin(this, new DVector2(2.4, 18.5), new DVector2(5.86, 14.5), -Math.PI / 6);
 
             Engines = new IEngine[7];
             for (int i = 0; i < 7; i++)
@@ -214,10 +214,10 @@ namespace SpaceSim.Spacecrafts.ITS
 
             graphics.ResetTransform();
 
-            //foreach (Fin fin in Fins)
-            //{
-            //    fin.RenderGdi(graphics, camera);
-            //}
+            foreach (Fin fin in Fins)
+            {
+                fin.RenderGdi(graphics, camera);
+            }
 
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {

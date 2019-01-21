@@ -10,7 +10,7 @@ namespace SpaceSim.Engines
         private double _angle;
 
         public SuperDraco(int id, ISpaceCraft parent, DVector2 offset, double angle)
-            : base(parent, offset, new EngineFlame(id, Color.Yellow, 200, 4, 0.1, 0.15, 0.02, angle))
+            : base(parent, offset, new EngineFlame(id, Color.FromArgb(63, 255, 255, 159), 50, 2, 0.1, 0.15, 0.003, angle))
         {
             _angle = angle;
         }

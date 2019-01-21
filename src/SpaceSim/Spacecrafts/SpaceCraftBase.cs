@@ -652,9 +652,10 @@ namespace SpaceSim.Spacecrafts
                     double speed = relativeVelocity.Length();
 
                     // Heating
-                    HeatingRate = 1.83e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
-                    //HeatingRate = 0.8e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
-
+                    double qConv = 1.83e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
+                    double qRad = 3.2e-26 * Math.Pow(speed, 8) * Math.Pow(atmosphericDensity, 1.2) * Math.Sqrt((Width * 0.5));
+                    HeatingRate = qConv + qRad;
+                    
                     relativeVelocity.Normalize();
 
                     double formDragCoefficient = TotalFormDragCoefficient();

@@ -3,12 +3,12 @@
   <Command xsi:type="Ignition">
     <StartTime>157</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>103</Throttle>
+    <Throttle>99</Throttle>
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>500</StartTime>
     <Duration>17</Duration>
-    <TargetThrottle>99</TargetThrottle>
+    <TargetThrottle>86</TargetThrottle>
   </Command>
   <Command xsi:type="Shutdown">
     <StartTime>517</StartTime>
@@ -17,13 +17,13 @@
   <Command xsi:type="Ignition">
     <StartTime>3097</StartTime>
     <Duration>0.5</Duration>
-    <Throttle>66</Throttle>
+    <Throttle>64</Throttle>
     <EngineIds>
       <int>0</int>
     </EngineIds>
   </Command>
 <Command xsi:type="Shutdown">
-    <StartTime>3101</StartTime>
+    <StartTime>3100.5</StartTime>
     <Duration>0.5</Duration>
   </Command>
 </ArrayOfCommand>

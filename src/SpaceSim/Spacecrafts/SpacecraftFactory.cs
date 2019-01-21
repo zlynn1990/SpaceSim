@@ -153,6 +153,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildScaledBfsEDL(planet, config, craftDirectory);
                 case "SLS Satellite":
                     return BuildSLS(planet, config, craftDirectory);
+                case "StarHopper":
+                    return BuildStarHopper(planet, config, craftDirectory);
                 default:
                     throw new Exception("Unknown vehicle type: " + config.VehicleType);
             }
@@ -785,7 +787,7 @@ namespace SpaceSim.Spacecrafts
         private static List<ISpaceCraft> BuildBfsMarsReturnEdl(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
             var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, planet.SurfaceRadius + 166000.0),
-                planet.Velocity + new DVector2(12500, -1640), config.PayloadMass, 30000);
+                planet.Velocity + new DVector2(12500, -1635), config.PayloadMass, 30000);
 
             return new List<ISpaceCraft>
             {
@@ -942,6 +944,13 @@ namespace SpaceSim.Spacecrafts
             {
                 ship
             };
+        }
+
+        private static List<ISpaceCraft> BuildStarHopper(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new StarHopper(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity);
+
+            return new List<ISpaceCraft> { ship };
         }
     }
 }

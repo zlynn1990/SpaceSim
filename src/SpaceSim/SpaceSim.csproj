@@ -112,6 +112,8 @@
     <Compile Include="Engines\BE3U.cs" />
     <Compile Include="Engines\BE4.cs" />
     <Compile Include="Engines\BE4Vac.cs" />
+    <Compile Include="Engines\Merlin1DB5.cs" />
+    <Compile Include="Engines\Merlin1DB5Vac.cs" />
     <Compile Include="Engines\MiniRaptor50.cs" />
     <Compile Include="Engines\NEXT.cs" />
     <Compile Include="Engines\Raptor40.cs" />
@@ -231,6 +233,7 @@
     <Compile Include="Spacecrafts\ITS\BFR19.cs" />
     <Compile Include="Spacecrafts\ITS\BFR300.cs" />
     <Compile Include="Spacecrafts\ITS\BFS.cs" />
+    <Compile Include="Spacecrafts\ITS\StarHopper.cs" />
     <Compile Include="Spacecrafts\ITS\BFS300.cs" />
     <Compile Include="Spacecrafts\ITS\Carousel.cs" />
     <Compile Include="Spacecrafts\Fin.cs" />
@@ -472,6 +475,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\scaledBFS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Its\StarHopper.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\TiGridFinLeft.png">

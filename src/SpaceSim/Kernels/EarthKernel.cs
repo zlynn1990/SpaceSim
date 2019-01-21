@@ -31,9 +31,9 @@ namespace SpaceSim.Kernels
 
                     double textureFactor = 0.25 * sin(worldAngle * 500) + 0.75;
 
-                    int red = (int)(sunDotProduct * 127 * ratio * textureFactor);
-                    int green = (int)(sunDotProduct * 225 * ratio * textureFactor);
-                    int blue = (int)(sunDotProduct * 63 * ratio * textureFactor);
+                    int red = (int)(sunDotProduct * 95 * ratio * textureFactor);
+                    int green = (int)(sunDotProduct * 169 * ratio * textureFactor);
+                    int blue = (int)(sunDotProduct * 47 * ratio * textureFactor);
 
                     image[index] = ALPHA | (green << 8) | (red << 16);
                 }

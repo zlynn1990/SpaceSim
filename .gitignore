@@ -109,3 +109,5 @@ ipch/
 /doc/
 /rdoc/
 /flight profiles/SLS Satellite Launch/Images
+/flight profiles/Iridium-8/Sim
+/flight profiles/Iridium-8/Sim/GPS III SV01 raw.xlsx

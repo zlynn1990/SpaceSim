@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>2</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-98</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>70</Duration>
+    <TargetOrientation>-139</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>120</StartTime>
+    <Duration>30</Duration>
+    <TargetOrientation>-156</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>152</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>153</StartTime>
+    <Duration>2</Duration>
+    <TargetOrientation>-145</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>155</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-150</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>195</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>215</StartTime>
+    <Duration>85</Duration>
+    <TargetOrientation>-155</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>300</StartTime>
+    <Duration>100</Duration>
+    <TargetOrientation>-163</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>400</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-178</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>460</StartTime>
+    <Duration>20</Duration>
+    <TargetOrientation>-173</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>480</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>555</StartTime>
+    <Duration>3000</Duration>
+    <InitialAdjustmentTime>25</InitialAdjustmentTime>
+  </Command>
+</ArrayOfCommand>
