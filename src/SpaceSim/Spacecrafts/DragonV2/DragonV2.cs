@@ -9,6 +9,8 @@ using SpaceSim.Drawing;
 using SpaceSim.Properties;
 using SpaceSim.Particles;
 
+using SpaceSim.Spacecrafts.FalconCommon;
+
 namespace SpaceSim.Spacecrafts.DragonV2
 {
     class DragonV2 : SpaceCraftBase
@@ -81,7 +83,7 @@ namespace SpaceSim.Spacecrafts.DragonV2
         // Parachute size = 2 * pi * 20^2
         public override double FrontalArea
         {
-            get { return 21.504 + _parachuteRatio * 2500; }
+            get { return 21.504 + _parachuteRatio * 15000; }
         }
 
         public override double LiftingSurfaceArea
@@ -112,11 +114,16 @@ namespace SpaceSim.Spacecrafts.DragonV2
         private bool _drogueDeployed;
         private bool _parachuteDeployed;
         private double _parachuteRatio;
+        DrogueChute _drogueChute;
+        Parachute _parachute;
         private DateTime timestamp = DateTime.Now;
 
         public DragonV2(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass, double propellantMass)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, "Dragon/V2/capsule.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
         {
+            _drogueChute = new DrogueChute(this, new DVector2(8.0, -7.5));
+            _parachute = new Parachute(this, new DVector2(40.0, 2.0));
+
             Engines = new IEngine[]
             {
                 new SuperDraco(0, this, new DVector2(-1.35, 0.1), -0.15),
@@ -147,6 +154,11 @@ namespace SpaceSim.Spacecrafts.DragonV2
             SetThrottle(100);
         }
 
+        public override void DeployDrogues()
+        {
+            _drogueChute.Deploy();
+        }
+
         public override void DeployParachutes()
         {
             if (!_drogueDeployed)
@@ -158,6 +170,7 @@ namespace SpaceSim.Spacecrafts.DragonV2
                 _drogueDeployed = false;
                 _parachuteDeployed = true;
             }
+            _parachute.Deploy();
         }
 
         public override void Update(double dt)
@@ -172,6 +185,9 @@ namespace SpaceSim.Spacecrafts.DragonV2
             }
 
             base.Update(dt);
+
+            _drogueChute.Update(dt);
+            _parachute.Update(dt);
         }
 
         protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
@@ -240,6 +256,16 @@ namespace SpaceSim.Spacecrafts.DragonV2
             //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
             graphics.ResetTransform();
+
+            if (_parachute.IsDeploying() || _parachute.IsDeployed())
+            {
+                _parachute.RenderGdi(graphics, camera);
+            }
+            else
+            {
+                if (_drogueChute.IsDeploying() || _drogueChute.IsDeployed())
+                    _drogueChute.RenderGdi(graphics, camera);
+            }
 
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {

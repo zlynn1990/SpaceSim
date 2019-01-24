@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>2</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-94</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>13</Duration>
+    <TargetOrientation>-103</TargetOrientation>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>63</StartTime>
+    <Duration>37</Duration>
+    <InitialAdjustmentTime>5</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>63</StartTime>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>63</StartTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>63</StartTime>
+    <Duration>0.1</Duration>
+    <Throttle>100</Throttle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>67</StartTime>
+    <Duration>0.1</Duration>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>100</StartTime>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>101</StartTime>
+    <Duration>3</Duration>
+    <InitialAdjustmentTime>3</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Drogues</Part>
+    <StartTime>104</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>104</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-90</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Parachutes</Part>
+    <StartTime>114</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>114</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-110</TargetOrientation>
+  </Command>
+</ArrayOfCommand>

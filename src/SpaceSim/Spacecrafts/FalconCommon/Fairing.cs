@@ -17,7 +17,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public override double DryMass { get { return 875; } }
 
         private readonly DrogueChute _drogueChute;
-        private readonly Parachute _parachute;
+        private readonly Parafoil _parachute;
 
         public override AeroDynamicProperties GetAeroDynamicProperties
         {
@@ -83,13 +83,13 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             {
                 StageOffset = new DVector2(-1.26, -2.2);
                 _drogueChute = new DrogueChute(this, new DVector2(-1.26, 6.5));
-                _parachute = new Parachute(this, new DVector2(-1.26, 0.0), _isLeft);
+                _parachute = new Parafoil(this, new DVector2(-1.26, 0.0), _isLeft);
             }
             else
             {
                 StageOffset = new DVector2(1.26, -2.2);
                 _drogueChute = new DrogueChute(this, new DVector2(1.26, 6.5));
-                _parachute = new Parachute(this, new DVector2(1.26, 0.0), _isLeft);
+                _parachute = new Parafoil(this, new DVector2(1.26, 0.0), _isLeft);
             }
 
             Engines = new IEngine[0];

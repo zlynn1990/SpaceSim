@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>0</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>90</Throttle>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>0</StartTime>
+    <TargetScale>-20</TargetScale>
+  </Command>
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>1</StartTime>
+    <TargetScale>20</TargetScale>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>5</StartTime>
+    <Duration>0.5</Duration>
+    <TargetThrottle>100</TargetThrottle>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>9</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>11</StartTime>
+    <Duration>5</Duration>
+    <Message>This is a simulation of a StarHopper hop to 5kms altitude and return.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>17</StartTime>
+    <Duration>5</Duration>
+    <Message>In full daylight the methalox plumes will be translucent and may be difficult to see ...</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>18</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>23</StartTime>
+    <Duration>5</Duration>
+    <Message>... even with 400t of propellant, the 3 Raptors will have an abundance of thrust.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>28</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>28</StartTime>
+    <Duration>32</Duration>
+    <TargetThrottle>20</TargetThrottle>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>35</StartTime>
+    <Duration>5</Duration>
+    <Message>Notice the throttle indicator at the bottom right gradually dropping ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>41</StartTime>
+    <Duration>5</Duration>
+    <Message>... to about 20% if all three engines are running (hence the stepped nozzles?) ...</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>50</StartTime>
+    <TargetScale>30</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>63</StartTime>
+    <Duration>5</Duration>
+    <Message>... and sharply increasing to hold a hover.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>65</StartTime>
+    <TargetScale>-240</TargetScale>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>69</StartTime>
+    <Duration>0.5</Duration>
+    <TargetThrottle>58</TargetThrottle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>70</StartTime>
+    <Duration>25</Duration>
+    <TargetThrottle>57</TargetThrottle>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>89</StartTime>
+    <Duration>5</Duration>
+    <Message>As propellant is burnt off, the throttle required slowly reduces.</Message>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>95</StartTime>
+    <Duration>25</Duration>
+    <TargetThrottle>52</TargetThrottle>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>114</StartTime>
+    <Duration>5</Duration>
+    <Message>Throttling back for descent, and pitching to compensate for drift ...</Message>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>120</StartTime>
+    <Duration>0.5</Duration>
+    <TargetThrottle>30</TargetThrottle>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>120</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-97.5</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>138</StartTime>
+    <Duration>5</Duration>
+    <Message>As velocity increases, so does lift, reducing the effect of the pitch.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>144</StartTime>
+    <Duration>5</Duration>
+    <Message>Throttling up to limit the descent rate ...</Message>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>150</StartTime>
+    <Duration>0.5</Duration>
+    <TargetThrottle>50</TargetThrottle>
+  </Command>
+    <Command xsi:type="Post">
+    <StartTime>154</StartTime>
+    <Duration>5</Duration>
+    <Message>Throttling up for landing ...</Message>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>160.6</StartTime>
+    <Duration>0.5</Duration>
+    <TargetThrottle>68</TargetThrottle>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>170</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-83.7</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>180</StartTime>
+    <TargetScale>-50</TargetScale>
+  </Command>
+  <Command xsi:type="Retrograde">
+    <StartTime>180</StartTime>
+    <Duration>7</Duration>
+    <InitialAdjustmentTime>5</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>184</StartTime>
+    <TargetScale>-40</TargetScale>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>187</StartTime>
+    <Duration>0.5</Duration>
+    <TargetThrottle>50</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>188</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+</ArrayOfCommand>

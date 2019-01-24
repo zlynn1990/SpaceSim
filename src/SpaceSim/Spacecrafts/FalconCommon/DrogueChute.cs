@@ -31,7 +31,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _parent = parent;
 
             _offsetLength = offset.Length();
-            _offsetRotation = _offsetRotation = offset.Angle() - Math.PI / 2.0;
+            _offsetRotation = offset.Angle() - Math.PI / 2.0;
 
             _texture = new Bitmap("Textures/Spacecrafts/Falcon/Common/drogueChute.png");
         }
@@ -66,7 +66,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             {
                 _deployTimer += dt;
 
-                Pitch -= 0.025 * dt;
+                Pitch += 0.025 * dt;
 
                 if (_deployTimer > 9)
                 {
@@ -83,13 +83,13 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             DVector2 drawingOffset = new DVector2(Math.Cos(drawingRotation), Math.Sin(drawingRotation)) * 6.5;
 
             RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position - drawingOffset, camera.Bounds, Width, Height);
-            //RectangleF screenBounds = RenderUtils.ComputeBoundingBox(Position, cameraBounds, Width, Height);
 
             var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f, screenBounds.Y + screenBounds.Height * 0.5f);
 
             graphics.TranslateTransform(offset.X, offset.Y);
 
-            graphics.RotateTransform((float)((drawingRotation + Math.PI * 0.5) * 180 / Math.PI));
+            //graphics.RotateTransform((float)((drawingRotation + Math.PI * 0.5) * 180 / Math.PI));
+            graphics.RotateTransform((float)((drawingRotation - Math.PI) * 180 / Math.PI));
 
             graphics.TranslateTransform(-offset.X, -offset.Y);
 

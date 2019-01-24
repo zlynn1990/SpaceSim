@@ -88,7 +88,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
 
         private SpriteSheet _spriteSheet;
         DrogueChute _drogueChute;
-        Parachute _parachute;
+        Parafoil _parachute;
         Skid[] _skids;
         DateTime timestamp = DateTime.Now;
 
@@ -98,7 +98,7 @@ namespace SpaceSim.Spacecrafts.Falcon9
             StageOffset = new DVector2(0, stageOffset);
 
             _drogueChute = new DrogueChute(this, new DVector2(-2.5, 5));
-            _parachute = new Parachute(this, new DVector2(-1.5, 0.0), true);
+            _parachute = new Parafoil(this, new DVector2(-1.5, 0.0), true);
 
             Engines = new IEngine[]
             {

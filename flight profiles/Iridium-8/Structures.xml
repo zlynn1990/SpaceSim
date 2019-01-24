@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ArrayOfStructureConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <StructureConfig>
+    <Type>Strongback</Type>
+	  <DownrangeDistance>0</DownrangeDistance>
+	  <HeightOffset>-25</HeightOffset>
+  </StructureConfig>
+  <StructureConfig>
+    <Type>ServiceTower</Type>
+	  <DownrangeDistance>-28</DownrangeDistance>
+	  <HeightOffset>-46</HeightOffset>
+  </StructureConfig>
+  <StructureConfig>
+    <Type>ASDS</Type>
+	  <DownrangeDistance>243950.0</DownrangeDistance>
+	  <HeightOffset>6.5</HeightOffset>
+  </StructureConfig>
+</ArrayOfStructureConfig>

@@ -60,10 +60,10 @@
     <Duration>5</Duration>
     <Message>Increasing update speed to 2x.</Message>
   </Command>
-  <Command xsi:type="Rate">
+  <!--<Command xsi:type="Rate">
     <StartTime>63</StartTime>
     <TargetIndex>5</TargetIndex>
-  </Command>
+  </Command>-->
   <Command xsi:type="Zoom">
     <StartTime>63</StartTime>
     <TargetScale>65</TargetScale>

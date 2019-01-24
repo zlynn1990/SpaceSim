@@ -220,6 +220,7 @@
     <Compile Include="Spacecrafts\FalconCommon\GridFin.cs" />
     <Compile Include="Spacecrafts\FalconCommon\LandingLeg.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Parachute.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\Parafoil.cs" />
     <Compile Include="Spacecrafts\FalconCommon\PartyBalloon.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Skid.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
@@ -430,6 +431,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Falcon\Common\parachuteRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Falcon\Common\parachutes.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Falcon\Heavy\roadster.png">

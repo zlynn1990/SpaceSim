@@ -13,7 +13,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public double Mass { get; private set; }
         public double Pitch { get; private set; }
 
-        private const double Width = 13.0;
+        private const double Width = 65.0;
         private double Height = 0.0;
 
         private Bitmap _texture;
@@ -26,17 +26,14 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         private bool _isDeployed = false;
         private double _deployTimer;
 
-        public Parachute(ISpaceCraft parent, DVector2 offset, bool isLeft)
+        public Parachute(ISpaceCraft parent, DVector2 offset)
         {
             _parent = parent;
 
             _offsetLength = offset.Length();
             _offsetRotation = offset.Angle() - Math.PI / 2.0;
 
-            if(isLeft)
-                _texture = new Bitmap("Textures/Spacecrafts/Falcon/Common/parachuteLeft.png");
-            else
-                _texture = new Bitmap("Textures/Spacecrafts/Falcon/Common/parachuteRight.png");
+            _texture = new Bitmap("Textures/Spacecrafts/Falcon/Common/parachutes.png");
         }
 
         public void Deploy()
@@ -72,7 +69,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
                 Height += 10 * dt;
 
-                if (Height > 26.0)
+                if (Height > 50.0)
                 {
                     _isDeploying = false;
                     _isDeployed = true;
@@ -92,7 +89,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
             graphics.TranslateTransform(offset.X, offset.Y);
 
-            graphics.RotateTransform((float)((drawingRotation + Math.PI * 0.5) * 180 / Math.PI));
+            //graphics.RotateTransform((float)((drawingRotation + Math.PI * 0.5) * 180 / Math.PI));
+            graphics.RotateTransform((float)((drawingRotation - Math.PI * 0.5) * 180 / Math.PI));
 
             graphics.TranslateTransform(-offset.X, -offset.Y);
 
