@@ -6,13 +6,18 @@
 	<HeightOffset>-25</HeightOffset>
   </StructureConfig>
   <StructureConfig>
+    <Type>CrewArm</Type>
+	<DownrangeDistance>-25</DownrangeDistance>
+	<HeightOffset>-63</HeightOffset>
+  </StructureConfig>
+  <StructureConfig>
     <Type>ServiceTower</Type>
 	<DownrangeDistance>-40</DownrangeDistance>
 	<HeightOffset>-43</HeightOffset>
   </StructureConfig>
   <StructureConfig>
-    <Type>LandingPad</Type>
-	<DownrangeDistance>-10220</DownrangeDistance>
-	<HeightOffset>5</HeightOffset>
+    <Type>ASDS</Type>
+	  <DownrangeDistance>629120</DownrangeDistance>
+	  <HeightOffset>0</HeightOffset>
   </StructureConfig>
 </ArrayOfStructureConfig>

@@ -54,6 +54,9 @@ namespace SpaceSim.Structures
                         case "Strongback":
                             structures.Add(new Strongback(surfaceAngle, structureConfig.HeightOffset, planet));
                             break;
+                        case "CrewArm":
+                            structures.Add(new CrewArm(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
                     }
                 }
             }
