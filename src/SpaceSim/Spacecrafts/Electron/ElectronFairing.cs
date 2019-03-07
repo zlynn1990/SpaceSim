@@ -45,7 +45,7 @@ namespace SpaceSim.Spacecrafts.Electron
 
         public override double StagingForce
         {
-            get { return 300; }
+            get { return 1000; }
         }
 
         public override double FormDragCoefficient

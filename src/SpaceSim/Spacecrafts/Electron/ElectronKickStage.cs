@@ -29,7 +29,7 @@ namespace SpaceSim.Spacecrafts.Electron
         }
 
         public override double Width { get { return 1.2; } }
-        public override double Height { get { return 0.5; } }
+        public override double Height { get { return 0.8; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
 
@@ -108,7 +108,7 @@ namespace SpaceSim.Spacecrafts.Electron
         DateTime timestamp = DateTime.Now;
 
         public ElectronKickStage(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 50, double propellantMass = 100)
-            : base(craftDirectory, position, velocity, payloadMass, propellantMass, "Electron/ElectronS2.png")
+            : base(craftDirectory, position, velocity, payloadMass, propellantMass, "Electron/KickStage.png")
         {
             StageOffset = new DVector2(0, 0);
 
@@ -204,8 +204,8 @@ namespace SpaceSim.Spacecrafts.Electron
                 string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
                     this.GetRelativeVelocity().Length(),
                     this.GetRelativeAcceleration().Length() * 100,
-                    //this.GetRelativeAltitude() / 100,
-                    this.GetRelativeAltitude() / 1000,
+                    this.GetRelativeAltitude() / 100,
+                    //this.GetRelativeAltitude() / 1000,
                     this.Throttle * 10);
                 File.AppendAllText(filename, contents);
             }

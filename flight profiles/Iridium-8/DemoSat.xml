@@ -1,22 +1,119 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Zoom">
+    <StartTime>-2</StartTime>
+    <TargetScale>-24</TargetScale>
+  </Command>
   <Command xsi:type="Release">
     <StartTime>2</StartTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>2</StartTime>
+    <TargetScale>25</TargetScale>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>10</StartTime>
     <Duration>40</Duration>
     <TargetOrientation>-98</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>12</StartTime>
+    <Duration>5</Duration>
+    <Message>This is a compari-sim between the Rocket Lab ELaNa 19 launch and Iridium 8.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>18</StartTime>
+    <Duration>5</Duration>
+    <Message>In many ways, Electron is a 1/3 scale model of Falcon 9.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>18</StartTime>
+    <TargetScale>30</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>24</StartTime>
+    <Duration>5</Duration>
+    <Message>The first and second stage engine counts are the same, as is the propellant type.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>24</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>30</StartTime>
+    <Duration>5</Duration>
+    <Message>The fuselage diameters are 1.2 and 3.66m respectively, but F9 has a greater fineness ratio.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>30</StartTime>
+    <TargetScale>80</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>36</StartTime>
+    <Duration>5</Duration>
+    <Message>Both of these missions are to polar orbits.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>36</StartTime>
+    <TargetScale>120</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>42</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 2x.</Message>
+  </Command>
+    <Command xsi:type="Rate">
+    <StartTime>42</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>42</StartTime>
+    <TargetScale>120</TargetScale>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>50</StartTime>
     <Duration>70</Duration>
     <TargetOrientation>-139</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>60</StartTime>
+    <Duration>5</Duration>
+    <Message>Electron reaches MaxQ at T+01:13, a few seconds after Falcon.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>75</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 4x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>75</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>75</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>100</StartTime>
+    <Duration>5</Duration>
+    <Message>As Falcon gradually throttles down, Electron begins to catch up.</Message>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>120</StartTime>
     <Duration>30</Duration>
     <TargetOrientation>-156</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>120</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>148</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>148</StartTime>
+    <TargetScale>-569</TargetScale>
   </Command>
   <Command xsi:type="Stage">
     <StartTime>152</StartTime>
@@ -31,24 +128,78 @@
     <Duration>50</Duration>
     <TargetOrientation>-150</TargetOrientation>
   </Command>
+  <!--<Command xsi:type="Rate">
+    <StartTime>160</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>160</StartTime>
+    <TargetScale>500</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>182</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>182</StartTime>
+    <TargetScale>-430</TargetScale>
+  </Command>-->
+  <Command xsi:type="Rate">
+    <StartTime>190</StartTime>
+    <TargetIndex>7</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>190</StartTime>
+    <TargetScale>680</TargetScale>
+  </Command>
   <Command xsi:type="Deploy">
     <Part>Fairing</Part>
     <StartTime>195</StartTime>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>210</StartTime>
+    <Duration>5</Duration>
+    <Message>At T+03:35 the Electron S2 passes 150kms in altitude, for a more lofted trajectory than Falcon.</Message>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>215</StartTime>
     <Duration>85</Duration>
     <TargetOrientation>-155</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>280</StartTime>
+    <Duration>5</Duration>
+    <Message>The Electron S2 is now travelling at 3km/s.</Message>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>300</StartTime>
     <Duration>100</Duration>
     <TargetOrientation>-163</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>330</StartTime>
+    <Duration>5</Duration>
+    <Message>The Electron S2 approaches its first apogee of about 220kms.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>370</StartTime>
+    <Duration>5</Duration>
+    <Message>The Electron S2 is now travelling at 4km/s.</Message>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>400</StartTime>
     <Duration>60</Duration>
     <TargetOrientation>-178</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>400</StartTime>
+    <Duration>5</Duration>
+    <Message>The Electron S2 performs a battery hotswap.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>430</StartTime>
+    <Duration>5</Duration>
+    <Message>The Electron S2 is now travelling at 5km/s.</Message>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>460</StartTime>
@@ -60,9 +211,21 @@
     <Duration>40</Duration>
     <TargetOrientation>-180</TargetOrientation>
   </Command>
+  <Command xsi:type="Rate">
+    <StartTime>535</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>535</StartTime>
+    <TargetScale>-580</TargetScale>
+  </Command>
   <Command xsi:type="Prograde">
-    <StartTime>555</StartTime>
+    <StartTime>550</StartTime>
     <Duration>3000</Duration>
-    <InitialAdjustmentTime>25</InitialAdjustmentTime>
+    <InitialAdjustmentTime>10</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>565</StartTime>
+    <TargetScale>1000</TargetScale>
   </Command>
 </ArrayOfCommand>

@@ -17,7 +17,7 @@ namespace SpaceSim.Gauges
             Bounds = new RectangleF(_center.X - 5, _center.Y - 52, 10, 104);
         }
 
-        public void Update(double thrustAngle, double thrustMagnitude)
+        public void Update(double thrustAngle, double thrustMagnitude, double flightPathAngle)
         {
             _thrustMagnitude = thrustMagnitude;
         }
@@ -25,7 +25,6 @@ namespace SpaceSim.Gauges
         public void Render(Graphics graphics, RectangleD cameraBounds)
         {
             graphics.FillRectangle(new SolidBrush(Color.White), _center.X - 1, _center.Y - 52, 2, 104);
-
             graphics.FillRectangle(new SolidBrush(Color.White), _center.X - 5, _center.Y - 52, 10, 3);
             graphics.FillRectangle(new SolidBrush(Color.White), _center.X - 5, _center.Y + 52, 10, 3);
 

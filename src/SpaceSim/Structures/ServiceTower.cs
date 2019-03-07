@@ -5,8 +5,8 @@ namespace SpaceSim.Structures
 {
     class ServiceTower : StructureBase
     {
-        public override double Width { get { return 20; } }
-        public override double Height { get { return 95; } }
+        public override double Width { get { return 35; } }
+        public override double Height { get { return 100; } }
 
         public override Color IconColor { get { return Color.White; } }
 

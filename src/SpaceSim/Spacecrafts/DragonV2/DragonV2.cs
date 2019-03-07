@@ -273,16 +273,23 @@ namespace SpaceSim.Spacecrafts.DragonV2
 
                 if (!File.Exists(filename))
                 {
-                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle, Pressure, Heating\r\n");
                 }
 
                 timestamp = DateTime.Now;
 
-                string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
-                    this.GetRelativeVelocity().Length(),
+                double targetVelocity = this.GetRelativeVelocity().Length();
+                double density = this.GravitationalParent.GetAtmosphericDensity(this.GetRelativeAltitude());
+                double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
+
+                string contents = string.Format("{0}, {1}, {2}, {3}, {4}, {5}\r\n",
+                    targetVelocity,
                     this.GetRelativeAcceleration().Length() * 100,
                     this.GetRelativeAltitude() / 100,
-                    this.Throttle * 10);
+                    this.Throttle * 10,
+                    dynamicPressure / 10,
+                    this.HeatingRate / 10);
+
                 File.AppendAllText(filename, contents);
             }
         }

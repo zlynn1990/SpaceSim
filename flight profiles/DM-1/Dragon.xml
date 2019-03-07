@@ -8,55 +8,152 @@
     <Duration>40</Duration>
     <TargetOrientation>-94</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>6</StartTime>
+    <Duration>5</Duration>
+    <Message>Although CRS-16 on the left tried and failed to return its first stage to land ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>12</StartTime>
+    <Duration>5</Duration>
+    <Message>... the DM-1 first stage landed on a drone ship, saving propellant.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>18</StartTime>
+    <Duration>5</Duration>
+    <Message>Some propellant was used to throw the heavier Crew Dragon to orbit, but what about the rest?</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>18</StartTime>
+    <TargetScale>40</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>24</StartTime>
+    <Duration>5</Duration>
+    <Message>The DM-1 trajectory on the right is more lofted ...</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>24</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>42</StartTime>
+    <Duration>5</Duration>
+    <Message>... and it throttles back much further for Max-Q.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>42</StartTime>
+    <TargetScale>65</TargetScale>
+  </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>50</StartTime>
     <Duration>60</Duration>
-    <TargetOrientation>-129</TargetOrientation>
+    <TargetOrientation>-115</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>55</StartTime>
+    <TargetScale>90</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>60</StartTime>
+    <Duration>5</Duration>
+    <Message>Peak pressure for CRS-16 was about 24kPa, for DM-1 it was 21kPa.</Message>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>110</StartTime>
-    <Duration>10</Duration>
-    <TargetOrientation>-126</TargetOrientation>
+    <Duration>45</Duration>
+    <TargetOrientation>-148</TargetOrientation>
   </Command>
-  <Command xsi:type="RelativePitch">
+  <!--<Command xsi:type="Target">
+    <StartTime>70</StartTime>
+    <Next>true</Next>
+  </Command>-->
+  <Command xsi:type="Zoom">
+    <StartTime>70</StartTime>
+    <TargetScale>240</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>80</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 4x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>80</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>80</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>100</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
     <StartTime>120</StartTime>
-    <Duration>24</Duration>
-    <TargetOrientation>-140</TargetOrientation>
+    <TargetScale>60</TargetScale>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>148</StartTime>
+    <StartTime>161</StartTime>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>150</StartTime>
+    <StartTime>163</StartTime>
     <Duration>10</Duration>
-    <TargetOrientation>-145</TargetOrientation>
-  </Command>
-  <Command xsi:type="RelativePitch">
-    <StartTime>160</StartTime>
-    <Duration>100</Duration>
     <TargetOrientation>-158</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>260</StartTime>
+    <StartTime>170</StartTime>
     <Duration>100</Duration>
+    <TargetOrientation>-170</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>230</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 8x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>230</StartTime>
+    <TargetIndex>7</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>230</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>270</StartTime>
+    <Duration>100</Duration>
+    <TargetOrientation>-177</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>370</StartTime>
+    <Duration>50</Duration>
     <TargetOrientation>-163</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>360</StartTime>
+    <StartTime>420</StartTime>
     <Duration>100</Duration>
-    <TargetOrientation>-169</TargetOrientation>
+    <TargetOrientation>-167</TargetOrientation>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>460</StartTime>
-    <Duration>70</Duration>
-    <TargetOrientation>-181</TargetOrientation>
+    <StartTime>520</StartTime>
+    <Duration>30</Duration>
+    <TargetOrientation>-180</TargetOrientation>
   </Command>
   <Command xsi:type="Prograde">
-    <StartTime>590</StartTime>
+    <StartTime>550</StartTime>
     <Duration>10000</Duration>
     <InitialAdjustmentTime>10</InitialAdjustmentTime>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>630</StartTime>
+    <Duration>5</Duration>
+    <Message>The result is remarkably similar trajectories to the ISS.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>630</StartTime>
+    <TargetScale>200</TargetScale>
+  </Command>
   <Command xsi:type="Stage">
-    <StartTime>638</StartTime>
+    <StartTime>660</StartTime>
   </Command>
 </ArrayOfCommand>

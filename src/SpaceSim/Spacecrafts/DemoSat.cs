@@ -168,17 +168,18 @@ namespace SpaceSim.Spacecrafts
 
                 if (!File.Exists(filename))
                 {
-                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle, Heating rate\r\n");
                 }
 
                 timestamp = DateTime.Now;
 
-                string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
+                string contents = string.Format("{0}, {1}, {2}, {3}, {4}\r\n",
                     this.GetRelativeVelocity().Length(),
                     this.GetRelativeAcceleration().Length() * 100,
                     this.GetRelativeAltitude() / 100,
                     //this.GetRelativeAltitude() / 1000,
-                    this.Throttle * 10);
+                    this.Throttle * 10,
+                    this.HeatingRate / 10);
                 File.AppendAllText(filename, contents);
             }
         }

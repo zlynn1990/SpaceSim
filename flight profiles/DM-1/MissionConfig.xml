@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <MissionConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <VehicleType>Dragon2F9</VehicleType>
-  <PayloadMass>500</PayloadMass>
+  <PayloadMass>3455</PayloadMass>
   <ParentPlanet>Earth</ParentPlanet>
-  <LaunchDate>2018-11-12T16:00:00</LaunchDate>
+  <LaunchDate>2019-03-02T02:49:00</LaunchDate>
+  <ClockDelay>2</ClockDelay>
+  <Inclination>51.6</Inclination>
 </MissionConfig>

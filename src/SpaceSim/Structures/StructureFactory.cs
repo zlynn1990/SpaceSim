@@ -54,6 +54,12 @@ namespace SpaceSim.Structures
                         case "Strongback":
                             structures.Add(new Strongback(surfaceAngle, structureConfig.HeightOffset, planet));
                             break;
+                        case "TowersLeft":
+                            structures.Add(new TowersLeft(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
+                        case "TowersRight":
+                            structures.Add(new TowersRight(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
                     }
                 }
             }

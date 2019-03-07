@@ -32,7 +32,7 @@ namespace SpaceSim.Gauges
             IsActive = false;
         }
 
-        public void Update(double thrustAngle, double thrustMagnitude) { }
+        public void Update(double thrustAngle, double thrustMagnitude, double flightPathAngle) { }
 
         public void Render(Graphics graphics, RectangleD cameraBounds)
         {

@@ -18,13 +18,19 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ScreenSize" Type="System.Drawing.Size" Scope="Application">
-      <Value Profile="(Default)">1600, 900</Value>
+      <Value Profile="(Default)">1280, 720</Value>
     </Setting>
     <Setting Name="PolarOrbit" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Font" Type="System.Drawing.Font" Scope="Application">
       <Value Profile="(Default)">Verdana, 11pt</Value>
+    </Setting>
+    <Setting Name="RotateInOrbit" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Inclination" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">51.6</Value>
     </Setting>
   </Settings>
 </SettingsFile>
