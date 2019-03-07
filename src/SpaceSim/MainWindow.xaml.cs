@@ -205,7 +205,7 @@ namespace SpaceSim
 
             MissionConfig primaryMission = MissionConfig.Load(ProfilePaths[0]);
 
-            _originTime = primaryMission.GetLaunchDate();
+            _originTime = Constants.Epoch;//primaryMission.GetLaunchDate();
 
             UpdateLoadingPercentage(20);
 
@@ -778,7 +778,7 @@ namespace SpaceSim
                 // Info for speed / acceleration
                 var movementInfo = new List<string>
                 {
-                    "Relative Speed: " + UnitDisplay.Speed(targetVelocity, false),
+                    "Relative Speed: " + UnitDisplay.Speed(targetVelocity, true),
                     "Relative Acceleration: " + UnitDisplay.Acceleration(target.GetRelativeAcceleration().Length()),
                 };
 
