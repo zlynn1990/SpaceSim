@@ -7,7 +7,7 @@ namespace SpaceSim.Gauges
     {
         RectangleF Bounds { get; }
 
-        void Update(double thrustAngle, double thrustMagnitude);
+        void Update(double thrustAngle, double thrustMagnitude, double flightPathAngle);
 
         void Render(Graphics graphics, RectangleD cameraBounds);
     }

@@ -787,7 +787,9 @@ namespace SpaceSim.Spacecrafts
         private static List<ISpaceCraft> BuildBfsMarsReturnEdl(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
             var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, planet.SurfaceRadius + 166000.0),
-                planet.Velocity + new DVector2(12500, -1635), config.PayloadMass, 30000);
+                planet.Velocity + new DVector2(12500, -1634), config.PayloadMass, 30000); // -45° AoA
+                //planet.Velocity + new DVector2(12500, -1740), config.PayloadMass, 30000); // 80° AoA
+                //planet.Velocity + new DVector2(12500, -2100), config.PayloadMass, 30000); // 45° AoA
 
             return new List<ISpaceCraft>
             {

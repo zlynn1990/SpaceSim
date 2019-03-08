@@ -14,11 +14,12 @@ namespace SpaceSim.Spacecrafts
 
         private double _offsetLength;
         private double _offsetRotation;
+        private double _offsetRatio;
 
         private double _width;
         private double _height;
 
-        public Fin(ISpaceCraft parent, DVector2 offset, DVector2 size, double dihedral = 0.0, string texturePath = "Textures/Spacecrafts/ITS/Fin.png")
+        public Fin(ISpaceCraft parent, DVector2 offset, DVector2 size, double dihedral = 0.0, string texturePath = "Textures/Spacecrafts/ITS/Fin.png", double offsetRatio = 1.5)
             : base(parent, texturePath)
         {
             _width = size.X;
@@ -33,6 +34,7 @@ namespace SpaceSim.Spacecrafts
 
             _offsetLength = offset.Length();
             _offsetRotation = offset.Angle() - Constants.PiOverTwo;
+            _offsetRatio = offsetRatio;
         }
 
         public void SetDihedral(double targetAngle)
@@ -47,8 +49,8 @@ namespace SpaceSim.Spacecrafts
             DVector2 offset = new DVector2(Math.Cos(rotation), Math.Sin(rotation)) * _offsetLength;
 
             // handle dihedral
-            offset.X += Math.Sin(Dihedral) * Math.Cos(rotation - Constants.PiOverTwo) * _width / 2.4;
-            offset.Y += Math.Sin(Dihedral) * Math.Sin(rotation - Constants.PiOverTwo) * _width / 2.4;
+            offset.X += Math.Sin(Dihedral) * Math.Cos(rotation - Constants.PiOverTwo) * _width / _offsetRatio;
+            offset.Y += Math.Sin(Dihedral) * Math.Sin(rotation - Constants.PiOverTwo) * _width / _offsetRatio;
 
             Position = _parent.Position - offset;
 

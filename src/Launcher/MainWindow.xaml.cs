@@ -53,9 +53,9 @@ namespace Launcher
                             continue;
                         }
 
-                        var commmands = CommandReader.Read(commandFile);
+                        List<Command> commands = CommandReader.Read(commandFile);
 
-                        missionProfile.Commands.Add(Path.GetFileNameWithoutExtension(commandFile), commmands);
+                        missionProfile.Commands.Add(Path.GetFileNameWithoutExtension(commandFile), commands);
                     }
 
                     _missionProfiles.Add(displayName, missionProfile);

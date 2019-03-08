@@ -42,6 +42,7 @@ namespace SpaceSim
     {
         public static List<string> ProfilePaths;
         public static bool FullScreen;
+        public static bool IgnoreCustomActions;
 
         private RenderingType _renderingType = RenderingType.OpenCLHardware;
 
@@ -64,6 +65,7 @@ namespace SpaceSim
         private Camera _camera;
         private int _targetIndex;
         private bool _targetInOrbit;
+        private bool _rotateInOrbit;
 
         private Sun _sun;
 
@@ -95,6 +97,7 @@ namespace SpaceSim
 
             _isPaused = true;
             _isActive = true;
+
             _updateThread = new Thread(GameLoop);
             _updateThread.Start();
         }
@@ -102,6 +105,7 @@ namespace SpaceSim
         private void InitializeScreen()
         {
             Mouse.OverrideCursor = Cursors.None;
+            _rotateInOrbit = Settings.Default.RotateInOrbit;
 
             if (FullScreen)
             {
@@ -205,7 +209,8 @@ namespace SpaceSim
 
             MissionConfig primaryMission = MissionConfig.Load(ProfilePaths[0]);
 
-            _originTime = Constants.Epoch;//primaryMission.GetLaunchDate();
+            //_originTime = Constants.Epoch;
+            _originTime = primaryMission.GetLaunchDate();
 
             UpdateLoadingPercentage(20);
 
@@ -467,34 +472,43 @@ namespace SpaceSim
 
             if (target is ISpaceCraft)
             {
-                if (target.InOrbit)
+                if (_rotateInOrbit)
                 {
-                    if (!_targetInOrbit)
+                    if (target.InOrbit)
                     {
-                        _camera.SetRotation(0, true);
+                        if (!_targetInOrbit)
+                        {
+                            _camera.SetRotation(0, true);
 
-                        _targetInOrbit = true;
+                            _targetInOrbit = true;
+                        }
+                        else
+                        {
+                            _camera.SetRotation(0);
+                        }
                     }
                     else
                     {
-                        _camera.SetRotation(0);
+                        DVector2 craftOffset = target.GravitationalParent.Position - target.Position;
+                        craftOffset.Normalize();
+
+                        if (_targetInOrbit)
+                        {
+                            _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle(), true);
+
+                            _targetInOrbit = false;
+                        }
+                        else
+                        {
+                            _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
+                        }
                     }
                 }
                 else
                 {
                     DVector2 craftOffset = target.GravitationalParent.Position - target.Position;
                     craftOffset.Normalize();
-
-                    if (_targetInOrbit)
-                    {
-                        _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle(), true);
-
-                        _targetInOrbit = false;
-                    }
-                    else
-                    {
-                        _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
-                    }
+                    _camera.SetRotation(Constants.PiOverTwo - craftOffset.Angle());
                 }
             }
             else
@@ -730,7 +744,8 @@ namespace SpaceSim
                 {
                     if (targetSpaceCraft != null)
                     {
-                        gauge.Update(_gravitationalBodies[_targetIndex].GetRelativePitch(), throttle / 100.0);
+                        double relativePitch = _gravitationalBodies[_targetIndex].GetRelativePitch();
+                        gauge.Update(relativePitch, throttle / 100.0, relativePitch - targetSpaceCraft.GetAlpha());
                     }
 
                     gauge.Render(graphics, cameraBounds);
@@ -827,7 +842,7 @@ namespace SpaceSim
                     {
                         "Air Density: " + UnitDisplay.Density(density),
                         "Dynamic Pressure: " + UnitDisplay.Pressure(dynamicPressure),
-                        "Heating Rate: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate)
+                        "Heat Flux: " + UnitDisplay.Heat(targetSpaceCraft.HeatingRate)
                     });
                 }
 

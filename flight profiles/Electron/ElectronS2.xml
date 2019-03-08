@@ -8,6 +8,11 @@
       <int>0</int>
     </EngineIds>
   </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>529</StartTime>
+    <Duration>10</Duration>
+    <TargetThrottle>75</TargetThrottle>
+  </Command>
   <Command xsi:type="Shutdown">
     <StartTime>539</StartTime>
     <Duration>0.5</Duration>

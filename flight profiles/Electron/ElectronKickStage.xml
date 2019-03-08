@@ -68,7 +68,7 @@
     <InitialAdjustmentTime>10</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>2939</StartTime>
+    <StartTime>2870</StartTime>
     <Duration>0.5</Duration>
     <Throttle>100</Throttle>
   </Command>

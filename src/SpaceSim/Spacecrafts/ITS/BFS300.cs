@@ -121,8 +121,8 @@ namespace SpaceSim.Spacecrafts.ITS
             StageOffset = new DVector2(0, 0);
 
             Fins = new Fin[2];
-            Fins[0] = new Fin(this, new DVector2(0.2, -19.8), new DVector2(-2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard.png");
-            Fins[1] = new Fin(this, new DVector2(2.4, 18.5), new DVector2(5.86, 14.5), -Math.PI / 6);
+            Fins[0] = new Fin(this, new DVector2(3.8, -18.0), new DVector2(2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard.png", 1000.0);
+            Fins[1] = new Fin(this, new DVector2(2.4, 17.2), new DVector2(5.86, 13.0), -Math.PI / 6);
 
             Engines = new IEngine[7];
             for (int i = 0; i < 7; i++)
@@ -163,43 +163,69 @@ namespace SpaceSim.Spacecrafts.ITS
 
             // Normalize the angle to [0,360]
             int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
-
             int heatingRate = Math.Min((int)this.HeatingRate, 2000000);
             if (heatingRate > 100000)
             {
                 Random rnd = new Random();
                 float noise = (float)rnd.NextDouble();
-                float width = screenBounds.Width / (3 + noise);
-                float height = screenBounds.Height / (18 + noise);
+                
+                // vary the bow shock width with velocity
+                double mach = this.MachNumber;
+                double theta = Math.PI / (2 * mach);
+                float width = screenBounds.Width * (float)Math.Sin(theta) * (10 + noise);
+                float height = screenBounds.Height / (2 + noise / 40);
                 RectangleF plasmaRect = screenBounds;
                 plasmaRect.Inflate(new SizeF(width, height));
 
-                int alpha = Math.Min(heatingRate / 7800, 255);
+                if (rollAngle <= 90)
+                {
+                    plasmaRect.Offset(0.0f, screenBounds.Height / 3.0f);
+                }
+                else
+                {
+                    plasmaRect.Offset(-screenBounds.Width / 2.0f, screenBounds.Height / 2.0f);
+                }
+
+                int alpha = Math.Min(heatingRate / 20000, 255);
                 int red = alpha;
-                int green = Math.Max(red - 128, 0) * 2;
-                int blue = 0;
+                int green = 0;
+                int blue = alpha;
                 Color glow = Color.FromArgb(alpha, red, green, blue);
 
-                float penWidth = width / 12;
+                float penWidth = width / 16;
                 Pen glowPen = new Pen(glow, penWidth);
                 glowPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                 glowPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
-                graphics.DrawArc(glowPen, plasmaRect, 130, 100);
 
-                glowPen.Color = Color.FromArgb((int)(alpha * 0.75), glow);
-                plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, 110, 140);
-
-                glowPen.Color = Color.FromArgb((int)(alpha * 0.5), glow);
-                plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, 90, 180);
-
-                glowPen.Color = Color.FromArgb((int)(alpha * 0.25), glow);
-                plasmaRect.Inflate(-penWidth, -penWidth);
-                graphics.DrawArc(glowPen, plasmaRect, 70, 220);
+                if (rollAngle <= 90)
+                {
+                    float startAngle = 170;
+                    float sweepAngle = 30;
+                    int arcs = 20;
+                    for (int i = 0; i < arcs; i++)
+                    {
+                        glow = Color.FromArgb(alpha, (int)(red * (arcs - i) / arcs), green, blue);
+                        glowPen.Color = Color.FromArgb((int)(alpha * (arcs - i) / arcs), glow);
+                        plasmaRect.Inflate(-penWidth, -penWidth);
+                        graphics.DrawArc(glowPen, plasmaRect, startAngle + i * 4.0f, sweepAngle + i * 1);
+                    }
+                }
+                else
+                {
+                    float startAngle = 265;
+                    float sweepAngle = 30;
+                    int arcs = 20;
+                    for (int i = 0; i < arcs; i++)
+                    {
+                        glow = Color.FromArgb(alpha, (int)(red * (arcs - i) / arcs), green, blue);
+                        glowPen.Color = Color.FromArgb((int)(alpha * (arcs - i) / arcs), glow);
+                        plasmaRect.Inflate(-penWidth, -penWidth);
+                        graphics.DrawArc(glowPen, plasmaRect, startAngle + i * 1.0f, sweepAngle + i * 6);
+                    }
+                }
             }
 
-            if(rollAngle <= 90)
+            if (rollAngle <= 90)
                 graphics.DrawImage(this.Texture, screenBounds.X - screenBounds.Width * 0.43f, screenBounds.Y, screenBounds.Width * 1.8f, screenBounds.Height);
             else
                 graphics.DrawImage(this.Texture, screenBounds.X + screenBounds.Width * 0.9f, screenBounds.Y, -screenBounds.Width * 1.8f, screenBounds.Height);
@@ -225,7 +251,8 @@ namespace SpaceSim.Spacecrafts.ITS
 
                 if (!File.Exists(filename))
                 {
-                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                    //File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Heating\r\n");
                 }
 
                 timestamp = DateTime.Now;
@@ -234,7 +261,8 @@ namespace SpaceSim.Spacecrafts.ITS
                     this.GetRelativeVelocity().Length(),
                     this.GetRelativeAcceleration().Length() * 1000,
                     this.GetRelativeAltitude() / 10,
-                    this.Throttle * 100);
+                    //this.Throttle * 100,
+                    this.HeatingRate / 500);
                 File.AppendAllText(filename, contents);
             }
         }

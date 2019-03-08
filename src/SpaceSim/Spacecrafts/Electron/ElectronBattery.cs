@@ -62,15 +62,13 @@ namespace SpaceSim.Spacecrafts.Electron
         {
             get
             {
-                double baseCd = GetBaseCd(0.6);
-                double alpha = GetAlpha();
-                return baseCd * Math.Sin(alpha * 2.0);
+                return 0.0;
             }
         }
 
         public override double FrontalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
         public override double ExposedSurfaceArea { get { return 2 * Math.PI * (Width / 2) * Height + FrontalArea; } }
-        public override double LiftingSurfaceArea { get { return Width * Height; } }
+        public override double LiftingSurfaceArea { get { return 0.0; } }
 
         private bool _isLeft;
         private bool _isHidden;

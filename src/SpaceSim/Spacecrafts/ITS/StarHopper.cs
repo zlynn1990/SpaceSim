@@ -17,7 +17,8 @@ namespace SpaceSim.Spacecrafts.ITS
 
         public override double DryMass { get { return 100000; } }
         public override double Width { get { return 9; } }
-        public override double Height { get { return 40.6; } }
+        //public override double Height { get { return 17; } }
+        public override double Height { get { return 39.55; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
 
@@ -107,14 +108,15 @@ namespace SpaceSim.Spacecrafts.ITS
             Engines = new IEngine[3];
             for (int i = 0; i < 3; i++)
             {
-                double engineOffsetX = (i - 0.6) / 1.4;
-                var offset = new DVector2(engineOffsetX * Width * 0.2, Height * 0.42);
+                double engineOffsetX = (i - 1) / 1.4;
+                var offset = new DVector2(engineOffsetX * Width * 0.22, Height * 0.32);
                 Engines[i] = new RaptorSL300(i, this, offset);
             }
 
             //_spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/scaledShip.png", 12, 12);
 
             string texturePath = "Its/StarHopper.png";
+            //string texturePath = "Its/StarHopper2.png";
             string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
             this.Texture = new Bitmap(fullPath);
 
@@ -155,16 +157,21 @@ namespace SpaceSim.Spacecrafts.ITS
 
                 if (!File.Exists(filename))
                 {
-                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle, Pressure\r\n");
                 }
 
                 timestamp = DateTime.Now;
 
-                string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
+                double density = this.GravitationalParent.GetAtmosphericDensity(this.GetRelativeAltitude());
+                double velocity = this.GetRelativeVelocity().Length();
+                double dynamicPressure = 0.5 * density * velocity * velocity;
+
+                string contents = string.Format("{0}, {1}, {2}, {3}, {4}\r\n",
                     this.GetRelativeVelocity().Length() * 10,
                     this.GetRelativeAcceleration().Length() * 100,
-                    this.GetRelativeAltitude(),
-                    this.Throttle * 10);
+                    this.GetRelativeAltitude() / 10,
+                    this.Throttle * 10,
+                    dynamicPressure / 10);
                 File.AppendAllText(filename, contents);
             }
         }

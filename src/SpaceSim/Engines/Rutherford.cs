@@ -8,7 +8,7 @@ namespace SpaceSim.Engines
     class Rutherford : EngineBase
     {
         public Rutherford(int id, ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(id, Color.FromArgb(63, 255, 255, 191), 50, 2, 0.2, 0.6, 0.01))
+            : base(parent, offset, new EngineFlame(id, Color.FromArgb(63, 255, 255, 191), 30, 2, 0.2, 0.6, 0.01))
         {
         }
 

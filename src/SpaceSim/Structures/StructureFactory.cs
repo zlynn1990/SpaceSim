@@ -57,6 +57,12 @@ namespace SpaceSim.Structures
                         case "CrewArm":
                             structures.Add(new CrewArm(surfaceAngle, structureConfig.HeightOffset, planet));
                             break;
+                        case "TowersLeft":
+                            structures.Add(new TowersLeft(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
+                        case "TowersRight":
+                            structures.Add(new TowersRight(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
                     }
                 }
             }

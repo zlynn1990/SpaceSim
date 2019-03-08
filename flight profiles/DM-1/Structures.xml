@@ -2,8 +2,8 @@
 <ArrayOfStructureConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <StructureConfig>
     <Type>Strongback</Type>
-	<DownrangeDistance>0</DownrangeDistance>
-	<HeightOffset>-25</HeightOffset>
+	  <DownrangeDistance>0</DownrangeDistance>
+	  <HeightOffset>-25</HeightOffset>
   </StructureConfig>
   <StructureConfig>
     <Type>CrewArm</Type>
@@ -12,12 +12,12 @@
   </StructureConfig>
   <StructureConfig>
     <Type>ServiceTower</Type>
-	<DownrangeDistance>-40</DownrangeDistance>
-	<HeightOffset>-43</HeightOffset>
+	  <DownrangeDistance>-40</DownrangeDistance>
+	  <HeightOffset>-50</HeightOffset>
   </StructureConfig>
   <StructureConfig>
     <Type>ASDS</Type>
-	  <DownrangeDistance>629120</DownrangeDistance>
-	  <HeightOffset>0</HeightOffset>
+    <DownrangeDistance>494820.0</DownrangeDistance>
+    <HeightOffset>0</HeightOffset>
   </StructureConfig>
 </ArrayOfStructureConfig>

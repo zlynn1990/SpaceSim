@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Ignition">
+    <StartTime>153</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>95</Throttle>
+  </Command>
+  <Command xsi:type="Throttle">
+    <StartTime>466</StartTime>
+    <Duration>70</Duration>
+    <TargetThrottle>74.7</TargetThrottle>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>536</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+</ArrayOfCommand>

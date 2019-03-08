@@ -70,7 +70,7 @@ namespace SpaceSim.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1600, 900")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1280, 720")]
         public global::System.Drawing.Size ScreenSize {
             get {
                 return ((global::System.Drawing.Size)(this["ScreenSize"]));
@@ -92,6 +92,24 @@ namespace SpaceSim.Properties {
         public global::System.Drawing.Font Font {
             get {
                 return ((global::System.Drawing.Font)(this["Font"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RotateInOrbit {
+            get {
+                return ((bool)(this["RotateInOrbit"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("51.6")]
+        public float Inclination {
+            get {
+                return ((float)(this["Inclination"]));
             }
         }
     }

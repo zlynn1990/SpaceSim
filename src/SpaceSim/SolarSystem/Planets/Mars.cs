@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using SpaceSim.Kernels;
 using SpaceSim.Orbits;
 
@@ -43,9 +44,23 @@ namespace SpaceSim.SolarSystem.Planets
         {
         }
 
+        // Realistic density model based off https://www.grc.nasa.gov/www/k-12/rocket/atmos.html
         public override double GetAtmosphericDensity(double altitude)
         {
-            return base.GetAtmosphericDensity(altitude) * 0.02;
+            if (altitude > AtmosphereHeight) return 0;
+
+            double temperature;
+            if (altitude > 7000)
+            {
+                temperature = -23.4 - 0.00222 * altitude;
+            }
+            else
+            {
+                temperature = -31 - 0.000998 * altitude;
+            }
+
+            double pressure = 0.699 * Math.Exp(-0.00009 * temperature);
+            return pressure / (0.1921 * (temperature + 273.1));
         }
 
         public override double GetSpeedOfSound(double altitude)

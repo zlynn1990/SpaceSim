@@ -8,6 +8,7 @@ using VectorMath;
 
 using SpaceSim.Properties;
 using System.IO;
+using SpaceSim.Drawing;
 
 namespace SpaceSim.Spacecrafts.DragonV1
 {
@@ -143,26 +144,56 @@ namespace SpaceSim.Spacecrafts.DragonV1
                 _parachuteRatio = Math.Min(_parachuteRatio + dt * 0.03, 1);
             }
 
+            base.Update(dt);
+        }
+
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
+        {
+            double drawingRotation = Pitch + Math.PI * 0.5;
+
+            var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
+                                    screenBounds.Y + screenBounds.Height * 0.5f);
+
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
+
+            graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
+
+            // Index into the sprite
+            //int ships = _spriteSheet.Cols * _spriteSheet.Rows;
+            //int spriteIndex = (rollAngle * ships) / 360;
+            //while (spriteIndex < 0)
+            //    spriteIndex += ships;
+
+            //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
+
+            graphics.ResetTransform();
+
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {
                 string filename = MissionName + ".csv";
 
                 if (!File.Exists(filename))
                 {
-                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle\r\n");
+                    File.AppendAllText(filename, "Velocity, Acceleration, Altitude, Throttle, Pressure, Heating\r\n");
                 }
 
                 timestamp = DateTime.Now;
 
-                string contents = string.Format("{0}, {1}, {2}, {3}\r\n",
-                    this.GetRelativeVelocity().Length(),
-                    this.GetRelativeAcceleration().Length() * 1000,
-                    this.GetRelativeAltitude() / 10,
-                    this.Throttle * 100);
+                double targetVelocity = this.GetRelativeVelocity().Length();
+                double density = this.GravitationalParent.GetAtmosphericDensity(this.GetRelativeAltitude());
+                double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;
+
+                string contents = string.Format("{0}, {1}, {2}, {3}, {4}, {5}\r\n",
+                    targetVelocity,
+                    this.GetRelativeAcceleration().Length() * 100,
+                    this.GetRelativeAltitude() / 100,
+                    this.Throttle * 10,
+                    dynamicPressure / 10,
+                    this.HeatingRate / 10);
+
                 File.AppendAllText(filename, contents);
             }
-
-            base.Update(dt);
         }
     }
 }

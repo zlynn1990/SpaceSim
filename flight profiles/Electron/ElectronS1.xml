@@ -8,7 +8,7 @@
   <Command xsi:type="Throttle">
     <StartTime>62</StartTime>
     <Duration>5</Duration>
-    <TargetThrottle>95</TargetThrottle>
+    <TargetThrottle>90</TargetThrottle>
   </Command>
   <Command xsi:type="Throttle">
     <StartTime>78</StartTime>

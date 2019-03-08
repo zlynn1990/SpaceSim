@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>0</StartTime>
+    <TargetScale>-20</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>0</StartTime>
+    <Duration>0</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1</StartTime>
+    <Duration>14</Duration>
+    <TargetOrientation>-135</TargetOrientation>
+    <!--<TargetOrientation>-100</TargetOrientation>-->
+  </Command>
+  <Command xsi:type="Dihedral">
+    <StartTime>15</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>45</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>15</StartTime>
+    <Duration>300</Duration>
+    <TargetOrientation>-135</TargetOrientation>
+    <!--<TargetOrientation>-100</TargetOrientation>-->
+  </Command>
+</ArrayOfCommand>

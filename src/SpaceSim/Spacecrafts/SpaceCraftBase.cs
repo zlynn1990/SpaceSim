@@ -172,7 +172,7 @@ namespace SpaceSim.Spacecrafts
 
         private int _onGroundIterations;
 
-        private bool _showDisplayVectors;
+        bool _showDisplayVectors;
 
         protected SpaceCraftBase(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass,
             double propellantMass, string texturePath, ReEntryFlame entryFlame = null)
@@ -629,7 +629,7 @@ namespace SpaceSim.Spacecrafts
 
                     Position = body.Position + normal * (body.SurfaceRadius + heightOffset);
 
-                    Velocity = (body.Velocity + surfaceNormal*rotationalSpeed);
+                    Velocity = (body.Velocity + surfaceNormal * rotationalSpeed);
 
                     Pitch = normal.Angle();
 
@@ -653,7 +653,7 @@ namespace SpaceSim.Spacecrafts
 
                     // Heating
                     double qConv = 1.83e-4 * Math.Pow(speed, 3) * Math.Sqrt(atmosphericDensity / (Width * 0.5));
-                    double qRad = 3.2e-26 * Math.Pow(speed, 8) * Math.Pow(atmosphericDensity, 1.2) * Math.Sqrt((Width * 0.5));
+                    double qRad = 3.2e-22 * Math.Pow(speed, 8) * Math.Pow(atmosphericDensity, 1.2) * Math.Sqrt((Width * 0.5));
                     HeatingRate = qConv + qRad;
                     
                     relativeVelocity.Normalize();

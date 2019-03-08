@@ -17,6 +17,8 @@ namespace SpaceSim
 
             var flightProfileManager = new FlightProfileManager();
 
+            SpaceSim.MainWindow.IgnoreCustomActions = true;
+
             if (e.Args.Length > 0)
             {
                 bool loadProfiles = false;
@@ -72,6 +74,7 @@ namespace SpaceSim
                     //flightProfileManager.BuildFullPath("Inmarsat-5"),
                     //flightProfileManager.BuildFullPath("Intelsat-35e"),
                     //flightProfileManager.BuildFullPath("NROL-76"),
+                    //flightProfileManager.BuildFullPath("Nusantara-Satu"),
                     //flightProfileManager.BuildFullPath("Saocom-1A"),
                     //flightProfileManager.BuildFullPath("SES-10"),
                     //flightProfileManager.BuildFullPath("BFR Crew Launch"),
@@ -86,8 +89,11 @@ namespace SpaceSim
                     //flightProfileManager.BuildFullPath("BFR Direct GTO"),
                     //flightProfileManager.BuildFullPath("BFS Earth EDL"),
                     //flightProfileManager.BuildFullPath("BFS Mars Return EDL"),
+                    //flightProfileManager.BuildFullPath("BFS Mars Return Skip Entry"),
                     //flightProfileManager.BuildFullPath("BFS Mars TEI"),
                     //flightProfileManager.BuildFullPath("StarHopper"),
+                    //flightProfileManager.BuildFullPath("StarHopper2"),
+                    //flightProfileManager.BuildFullPath("StarHopper3"),
                     //flightProfileManager.BuildFullPath("MiniBFS"),
                     //flightProfileManager.BuildFullPath("ITS Crew Launch"),
                     //flightProfileManager.BuildFullPath("ITS Tanker SSTO"),

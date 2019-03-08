@@ -82,19 +82,19 @@ namespace SpaceSim.Commands
                 {
                     commands.Add(new YawCommand(contract as Yaw));
                 }
-                else if (contract is Post)
+                else if (contract is Post && !MainWindow.IgnoreCustomActions)
                 {
                     commands.Add(new PostCommand(contract as Post));
                 }
-                else if (contract is Rate)
+                else if (contract is Rate && !MainWindow.IgnoreCustomActions)
                 {
                     commands.Add(new RateCommand(contract as Rate));
                 }
-                else if (contract is Target)
+                else if (contract is Target && !MainWindow.IgnoreCustomActions)
                 {
                     commands.Add(new TargetCommand(contract as Target));
                 }
-                else if (contract is Zoom)
+                else if (contract is Zoom && !MainWindow.IgnoreCustomActions)
                 {
                     commands.Add(new ZoomCommand(contract as Zoom));
                 }

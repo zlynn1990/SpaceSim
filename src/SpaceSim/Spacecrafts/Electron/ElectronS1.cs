@@ -4,6 +4,7 @@ using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
 using SpaceSim.Common;
+using SpaceSim.Drawing;
 
 namespace SpaceSim.Spacecrafts.Electron
 {
@@ -101,6 +102,21 @@ namespace SpaceSim.Spacecrafts.Electron
 
                 Engines[i] = new Rutherford(i, this, offset);
             }
+        }
+
+        protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
+        {
+            double drawingRotation = Pitch + Math.PI * 0.5;
+
+            var offset = new PointF(screenBounds.X + screenBounds.Width * 0.5f,
+                                    screenBounds.Y + screenBounds.Height * 0.5f);
+
+            camera.ApplyScreenRotation(graphics);
+            camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
+
+            graphics.DrawImage(Texture, screenBounds.X - screenBounds.Width * 0.05f, screenBounds.Y, screenBounds.Width * 1.1f, screenBounds.Height);
+
+            graphics.ResetTransform();
         }
     }
 }

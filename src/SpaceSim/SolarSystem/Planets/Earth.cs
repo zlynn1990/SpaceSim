@@ -4,6 +4,7 @@ using SpaceSim.Kernels;
 using SpaceSim.Orbits;
 
 using SpaceSim.Properties;
+using VectorMath;
 
 namespace SpaceSim.SolarSystem.Planets
 {
@@ -11,6 +12,8 @@ namespace SpaceSim.SolarSystem.Planets
     {
         public override string ApoapsisName { get { return "Apogee"; } }
         public override string PeriapsisName { get { return "Perigee"; } }
+
+        private double inclination = Math.Cos(Settings.Default.Inclination * MathHelper.DegreesToRadians);
 
         public override double Mass
         {
@@ -33,7 +36,7 @@ namespace SpaceSim.SolarSystem.Planets
                 if(Settings.Default.PolarOrbit)
                     return -7.2722052166e-7;
                 else
-                    return -7.2722052166e-5;
+                    return -7.2722052166e-5 * inclination;
             }
         }
 
@@ -43,7 +46,7 @@ namespace SpaceSim.SolarSystem.Planets
                 if (Settings.Default.PolarOrbit)
                     return 8640000;
                 else
-                    return 86400;
+                    return 86400 / inclination;
             }
         }
 
@@ -64,28 +67,26 @@ namespace SpaceSim.SolarSystem.Planets
             double temperature;
             double pressure;
 
-            if (altitude > 25098.756)
+            if (altitude > 25000)
             {
-                temperature = -205.05 + 0.0053805776 * altitude;
+                temperature = -131.21 + 0.00299 * altitude;
 
-                pressure = 51.97 * Math.Pow((temperature + 459.7) / 389.98, -11.388);
+                pressure = 2.448 * Math.Pow((temperature + 273.1) / 216.6, -11.388);
             }
-            else if (altitude > 11019.13)
+            else if (altitude > 11000)
             {
-                temperature = -70;
+                temperature = -56.46;
 
-                pressure = 473.1 * Math.Exp(1.73 - 0.00015748032 * altitude);
+                pressure = 22.65 * Math.Exp(1.73 - 0.000157 * altitude);
             }
             else
             {
-                temperature = 59 - 0.0116797904 * altitude;
+                temperature = 15.04 - 0.00649 * altitude;
 
-                pressure = 2116 * Math.Pow((temperature + 459.7) / 518.6, 5.256);   
+                pressure = 101.29 * Math.Pow((temperature + 273.1) / 288.08, 5.256);   
             }
 
-            double density = pressure / (1718 * (temperature + 459.7));
-
-            return density * 515.379;
+            return pressure / (0.2869 * (temperature + 273.1));
         }
 
         // Quickly approximated using temperature from here https://www.grc.nasa.gov/www/k-12/rocket/atmos.html

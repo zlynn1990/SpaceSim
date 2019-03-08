@@ -219,8 +219,8 @@
     <Compile Include="Spacecrafts\FalconCommon\Fairing.cs" />
     <Compile Include="Spacecrafts\FalconCommon\GridFin.cs" />
     <Compile Include="Spacecrafts\FalconCommon\LandingLeg.cs" />
-    <Compile Include="Spacecrafts\FalconCommon\Parachute.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Parafoil.cs" />
+    <Compile Include="Spacecrafts\FalconCommon\Parachute.cs" />
     <Compile Include="Spacecrafts\FalconCommon\PartyBalloon.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Skid.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
@@ -270,6 +270,8 @@
     <Compile Include="Structures\Edwards.cs" />
     <Compile Include="Structures\ITSMount.cs" />
     <Compile Include="Structures\LandingPad.cs" />
+    <Compile Include="Structures\TowersRight.cs" />
+    <Compile Include="Structures\TowersLeft.cs" />
     <Compile Include="Structures\ServiceTower.cs" />
     <Compile Include="Structures\ElectronStrongback.cs" />
     <Compile Include="Structures\Strongback.cs" />
@@ -334,6 +336,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Textures\Structures\towersRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Structures\towersLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Rocket.ico" />
     <Content Include="Textures\Spacecrafts\DeltaIV\booster1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -369,6 +377,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Electron\electronRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Electron\KickStage.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Falcon\9\S1B5.png">
@@ -453,7 +464,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\BFS3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\BFS2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -483,6 +494,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\StarHopper.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Its\StarHopper2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\TiGridFinLeft.png">
