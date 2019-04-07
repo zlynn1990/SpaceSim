@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="RelativePitch">
+    <StartTime>-10</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-180</TargetOrientation>
+  </Command>
+  <Command xsi:type="Release">
+    <StartTime>-10</StartTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>-10</StartTime>
+    <TargetScale>1840</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>-7</StartTime>
+    <Duration>5</Duration>
+    <Message>This is a simulation of StarKicker injecting a Starlink satellite towards the outer Solar System.</Message>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>0</StartTime>
+    <Duration>314712000</Duration> <!-- 10 years -->
+    <InitialAdjustmentTime>1</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>-1</StartTime>
+    <TargetScale>-400</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>6</StartTime>
+    <Duration>5</Duration>
+    <Message>The sim starts with StarKicker fully fuelled at the perigee of a highly elliptical orbit ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>12</StartTime>
+    <Duration>5</Duration>
+    <Message>... with an apogee of 100,000kms, and velocity at perigee of 10.7 km/s.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>18</StartTime>
+    <Duration>5</Duration>
+    <Message>The injection burn takes about 12 minutes. Increasing update speed to 32x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>18</StartTime>
+    <TargetIndex>9</TargetIndex>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>680</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>680</StartTime>
+    <TargetScale>-800</TargetScale>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>690</StartTime>
+  </Command>
+  <Command xsi:type="Ignition">
+    <StartTime>695</StartTime>
+    <Duration>0.5</Duration>
+    <Throttle>100</Throttle>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>700</StartTime>
+    <TargetIndex>9</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>700</StartTime>
+    <TargetScale>1200</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>710</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 1000x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>710</StartTime>
+    <TargetIndex>12</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>710</StartTime>
+    <TargetScale>200</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>3000</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 500000x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>3000</StartTime>
+    <TargetIndex>16</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>3000</StartTime>
+    <TargetScale>200</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>3000000</StartTime>
+    <Duration>5</Duration>
+    <Message>The satellite reaches the orbit of Mars in 44 days!</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>3628800</StartTime>
+    <TargetIndex>16</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>7257600</StartTime>
+    <Duration>5</Duration>
+    <Message>Imperceptably at first, Starlink's ion drive pushes it ahead of the depleted StarKicker ...</Message>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>9936000</StartTime>
+    <Next>false</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>10800000</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>19008000</StartTime>
+    <TargetIndex>14</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>19008000</StartTime>
+    <TargetScale>-160</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>19267200</StartTime>
+    <Duration>5</Duration>
+    <Message>... and swings by Jupiter after 223 days. Voyager 1 took 551 days.</Message>
+  </Command>
+    <Command xsi:type="Rate">
+    <StartTime>19267200</StartTime>
+    <TargetIndex>13</TargetIndex>
+  </Command>
+    <Command xsi:type="Zoom">
+    <StartTime>19267200</StartTime>
+    <TargetScale>-40</TargetScale>
+  </Command>
+  <Command xsi:type="Shutdown">
+    <StartTime>19267200</StartTime>
+    <Duration>0.5</Duration>
+  </Command>
+    <Command xsi:type="Rate">
+    <StartTime>19353600</StartTime>
+    <TargetIndex>17</TargetIndex>
+  </Command>
+    <Command xsi:type="Zoom">
+    <StartTime>19353600</StartTime>
+    <TargetScale>240</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>25920000</StartTime>
+    <Duration>5</Duration>
+    <Message>With multiple satellites, Jupiter could act as a gravitational lens, spreading out the trajectories.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>36547200</StartTime>
+    <Duration>5</Duration>
+    <Message>The satellite reaches the orbit of Saturn in 422 days. Voyager 1 took 1,169 days.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>36547200</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+</ArrayOfCommand>
