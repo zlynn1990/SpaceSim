@@ -8,7 +8,7 @@ namespace SpaceSim.Engines
     class RaptorVac300 : EngineBase
     {
         public RaptorVac300(int id, ISpaceCraft parent, DVector2 offset)
-            : base(parent, offset, new EngineFlame(id, Color.FromArgb(23, 209, 173, 199), 200, 2, 0.2, 1.2, 0.1))
+            : base(parent, offset, new EngineFlame(id, Color.FromArgb(63, 209, 173, 199), 200, 2, 0.2, 1.2, 0.1))
         {
         }
 
@@ -17,9 +17,11 @@ namespace SpaceSim.Engines
             return (1980000.0 + 300000.0 * ispMultiplier) * Throttle * 0.01;
         }
 
+        // ṁ = F / Isp * g0
         public override double MassFlowRate(double ispMultiplier)
         {
-            return 631 * Throttle * 0.01;
+            // return 631 * Throttle * 0.01;    // Isp 375
+            return 612 * Throttle * 0.01;    // Isp 380
         }
 
         public override IEngine Clone()

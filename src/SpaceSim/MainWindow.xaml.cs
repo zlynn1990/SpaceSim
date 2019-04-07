@@ -62,6 +62,7 @@ namespace SpaceSim
         private float _targetScrollRate;
 
         private Camera _camera;
+        private Camera _pipCam;
         private int _targetIndex;
         private bool _targetInOrbit;
         private bool _rotateInOrbit;
@@ -75,7 +76,7 @@ namespace SpaceSim
 
         private SpaceCraftManager _spaceCraftManager;
         private List<IMassiveBody> _massiveBodies;
-        private List<StructureBase> _structures; 
+        private List<StructureBase> _structures;
         private List<IGravitationalBody> _gravitationalBodies;
 
         private DateTime _originTime;
@@ -336,7 +337,7 @@ namespace SpaceSim
             else
                 _targetIndex = GravitationalBodyIterator.Prev(_targetIndex, _gravitationalBodies, _camera);
 
-            _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);           
+            _camera.UpdateTarget(_gravitationalBodies[_targetIndex]);
         }
 
         public void SetZoom(float delta)
@@ -528,6 +529,7 @@ namespace SpaceSim
 
             _camera = new Camera(_gravitationalBodies[_targetIndex], 0.3);
             //_camera = new Camera(_gravitationalBodies[_targetIndex], 5000);
+            _pipCam = new Camera(_gravitationalBodies[_targetIndex], 0.05);
 
             _timeStepIndex = TimeStep.RealTimeIndex;
             _timeSteps = TimeStep.Defaults();
@@ -588,6 +590,7 @@ namespace SpaceSim
             }
 
             _camera.Update(TimeStep.RealTimeDt);
+            _pipCam.Update(TimeStep.RealTimeDt);
             _eventManager.Update(TimeStep.RealTimeDt);
 
             // Fixed update all gravitational bodies
@@ -625,7 +628,7 @@ namespace SpaceSim
 
             if (_camera.Zoom > 1)
             {
-                double scroll = Math.Pow(_camera.Zoom, 1.05f)*_scrollRate;
+                double scroll = Math.Pow(_camera.Zoom, 1.05f) * _scrollRate;
 
                 _camera.ChangeZoom(scroll);
             }
@@ -736,6 +739,15 @@ namespace SpaceSim
                 if (targetSpaceCraft != null)
                 {
                     throttle = targetSpaceCraft.Throttle;
+
+                    // TODO: render PIP
+                    //int width = RenderUtils.ScreenWidth;
+                    //int height = RenderUtils.ScreenHeight;
+                    //Rectangle rectPip = new Rectangle(width - 220, 100, 200, height - 300);
+                    //graphics.DrawRectangle(Pens.White, rectPip);
+
+                    //_pipCam.ApplyScreenRotation(graphics);
+                    //_spaceCraftManager.Render(graphics, _pipCam);
                 }
 
                 foreach (IGauge gauge in _gauges)
@@ -821,7 +833,7 @@ namespace SpaceSim
                 _textDisplay.AddTextBlock(StringAlignment.Near, forceInfo);
 
                 // Don't show Apoapsis/Periapsis info for the sun
-                if (!(target is Sun))
+                if (!(target is Sun) && target.GravitationalParent != null)
                 {
                     _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
                     {
@@ -831,7 +843,7 @@ namespace SpaceSim
                 }
 
                 // Add atmospheric info if the spaceship is the target
-                if (targetSpaceCraft != null)
+                if (targetSpaceCraft != null && targetSpaceCraft.GravitationalParent != null)
                 {
                     double density = targetSpaceCraft.GravitationalParent.GetAtmosphericDensity(target.GetRelativeAltitude());
                     double dynamicPressure = 0.5 * density * targetVelocity * targetVelocity;

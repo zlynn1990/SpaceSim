@@ -48,11 +48,17 @@ namespace SpaceSim.Structures
                         case "LandingPad":
                             structures.Add(new LandingPad(surfaceAngle, structureConfig.HeightOffset, planet));
                             break;
+                        case "Ocean":
+                            structures.Add(new Ocean(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
                         case "ServiceTower":
                             structures.Add(new ServiceTower(surfaceAngle, structureConfig.HeightOffset, planet));
                             break;
                         case "Strongback":
                             structures.Add(new Strongback(surfaceAngle, structureConfig.HeightOffset, planet));
+                            break;
+                        case "CrewArm":
+                            structures.Add(new CrewArm(surfaceAngle, structureConfig.HeightOffset, planet));
                             break;
                         case "TowersLeft":
                             structures.Add(new TowersLeft(surfaceAngle, structureConfig.HeightOffset, planet));

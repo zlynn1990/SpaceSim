@@ -2,17 +2,22 @@
 <ArrayOfStructureConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <StructureConfig>
     <Type>Strongback</Type>
-	<DownrangeDistance>0</DownrangeDistance>
-	<HeightOffset>-25</HeightOffset>
+    <DownrangeDistance>0</DownrangeDistance>
+    <HeightOffset>-25</HeightOffset>
   </StructureConfig>
   <StructureConfig>
     <Type>ServiceTower</Type>
-	<DownrangeDistance>-40</DownrangeDistance>
-	<HeightOffset>-43</HeightOffset>
+    <DownrangeDistance>-28</DownrangeDistance>
+    <HeightOffset>-50</HeightOffset>
   </StructureConfig>
   <StructureConfig>
-    <Type>LandingPad</Type>
-	<DownrangeDistance>-10755</DownrangeDistance>
-	<HeightOffset>5</HeightOffset>
+    <Type>CrewArm</Type>
+    <DownrangeDistance>-13.5</DownrangeDistance>
+    <HeightOffset>-65</HeightOffset>
+  </StructureConfig>
+  <StructureConfig>
+    <Type>Ocean</Type>
+    <DownrangeDistance>55485</DownrangeDistance>
+    <HeightOffset>45</HeightOffset>
   </StructureConfig>
 </ArrayOfStructureConfig>

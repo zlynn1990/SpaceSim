@@ -134,7 +134,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
             //_spriteSheet = new SpriteSheet("Textures/Spacecrafts/Its/scaledShip.png", 12, 12);
 
-            string texturePath = "Its/BFS3.png";
+            string texturePath = "Its/Starship.png";
             string fullPath = Path.Combine("Textures/Spacecrafts", texturePath);
             this.Texture = new Bitmap(fullPath);
 
@@ -179,14 +179,14 @@ namespace SpaceSim.Spacecrafts.ITS
 
                 if (rollAngle <= 90)
                 {
-                    plasmaRect.Offset(0.0f, screenBounds.Height / 3.0f);
+                    plasmaRect.Offset(0.0f, screenBounds.Height / 2.25f);
                 }
                 else
                 {
                     plasmaRect.Offset(-screenBounds.Width / 2.0f, screenBounds.Height / 2.0f);
                 }
 
-                int alpha = Math.Min(heatingRate / 20000, 255);
+                int alpha = Math.Min(heatingRate / 10000, 255);
                 int red = alpha;
                 int green = 0;
                 int blue = alpha;
@@ -199,15 +199,15 @@ namespace SpaceSim.Spacecrafts.ITS
 
                 if (rollAngle <= 90)
                 {
-                    float startAngle = 170;
-                    float sweepAngle = 30;
+                    float startAngle = 235;
+                    float sweepAngle = 32;
                     int arcs = 20;
                     for (int i = 0; i < arcs; i++)
                     {
-                        glow = Color.FromArgb(alpha, (int)(red * (arcs - i) / arcs), green, blue);
+                        glow = Color.FromArgb(alpha, (int)(red * (arcs - i) / (arcs * 1.3)), green, blue);
                         glowPen.Color = Color.FromArgb((int)(alpha * (arcs - i) / arcs), glow);
                         plasmaRect.Inflate(-penWidth, -penWidth);
-                        graphics.DrawArc(glowPen, plasmaRect, startAngle + i * 4.0f, sweepAngle + i * 1);
+                        graphics.DrawArc(glowPen, plasmaRect, startAngle - i * 6, sweepAngle + i * 6.75f);
                     }
                 }
                 else
@@ -217,10 +217,10 @@ namespace SpaceSim.Spacecrafts.ITS
                     int arcs = 20;
                     for (int i = 0; i < arcs; i++)
                     {
-                        glow = Color.FromArgb(alpha, (int)(red * (arcs - i) / arcs), green, blue);
+                        glow = Color.FromArgb(alpha, (int)(red * (arcs - i) / (arcs * 1.3)), green, blue);
                         glowPen.Color = Color.FromArgb((int)(alpha * (arcs - i) / arcs), glow);
                         plasmaRect.Inflate(-penWidth, -penWidth);
-                        graphics.DrawArc(glowPen, plasmaRect, startAngle + i * 1.0f, sweepAngle + i * 6);
+                        graphics.DrawArc(glowPen, plasmaRect, startAngle + i * 1, sweepAngle + i * 6);
                     }
                 }
             }

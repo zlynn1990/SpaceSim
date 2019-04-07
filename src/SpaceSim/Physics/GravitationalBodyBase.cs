@@ -24,7 +24,12 @@ namespace SpaceSim.Physics
 
         public bool InOrbit
         {
-            get { return Apoapsis > GravitationalParent.AtmosphereHeight * 0.5 && Periapsis > GravitationalParent.AtmosphereHeight * 0.5 && GetRelativeVelocity().Length() > 1; }
+            get {
+                if (GravitationalParent == null)
+                    return true;
+                else
+                    return Apoapsis > GravitationalParent.AtmosphereHeight * 0.5 && Periapsis > GravitationalParent.AtmosphereHeight * 0.5 && GetRelativeVelocity().Length() > 1;
+            }
         }
 
         public abstract Color IconColor { get; }

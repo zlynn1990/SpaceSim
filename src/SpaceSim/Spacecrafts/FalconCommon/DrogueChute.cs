@@ -13,8 +13,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public double Mass { get; private set; }
         public double Pitch { get; private set; }
 
-        private const double Width = 2.0;
-        private const double Height = 12.0;
+        private double Width = 0.0;
+        private double Height = 0.0;
 
         private Bitmap _texture;
         private ISpaceCraft _parent;
@@ -33,7 +33,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _offsetLength = offset.Length();
             _offsetRotation = offset.Angle() - Math.PI / 2.0;
 
-            _texture = new Bitmap("Textures/Spacecrafts/Falcon/Common/drogueChute.png");
+            _texture = new Bitmap("Textures/Spacecrafts/Falcon/Common/drogueChutes.png");
         }
 
         public void Deploy()
@@ -66,13 +66,26 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             {
                 _deployTimer += dt;
 
-                Pitch += 0.025 * dt;
+                if (Pitch < 0.25)
+                {
+                    Pitch += 0.025 * dt;
+                }
 
-                if (_deployTimer > 9)
+                if (Width < 6.0)
+                {
+                    Width += 1 * dt;
+                }
+                else
                 {
                     _isDeploying = false;
                     _isDeployed = true;
                 }
+
+                if (Height < 13.0)
+                {
+                    Height += 10 * dt;
+                }
+
             }
         }
 

@@ -259,6 +259,9 @@ namespace SpaceSim.Spacecrafts
         /// </summary>
         public double GetDownrangeDistance(DVector2 pointOfReference)
         {
+            if (GravitationalParent == null)
+                return 0.0;
+
             DVector2 pofOffset = GravitationalParent.Position - pointOfReference;
             pofOffset.Normalize();
 
@@ -478,6 +481,12 @@ namespace SpaceSim.Spacecrafts
 
         public void SetRelativePitch(double pitch)
         {
+            if (GravitationalParent == null)
+            {
+                Pitch = pitch;
+                return;
+            }
+
             DVector2 difference = GravitationalParent.Position - Position;
             difference.Normalize();
             double surfaceNormal = difference.Angle() - Constants.PiOverTwo;
@@ -538,6 +547,9 @@ namespace SpaceSim.Spacecrafts
 
         public override double GetRelativePitch()
         {
+            if (GravitationalParent == null)
+                return 0.0;
+
             DVector2 difference = GravitationalParent.Position - Position;
             difference.Normalize();
             double surfaceNormal = difference.Angle() - Constants.PiOverTwo;
@@ -996,7 +1008,10 @@ namespace SpaceSim.Spacecrafts
 
             double altitude = GetRelativeAltitude();
 
-            IspMultiplier = GravitationalParent.GetIspMultiplier(altitude);
+            if (GravitationalParent == null)
+                IspMultiplier = 1;
+            else
+                IspMultiplier = GravitationalParent.GetIspMultiplier(altitude);
 
             if (Parent == null)
             {
@@ -1080,6 +1095,9 @@ namespace SpaceSim.Spacecrafts
 
         private void ComputeCachedProperties()
         {
+            if (GravitationalParent == null)
+                return;
+
             DVector2 difference = GravitationalParent.Position - Position;
 
             double totalDistance = difference.Length() - TotalHeight * 0.5;

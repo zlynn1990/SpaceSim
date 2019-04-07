@@ -21,7 +21,7 @@ namespace SpaceSim.Spacecrafts.DragonV2
         public override double Width { get { return 3.7; } }
         public override double Height { get { return 4.15; } }
 
-        public override double DryMass { get { return 6350; } }
+        public override double DryMass { get { return 5148; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties
         {
@@ -83,7 +83,8 @@ namespace SpaceSim.Spacecrafts.DragonV2
         // Parachute size = 2 * pi * 20^2
         public override double FrontalArea
         {
-            get { return 21.504 + _parachuteRatio * 15000; }
+            //get { return 21.504 + _parachuteRatio * 15000; }
+            get { return 21.504 + _parachuteRatio * 25000; }
         }
 
         public override double LiftingSurfaceArea
@@ -119,10 +120,10 @@ namespace SpaceSim.Spacecrafts.DragonV2
         private DateTime timestamp = DateTime.Now;
 
         public DragonV2(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass, double propellantMass)
-            : base(craftDirectory, position, velocity, payloadMass, propellantMass, "Dragon/V2/capsule.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
+            : base(craftDirectory, position, velocity, payloadMass, propellantMass, "Dragon/V2/crewdragon.png", new ReEntryFlame(1000, 1, new DVector2(2.5, 0)))
         {
-            _drogueChute = new DrogueChute(this, new DVector2(8.0, -7.5));
-            _parachute = new Parachute(this, new DVector2(40.0, 2.0));
+            _drogueChute = new DrogueChute(this, new DVector2(7.0, -8.5));
+            _parachute = new Parachute(this, new DVector2(-10.0, -36.0));
 
             Engines = new IEngine[]
             {

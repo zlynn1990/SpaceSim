@@ -13,7 +13,7 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public double Mass { get; private set; }
         public double Pitch { get; private set; }
 
-        private const double Width = 65.0;
+        private double Width = 0.0;
         private double Height = 0.0;
 
         private Bitmap _texture;
@@ -31,7 +31,10 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             _parent = parent;
 
             _offsetLength = offset.Length();
-            _offsetRotation = offset.Angle() - Math.PI / 2.0;
+            _offsetRotation = offset.Angle();
+
+            //Pitch = -Math.PI / 2.0;
+            Pitch = Math.PI / 2.0 + Math.PI / 12.0;
 
             _texture = new Bitmap("Textures/Spacecrafts/Falcon/Common/parachutes.png");
         }
@@ -39,9 +42,8 @@ namespace SpaceSim.Spacecrafts.FalconCommon
         public void Deploy()
         {
             // Been deployed already, can't again
-            if (Pitch > 0) return;
+            if (Height > 0) return;
 
-            Pitch = Math.PI / 2.0;
             _isDeploying = true;
         }
 
@@ -67,12 +69,19 @@ namespace SpaceSim.Spacecrafts.FalconCommon
             {
                 _deployTimer += dt;
 
-                Height += 10 * dt;
-
-                if (Height > 50.0)
+                if (Width < 65.0)
+                {
+                    Width += 10 * dt;
+                }
+                else
                 {
                     _isDeploying = false;
                     _isDeployed = true;
+                }
+
+                if (Height < 50.0)
+                {
+                    Height += 50 * dt;
                 }
             }
         }
@@ -89,7 +98,6 @@ namespace SpaceSim.Spacecrafts.FalconCommon
 
             graphics.TranslateTransform(offset.X, offset.Y);
 
-            //graphics.RotateTransform((float)((drawingRotation + Math.PI * 0.5) * 180 / Math.PI));
             graphics.RotateTransform((float)((drawingRotation - Math.PI * 0.5) * 180 / Math.PI));
 
             graphics.TranslateTransform(-offset.X, -offset.Y);

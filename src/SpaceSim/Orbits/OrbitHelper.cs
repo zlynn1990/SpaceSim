@@ -125,6 +125,8 @@ namespace SpaceSim.Orbits
         public static void TraceSpaceCraft(SpaceCraftBase satellite, OrbitTrace trace)
         {
             IMassiveBody parent = satellite.GravitationalParent;
+            if (parent == null)
+                return;
 
             DVector2 initialPosition = satellite.Position - parent.Position;
 

@@ -85,6 +85,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildBfsEarthEdl(planet, config, craftDirectory);
                 case "BFS Mars Return EDL":
                     return BuildBfsMarsReturnEdl(planet, config, craftDirectory);
+                case "BFS Mars Return Skip Entry":
+                    return BuildBfsMarsReturnSkipEntry(planet, config, craftDirectory);
                 case "BFS Mars TEI":
                     return BuildBfsMarsTEI(planet, config, craftDirectory);
                 case "Electron":
@@ -155,6 +157,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildSLS(planet, config, craftDirectory);
                 case "StarHopper":
                     return BuildStarHopper(planet, config, craftDirectory);
+                case "StarKicker":
+                    return BuildStarKicker(planet, config, craftDirectory);
                 default:
                     throw new Exception("Unknown vehicle type: " + config.VehicleType);
             }
@@ -326,7 +330,7 @@ namespace SpaceSim.Spacecrafts
 
         private static List<ISpaceCraft> BuildF9Dragon2(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
-            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset, planet.Velocity, config.PayloadMass, 1250);
+            var dragon = new DragonV2.DragonV2(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset, planet.Velocity, config.PayloadMass, 2563);
             var dragonTrunk = new DragonV2Trunk(craftDirectory, DVector2.Zero, DVector2.Zero);
 
             var f9S1 = new F9S1B5(craftDirectory, DVector2.Zero, DVector2.Zero);
@@ -789,7 +793,17 @@ namespace SpaceSim.Spacecrafts
             var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, planet.SurfaceRadius + 166000.0),
                 planet.Velocity + new DVector2(12500, -1634), config.PayloadMass, 30000); // -45° AoA
                 //planet.Velocity + new DVector2(12500, -1740), config.PayloadMass, 30000); // 80° AoA
-                //planet.Velocity + new DVector2(12500, -2100), config.PayloadMass, 30000); // 45° AoA
+
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildBfsMarsReturnSkipEntry(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, planet.SurfaceRadius + 166000.0),
+                planet.Velocity + new DVector2(12500, -2150), config.PayloadMass, 30000); // 45° AoA
 
             return new List<ISpaceCraft>
             {
@@ -953,6 +967,27 @@ namespace SpaceSim.Spacecrafts
             var ship = new StarHopper(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity);
 
             return new List<ISpaceCraft> { ship };
+        }
+
+
+        private static List<ISpaceCraft> BuildStarKicker(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            double offset = 0.3334;
+            double perigeeAngle = offset + Math.PI / 2;
+            double perigeeAltitude = 166000;
+            double posX = Math.Cos(perigeeAngle) * (planet.SurfaceRadius + perigeeAltitude);
+            double posY = Math.Sin(perigeeAngle) * (planet.SurfaceRadius + perigeeAltitude);
+            double velPerigee = 10700;
+            double velX = Math.Sin(perigeeAngle - 2.0 * offset) * velPerigee;
+            double velY = Math.Cos(perigeeAngle - 2.0 * offset) * velPerigee;
+
+            var ionSat = new StarlinkSat(craftDirectory, planet.Position + new DVector2(posX, posY), planet.Velocity + new DVector2(velX, velY), 0);
+            var ship = new StarKicker(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            ionSat.AddChild(ship);
+            ship.SetParent(ionSat);
+
+            return new List<ISpaceCraft> { ionSat, ship };
         }
     }
 }

@@ -1,62 +1,212 @@
 <?xml version="1.0"?>
 <ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Zoom">
+    <StartTime>-2</StartTime>
+    <TargetScale>-25</TargetScale>
+  </Command>
   <Command xsi:type="Release">
-    <StartTime>2</StartTime>
+    <StartTime>0</StartTime>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>6</StartTime>
+    <Duration>5</Duration>
+    <Message>The Crew Dragon in-flight abort (IFA) mission will initially emulate a regular Crew Dragon profile ...</Message>
   </Command>
   <Command xsi:type="RelativePitch">
     <StartTime>10</StartTime>
     <Duration>40</Duration>
     <TargetOrientation>-94</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>12</StartTime>
+    <Duration>5</Duration>
+    <Message>... full throttle to about T+49 seconds, 85% throttle until T+70 ...</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>18</StartTime>
+    <Duration>5</Duration>
+    <Message>... then back up to about 96%.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>24</StartTime>
+    <Duration>5</Duration>
+    <Message>Acceleration will build to around 2.4g at T+90 seconds, well after MaxQ.</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>32</StartTime>
+    <Duration>5</Duration>
+    <Message>At around Mach 2, S1 will shutdown, and Dragon will abort. Increasing update speed to 2x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>32</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>32</StartTime>
+    <TargetScale>320</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>44</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>-->
   <Command xsi:type="RelativePitch">
     <StartTime>50</StartTime>
-    <Duration>13</Duration>
-    <TargetOrientation>-103</TargetOrientation>
+    <Duration>40</Duration>
+    <TargetOrientation>-110</TargetOrientation>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>68</StartTime>
+    <TargetScale>100</TargetScale>
+  </Command>-->
+  <Command xsi:type="Rate">
+    <StartTime>88</StartTime>
+    <TargetIndex>4</TargetIndex>
   </Command>
   <Command xsi:type="Prograde">
-    <StartTime>63</StartTime>
-    <Duration>37</Duration>
+    <StartTime>90</StartTime>
+    <Duration>85</Duration>
     <InitialAdjustmentTime>5</InitialAdjustmentTime>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>63</StartTime>
+    <StartTime>90</StartTime>
   </Command>
   <Command xsi:type="Stage">
-    <StartTime>63</StartTime>
+    <StartTime>90</StartTime>
   </Command>
   <Command xsi:type="Ignition">
-    <StartTime>63</StartTime>
+    <StartTime>90</StartTime>
     <Duration>0.1</Duration>
     <Throttle>100</Throttle>
   </Command>
   <Command xsi:type="Shutdown">
-    <StartTime>67</StartTime>
+    <StartTime>96</StartTime>
     <Duration>0.1</Duration>
   </Command>
-  <Command xsi:type="Stage">
+  <Command xsi:type="Post">
     <StartTime>100</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 8x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>100</StartTime>
+    <TargetIndex>7</TargetIndex>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>175</StartTime>
+    <Duration>5</Duration>
+    <Message>Decreasing update speed to 1x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>175</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>177</StartTime>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>185</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 16x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>185</StartTime>
+    <TargetIndex>8</TargetIndex>
   </Command>
   <Command xsi:type="Retrograde">
-    <StartTime>101</StartTime>
-    <Duration>3</Duration>
-    <InitialAdjustmentTime>3</InitialAdjustmentTime>
+    <StartTime>190</StartTime>
+    <Duration>90</Duration>
+    <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>278</StartTime>
+    <Duration>5</Duration>
+    <Message>Decreasing update speed to 1x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>278</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>278</StartTime>
+    <TargetScale>10</TargetScale>
   </Command>
   <Command xsi:type="Deploy">
     <Part>Drogues</Part>
-    <StartTime>104</StartTime>
+    <StartTime>280</StartTime>
   </Command>
   <Command xsi:type="RelativePitch">
-    <StartTime>104</StartTime>
-    <Duration>10</Duration>
-    <TargetOrientation>-90</TargetOrientation>
+    <StartTime>280</StartTime>
+    <Duration>3</Duration>
+    <TargetOrientation>-125</TargetOrientation>
   </Command>
+  <Command xsi:type="Post">
+    <StartTime>290</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 16x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>290</StartTime>
+    <TargetIndex>8</TargetIndex>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>290</StartTime>
+    <TargetScale>-80</TargetScale>
+  </Command>-->
+  <Command xsi:type="RelativePitch">
+    <StartTime>365</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>-125</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>368</StartTime>
+    <Duration>5</Duration>
+    <Message>Decreasing update speed to 1x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>368</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>368</StartTime>
+    <TargetScale>-410</TargetScale>
+  </Command>-->
   <Command xsi:type="Deploy">
     <Part>Parachutes</Part>
-    <StartTime>114</StartTime>
+    <StartTime>370</StartTime>
   </Command>
-  <Command xsi:type="RelativePitch">
-    <StartTime>114</StartTime>
-    <Duration>10</Duration>
-    <TargetOrientation>-110</TargetOrientation>
+  <Command xsi:type="Post">
+    <StartTime>380</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 16x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>380</StartTime>
+    <TargetIndex>8</TargetIndex>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>380</StartTime>
+    <TargetScale>220</TargetScale>
+  </Command>-->
+  <Command xsi:type="Post">
+    <StartTime>560</StartTime>
+    <Duration>5</Duration>
+    <Message>Decreasing update speed to 4x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>560</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <!--<Command xsi:type="Zoom">
+    <StartTime>560</StartTime>
+    <TargetScale>-215</TargetScale>
+  </Command>-->
+  <Command xsi:type="Post">
+    <StartTime>580</StartTime>
+    <Duration>5</Duration>
+    <Message>Decreasing update speed to 1x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>580</StartTime>
+    <TargetIndex>4</TargetIndex>
   </Command>
 </ArrayOfCommand>
