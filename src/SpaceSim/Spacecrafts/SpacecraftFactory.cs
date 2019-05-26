@@ -15,6 +15,7 @@ using SpaceSim.Spacecrafts.NewGlenn;
 using VectorMath;
 
 using SpaceSim.Spacecrafts.Electron;
+using SpaceSim.Spacecrafts.SLS;
 
 namespace SpaceSim.Spacecrafts
 {
@@ -125,12 +126,22 @@ namespace SpaceSim.Spacecrafts
                     return BuildGreyDragonFH(planet, config, craftDirectory);
                 case "GenericFH":
                     return BuildFalconHeavy(planet, config, craftDirectory);
+                case "FH-B5":
+                    return BuildFalconHeavyB5(planet, config, craftDirectory);
                 case "FH-Demo":
                     return BuildFalconHeavyDemo(planet, config, craftDirectory);
                 case "FH-Europa":
                     return BuildFalconHeavyEuropa(planet, config, craftDirectory);
                 case "FH-PSP":
                     return BuildFalconHeavyPSP(planet, config, craftDirectory);
+                case "FH-Orion":
+                    return BuildFalconHeavyOrion(planet, config, craftDirectory);
+                case "FH-Orion-ESM":
+                    return BuildFalconHeavyOrionESM(planet, config, craftDirectory);
+                case "FH-ICPS":
+                    return BuildFalconHeavyICPS(planet, config, craftDirectory);
+                case "FH-BOOSTER-ICPS":
+                    return BuildFalconHeavyBoosterICPS(planet, config, craftDirectory);
                 case "AutoLandingTest":
                     return BuildAutoLandingTest(planet, config, craftDirectory);
                 case "ITS Crew Launch":
@@ -141,6 +152,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildItsEDL(planet, config, craftDirectory);
                 case "New Glenn":
                     return BuildNewGlenn(planet, config, craftDirectory);
+                case "OrionTLI":
+                    return BuildOrionTLI(planet, config, craftDirectory);
                 case "Scaled BFR Launch":
                     return BuildScaledBFR(planet, config, craftDirectory);
                 case "Scaled BFR GTO":
@@ -155,6 +168,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildScaledBfsEDL(planet, config, craftDirectory);
                 case "SLS Satellite":
                     return BuildSLS(planet, config, craftDirectory);
+                case "SLS Orion":
+                    return BuildSLSOrion(planet, config, craftDirectory);
                 case "StarHopper":
                     return BuildStarHopper(planet, config, craftDirectory);
                 case "StarKicker":
@@ -519,6 +534,37 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
+        private static List<ISpaceCraft> BuildFalconHeavyB5(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var demoSat = new DemoSat(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset,
+                                      planet.Velocity + new DVector2(-400, 0) + config.VelocityOffset, config.PayloadMass);
+
+            var fairingLeft = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, true);
+            var fairingRight = new Fairing(craftDirectory, demoSat.Position, DVector2.Zero, false);
+
+            demoSat.AttachFairings(fairingLeft, fairingRight);
+
+            var fhS1 = new FHS1B5(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2B5(craftDirectory, DVector2.Zero, DVector2.Zero, 11.3);
+
+            var fhLeftBooster = new FHBoosterB5(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBoosterB5(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            demoSat.AddChild(fhS2);
+            fhS2.SetParent(demoSat);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                demoSat, fhS2, fhLeftBooster, fhS1, fhRightBooster, fairingLeft, fairingRight
+            };
+        }
+
         private static List<ISpaceCraft> BuildFalconHeavyEuropa(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
             var ionSat = new IonDriveSat(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset,
@@ -581,6 +627,151 @@ namespace SpaceSim.Spacecrafts
             };
         }
 
+        private static List<ISpaceCraft> BuildFalconHeavyOrion(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var orion = new Orion(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0) + config.PositionOffset,
+                          planet.Velocity + new DVector2(0, -400) + config.VelocityOffset, config.PayloadMass, 0);
+
+            var las = new LAS(craftDirectory, orion.Position, DVector2.Zero);
+            orion.AttachLAS(las);
+
+            var esm = new ESM(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var icps = new ICPS(craftDirectory, DVector2.Zero, DVector2.Zero, 8.2);
+            var fhS2 = new FHS2B5(craftDirectory, DVector2.Zero, DVector2.Zero, 13);
+            var fhS1 = new FHS1B5(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhLeftBooster = new FHBoosterB5(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBoosterB5(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            orion.AddChild(esm);
+            esm.SetParent(orion);
+            esm.AddChild(icps);
+            icps.SetParent(esm);
+            icps.AddChild(fhS2);
+            fhS2.SetParent(icps);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                orion, esm, icps, fhS2, fhLeftBooster, fhS1, fhRightBooster, las
+            };
+        }
+
+        private static List<ISpaceCraft> BuildFalconHeavyOrionESM(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var orion = new Orion(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0) + config.PositionOffset,
+                          planet.Velocity + new DVector2(0, -400) + config.VelocityOffset, config.PayloadMass, 0);
+
+            var las = new LAS(craftDirectory, orion.Position, DVector2.Zero);
+            orion.AttachLAS(las);
+
+            var esm = new ESM(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var interstage = new Interstage(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2B5(craftDirectory, DVector2.Zero, DVector2.Zero, 8.5);
+            var fhS1 = new FHS1B5(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhLeftBooster = new FHBoosterB5(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBoosterB5(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            orion.AddChild(esm);
+            esm.SetParent(orion);
+            esm.AddChild(interstage);
+            interstage.SetParent(esm);
+            interstage.AddChild(fhS2);
+            fhS2.SetParent(interstage);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                orion, esm, interstage, fhS2, fhLeftBooster, fhS1, fhRightBooster, las
+            };
+        }
+
+        private static List<ISpaceCraft> BuildFalconHeavyICPS(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var icps = new ICPS(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0) + config.PositionOffset,
+                          planet.Velocity + new DVector2(0, -400) + config.VelocityOffset);
+
+            var interstage = new Interstage(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhS2 = new FHS2B5(craftDirectory, DVector2.Zero, DVector2.Zero, 8.5);
+            var fhS1 = new FHS1B5(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhLeftBooster = new FHBoosterB5(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBoosterB5(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            icps.AddChild(interstage);
+            interstage.SetParent(icps);
+            interstage.AddChild(fhS2);
+            fhS2.SetParent(interstage);
+            fhS2.AddChild(fhS1);
+            fhS1.SetParent(fhS2);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                icps, interstage, fhS2, fhLeftBooster, fhS1, fhRightBooster
+            };
+        }
+
+        private static List<ISpaceCraft> BuildFalconHeavyBoosterICPS(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var icps = new ICPS(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0) + config.PositionOffset,
+                          planet.Velocity + new DVector2(0, -400) + config.VelocityOffset);
+
+            var fairingLeft = new ICPSFairing(craftDirectory, icps.Position, DVector2.Zero, true);
+            var fairingRight = new ICPSFairing(craftDirectory, icps.Position, DVector2.Zero, false);
+
+            icps.AttachFairings(fairingLeft, fairingRight);
+
+            var interstage = new Interstage(craftDirectory, DVector2.Zero, DVector2.Zero, 0.5);
+            var fhS1 = new FHS1B5(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var fhLeftBooster = new FHBoosterB5(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var fhRightBooster = new FHBoosterB5(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            icps.AddChild(interstage);
+            interstage.SetParent(icps);
+            interstage.AddChild(fhS1);
+            fhS1.SetParent(interstage);
+            fhS1.AddChild(fhLeftBooster);
+            fhS1.AddChild(fhRightBooster);
+            fhLeftBooster.SetParent(fhS1);
+            fhRightBooster.SetParent(fhS1);
+
+            return new List<ISpaceCraft>
+            {
+                icps, interstage, fhLeftBooster, fhS1, fhRightBooster, fairingLeft, fairingRight
+            };
+        }
+
+        private static List<ISpaceCraft> BuildOrionTLI(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var orion = new Orion(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius + 166000.0, 0) + config.PositionOffset,
+                          planet.Velocity + new DVector2(0, -7817.1) + config.VelocityOffset, config.PayloadMass);
+
+            var esm = new ESM(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var icps = new ICPS(craftDirectory, DVector2.Zero, DVector2.Zero, 8.2);
+
+            orion.AddChild(esm);
+            esm.SetParent(orion);
+            esm.AddChild(icps);
+            icps.SetParent(esm);
+
+            return new List<ISpaceCraft>
+            {
+                orion, esm, icps
+            };
+        }
+
         private static List<ISpaceCraft> BuildSLS(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
             var demoSat = new EuropaClipper(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius) + config.PositionOffset,
@@ -591,9 +782,9 @@ namespace SpaceSim.Spacecrafts
 
             demoSat.AttachFairings(fairingLeft, fairingRight);
 
+            var slsS2 = new ICPS(craftDirectory, DVector2.Zero, DVector2.Zero, 9.9);
             var slsS1 = new SLSS1(craftDirectory, DVector2.Zero, DVector2.Zero);
-            var slsS2 = new SLSS2(craftDirectory, DVector2.Zero, DVector2.Zero, 9.9);
-
+            
             var slsLeftBooster = new SLSBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
             var slsRightBooster = new SLSBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
 
@@ -609,6 +800,38 @@ namespace SpaceSim.Spacecrafts
             return new List<ISpaceCraft>
             {
                 demoSat, slsS2, slsLeftBooster, slsS1, slsRightBooster, fairingLeft, fairingRight
+            };
+        }
+
+        private static List<ISpaceCraft> BuildSLSOrion(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            var orion = new Orion(craftDirectory, planet.Position + new DVector2(planet.SurfaceRadius, 0) + config.PositionOffset,
+                          planet.Velocity + new DVector2(0, -400) + config.VelocityOffset, config.PayloadMass, 0);
+
+            var las = new LAS(craftDirectory, orion.Position, DVector2.Zero);
+            orion.AttachLAS(las);
+
+            var esm = new ESM(craftDirectory, DVector2.Zero, DVector2.Zero);
+            var icps = new ICPS(craftDirectory, DVector2.Zero, DVector2.Zero, 8.2);
+            var slsS1 = new SLSS1(craftDirectory, DVector2.Zero, DVector2.Zero);
+
+            var slsLeftBooster = new SLSBooster(craftDirectory, 1, DVector2.Zero, DVector2.Zero);
+            var slsRightBooster = new SLSBooster(craftDirectory, 2, DVector2.Zero, DVector2.Zero);
+
+            orion.AddChild(esm);
+            esm.SetParent(orion);
+            esm.AddChild(icps);
+            icps.SetParent(esm);
+            icps.AddChild(slsS1);
+            slsS1.SetParent(icps);
+            slsS1.AddChild(slsLeftBooster);
+            slsS1.AddChild(slsRightBooster);
+            slsLeftBooster.SetParent(slsS1);
+            slsRightBooster.SetParent(slsS1);
+
+            return new List<ISpaceCraft>
+            {
+                orion, esm, icps, slsLeftBooster, slsS1, slsRightBooster, las
             };
         }
 
@@ -753,7 +976,8 @@ namespace SpaceSim.Spacecrafts
         private static List<ISpaceCraft> BuildBfs300(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
             // inclination 53°
-            var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity + new DVector2(-277, 0), config.PayloadMass, 1100000);
+            // var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity + new DVector2(-277, 0), config.PayloadMass, 1100000);
+            var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity, 0, 1100000);
             return new List<ISpaceCraft>
             {
                 ship
@@ -972,7 +1196,8 @@ namespace SpaceSim.Spacecrafts
 
         private static List<ISpaceCraft> BuildStarKicker(IMassiveBody planet, MissionConfig config, string craftDirectory)
         {
-            double offset = 0.3334;
+            //double offset = 0.3334;
+            double offset = 0.33325;
             double perigeeAngle = offset + Math.PI / 2;
             double perigeeAltitude = 166000;
             double posX = Math.Cos(perigeeAngle) * (planet.SurfaceRadius + perigeeAltitude);

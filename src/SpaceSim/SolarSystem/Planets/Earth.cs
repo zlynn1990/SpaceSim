@@ -13,7 +13,7 @@ namespace SpaceSim.SolarSystem.Planets
         public override string ApoapsisName { get { return "Apogee"; } }
         public override string PeriapsisName { get { return "Perigee"; } }
 
-        private double inclination = Math.Cos(Settings.Default.Inclination * MathHelper.DegreesToRadians);
+        private double inclination = 0.0;
 
         public override double Mass
         {
@@ -32,31 +32,22 @@ namespace SpaceSim.SolarSystem.Planets
 
         public override double RotationRate
         {
-            get {
-                if(Settings.Default.PolarOrbit)
-                    return -7.2722052166e-7;
-                else
-                    return -7.2722052166e-5 * inclination;
-            }
+            get { return -7.2722052166e-5 * inclination; }
         }
 
         public override double RotationPeriod
         {
-            get {
-                if (Settings.Default.PolarOrbit)
-                    return 8640000;
-                else
-                    return 86400 / inclination;
-            }
+            get { return 86400 / inclination; }
         }
 
         public override Color IconColor { get { return Color.Green; } }
         public override Color IconAtmopshereColor { get { return Color.LightSkyBlue; } }
 
-        public Earth()
+        public Earth(double inclination)
             : base(OrbitHelper.FromJplEphemeris(1.470669705624798E+08, -3.465263667484938E+07),
                    OrbitHelper.FromJplEphemeris(6.445708901348731E+00, 2.887242866160539E+01), new EarthKernel())
         {
+            this.inclination = Math.Cos(inclination * MathHelper.DegreesToRadians); ;
         }
 
         // Realistic density model based off https://www.grc.nasa.gov/www/k-12/rocket/atmos.html

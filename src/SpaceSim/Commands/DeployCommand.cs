@@ -43,6 +43,9 @@ namespace SpaceSim.Commands
                 case "Parachutes":
                     spaceCraft.DeployParachutes();
                     break;
+                case "LAS":
+                    spaceCraft.DeployLAS();
+                    break;
                 default:
                     throw new Exception(string.Format("{0} is not a known deployable!", _part));
             }

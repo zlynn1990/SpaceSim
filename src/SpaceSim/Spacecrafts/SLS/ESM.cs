@@ -4,17 +4,17 @@ using SpaceSim.Engines;
 using SpaceSim.Physics;
 using VectorMath;
 
-namespace SpaceSim.Spacecrafts.FalconHeavy
+namespace SpaceSim.Spacecrafts.DragonV2
 {
-    sealed class SLSS2 : SpaceCraftBase
+    class ESM : SpaceCraftBase
     {
-        public override string CraftName { get { return "SLS ICPS "; } }
-        public override string CommandFileName { get { return "SLSS2.xml"; } }
+        public override string CraftName { get { return "ESM"; } }
+        public override string CommandFileName { get { return "ESM.xml"; } }
 
-        public override double DryMass { get { return 3490; } }
+        public override double Width { get { return 5.02; } }
+        public override double Height { get { return 4.78; } }
 
-        public override double Width { get { return 5.1; } }
-        public override double Height { get { return 13.7; } }
+        public override double DryMass { get { return 6461; } }
 
         public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExtendsFineness; } }
 
@@ -22,10 +22,12 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
         {
             get
             {
-                double baseCd = GetBaseCd(0.4);
+                double baseCd = GetBaseCd(0.3);
                 double alpha = GetAlpha();
+                double cosAlpha = Math.Cos(alpha);
+                double Cd = Math.Abs(baseCd * cosAlpha);
 
-                return Math.Abs(baseCd * Math.Cos(alpha));
+                return Cd;
             }
         }
 
@@ -35,12 +37,14 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
             {
                 double baseCd = GetBaseCd(0.6);
                 double alpha = GetAlpha();
-
-                return baseCd * Math.Sin(alpha * 2);
+                double sinAlpha = Math.Sin(alpha * 2);
+                return baseCd * sinAlpha;
             }
         }
 
-        public override double FrontalArea { get { return Math.PI * Math.Pow(Width / 2, 2); } }
+        // Cylinder - 2 * pi * r * h
+        public override double FrontalArea { get { return 27.6579; } }
+
         public override double ExposedSurfaceArea
         {
             get
@@ -54,16 +58,15 @@ namespace SpaceSim.Spacecrafts.FalconHeavy
 
         public override Color IconColor { get { return Color.White; } }
 
-        public SLSS2(string craftDirectory, DVector2 position, DVector2 velocity, double zOffset = 9)
-            : base(craftDirectory, position, velocity, 0, 27220, "DeltaIV/S2.png")
+        public ESM(string craftDirectory, DVector2 position, DVector2 velocity, double propellantMass = 9000)
+            : base(craftDirectory, position, velocity, 0, propellantMass, "SLS/ESM.png")
         {
-            StageOffset = new DVector2(0, zOffset);
+            StageOffset = new DVector2(0, 3.5);
 
             Engines = new IEngine[]
             {
-                new RL10(0, this, new DVector2(0, Height * 0.33))
+                new AJ10(0, this, new DVector2(0, 2), 0)
             };
         }
     }
 }
-

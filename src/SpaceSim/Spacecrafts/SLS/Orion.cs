@@ -1,28 +1,32 @@
 ﻿using System;
 using System.Drawing;
-using SpaceSim.Common;
 using SpaceSim.Engines;
-using SpaceSim.Particles;
 using SpaceSim.Physics;
 using VectorMath;
-
-using SpaceSim.Properties;
 using System.IO;
+using SpaceSim.Common;
 using SpaceSim.Drawing;
+using SpaceSim.Properties;
+using SpaceSim.Particles;
 
-namespace SpaceSim.Spacecrafts.DragonV1
+using SpaceSim.Spacecrafts.FalconCommon;
+
+namespace SpaceSim.Spacecrafts.DragonV2
 {
-    sealed class Dragon : SpaceCraftBase
+    class Orion : SpaceCraftBase
     {
-        public override string CraftName { get { return "Dragon"; } }
-        public override string CommandFileName { get { return "dragon.xml"; } }
+        public override string CraftName { get { return "Orion"; } }
+        public override string CommandFileName { get { return "Orion.xml"; } }
 
-        public override double Width { get { return 3.7; } }
-        public override double Height { get { return 4.194; } }
+        public override double Width { get { return 5.02; } }
+        public override double Height { get { return 3.3; } }
 
-        public override double DryMass { get { return 4200; } }
+        public override double DryMass { get { return 8500; } }
 
-        public override AeroDynamicProperties GetAeroDynamicProperties { get { return AeroDynamicProperties.ExposedToAirFlow; } }
+        public override AeroDynamicProperties GetAeroDynamicProperties
+        {
+            get { return AeroDynamicProperties.ExposedToAirFlow; }
+        }
 
         public override double FormDragCoefficient
         {
@@ -33,11 +37,10 @@ namespace SpaceSim.Spacecrafts.DragonV1
 
                 if (alpha > Constants.PiOverTwo || alpha < -Constants.PiOverTwo)
                 {
-                    baseCd = GetBaseCd(0.8);
+                    baseCd = GetBaseCd(0.9);
                 }
 
                 baseCd *= Math.Cos(alpha);
-
                 return Math.Abs(baseCd);
             }
         }
@@ -55,14 +58,16 @@ namespace SpaceSim.Spacecrafts.DragonV1
                 }
 
                 double alphaCd = baseCd * Math.Sin(alpha * 2);
-
-                return alphaCd;
+                return -alphaCd;
             }
         }
 
+        // Base dome = 2 * pi * 1.85^2
+        // Parachute size = 2 * pi * 20^2
         public override double FrontalArea
         {
-            get { return 21.504 + _parachuteRatio * 2500; }
+            //get { return 21.504 + _parachuteRatio * 15000; }
+            get { return 21.504 + _parachuteRatio * 25000; }
         }
 
         public override double LiftingSurfaceArea
@@ -84,7 +89,6 @@ namespace SpaceSim.Spacecrafts.DragonV1
                 double r = Width / 2;
                 double h2 = Math.Pow(Height, 2);
                 double r2 = Math.Pow(r, 2);
-
                 return Math.PI * r * (r + Math.Pow(h2 + r2, 0.5));
             }
         }
@@ -94,11 +98,42 @@ namespace SpaceSim.Spacecrafts.DragonV1
         private bool _drogueDeployed;
         private bool _parachuteDeployed;
         private double _parachuteRatio;
+        DrogueChute _drogueChute;
+        Parachute _parachute;
+        LAS _las;
+        private bool _lasDeployed;
+        private DateTime timestamp = DateTime.Now;
 
-        public Dragon(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass)
-            : base(craftDirectory, position, velocity, payloadMass, 1290, "Dragon/V1/capsule.png")
+        public Orion(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass, double propellantMass = 175)
+            : base(craftDirectory, position, velocity, payloadMass, propellantMass, "SLS/Orion.png")
         {
-            Engines = new IEngine[0];
+            _drogueChute = new DrogueChute(this, new DVector2(7.0, -8.5));
+            _parachute = new Parachute(this, new DVector2(-10.0, -36.0));
+
+            Engines = new IEngine[]{};
+        }
+
+        public override void Release()
+        {
+            if(_las != null)
+                _las.Release();
+
+            base.Release();
+        }
+
+        public void AttachLAS(LAS las)
+        {
+            _las = las;
+            _las.SetParent(this);
+        }
+
+        public override void DeployLAS()
+        {
+            if (_las != null)
+            {
+                _lasDeployed = true;
+                _las.Stage();
+            }
         }
 
         public void Abort()
@@ -118,6 +153,11 @@ namespace SpaceSim.Spacecrafts.DragonV1
             SetThrottle(100);
         }
 
+        public override void DeployDrogues()
+        {
+            _drogueChute.Deploy();
+        }
+
         public override void DeployParachutes()
         {
             if (!_drogueDeployed)
@@ -129,15 +169,14 @@ namespace SpaceSim.Spacecrafts.DragonV1
                 _drogueDeployed = false;
                 _parachuteDeployed = true;
             }
+            _parachute.Deploy();
         }
-
-        DateTime timestamp = DateTime.Now;
 
         public override void Update(double dt)
         {
             if (_drogueDeployed)
             {
-                _parachuteRatio = Math.Min(_parachuteRatio + dt * 0.03, 0.3);
+                _parachuteRatio = Math.Min(_parachuteRatio + dt * 0.03, 0.15);
             }
             else if (_parachuteDeployed)
             {
@@ -145,6 +184,15 @@ namespace SpaceSim.Spacecrafts.DragonV1
             }
 
             base.Update(dt);
+
+            _drogueChute.Update(dt);
+            _parachute.Update(dt);
+
+            if (_las != null && !_lasDeployed)
+            {
+                _las.UpdateChildren(Position, Velocity);
+                _las.SetPitch(Pitch);
+            }
         }
 
         protected override void RenderShip(Graphics graphics, Camera camera, RectangleF screenBounds)
@@ -157,6 +205,51 @@ namespace SpaceSim.Spacecrafts.DragonV1
             camera.ApplyScreenRotation(graphics);
             camera.ApplyRotationMatrix(graphics, offset, drawingRotation);
 
+            // Normalize the angle to [0,360]
+            int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
+
+            int heatingRate = Math.Min((int)this.HeatingRate, 600000);
+            if (heatingRate > 100000)
+            {
+                Random rnd = new Random();
+                float noise = (float)rnd.NextDouble();
+                float width = screenBounds.Width / (3 + noise);
+                float height = screenBounds.Height / (18 + noise);
+                RectangleF plasmaRect = screenBounds;
+                plasmaRect.Inflate(new SizeF(width, height));
+
+                if (Roll != 0)
+                {
+                    float foreshortening = (float)Math.Pow(Math.Cos(Roll), 0.4);
+                    plasmaRect.Y += plasmaRect.Height * (1 - foreshortening);
+                    plasmaRect.Height *= foreshortening;
+                }
+
+                int alpha = 255;
+                int blue = Math.Min(heatingRate / 2000, 255);
+                int green = 0;
+                int red = Math.Max(blue - 64, 0);
+                Color glow = Color.FromArgb(alpha, red, green, blue);
+
+                float penWidth = width / 12;
+                Pen glowPen = new Pen(glow, penWidth);
+                glowPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                glowPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+                graphics.DrawArc(glowPen, plasmaRect, 220, 100);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.75), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, 200, 140);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.5), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, 180, 180);
+
+                glowPen.Color = Color.FromArgb((int)(alpha * 0.25), glow);
+                plasmaRect.Inflate(-penWidth, -penWidth);
+                graphics.DrawArc(glowPen, plasmaRect, 160, 220);
+            }
+
             graphics.DrawImage(this.Texture, screenBounds.X, screenBounds.Y, screenBounds.Width, screenBounds.Height);
 
             // Index into the sprite
@@ -168,6 +261,19 @@ namespace SpaceSim.Spacecrafts.DragonV1
             //_spriteSheet.Draw(spriteIndex, graphics, screenBounds);
 
             graphics.ResetTransform();
+
+            if (_parachute.IsDeploying() || _parachute.IsDeployed())
+            {
+                _parachute.RenderGdi(graphics, camera);
+            }
+            else
+            {
+                if (_drogueChute.IsDeploying() || _drogueChute.IsDeployed())
+                    _drogueChute.RenderGdi(graphics, camera);
+            }
+
+            if(_las != null)
+                _las.RenderGdi(graphics, camera);
 
             if (Settings.Default.WriteCsv && (DateTime.Now - timestamp > TimeSpan.FromSeconds(1)))
             {
@@ -195,5 +301,6 @@ namespace SpaceSim.Spacecrafts.DragonV1
                 File.AppendAllText(filename, contents);
             }
         }
+
     }
 }

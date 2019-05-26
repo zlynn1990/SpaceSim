@@ -174,12 +174,15 @@ namespace SpaceSim
 
         private void LoadSolarSystem()
         {
+            MissionConfig primaryMission = MissionConfig.Load(ProfilePaths[0]);
+
             _sun = new Sun();
 
             var mercury = new Mercury();
             var venus = new Venus();
 
-            var earth = new Earth();
+            float inclination = primaryMission.Inclination;
+            var earth = new Earth(inclination);
             var moon = new Moon(earth.Position, earth.Velocity);
 
             var mars = new Mars();
@@ -206,9 +209,6 @@ namespace SpaceSim
 
             _spaceCraftManager = new SpaceCraftManager(_gravitationalBodies);
             _structures = new List<StructureBase>();
-
-            MissionConfig primaryMission = MissionConfig.Load(ProfilePaths[0]);
-
             _originTime = primaryMission.GetLaunchDate();
 
             UpdateLoadingPercentage(20);
@@ -754,8 +754,13 @@ namespace SpaceSim
                 {
                     if (targetSpaceCraft != null)
                     {
-                        double relativePitch = _gravitationalBodies[_targetIndex].GetRelativePitch();
-                        gauge.Update(relativePitch, throttle / 100.0, relativePitch - targetSpaceCraft.GetAlpha());
+                        double pitch = 0.0;
+                        if (_targetInOrbit && _rotateInOrbit)
+                            pitch = _gravitationalBodies[_targetIndex].Pitch;
+                        else
+                            pitch = _gravitationalBodies[_targetIndex].GetRelativePitch();
+
+                        gauge.Update(pitch, throttle / 100.0, pitch - targetSpaceCraft.GetAlpha());
                     }
 
                     gauge.Render(graphics, cameraBounds);
@@ -773,7 +778,8 @@ namespace SpaceSim
                 // Main timing display
                 _textDisplay.AddTextBlock(StringAlignment.Near, new List<string>
                 {
-                    $"Origin Time: {localTime.ToShortDateString()} {localTime.ToShortTimeString()}",
+                    //$"Origin Time: {localTime.ToShortDateString()} {localTime.ToShortTimeString()}",
+                    $"Origin Time: {string.Format("{0}-{1}-{2:D2}", localTime.Date.Year, localTime.Date.Month, localTime.Date.Day)} {localTime.ToShortTimeString()}",
                     //$"Elapsed Time: Y:{elapsedYears} D:{elapsedDays} H:{elapsedTime.Hours} M:{elapsedTime.Minutes} S:{Math.Round(elapsedTime.TotalSeconds % 60)}",
                     $"Elapsed Time: Y:{elapsedYears} D:{elapsedDays} H:{elapsedTime.Hours} M:{elapsedTime.Minutes} S:{elapsedTime.Seconds}",
                     $"Update Speed: {timeStep.Multiplier}"

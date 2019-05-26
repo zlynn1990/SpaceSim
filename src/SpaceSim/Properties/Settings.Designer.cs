@@ -70,19 +70,10 @@ namespace SpaceSim.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1600, 900")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1280, 748")]
         public global::System.Drawing.Size ScreenSize {
             get {
                 return ((global::System.Drawing.Size)(this["ScreenSize"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PolarOrbit {
-            get {
-                return ((bool)(this["PolarOrbit"]));
             }
         }
         
@@ -101,15 +92,6 @@ namespace SpaceSim.Properties {
         public bool RotateInOrbit {
             get {
                 return ((bool)(this["RotateInOrbit"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("28.5")]
-        public float Inclination {
-            get {
-                return ((float)(this["Inclination"]));
             }
         }
     }

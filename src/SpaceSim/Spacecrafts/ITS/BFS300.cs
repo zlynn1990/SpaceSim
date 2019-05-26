@@ -123,12 +123,14 @@ namespace SpaceSim.Spacecrafts.ITS
             Fins = new Fin[2];
             Fins[0] = new Fin(this, new DVector2(3.8, -18.0), new DVector2(2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard.png", 1000.0);
             Fins[1] = new Fin(this, new DVector2(2.4, 17.2), new DVector2(5.86, 13.0), -Math.PI / 6);
+            //Fins[0] = new Fin(this, new DVector2(-0.8, -18.0), new DVector2(2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard2.png", 1000.0);
+            //Fins[1] = new Fin(this, new DVector2(-2.4, 17.2), new DVector2(5.86, 13.0), -Math.PI / 6);
 
             Engines = new IEngine[7];
             for (int i = 0; i < 7; i++)
             {
-                double engineOffsetX = (i - 3.5) / 3.5;
-                var offset = new DVector2(engineOffsetX * Width * 0.2, Height * 0.45);
+                double engineOffsetX = (i - 3.0) / 3.0;
+                var offset = new DVector2(engineOffsetX * Width * 0.2, Height * 0.4);
                 Engines[i] = new RaptorSL300(i, this, offset);
             }
 
@@ -201,7 +203,8 @@ namespace SpaceSim.Spacecrafts.ITS
                 {
                     float startAngle = 235;
                     float sweepAngle = 32;
-                    int arcs = 20;
+                    //int arcs = 20;
+                    int arcs = 15;
                     for (int i = 0; i < arcs; i++)
                     {
                         glow = Color.FromArgb(alpha, (int)(red * (arcs - i) / (arcs * 1.3)), green, blue);
@@ -214,13 +217,21 @@ namespace SpaceSim.Spacecrafts.ITS
                 {
                     float startAngle = 265;
                     float sweepAngle = 30;
-                    int arcs = 20;
+                    //int arcs = 20;
+                    int arcs = 15;
                     for (int i = 0; i < arcs; i++)
                     {
                         glow = Color.FromArgb(alpha, (int)(red * (arcs - i) / (arcs * 1.3)), green, blue);
                         glowPen.Color = Color.FromArgb((int)(alpha * (arcs - i) / arcs), glow);
                         plasmaRect.Inflate(-penWidth, -penWidth);
-                        graphics.DrawArc(glowPen, plasmaRect, startAngle + i * 1, sweepAngle + i * 6);
+                        try
+                        {
+                            graphics.DrawArc(glowPen, plasmaRect, startAngle + i * 1, sweepAngle + i * 6);
+                        }
+                        catch(Exception ex)
+                        {
+                            string message = ex.Message;
+                        }
                     }
                 }
             }
@@ -228,7 +239,7 @@ namespace SpaceSim.Spacecrafts.ITS
             if (rollAngle <= 90)
                 graphics.DrawImage(this.Texture, screenBounds.X - screenBounds.Width * 0.43f, screenBounds.Y, screenBounds.Width * 1.8f, screenBounds.Height);
             else
-                graphics.DrawImage(this.Texture, screenBounds.X + screenBounds.Width * 0.9f, screenBounds.Y, -screenBounds.Width * 1.8f, screenBounds.Height);
+                graphics.DrawImage(this.Texture, screenBounds.X + screenBounds.Width * 1.43f, screenBounds.Y, -screenBounds.Width * 1.8f, screenBounds.Height);
 
             // Index into the sprite
             //int ships = _spriteSheet.Cols * _spriteSheet.Rows;

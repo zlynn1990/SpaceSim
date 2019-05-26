@@ -17,7 +17,7 @@ namespace SpaceSim.Engines
             return (100000.0 + 10000.0 * ispMultiplier) * Throttle * 0.01;
         }
 
-        // Based off of ISP = F/m*g0
+        // Based off of Isp = F/ṁ*g0 => ṁ = F/Isp*g0 Isp = 465.5
         public override double MassFlowRate(double ispMultiplier)
         {
             return 24.14 * Throttle * 0.01;

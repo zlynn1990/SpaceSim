@@ -22,6 +22,8 @@ namespace SpaceSim.Common.Contracts
         public int ClockDelay { get; set; }
         public int TimeSkew { get; set; }
 
+        public float Inclination { get; set; }
+
         public DateTime GetLaunchDate()
         {
             DateTime date;

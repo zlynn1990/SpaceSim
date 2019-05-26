@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Prograde">
+    <StartTime>215</StartTime>
+    <Duration>270</Duration>
+    <InitialAdjustmentTime>5</InitialAdjustmentTime>
+  </Command>
+  <!--<Command xsi:type="Deploy">
+    <Part>Drogues</Part>
+    <StartTime>480</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>480</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>160</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>490</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>160</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>550</StartTime>
+    <Duration>170</Duration>
+    <TargetOrientation>145</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Parachutes</Part>
+    <StartTime>720</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>720</StartTime>
+    <Duration>15</Duration>
+    <TargetOrientation>165</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>730</StartTime>
+    <Duration>300</Duration>
+    <TargetOrientation>165</TargetOrientation>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>1240</StartTime>
+    <Duration>5</Duration>
+    <TargetOrientation>185</TargetOrientation>
+  </Command>-->
+</ArrayOfCommand>

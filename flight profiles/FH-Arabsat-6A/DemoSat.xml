@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<ArrayOfCommand xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Command xsi:type="Zoom">
+    <StartTime>-3</StartTime>
+    <TargetScale>-10</TargetScale>
+  </Command>
+  <Command xsi:type="Release">
+    <StartTime>0</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>0</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>-90</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>5</StartTime>
+    <TargetScale>25</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>8</StartTime>
+    <TargetScale>45</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>10</StartTime>
+    <Duration>40</Duration>
+    <TargetOrientation>-106</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>11</StartTime>
+    <TargetScale>50</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>14</StartTime>
+    <Duration>5</Duration>
+    <Message>Much is made of the thrust of Falcon Heavy being twice that of any operational rocket.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>14</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Roll">
+    <StartTime>20</StartTime>
+    <Duration>10</Duration>
+    <TargetOrientation>90</TargetOrientation>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>21</StartTime>
+    <Duration>5</Duration>
+    <Message>It is somewhat ironic then that full thrust was only used instantaneously in this mission ...</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>21</StartTime>
+    <TargetScale>70</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>27</StartTime>
+    <Duration>5</Duration>
+    <Message>... at T+00:10. The upside might be that there is more performance to come.</Message>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>27</StartTime>
+    <TargetScale>70</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>33</StartTime>
+    <Duration>5</Duration>
+    <Message>Increasing update speed to 2x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>33</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>40</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>50</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-134</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>55</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>66</StartTime>
+    <Duration>5</Duration>
+    <Message>Mach 1</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>70</StartTime>
+    <Duration>5</Duration>
+    <Message>Max-Q</Message>
+  </Command>
+  <Command xsi:type="Post">
+    <StartTime>76</StartTime>
+    <Duration>6</Duration>
+    <Message>Increasing update speed to 4x.</Message>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>76</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>85</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>100</StartTime>
+    <Duration>50</Duration>
+    <TargetOrientation>-154</TargetOrientation>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>120</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>152</StartTime>
+    <TargetIndex>4</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>152</StartTime>
+    <TargetScale>-510</TargetScale>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>157</StartTime>
+    <Duration>6</Duration>
+    <TargetOrientation>-150</TargetOrientation>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>157</StartTime>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>158</StartTime>
+    <Next>true</Next>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>163</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>163</StartTime>
+    <Duration>56</Duration>
+    <TargetOrientation>-165</TargetOrientation>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>180</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>180</StartTime>
+    <TargetScale>660</TargetScale>
+  </Command>
+  <Command xsi:type="Stage">
+    <StartTime>219</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>219</StartTime>
+    <Duration>11</Duration>
+    <TargetOrientation>-170</TargetOrientation>
+  </Command>
+  <Command xsi:type="Deploy">
+    <Part>Fairing</Part>
+    <StartTime>225</StartTime>
+  </Command>
+  <Command xsi:type="RelativePitch">
+    <StartTime>230</StartTime>
+    <Duration>70</Duration>
+    <TargetOrientation>-160</TargetOrientation>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>260</StartTime>
+    <TargetIndex>7</TargetIndex>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>260</StartTime>
+    <Next>false</Next>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>260</StartTime>
+    <Next>false</Next>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>300</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-170</TargetOrientation>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>360</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-175</TargetOrientation>
+  </Command>
+  <Command xsi:type="Target">
+    <StartTime>400</StartTime>
+    <Next>false</Next>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>400</StartTime>
+    <TargetScale>60</TargetScale>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>420</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-188</TargetOrientation>
+  </Command>
+  <Command xsi:type="Pitch">
+    <StartTime>480</StartTime>
+    <Duration>60</Duration>
+    <TargetOrientation>-190</TargetOrientation>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>525</StartTime>
+    <TargetIndex>5</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>525</StartTime>
+    <TargetScale>250</TargetScale>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>540</StartTime>
+    <TargetIndex>11</TargetIndex>
+  </Command>
+  <Command xsi:type="Prograde">
+    <StartTime>540</StartTime>
+    <Duration>100000</Duration>
+    <InitialAdjustmentTime>20</InitialAdjustmentTime>
+  </Command>
+  <Command xsi:type="Rate">
+    <StartTime>1660</StartTime>
+    <TargetIndex>6</TargetIndex>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>1700</StartTime>
+    <TargetScale>40</TargetScale>
+  </Command>
+  <Command xsi:type="Zoom">
+    <StartTime>1730</StartTime>
+    <TargetScale>40</TargetScale>
+  </Command>
+</ArrayOfCommand>

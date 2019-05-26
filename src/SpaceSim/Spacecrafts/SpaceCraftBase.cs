@@ -355,6 +355,11 @@ namespace SpaceSim.Spacecrafts
         /// </summary>
         public virtual void DeployLandingLegs() { }
 
+        /// <summary>
+        /// Deploys the LAS.
+        /// </summary>
+        public virtual void DeployLAS() { }
+
         public void SetDihedral(double dihedral, int[] finIds = null)
         {
             if (Fins.Length > 0)
@@ -568,9 +573,10 @@ namespace SpaceSim.Spacecrafts
             //    return Pitch - GravitationalParent.Pitch;
             //}
 
-            var alpha = 0.0;
-            if (altitude > 0.1)
-            {
+            // assume some windspeed from the West
+            var alpha = -Math.PI/2;
+            if (_isReleased)
+                {
                 double vAngle = GetRelativeVelocity().Angle();
                 alpha = Pitch - vAngle;
 

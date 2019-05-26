@@ -45,7 +45,6 @@ namespace SpaceSim.Spacecrafts
         public override void Update(double dt)
         {
             double rotation = _parent.Pitch - _offsetRotation;
-
             DVector2 offset = new DVector2(Math.Cos(rotation), Math.Sin(rotation)) * _offsetLength;
 
             // handle dihedral
@@ -54,9 +53,7 @@ namespace SpaceSim.Spacecrafts
 
             Position = _parent.Position - offset;
 
-
             Width = -Math.Sin(Dihedral) * _width;
-            
         }
     }
 }

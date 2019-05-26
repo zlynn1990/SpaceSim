@@ -132,6 +132,8 @@
     <Compile Include="Engines\RutherfordVac.cs" />
     <Compile Include="Engines\SRB.cs" />
     <Compile Include="Engines\Star48.cs" />
+    <Compile Include="Engines\AJ10.cs" />
+    <Compile Include="Engines\OrionAbortMotor.cs" />
     <Compile Include="Kernels\BaseKernel.cs" />
     <Compile Include="Kernels\CallistoKernel.cs" />
     <Compile Include="Kernels\GanymedeKernel.cs" />
@@ -224,11 +226,19 @@
     <Compile Include="Spacecrafts\FalconCommon\Parachute.cs" />
     <Compile Include="Spacecrafts\FalconCommon\PartyBalloon.cs" />
     <Compile Include="Spacecrafts\FalconCommon\Skid.cs" />
+    <Compile Include="Spacecrafts\FalconHeavy\FHBoosterB5.cs" />
+    <Compile Include="Spacecrafts\FalconHeavy\FHS1B5.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS1.cs" />
+    <Compile Include="Spacecrafts\FalconHeavy\FHS2B5.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHS2.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\Roadster.cs" />
     <Compile Include="Spacecrafts\GreyDragon\GreyDragon.cs" />
+    <Compile Include="Spacecrafts\SLS\Interstage.cs" />
+    <Compile Include="Spacecrafts\SLS\ESM.cs" />
+    <Compile Include="Spacecrafts\SLS\LAS.cs" />
+    <Compile Include="Spacecrafts\SLS\Orion.cs" />
+    <Compile Include="Spacecrafts\SLS\ICPSFairing.cs" />
     <Compile Include="Spacecrafts\StarlinkSat.cs" />
     <Compile Include="Spacecrafts\IonDriveSat.cs" />
     <Compile Include="Spacecrafts\ISpaceCraft.cs" />
@@ -260,7 +270,7 @@
     <Compile Include="Spacecrafts\SLS\SLS5mFairing.cs" />
     <Compile Include="Spacecrafts\SLS\SLSBooster.cs" />
     <Compile Include="Spacecrafts\SLS\SLSS1.cs" />
-    <Compile Include="Spacecrafts\SLS\SLSS2.cs" />
+    <Compile Include="Spacecrafts\SLS\ICPS.cs" />
     <Compile Include="Spacecrafts\SpaceCraftBase.cs" />
     <Compile Include="Spacecrafts\SpacecraftFactory.cs" />
     <Compile Include="SolarSystem\Stars\Sun.cs" />
@@ -349,10 +359,34 @@
     <Content Include="Textures\Spacecrafts\Falcon\Common\drogueChutes.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Textures\Spacecrafts\Its\Canard2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\Its\Canard2Soot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Textures\Spacecrafts\Its\StarKicker.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Spacecrafts\Its\Starship.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\ESM.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\fairingIcpsLeft.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\fairingIcpsRight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\Interstage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\LAS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Textures\Spacecrafts\SLS\Orion.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Textures\Structures\crewArm.png">
