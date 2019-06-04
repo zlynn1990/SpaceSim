@@ -234,6 +234,7 @@
     <Compile Include="Spacecrafts\FalconHeavy\FHBooster.cs" />
     <Compile Include="Spacecrafts\FalconHeavy\Roadster.cs" />
     <Compile Include="Spacecrafts\GreyDragon\GreyDragon.cs" />
+    <Compile Include="Spacecrafts\ITS\StarshipP2P.cs" />
     <Compile Include="Spacecrafts\SLS\Interstage.cs" />
     <Compile Include="Spacecrafts\SLS\ESM.cs" />
     <Compile Include="Spacecrafts\SLS\LAS.cs" />

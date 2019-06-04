@@ -174,6 +174,8 @@ namespace SpaceSim.Spacecrafts
                     return BuildStarHopper(planet, config, craftDirectory);
                 case "StarKicker":
                     return BuildStarKicker(planet, config, craftDirectory);
+                case "StarshipP2P":
+                    return BuildStarshipP2P(planet, config, craftDirectory);
                 default:
                     throw new Exception("Unknown vehicle type: " + config.VehicleType);
             }
@@ -978,6 +980,16 @@ namespace SpaceSim.Spacecrafts
             // inclination 53°
             // var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity + new DVector2(-277, 0), config.PayloadMass, 1100000);
             var ship = new BFS300(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity, 0, 1100000);
+            return new List<ISpaceCraft>
+            {
+                ship
+            };
+        }
+
+        private static List<ISpaceCraft> BuildStarshipP2P(IMassiveBody planet, MissionConfig config, string craftDirectory)
+        {
+            // inclination 28.5°
+            var ship = new StarshipP2P(craftDirectory, planet.Position + new DVector2(0, -planet.SurfaceRadius), planet.Velocity, config.PayloadMass, 1100000);
             return new List<ISpaceCraft>
             {
                 ship

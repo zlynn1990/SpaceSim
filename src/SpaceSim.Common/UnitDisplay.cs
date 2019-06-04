@@ -117,7 +117,7 @@ namespace SpaceSim.Common
 
         public static string Density(double density)
         {
-            return density.ToString("0.##0") + " kg/m^3";
+            return density.ToString("0.##0") + " kg/m³";
         }
 
         public static string Pressure(double pressure)
@@ -138,10 +138,10 @@ namespace SpaceSim.Common
             {
                 heatingRate *= 0.001;
 
-                return heatingRate.ToString("#,##0.0") + " kW/m^2";
+                return heatingRate.ToString("#,##0.0") + " kW/m²";
             }
 
-            return heatingRate.ToString("#,##0.0") + " W/m^2";
+            return heatingRate.ToString("#,##0.0") + " W/m²";
         }
 
         public static string Degrees(double angle)

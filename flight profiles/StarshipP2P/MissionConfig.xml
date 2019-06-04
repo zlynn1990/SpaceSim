@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<MissionConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <VehicleType>StarshipP2P</VehicleType>
+  <PayloadMass>10000</PayloadMass>
+  <ParentPlanet>Earth</ParentPlanet>
+  <LaunchDate>2019-09-01T09:00:00</LaunchDate>
+  <ClockDelay>2</ClockDelay>
+  <Inclination>28.5</Inclination>
+</MissionConfig>

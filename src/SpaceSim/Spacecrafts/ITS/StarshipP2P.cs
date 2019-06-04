@@ -10,10 +10,10 @@ using SpaceSim.Properties;
 
 namespace SpaceSim.Spacecrafts.ITS
 {
-    class BFS300 : SpaceCraftBase
+    class StarshipP2P : SpaceCraftBase
     {
         public override string CraftName { get { return "Starship"; } }
-        public override string CommandFileName { get { return "BFS.xml"; } }
+        public override string CommandFileName { get { return "Starship.xml"; } }
 
         public override double DryMass { get { return 90000; } }
         public override double Width { get { return 9; } }
@@ -115,21 +115,19 @@ namespace SpaceSim.Spacecrafts.ITS
 
         //private SpriteSheet _spriteSheet;
 
-        public BFS300(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 0, double propellantMass = 1000000)
+        public StarshipP2P(string craftDirectory, DVector2 position, DVector2 velocity, double payloadMass = 0, double propellantMass = 1000000)
             : base(craftDirectory, position, velocity, payloadMass, propellantMass, null)
         {
             StageOffset = new DVector2(0, 0);
 
             Fins = new Fin[2];
-            //Fins[0] = new Fin(this, new DVector2(3.8, -18.0), new DVector2(2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard.png", 1000.0);
-            Fins[1] = new Fin(this, new DVector2(2.4, 17.2), new DVector2(5.86, 13.0), -Math.PI / 6);
-            Fins[0] = new Fin(this, new DVector2(-0.8, -18.0), new DVector2(2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard2.png", 1000.0);
-            //Fins[1] = new Fin(this, new DVector2(-2.4, 17.2), new DVector2(5.86, 13.0), -Math.PI / 6);
+            Fins[0] = new Fin(this, new DVector2(-1.2, -18.0), new DVector2(2.5, 5), 0, "Textures/Spacecrafts/ITS/Canard2.png", 1.5);
+            Fins[1] = new Fin(this, new DVector2(2.0, 17.2), new DVector2(5.86, 13.0), -Math.PI / 6, "Textures/Spacecrafts/ITS/Fin.png", 3);
 
-            Engines = new IEngine[7];
-            for (int i = 0; i < 7; i++)
+            Engines = new IEngine[9];
+            for (int i = 0; i < 9; i++)
             {
-                double engineOffsetX = (i - 3.0) / 3.0;
+                double engineOffsetX = (i - 4.0) / 4.0;
                 var offset = new DVector2(engineOffsetX * Width * 0.2, Height * 0.4);
                 Engines[i] = new RaptorSL300(i, this, offset);
             }
@@ -166,7 +164,7 @@ namespace SpaceSim.Spacecrafts.ITS
             // Normalize the angle to [0,360]
             int rollAngle = (int)(Roll * MathHelper.RadiansToDegrees) % 360;
             int heatingRate = Math.Min((int)this.HeatingRate, 2000000);
-            if (heatingRate > 100000)
+            if (heatingRate > 50000)
             {
                 Random rnd = new Random();
                 float noise = (float)rnd.NextDouble();
@@ -181,7 +179,7 @@ namespace SpaceSim.Spacecrafts.ITS
 
                 if (rollAngle <= 90)
                 {
-                    plasmaRect.Offset(0.0f, screenBounds.Height / 2.25f);
+                    plasmaRect.Offset(screenBounds.Width / 4.0f, screenBounds.Height / 2.1f);
                 }
                 else
                 {

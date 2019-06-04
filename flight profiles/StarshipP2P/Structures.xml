@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ArrayOfStructureConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <StructureConfig>
+    <Type>LandingPad</Type>
+    <DownrangeDistance>0</DownrangeDistance>
+    <HeightOffset>5</HeightOffset>
+  </StructureConfig>
+  <StructureConfig>
+    <Type>ServiceTower</Type>
+    <DownrangeDistance>-120</DownrangeDistance>
+    <HeightOffset>-50</HeightOffset>
+  </StructureConfig>
+  <StructureConfig>
+    <Type>LandingPad</Type>
+    <DownrangeDistance>10237890</DownrangeDistance>
+    <HeightOffset>5</HeightOffset>
+  </StructureConfig>
+</ArrayOfStructureConfig>
